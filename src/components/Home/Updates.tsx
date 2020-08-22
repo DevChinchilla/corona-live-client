@@ -33,14 +33,12 @@ const Updates = ({ data }) => {
         title={"실시간 확진자 정보"}
         icon={"Notification"}
       >
-        {Array(50)
-          .fill(0)
-          .map((i) => (
-            <UpdateCard key={i}></UpdateCard>
-          ))}
+        {data.map((update, i) => (
+          <UpdateCard key={i} data={update}></UpdateCard>
+        ))}
       </Modal>
       <Time>{getCurrentDateTime()}</Time>
-      <UpdateCard shadow onClick={() => setShowModal(true)}></UpdateCard>
+      <UpdateCard data={data[0]} shadow onClick={() => setShowModal(true)}></UpdateCard>
     </Wrapper>
   );
 };

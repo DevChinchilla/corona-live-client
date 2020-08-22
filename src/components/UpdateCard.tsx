@@ -1,13 +1,13 @@
-import React, { useState, FC } from "react";
-import styled, { css } from "styled-components";
 import { Col, Row, Box } from "./Layout";
 import Icon from "./Icon";
 import UpdateTime from "./UpdateTime";
+import Report from "./Report";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
-import Report from "./Report";
 
-const Wrapper = styled(Col)``;
+import React, { useState, FC } from "react";
+import styled, { css } from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: space-between;
@@ -36,8 +36,10 @@ const Message = styled(Row)`
 `;
 
 const Details = styled(Col)`
-  padding: 16px 20px;
-  padding-bottom: 24px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: ${theme("lightGreyText")};
+  margin-bottom: 14px;
   p {
     font-weight: 300;
     font-size: 13px;
@@ -47,8 +49,9 @@ const Details = styled(Col)`
 
 const ReportButton = styled(Row)`
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 12px;
 
+  font-weight: 500;
   text-decoration: underline;
   color: ${theme("darkGreyText")};
   justify-content: flex-end;
@@ -61,32 +64,35 @@ interface Props {
   shadow?: boolean;
 }
 const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
+  const { t } = useTranslation();
+
   const [showDetails, setShowDetails] = useState(false);
   const [showReport, setShowReport] = useState(false);
 
+  const { src, datetime, city, gu, cases } = data;
+
+  const cityName = t(`c${city}`);
+  const guName = t(`c${city}/${gu}`);
   return (
-    <Wrapper>
+    <Col>
       <Report hideOverlay={true} show={showReport} onClose={() => setShowReport(false)}></Report>
       <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
         <UpdateTime></UpdateTime>
         <Message>
           <Box fontWeight={700} mr="4px">
-            송파구
+            {`${cityName} ${guName[0] != "c" ? guName : ""}`}
           </Box>
-          5명 추가확진
+          {cases}명 추가확진
         </Message>
         {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
       </Card>
       {showDetails && (
         <Details>
-          <p>
-            [강진군청] 고양시확진자 강진방문관련 8.18.(화)11:30~13:00 모란추어탕 방문자는 보건소
-            선별진료소(061-430-3592)에서 검사받으시기 바랍니다
-          </p>
+          <p>{src}</p>
           <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>
         </Details>
       )}
-    </Wrapper>
+    </Col>
   );
 };
 
