@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import styled, { css } from "styled-components";
 import { Col, Row } from "./Layout";
 import Icon from "./Icon";
 import { palette } from "../styles";
 import UpdateTime from "./UpdateTime";
+import { theme } from "@styles/themes";
 
 const Wrapper = styled(Col)``;
 
@@ -11,7 +12,7 @@ const Card = styled(Row)`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background: ${palette.lightGrey};
+  background: ${theme("greyBg")};
   padding: 0px 20px;
   height: 46px;
   border-radius: 6px;
@@ -31,7 +32,7 @@ const Details = styled(Col)`
   p {
     font-weight: 300;
     font-size: 12px;
-    color: ${palette.darkGrey};
+    color: ${theme("darkGreyText")};
   }
 `;
 
@@ -40,15 +41,17 @@ const ReportButton = styled(Row)`
   font-size: 12px;
 
   text-decoration: underline;
-  color: ${palette.darkGrey};
+  color: ${theme("darkGreyText")};
   justify-content: flex-end;
   cursor: pointer;
 `;
 
-const UpdateCard = ({ onClick, data }) => {
+interface Props {
+  onClick?: any;
+  data?: any;
+}
+const UpdateCard: FC<Props> = ({ onClick, data }) => {
   const [showDetails, setShowDetails] = useState(false);
-  // const {} = data;
-
   return (
     <Wrapper>
       <Card onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>

@@ -7,7 +7,7 @@ import { ifProp } from "@styles/tools";
 import useTheme from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 
-const Wrapper = styled(Row)<{ isOld: boolean }>`
+const Wrapper = styled(Row)<{ isOld?: boolean }>`
   align-items: center;
   span {
     color: ${theme("greyText")};

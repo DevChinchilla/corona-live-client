@@ -69,6 +69,7 @@ const Css = css`
 
 export interface BoxProps extends PaddingProps, MarginProps, CSS.Properties {
   onClick?: any;
+  className?: string;
   w?: string;
   h?: string;
   bg?: string;

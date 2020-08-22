@@ -10,9 +10,9 @@
         "alias": {
           "@components": "./src/components",
           "@styles": "./src/styles",
-          "@utils": "./src/components",
-          "@consts": "./src/styles",
-          "@hooks": "./src/hooks"
+          "@hooks": "./src/hooks",
+          "@utils": "./src/utils",
+          "@consts": "./src/consts"
         }
       }
     ]

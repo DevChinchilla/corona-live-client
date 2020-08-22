@@ -24,8 +24,7 @@
       "@styles/*": ["./styles/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
-      "@consts/*": ["./consts"],
-      "@utils/*": ["./utils"]
+      "@utils": ["./utils"]
     }
   }
 }
