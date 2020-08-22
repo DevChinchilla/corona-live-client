@@ -1,7 +1,9 @@
-import React from "react";
+// import React from "react";
 
-function IconTemplate() {
-  return <svg></svg>;
-}
+// function IconTemplate() {
+//   return
 
-export default React.memo(IconTemplate);
+//   ;
+// }
+
+// export default React.memo(IconTemplate);

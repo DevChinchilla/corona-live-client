@@ -31,7 +31,8 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1;
     background: ${theme("bg")};
     color: ${theme("text")};
-    border-color: ${theme("border")}
+    border-color: ${theme("border")};
+    font-family: 'Noto Sans KR', sans-serif;
   }
 `;
 

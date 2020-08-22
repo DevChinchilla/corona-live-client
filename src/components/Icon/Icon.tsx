@@ -6,6 +6,8 @@ import Arrows from "./Arrows";
 import Check from "./Check";
 import Plus from "./Plus";
 import X from "./X";
+import Refresh from "./Refresh";
+
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
 import { BoxProps } from "@styles/mixins";
@@ -16,6 +18,7 @@ const icons = {
   Check,
   Plus,
   X,
+  Refresh,
 };
 
 export type IconType = keyof typeof icons;

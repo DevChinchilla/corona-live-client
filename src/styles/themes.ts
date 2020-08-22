@@ -1,7 +1,13 @@
 interface ThemeProps {
-  bg: string;
-  text: string;
+  bg: "";
+  text: "";
   border: string;
+  greyBg: string;
+
+  greyText: string;
+  darkGreyText: string;
+  lightGreyText: string;
+  blackText: string;
 }
 type ThemeType = keyof ThemeProps;
 
@@ -11,11 +17,23 @@ const lightTheme: ThemeProps = {
   bg: "",
   text: "",
   border: "",
+  greyBg: "",
+
+  greyText: "",
+  darkGreyText: "",
+  lightGreyText: "",
+  blackText: "",
 };
 const darkTheme: ThemeProps = {
   bg: "",
   text: "",
   border: "",
+  greyBg: "",
+
+  greyText: "",
+  darkGreyText: "",
+  lightGreyText: "",
+  blackText: "",
 };
 
 export default { light: lightTheme, dark: darkTheme };
