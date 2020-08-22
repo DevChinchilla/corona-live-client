@@ -5,7 +5,7 @@ import Icon from "./Icon";
 import UpdateTime from "./UpdateTime";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
-import { palette } from "@styles";
+import Report from "./Report";
 
 const Wrapper = styled(Col)``;
 
@@ -62,8 +62,11 @@ interface Props {
 }
 const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+
   return (
     <Wrapper>
+      <Report hideOverlay={true} show={showReport} onClose={() => setShowReport(false)}></Report>
       <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
         <UpdateTime></UpdateTime>
         <Message>
@@ -80,7 +83,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
             [강진군청] 고양시확진자 강진방문관련 8.18.(화)11:30~13:00 모란추어탕 방문자는 보건소
             선별진료소(061-430-3592)에서 검사받으시기 바랍니다
           </p>
-          <ReportButton>오류제보하기</ReportButton>
+          <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>
         </Details>
       )}
     </Wrapper>

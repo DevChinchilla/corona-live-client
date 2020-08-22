@@ -1,9 +1,7 @@
-import styled, { css } from "styled-components";
-import { switchProp, prop, ifProp } from "styled-tools";
+import styled from "styled-components";
 
 import React from "react";
 import { palette } from "../styles";
-import Stat from "./Stat";
 import Icon from "./Icon/Icon";
 import UpdateTime from "./UpdateTime";
 import { Row, Box } from "./Layout";

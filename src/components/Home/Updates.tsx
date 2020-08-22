@@ -5,6 +5,7 @@ import { Col, Row } from "../Layout";
 import Modal from "../Modal";
 import { getCurrentDateTime } from "@utils";
 import { palette } from "@styles";
+import Report from "@components/Report";
 
 const Wrapper = styled(Col)`
   width: 100%;

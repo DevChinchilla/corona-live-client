@@ -10,14 +10,14 @@ const sizes = {
 };
 
 interface MeidaProp {
-  giant: Function;
-  bigDesktop: Function;
-  desktop: Function;
-  tablet: Function;
-  thone: Function;
-  phablet: Function;
-  phone: Function;
-  tiny: Function;
+  giant: any;
+  bigDesktop: any;
+  desktop: any;
+  tablet: any;
+  thone: any;
+  phablet: any;
+  phone: any;
+  tiny: any;
 }
 
 export const media: MeidaProp = Object.keys(sizes).reduce((accumulator, label) => {

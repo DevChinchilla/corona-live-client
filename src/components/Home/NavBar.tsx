@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "../Button";
 import Icon from "../Icon";
 import { Row } from "../Layout";
 import { palette } from "@styles";
 import useTheme from "@hooks/useTheme";
+import Report from "@components/Report";
 
 const Logo = styled(Row)`
   span {
@@ -28,18 +29,22 @@ const Wrapper = styled(Row)`
 `;
 
 const NavBar = () => {
+  const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
   return (
-    <Wrapper>
-      <Button>제보</Button>
-      <Logo>
-        <span>corona</span>
-        <span>live</span>
-      </Logo>
-      <Button light>
-        <Icon name="Refresh" size={14} fill={theme("darkGreyText")}></Icon>
-      </Button>
-    </Wrapper>
+    <>
+      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
+      <Wrapper>
+        <Button onClick={() => setShowReport(true)}>제보</Button>
+        <Logo>
+          <span>corona</span>
+          <span>live</span>
+        </Logo>
+        <Button light>
+          <Icon name="Refresh" size={14} fill={theme("darkGreyText")}></Icon>
+        </Button>
+      </Wrapper>
+    </>
   );
 };
 
