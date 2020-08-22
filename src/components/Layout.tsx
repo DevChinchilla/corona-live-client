@@ -39,7 +39,7 @@ interface AbsoluteProps extends BoxProps {
   full?: boolean;
 }
 const SAbsolute = styled(Flex)`
-  position: fixed;
+  position: absolute;
   ${ifProp("center", mixins.AbsoluteCenter)}
   ${ifProp("full", mixins.AbsoluteFull)}
 `;

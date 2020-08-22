@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useEffect, FC } from "react";
-import { Col } from "./Layout";
-import Icon from "./Icon/Icon";
+import { Col, Absolute, Box } from "./Layout";
+import Icon, { IconType } from "./Icon/Icon";
 import { Row } from "./Layout";
 import { theme } from "@styles/themes";
 
@@ -44,7 +44,7 @@ const Wrapper = styled(Col)`
   .title {
     font-size: 16px;
     font-weight: bold;
-    margin-left: 10px;
+    /* margin-left: 10px; */
   }
 `;
 interface Props {
@@ -52,8 +52,9 @@ interface Props {
   onClose: any;
   title: string;
   hideOverlay?: boolean;
+  icon?: IconType;
 }
-const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title }) => {
+const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title, icon }) => {
   useEffect(() => {
     document.querySelector("body")!.style.position = show ? "fixed" : "";
   }, [show]);
@@ -67,7 +68,11 @@ const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title }) => {
           <div className="back-button" onClick={onClose}>
             <Icon name="ChevronLeft" size={24}></Icon>
           </div>
-          <div className="title">{title}</div>
+          <Absolute center className="title">
+            {icon && <Icon name={icon}></Icon>}
+            <Box w="8px"></Box>
+            {title}
+          </Absolute>
         </Row>
         <div className="container">{children}</div>
       </div>

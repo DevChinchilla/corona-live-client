@@ -18,7 +18,7 @@ const Wrapper = styled(Row)<{ isOld?: boolean }>`
       content: "";
       position: absolute;
       top: 0px;
-      right: -4px;
+      right: -6px;
       width: 4px;
       height: 4px;
       border-radius: 2px;
@@ -29,9 +29,10 @@ const Wrapper = styled(Row)<{ isOld?: boolean }>`
   ${ifProp(
     "isOld",
     css`
-      span:after {
+      /* transform:scale(0.9) */
+      /* span:after {
         display: none;
-      }
+      } */
     `
   )}
 `;

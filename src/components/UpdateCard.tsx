@@ -1,14 +1,15 @@
 import React, { useState, FC } from "react";
 import styled, { css } from "styled-components";
-import { Col, Row } from "./Layout";
+import { Col, Row, Box } from "./Layout";
 import Icon from "./Icon";
-import { palette } from "../styles";
 import UpdateTime from "./UpdateTime";
 import { theme } from "@styles/themes";
+import { ifProp } from "@styles/tools";
+import { palette } from "@styles";
 
 const Wrapper = styled(Col)``;
 
-const Card = styled(Row)`
+const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -17,6 +18,13 @@ const Card = styled(Row)`
   height: 46px;
   border-radius: 6px;
   margin-bottom: 10px;
+  ${ifProp(
+    "shadow",
+    css`
+      background: ${theme("bg")};
+      box-shadow: 0 3px 10px ${theme("blackText")}14;
+    `
+  )}
 `;
 
 const Message = styled(Row)`
@@ -24,21 +32,22 @@ const Message = styled(Row)`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px;
+  font-size: 13px;
 `;
 
 const Details = styled(Col)`
-  padding: 8px 20px;
+  padding: 16px 20px;
+  padding-bottom: 24px;
   p {
     font-weight: 300;
-    font-size: 12px;
+    font-size: 13px;
     color: ${theme("darkGreyText")};
   }
 `;
 
 const ReportButton = styled(Row)`
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 13px;
 
   text-decoration: underline;
   color: ${theme("darkGreyText")};
@@ -49,15 +58,19 @@ const ReportButton = styled(Row)`
 interface Props {
   onClick?: any;
   data?: any;
+  shadow?: boolean;
 }
-const UpdateCard: FC<Props> = ({ onClick, data }) => {
+const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <Wrapper>
-      <Card onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
+      <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
         <UpdateTime></UpdateTime>
         <Message>
-          <strong>송파구</strong>5명 추가확진
+          <Box fontWeight="bold" mr="4px">
+            송파구
+          </Box>
+          5명 추가확진
         </Message>
         {showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
       </Card>

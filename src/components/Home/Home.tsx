@@ -19,9 +19,9 @@ const Home = () => {
       <Suspense fallback={<div />}>
         <Board></Board>
       </Suspense>
-      {/* <Suspense fallback={<div />}>
+      <Suspense fallback={<div />}>
         <Table></Table>
-      </Suspense> */}
+      </Suspense>
     </Col>
   );
 };

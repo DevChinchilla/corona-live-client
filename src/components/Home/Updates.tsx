@@ -25,7 +25,12 @@ const Updates = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <Wrapper>
-      <Modal show={showModal} onClose={() => setShowModal(false)} title={"실시간 확진자 정보"}>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title={"실시간 확진자 정보"}
+        icon={"Notification"}
+      >
         {Array(50)
           .fill(0)
           .map((i) => (
@@ -33,7 +38,7 @@ const Updates = () => {
           ))}
       </Modal>
       <Time>{getCurrentDateTime()}</Time>
-      <UpdateCard onClick={() => setShowModal(true)}></UpdateCard>
+      <UpdateCard shadow onClick={() => setShowModal(true)}></UpdateCard>
     </Wrapper>
   );
 };

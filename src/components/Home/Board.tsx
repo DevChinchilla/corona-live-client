@@ -18,18 +18,24 @@ const Wrapper = styled(Row)`
 
 const Stat: FC<{ title: string; data: any; isToday?: boolean }> = ({ title, data, isToday }) => {
   const { total, delta } = data;
+  const theme = useTheme();
+
   const deltaPositive = delta > 0;
   const color = isToday ? "blackText" : deltaPositive ? "red" : "blue";
-  const theme = useTheme();
+  const _color = theme(color);
+
   return (
     <Col>
       <Col>
-        <Box fontSize="11px" mb="2px" color={theme(color)} opacity={0.7}>
+        <Box fontSize="11px" mb="2px" color={_color} opacity={0.7}>
           {title}
         </Box>
         <Row ai="center">
-          <Box fontSize="26px" fontWeight="bold" color={theme(color)}>
+          <Box fontSize="26px" fontWeight="bold" color={_color}>
             {numberWithCommas(total)}
+          </Box>
+          <Box fontSize="26px" fontWeight="lighter" color={_color}>
+            명
           </Box>
           <DeltaTag color={color} delta={delta}></DeltaTag>
         </Row>
