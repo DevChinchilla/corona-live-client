@@ -9,6 +9,9 @@ interface ThemeProps {
   darkGreyText: string;
   lightGreyText: string;
   blackText: string;
+
+  blue: string;
+  red: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -24,7 +27,9 @@ const lightTheme: ThemeProps = {
   lightGreyText: "#F5F5F5",
   semigreyText: "#d2d2d2",
   darkGreyText: "#4A4A4A",
-  blackText: "black",
+  blackText: "#222222",
+  blue: "#5673EB",
+  red: "#EB5374",
 };
 
 const darkTheme: ThemeProps = {
@@ -38,6 +43,8 @@ const darkTheme: ThemeProps = {
   darkGreyText: "",
   lightGreyText: "",
   blackText: "",
+  blue: "#5673EB",
+  red: "#EB5374",
 };
 
 export default { light: lightTheme, dark: darkTheme };

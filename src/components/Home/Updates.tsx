@@ -1,17 +1,16 @@
 import styled, { css } from "styled-components";
 import React, { useState } from "react";
-import UpdateCard from "./UpdateCard";
-import { Col } from "./Layout";
-import { Row } from "./Layout";
+import UpdateCard from "../UpdateCard";
+import { Col, Row } from "../Layout";
+import Modal from "../Modal";
 import { getCurrentDateTime } from "@utils";
-import { palette } from "../styles";
-import Modal from "./Modal";
+import { palette } from "@styles";
 
 const Wrapper = styled(Col)`
   width: 100%;
   justify-content: stretch;
   padding: 20px 0px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 `;
 
 const Time = styled(Row)`

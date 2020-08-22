@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import React, { useContext } from "react";
+import React from "react";
 
-import Button from "./Button";
-import Icon from "./Icon";
-import { Row } from "./Layout";
+import Button from "../Button";
+import Icon from "../Icon";
+import { Row } from "../Layout";
 import { palette } from "@styles";
 import useTheme from "@hooks/useTheme";
 

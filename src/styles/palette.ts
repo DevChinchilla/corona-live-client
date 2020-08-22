@@ -1,7 +1,7 @@
 enum Palette {
   blue = "#5673EB",
-  lightBlue = "#F6F7FE",
   red = "#EB5374",
+  lightBlue = "#F6F7FE",
   lightRed = "#FBF2F4",
   darkGrey = "#4A4A4A",
   grey = "#868686",
