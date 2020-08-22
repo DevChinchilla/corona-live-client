@@ -26,8 +26,9 @@ const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
 `;
+
 const NavBar = () => {
-  const getTheme = useTheme();
+  const theme = useTheme();
   return (
     <Wrapper>
       <Button>제보</Button>
@@ -36,7 +37,7 @@ const NavBar = () => {
         <span>live</span>
       </Logo>
       <Button light>
-        <Icon name="Refresh" size={14} fill={getTheme("darkGreyText")}></Icon>
+        <Icon name="Refresh" size={14} fill={theme("darkGreyText")}></Icon>
       </Button>
     </Wrapper>
   );

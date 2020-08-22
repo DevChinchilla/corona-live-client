@@ -5,10 +5,10 @@ import { theme, ThemeType } from "@styles/themes";
 
 const useTheme = () => {
   const themeContext = useContext(ThemeContext);
-  const getTheme = (attr: ThemeType) => {
+  const _theme = (attr: ThemeType) => {
     return theme(attr)({ theme: themeContext });
   };
-  return getTheme;
+  return _theme;
 };
 
 export default useTheme;
