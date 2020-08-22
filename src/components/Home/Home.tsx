@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Col } from "../Layout";
-import { API_ROOT } from "@consts";
+import { API_ROOT, TODAY_API_ROOT } from "@consts";
 import { fetcher, getStatsWithUpdates, getStatsDelta } from "@utils";
 import useSWR from "swr";
 
@@ -10,37 +10,41 @@ const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
 
 const Home = () => {
-  const { data: today } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
+  const { data: overallStats } = useSWR(TODAY_API_ROOT, fetcher, {
     revalidateOnMount: true,
     refreshInterval: 5000,
   });
 
-  const { data: yesterday } = useSWR(`${API_ROOT}/yesterday-updates.json`, fetcher, {
-    refreshInterval: 0,
+  const { data: todayUpdates } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
+    revalidateOnMount: true,
+    refreshInterval: 5000,
   });
 
-  const data = { today, yesterday };
-  if (today && yesterday) console.log(getStatsDelta(today, yesterday));
-
+  const { data: yesterdayUpdates } = useSWR(`${API_ROOT}/yesterday-updates.json`, fetcher, {
+    refreshInterval: 0,
+  });
+  console.log({ overallStats });
+  if (!todayUpdates || !yesterdayUpdates) return <div />;
+  const [todayStats, todayCases] = getStatsDelta(todayUpdates, yesterdayUpdates);
   return (
     <Col p="20px">
       <Suspense fallback={<div />}>
         <NavBar></NavBar>
       </Suspense>
-      {data && (
+      {todayUpdates && (
         <Suspense fallback={<div />}>
-          <Updates data={data}></Updates>
+          <Updates data={todayUpdates}></Updates>
         </Suspense>
       )}
-      {data && (
+      {todayCases && overallStats && (
         <Suspense fallback={<div />}>
-          <Board stats={data}></Board>
+          <Board today={todayCases} total={overallStats.totalCases}></Board>
         </Suspense>
       )}
 
-      {data && (
+      {todayStats && overallStats && (
         <Suspense fallback={<div />}>
-          <Table data={data}></Table>
+          <Table data={{ today: todayStats, overall: overallStats }}></Table>
         </Suspense>
       )}
     </Col>

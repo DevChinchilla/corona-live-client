@@ -10,11 +10,12 @@ const Wrapper = styled(Col)`
 const Table = ({ data }) => {
   return (
     <Wrapper>
-      {Array(10)
-        .fill(0)
-        .map((a) => (
-          <Row data={{ total: { total: 1000, delta: 60 }, today: { total: 60, delta: 5 } }}></Row>
-        ))}
+      {[...Array(10).keys()].map((i) => (
+        <Row
+          key={i}
+          data={{ total: { total: 1000, delta: 60 }, today: { total: 60, delta: 5 } }}
+        ></Row>
+      ))}
     </Wrapper>
   );
 };

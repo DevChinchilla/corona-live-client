@@ -19,10 +19,10 @@ const Wrapper = styled(Row)`
   margin-bottom: 10px;
 `;
 
-const Td = styled(Row)<{ end?: boolean; flex?: string }>`
+const Td = styled(Row)<{ end?: string; flex?: string }>`
   align-items: center;
   flex: ${(props) => (props.flex ? props.flex : 1)};
-  justify-content: ${(props) => (props.end ? "flex-end" : "flex-start")};
+  justify-content: ${(props) => (props.end == "" ? "flex-end" : "flex-start")};
 `;
 
 const RowComponent = ({ data }) => {
@@ -53,7 +53,7 @@ const RowComponent = ({ data }) => {
         </Box>
         <DeltaTag color={todayColor} delta={today.delta} small></DeltaTag>
       </Td>
-      <Td end>
+      <Td end="">
         <UpdateTime isOld></UpdateTime>
         <div style={{ width: "14px" }}></div>
         <Icon name="ChevronRight" size={18}></Icon>

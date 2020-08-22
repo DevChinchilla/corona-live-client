@@ -15,9 +15,9 @@ function Notification() {
           d="M11.313,5.725a2.725,2.725,0,0,0-5.451,0C5.863,8.9,4.5,9.813,4.5,9.813h8.176S11.313,8.9,11.313,5.725"
           fill="none"
           stroke="#656565"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_2"
@@ -26,9 +26,9 @@ function Notification() {
           transform="translate(-7.603 -19.87)"
           fill="none"
           stroke="#656565"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
       </g>
     </svg>
