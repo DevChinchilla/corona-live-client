@@ -103,7 +103,7 @@ export const getLatestTime = (updates) => {
   return sortByDate(updates)[0].datetime.split(" ")[1];
 };
 
-export const setUpdatesTimeRange = (updates, to, from = "00:00:01") => {
+export const setUpdatesTimeRange = (updates, to, from = "00:00:00") => {
   return sortByDate(
     updates.filter(({ datetime }) => {
       let [_, _time] = datetime.split(" ");
@@ -113,36 +113,13 @@ export const setUpdatesTimeRange = (updates, to, from = "00:00:01") => {
   );
 };
 
-export const getStatsDelta = (todayUpdates, yesterdayUpdates) => {
-  const statsDelta = {};
-  const currentTime = getCurrentTime();
-
-  const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
-  const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
-    setUpdatesTimeRange(yesterdayUpdates, currentTime)
-  );
-
-  Object.keys(todayStats).map((cityId) => {
-    let config = { todayStats, yesterdayStats, cityId };
-    statsDelta[cityId] = { gu: {}, ...getCityDelta(config) };
-    Object.keys(todayStats[cityId].gu).map((guId) => {
-      let config = { todayStats, yesterdayStats, cityId, guId };
-      statsDelta[cityId].gu[guId] = getDistrictDelta(config);
-    });
-  });
-
-  const delta = Number(todayTotal) - Number(yesterdayTotal);
-  const todayDelta = { total: todayTotal, delta };
-  return [statsDelta, todayDelta];
-};
-
 export const getStatsDeltaV2 = (todayUpdates, yesterdayUpdates) => {
   const statsDelta = { total: {}, delta: {} };
   const currentTime = getCurrentTime();
 
   const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
   const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
-    setUpdatesTimeRange(yesterdayUpdates, currentTime)
+    setUpdatesTimeRange(yesterdayUpdates, "20:00:00")
   );
 
   Object.keys(todayStats).map((cityId) => {

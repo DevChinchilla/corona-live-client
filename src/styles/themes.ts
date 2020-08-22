@@ -6,6 +6,7 @@ interface ThemeProps {
 
   greyText: string;
   semigreyText: string;
+  semiDarkGreyText: string;
   darkGreyText: string;
   lightGreyText: string;
   blackText: string;
@@ -23,11 +24,12 @@ const lightTheme: ThemeProps = {
   border: "#F5F5F5",
   greyBg: "#F5F5F5",
 
-  greyText: "#868686",
-  lightGreyText: "#F5F5F5",
-  semigreyText: "#d2d2d2",
-  darkGreyText: "#4A4A4A",
   blackText: "#222222",
+  darkGreyText: "#4A4A4A",
+  semiDarkGreyText: "#5a5a5a",
+  greyText: "#868686",
+  semigreyText: "#d2d2d2",
+  lightGreyText: "#F5F5F5",
   blue: "#5673EB",
   red: "#EB5374",
 };
@@ -40,6 +42,7 @@ const darkTheme: ThemeProps = {
 
   greyText: "",
   semigreyText: "",
+  semiDarkGreyText: "#5a5a5a",
   darkGreyText: "",
   lightGreyText: "",
   blackText: "",

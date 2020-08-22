@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@components/Layout";
+import { Box, Flex } from "@components/Layout";
 
 const ArrowLeft = () => {
   return (
@@ -21,25 +21,25 @@ const ArrowLeft = () => {
 
 const ArrowRight = () => {
   return (
-    <Box transform={"rotate(180deg)"}>
+    <Flex transform={"rotate(180deg)"} m="0px">
       <ArrowLeft></ArrowLeft>
-    </Box>
+    </Flex>
   );
 };
 
 const ArrowUp = () => {
   return (
-    <Box transform={"rotate(90deg)"}>
+    <Flex transform={"rotate(90deg)"} m="0px">
       <ArrowLeft></ArrowLeft>
-    </Box>
+    </Flex>
   );
 };
 
 const ArrowDown = () => {
   return (
-    <Box transform={"rotate(-90deg)"}>
+    <Flex transform={"rotate(-90deg)"} m="0px">
       <ArrowLeft></ArrowLeft>
-    </Box>
+    </Flex>
   );
 };
 

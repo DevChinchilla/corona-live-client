@@ -76,6 +76,7 @@ export interface BoxProps extends PaddingProps, MarginProps, CSS.Properties {
   fadeInDown?: boolean;
   fadeInUp?: boolean;
   delay?: number;
+  fontWeight?: 300 | 400 | 500 | 700;
 }
 const BoxCss = css`
   ${addIfProp("width", "w")};

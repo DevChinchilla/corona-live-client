@@ -4,6 +4,7 @@ import { theme } from "@styles/themes";
 
 interface ButtonProps {
   light?: boolean;
+  white?: boolean;
   big?: boolean;
   full?: boolean;
 }
@@ -33,6 +34,13 @@ const Button = styled.button<ButtonProps>`
       background: white;
     `
   )}
+
+${ifProp(
+  "white",
+  css`
+    background: white;
+  `
+)}
 
   ${ifProp(
     "big",

@@ -17,9 +17,10 @@ const Wrapper = styled(Col)`
 const Time = styled(Row)`
   justify-content: center;
   margin-bottom: 12px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: ${palette.grey};
+  opacity: 0.8;
 `;
 
 const Updates = ({ data }) => {

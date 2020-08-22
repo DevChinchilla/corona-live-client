@@ -15,7 +15,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   position: relative;
   background: ${theme("greyBg")};
   padding: 0px 20px;
-  height: 46px;
+  height: 48px;
   border-radius: 6px;
   margin-bottom: 10px;
   ${ifProp(
@@ -70,12 +70,12 @@ const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
       <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
         <UpdateTime></UpdateTime>
         <Message>
-          <Box fontWeight="bold" mr="4px">
+          <Box fontWeight={700} mr="4px">
             송파구
           </Box>
           5명 추가확진
         </Message>
-        {showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
+        {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
       </Card>
       {showDetails && (
         <Details>

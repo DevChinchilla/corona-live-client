@@ -16,6 +16,7 @@ const Table = ({ today, overall: { domestic, date } }) => {
           <Row
             fadeInUp
             delay={i * 2}
+            even={i % 2 == 0}
             key={cityId}
             cityId={cityId}
             data={{

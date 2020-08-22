@@ -7,18 +7,24 @@ import DeltaTag from "./DeltaTag";
 import { numberWithCommas } from "@utils";
 import useTheme from "@hooks/useTheme";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { ifProp } from "@styles/tools";
 
 const Wrapper = styled(Row)`
   display: flex;
   flex-direction: row;
-  background: ${palette.lightGrey};
   border-radius: 6px;
-  height: 46px;
+  height: 48px;
   padding: 0px 14px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
+  ${ifProp(
+    "even",
+    css`
+      background: ${palette.lightGrey};
+    `
+  )}
 `;
 
 const Td = styled(Row)<{ end?: string; flex?: string }>`
@@ -41,20 +47,22 @@ const RowComponent = ({ data, cityId, ...props }) => {
   if (name.indexOf("c") > -1) return <></>;
   return (
     <Wrapper onClick={onClick} {...props}>
-      <Td flex="0 1 50px">
-        <Box fontSize="13px" fontWeight="bold">
+      <Td flex="0 1 40px">
+        <Box fontSize="13px" fontWeight={700}>
           {name}
         </Box>
       </Td>
       <Td flex="0 1 16px">
-        <div style={{ width: "1px", height: "10px", background: palette.grey }}></div>
+        <div style={{ width: "1px", height: "10px", background: theme("greyText") }}></div>
       </Td>
       <Td flex="0 1 114px">
-        <Box fontSize="13px">{numberWithCommas(total.total)}명</Box>
-        <DeltaTag color={"blackText"} delta={total.delta} small></DeltaTag>
+        <Box fontSize="13px" color={theme("darkGreyText") as any} fontWeight={500}>
+          {numberWithCommas(total.total)}명
+        </Box>
+        <DeltaTag color={"greyText"} delta={total.delta} small></DeltaTag>
       </Td>
       <Td>
-        <Box fontSize="13px" color={theme(todayColor) as any}>
+        <Box fontSize="13px" color={theme("darkGreyText") as any} fontWeight={500}>
           {numberWithCommas(today.total)}명
         </Box>
         <DeltaTag color={todayColor} delta={today.delta} small></DeltaTag>

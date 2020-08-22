@@ -35,13 +35,15 @@ const NavBar = () => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
-        <Button onClick={() => setShowReport(true)}>제보</Button>
+        <Button onClick={() => setShowReport(true)} white>
+          제보
+        </Button>
         <Logo>
           <span>corona</span>
           <span>live</span>
         </Logo>
-        <Button light>
-          <Icon name="Refresh" size={14} fill={theme("darkGreyText")}></Icon>
+        <Button white>
+          <Icon name="Refresh" size={12} fill={theme("darkGreyText")}></Icon>
         </Button>
       </Wrapper>
     </>
