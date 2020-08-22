@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#" /> -->
+
+    <!-- Primary Meta Tags -->
+    <title>Title</title>
+    <meta name="title" content="$title" />
+    <meta name="description" content="$description" />
+    <meta name="keywords" content="keyword1, keyword1" />
+
+    <!-- <link rel="preconnect" href="" as="fetch" /> -->
+
+    <!-- Font Preloading -->
+    <link
+      rel="preload"
+      href="/fonts/noto-sans-kr-v12-korean-300.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/noto-sans-kr-v12-korean-500.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/noto-sans-kr-v12-korean-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/noto-sans-kr-v12-korean-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <style>
+      /* noto-sans-kr-300 - korean */
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url("/fonts/noto-sans-kr-v12-korean-300.eot");
+        src: local("Noto Sans KR Light"), local("NotoSansKR-Light"),
+          url("/fonts/noto-sans-kr-v12-korean-300.eot?#iefix") format("embedded-opentype"),
+          url("/fonts/noto-sans-kr-v12-korean-300.woff2") format("woff2"),
+          url("/fonts/noto-sans-kr-v12-korean-300.woff") format("woff"),
+          url("/fonts/noto-sans-kr-v12-korean-300.ttf") format("truetype");
+      }
+      /* noto-sans-kr-regular - korean */
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/fonts/noto-sans-kr-v12-korean-regular.eot");
+        src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"),
+          url("/fonts/noto-sans-kr-v12-korean-regular.eot?#iefix") format("embedded-opentype"),
+          url("/fonts/noto-sans-kr-v12-korean-regular.woff2") format("woff2"),
+          url("/fonts/noto-sans-kr-v12-korean-regular.woff") format("woff"),
+          url("/fonts/noto-sans-kr-v12-korean-regular.ttf") format("truetype");
+      }
+      /* noto-sans-kr-500 - korean */
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/fonts/noto-sans-kr-v12-korean-500.eot");
+        src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"),
+          url("/fonts/noto-sans-kr-v12-korean-500.eot?#iefix") format("embedded-opentype"),
+          url("/fonts/noto-sans-kr-v12-korean-500.woff2") format("woff2"),
+          url("/fonts/noto-sans-kr-v12-korean-500.woff") format("woff"),
+          url("/fonts/noto-sans-kr-v12-korean-500.ttf") format("truetype");
+      }
+      /* noto-sans-kr-700 - korean */
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/fonts/noto-sans-kr-v12-korean-700.eot");
+        src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"),
+          url("/fonts/noto-sans-kr-v12-korean-700.eot?#iefix") format("embedded-opentype"),
+          url("/fonts/noto-sans-kr-v12-korean-700.woff2") format("woff2"),
+          url("/fonts/noto-sans-kr-v12-korean-700.woff") format("woff"),
+          url("/fonts/noto-sans-kr-v12-korean-700.ttf") format("truetype");
+      }
+    </style>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="$url" />
+    <meta property="og:title" content="$title" />
+    <meta property="og:description" content="$description" />
+    <meta property="og:image" content="$url/thumbnail.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="$url" />
+    <meta property="twitter:title" content="$title" />
+    <!-- <meta name="twitter:site" value="@username" /> -->
+    <meta property="twitter:description" content="$description" />
+    <meta property="twitter:image" content="$url/thumbnail.png" />
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+
+  <!-- Google Analytics -->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+
+      setTimeout(() => {
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      }, 3000); // Wait 3 seconds
+    })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+
+    ga("create", "UA-xxxxxxxx-x", {
+      site_speed_sample_rate: 1,
+      sample_rate: 1,
+    });
+    ga("send", "pageview");
+  </script>
+  <!-- End Google Analytics -->
+</html>
