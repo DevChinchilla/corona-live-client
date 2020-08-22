@@ -23,8 +23,7 @@ const Home = () => {
   const { data: yesterdayUpdates } = useSWR(`${API_ROOT}/yesterday-updates.json`, fetcher, {
     refreshInterval: 0,
   });
-  if (!todayUpdates || !yesterdayUpdates) return <></>;
-  console.log({ yesterdayUpdates, todayUpdates });
+  if (!todayUpdates || !yesterdayUpdates) return <div>ddd</div>;
   const [todayStats, todayCases] = getStatsDeltaV2(todayUpdates, yesterdayUpdates);
   return (
     <Col p="20px">
@@ -41,7 +40,6 @@ const Home = () => {
           <Board today={todayCases} total={overallStats.totalCases}></Board>
         </Suspense>
       )}
-
       {todayStats && overallStats && (
         <Suspense fallback={<div />}>
           <Table today={todayStats} overall={overallStats}></Table>

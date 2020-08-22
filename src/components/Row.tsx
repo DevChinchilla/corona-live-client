@@ -27,7 +27,7 @@ const Td = styled(Row)<{ end?: string; flex?: string }>`
   justify-content: ${(props) => (props.end == "" ? "flex-end" : "flex-start")};
 `;
 
-const RowComponent = ({ data, cityId }) => {
+const RowComponent = ({ data, cityId, ...props }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -40,7 +40,7 @@ const RowComponent = ({ data, cityId }) => {
   const name = t(`c${cityId}`);
   if (name.indexOf("c") > -1) return <></>;
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper onClick={onClick} {...props}>
       <Td flex="0 1 50px">
         <Box fontSize="13px" fontWeight="bold">
           {name}

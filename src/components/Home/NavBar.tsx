@@ -34,7 +34,7 @@ const NavBar = () => {
   return (
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
-      <Wrapper>
+      <Wrapper fadeInUp>
         <Button onClick={() => setShowReport(true)}>제보</Button>
         <Logo>
           <span>corona</span>

@@ -9,11 +9,13 @@ const Wrapper = styled(Col)`
 `;
 const Table = ({ today, overall: { domestic, date } }) => {
   return (
-    <Wrapper>
-      {Object.keys(domestic.total).map((cityId) => {
+    <Wrapper fadeInUp delay={6}>
+      {Object.keys(domestic.total).map((cityId, i) => {
         const hasCases = today.total[cityId] != null;
         return (
           <Row
+            fadeInUp
+            delay={i * 2}
             key={cityId}
             cityId={cityId}
             data={{

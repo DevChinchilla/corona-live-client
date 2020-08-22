@@ -19,7 +19,7 @@ const App = () => {
   return (
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />
-      <Suspense fallback={<div />}>
+      <Suspense fallback={<div>aaa</div>}>
         <Switch location={location}>
           {pages.map((page, index) => {
             return <Route exact path={page.pageLink} render={() => <page.view />} key={index} />;

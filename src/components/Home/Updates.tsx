@@ -25,7 +25,7 @@ const Time = styled(Row)`
 const Updates = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   return (
-    <Wrapper>
+    <Wrapper fadeInUp delay={1}>
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}

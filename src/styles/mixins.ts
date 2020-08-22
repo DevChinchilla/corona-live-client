@@ -73,11 +73,36 @@ export interface BoxProps extends PaddingProps, MarginProps, CSS.Properties {
   w?: string;
   h?: string;
   bg?: string;
+  fadeInDown?: boolean;
+  fadeInUp?: boolean;
+  delay?: number;
 }
 const BoxCss = css`
   ${addIfProp("width", "w")};
   ${addIfProp("height", "h")};
   ${addIfProp("background", "bg")};
+  ${ifProp(
+    "fadeInUp",
+    css`
+      animation-duration: 0.45s;
+      animation-fill-mode: both;
+      animation-name: fadeInUp;
+    `
+  )}
+   ${ifProp(
+     "fadeInDown",
+     css`
+       animation-duration: 0.45s;
+       animation-fill-mode: both;
+       animation-name: fadeOutDown;
+     `
+   )}
+    ${ifProp(
+      "delay",
+      css`
+        animation-delay: ${(props) => props["delay"] * 100}ms;
+      `
+    )}
   ${Margin};
   ${Padding};
   ${Css};

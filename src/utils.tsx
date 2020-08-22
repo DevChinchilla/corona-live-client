@@ -60,7 +60,6 @@ const getTime = (time) => {
 export const getStatsWithUpdates = (updates) => {
   const stats = {};
   let total = 0;
-
   updates.map((info) => {
     let { gu, city, district, cases } = info;
     if (cases) {
@@ -104,7 +103,7 @@ export const getLatestTime = (updates) => {
   return sortByDate(updates)[0].datetime.split(" ")[1];
 };
 
-export const setUpdatesTimeRange = (updates, to, from = "00:00:00") => {
+export const setUpdatesTimeRange = (updates, to, from = "00:00:01") => {
   return sortByDate(
     updates.filter(({ datetime }) => {
       let [_, _time] = datetime.split(" ");

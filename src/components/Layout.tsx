@@ -1,4 +1,4 @@
-import styled, { css, ThemedStyledFunction } from "styled-components";
+import styled, { css, ThemedStyledFunction, keyframes } from "styled-components";
 
 import mixins, { BoxProps } from "@styles/mixins";
 import { addIfProp, ifProp } from "@styles/tools";

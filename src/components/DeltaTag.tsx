@@ -5,6 +5,7 @@ import Icon from "./Icon";
 import styled, { css } from "styled-components";
 import { prop, ifProp } from "@styles/tools";
 import { ThemeType } from "@styles/themes";
+import CountUp from "react-countup";
 
 const Wrapper = styled(Row)<{ color: string; small }>`
   color: ${prop("color")};
@@ -27,14 +28,19 @@ interface Props {
   color: ThemeType;
   delta: number;
   small?: boolean;
+  countUp?: boolean;
 }
 
-const DeltaTag: FC<Props> = ({ color, delta, small }) => {
+const DeltaTag: FC<Props> = ({ color, delta, small, countUp }) => {
   const theme = useTheme();
   const _color = theme(color);
   return (
     <Wrapper color={_color} small={small} bg={_color + 15}>
-      {Math.abs(delta)}
+      {countUp ? (
+        <CountUp end={Math.abs(delta)} separator={","} duration={3}></CountUp>
+      ) : (
+        Math.abs(delta)
+      )}
       <Box w="2px"></Box>
       {delta > 0 ? (
         <Icon name="ArrowUp" stroke={_color} size={small ? 14 : 20}></Icon>
