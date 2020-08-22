@@ -49,9 +49,9 @@ const Wrapper = styled(Col)`
     align-items: center;
   }
   .title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    /* margin-left: 10px; */
+    color: ${theme("blackText")};
   }
 `;
 interface Props {

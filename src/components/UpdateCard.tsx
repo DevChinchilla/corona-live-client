@@ -13,16 +13,16 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background: ${theme("greyBg")};
   padding: 0px 20px;
   height: 48px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  border-top: 1px solid ${theme("blackText")}15;
   ${ifProp(
     "shadow",
     css`
+      border-top: none;
+      border-radius: 6px;
       background: ${theme("bg")};
-      box-shadow: 0 3px 10px ${theme("blackText")}14;
+      box-shadow: 0 3px 10px ${theme("blackText")}15;
     `
   )}
 `;
