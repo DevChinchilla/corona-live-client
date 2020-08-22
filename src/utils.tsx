@@ -2,12 +2,137 @@ export const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const fetcher = (url) => {
+  return fetch(url).then((response) => {
+    return response.json();
+  });
+};
+
+export const sortByDate = (arr, key = "datetime") => {
+  const array = [...arr];
+  array.sort((a, b) => {
+    let dateA = key ? a[key] : a;
+    let dateB = key ? b[key] : b;
+    return new Date(dateB).getTime() - new Date(dateA).getTime();
+  });
+  return array;
+};
+
+export const addZero = (num) => {
+  return num > 9 ? num : `0${num}`;
+};
+
 export const getCurrentDateTime = () => {
   let date = new Date();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  let month = addZero(date.getMonth() + 1);
+  let day = addZero(date.getDate());
+  let hours = addZero(date.getHours());
+  let minutes = addZero(date.getMinutes());
+
+  let ampm = "AM";
+  if (hours > 12) {
+    hours -= 12;
+    ampm = "PM";
+  }
+
+  return `${month}월 ${day}일 ${hours}:${minutes}${ampm}`;
+};
+
+export const getCurrentTime = () => {
+  let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  return `${hours}:${minutes}:${seconds}`;
+};
 
-  return `${month}월 ${day}일 ${hours}:${minutes}`;
+const getTime = (time) => {
+  let [hours, minutes, seconds] = time.toString().split(":");
+  let date = new Date();
+
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(seconds || "00");
+
+  return date;
+};
+
+export const getStatsWithUpdates = (updates) => {
+  const stats = {};
+  let total = 0;
+
+  updates.map((info) => {
+    let { gu, city, district, cases } = info;
+    if (cases) {
+      let casesInt = parseInt(cases);
+      let [_city, _gu] = city != null ? [city, gu] : district.split(" ");
+
+      if (!stats[_city]) stats[_city] = { district: {}, cases: 0 };
+      if (!stats[_city].district[_gu]) stats[_city].district[_gu] = 0;
+      stats[_city].district[_gu] += casesInt;
+      stats[_city].cases += casesInt;
+      total += casesInt;
+    }
+  });
+
+  return [stats, total as number];
+};
+
+const getCityDelta = ({ todayStats, yesterdayStats, cityId }) => {
+  let today = todayStats[cityId]?.cases || 0;
+  let yesterday = yesterdayStats[cityId]?.cases || 0;
+  let delta = today - yesterday;
+  return {
+    total: today,
+    yesterday,
+    delta,
+  };
+};
+
+const getDistrictDelta = ({ todayStats, yesterdayStats, cityId, districtId }) => {
+  let today = todayStats[cityId]?.district[districtId] || 0;
+  let yesterday = yesterdayStats[cityId]?.district[districtId] || 0;
+  let delta = today - yesterday;
+  return {
+    total: today,
+    yesterday,
+    delta,
+  };
+};
+
+export const getLatestTime = (updates) => {
+  return sortByDate(updates)[0].datetime.split(" ")[1];
+};
+
+export const setUpdatesTimeRange = (updates, to, from = "00:00:00") => {
+  return sortByDate(
+    updates.filter(({ datetime }) => {
+      let [_, _time] = datetime.split(" ");
+      let time = getTime(_time);
+      return time > getTime(from) && time < getTime(to);
+    })
+  );
+};
+
+export const getStatsDelta = (todayUpdates, yesterdayUpdates) => {
+  const statsDelta = {};
+  const currentTime = getCurrentTime();
+  // const latestTime = getLatestTime(todayUpdates);
+  const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
+  const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
+    setUpdatesTimeRange(yesterdayUpdates, currentTime)
+  );
+
+  Object.keys(todayStats).map((cityId) => {
+    let config = { todayStats, yesterdayStats, cityId };
+    statsDelta[cityId] = { district: {}, ...getCityDelta(config) };
+    Object.keys(todayStats[cityId].district).map((districtId) => {
+      let config = { todayStats, yesterdayStats, cityId, districtId };
+      statsDelta[cityId].district[districtId] = getDistrictDelta(config);
+    });
+  });
+
+  const delta = Number(todayTotal) - Number(yesterdayTotal);
+  const todayDelta = { total: todayTotal, delta };
+  return [statsDelta, todayDelta];
 };

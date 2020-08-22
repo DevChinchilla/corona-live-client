@@ -7,7 +7,7 @@ import { Col } from "./Layout";
 const Wrapper = styled(Col)`
   margin-top: 30px;
 `;
-const Table = () => {
+const Table = ({ data }) => {
   return (
     <Wrapper>
       {Array(10)

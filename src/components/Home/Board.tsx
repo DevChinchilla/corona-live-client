@@ -43,12 +43,12 @@ const Stat: FC<{ title: string; data: any; isToday?: boolean }> = ({ title, data
     </Col>
   );
 };
-const Board = () => {
+const Board = ({ stats }) => {
   return (
     <Row>
       <Stat data={{ total: 15900, delta: 288 }} title={"총 확진자"} isToday></Stat>
       <Box w="40px"></Box>
-      <Stat data={{ total: 65, delta: 12 }} title={"오늘"}></Stat>
+      <Stat data={{ total: 322, delta: 12 }} title={"오늘"}></Stat>
     </Row>
   );
 };

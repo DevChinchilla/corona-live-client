@@ -22,7 +22,7 @@ const Time = styled(Row)`
   color: ${palette.grey};
 `;
 
-const Updates = () => {
+const Updates = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <Wrapper>
