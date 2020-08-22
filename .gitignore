@@ -8,6 +8,8 @@ logs
 
 node_modules
 bower_components
+dist/
+history/
 
 *.sublime*
 .history
