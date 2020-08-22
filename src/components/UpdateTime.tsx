@@ -29,6 +29,7 @@ const Wrapper = styled(Row)<{ isOld?: boolean }>`
   ${ifProp(
     "isOld",
     css`
+      opacity: 0.8;
       /* transform:scale(0.9) */
       /* span:after {
         display: none;
@@ -44,7 +45,7 @@ const UpdateTime: FC<Props> = ({ isOld }) => {
   const _theme = useTheme();
   return (
     <Wrapper isOld={isOld}>
-      <Icon name="Notification" size={12} stroke={_theme("semigreyText")}></Icon>
+      {!isOld && <Icon name="Notification" size={12} stroke={_theme("semigreyText")}></Icon>}
       <span>3분전</span>
     </Wrapper>
   );

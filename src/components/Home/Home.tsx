@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Col } from "../Layout";
 import { API_ROOT, TODAY_API_ROOT } from "@consts";
-import { fetcher, getStatsWithUpdates, getStatsDelta } from "@utils";
+import { fetcher, getStatsWithUpdates, getStatsDeltaV2 } from "@utils";
 import useSWR from "swr";
 
 const NavBar = lazy(() => import("./NavBar"));
@@ -23,9 +23,9 @@ const Home = () => {
   const { data: yesterdayUpdates } = useSWR(`${API_ROOT}/yesterday-updates.json`, fetcher, {
     refreshInterval: 0,
   });
-  console.log({ overallStats });
-  if (!todayUpdates || !yesterdayUpdates) return <div />;
-  const [todayStats, todayCases] = getStatsDelta(todayUpdates, yesterdayUpdates);
+  if (!todayUpdates || !yesterdayUpdates) return <></>;
+  console.log({ yesterdayUpdates, todayUpdates });
+  const [todayStats, todayCases] = getStatsDeltaV2(todayUpdates, yesterdayUpdates);
   return (
     <Col p="20px">
       <Suspense fallback={<div />}>
@@ -44,7 +44,7 @@ const Home = () => {
 
       {todayStats && overallStats && (
         <Suspense fallback={<div />}>
-          <Table data={{ today: todayStats, overall: overallStats }}></Table>
+          <Table today={todayStats} overall={overallStats}></Table>
         </Suspense>
       )}
     </Col>

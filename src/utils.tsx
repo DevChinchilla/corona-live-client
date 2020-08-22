@@ -89,9 +89,9 @@ const getCityDelta = ({ todayStats, yesterdayStats, cityId }) => {
   };
 };
 
-const getDistrictDelta = ({ todayStats, yesterdayStats, cityId, districtId }) => {
-  let today = todayStats[cityId]?.district[districtId] || 0;
-  let yesterday = yesterdayStats[cityId]?.district[districtId] || 0;
+const getDistrictDelta = ({ todayStats, yesterdayStats, cityId, guId }) => {
+  let today = todayStats[cityId]?.district[guId] || 0;
+  let yesterday = yesterdayStats[cityId]?.district[guId] || 0;
   let delta = today - yesterday;
   return {
     total: today,
@@ -117,7 +117,7 @@ export const setUpdatesTimeRange = (updates, to, from = "00:00:00") => {
 export const getStatsDelta = (todayUpdates, yesterdayUpdates) => {
   const statsDelta = {};
   const currentTime = getCurrentTime();
-  // const latestTime = getLatestTime(todayUpdates);
+
   const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
   const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
     setUpdatesTimeRange(yesterdayUpdates, currentTime)
@@ -125,13 +125,42 @@ export const getStatsDelta = (todayUpdates, yesterdayUpdates) => {
 
   Object.keys(todayStats).map((cityId) => {
     let config = { todayStats, yesterdayStats, cityId };
-    statsDelta[cityId] = { district: {}, ...getCityDelta(config) };
-    Object.keys(todayStats[cityId].district).map((districtId) => {
-      let config = { todayStats, yesterdayStats, cityId, districtId };
-      statsDelta[cityId].district[districtId] = getDistrictDelta(config);
+    statsDelta[cityId] = { gu: {}, ...getCityDelta(config) };
+    Object.keys(todayStats[cityId].gu).map((guId) => {
+      let config = { todayStats, yesterdayStats, cityId, guId };
+      statsDelta[cityId].gu[guId] = getDistrictDelta(config);
     });
   });
 
+  const delta = Number(todayTotal) - Number(yesterdayTotal);
+  const todayDelta = { total: todayTotal, delta };
+  return [statsDelta, todayDelta];
+};
+
+export const getStatsDeltaV2 = (todayUpdates, yesterdayUpdates) => {
+  const statsDelta = { total: {}, delta: {} };
+  const currentTime = getCurrentTime();
+
+  const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
+  const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
+    setUpdatesTimeRange(yesterdayUpdates, currentTime)
+  );
+
+  Object.keys(todayStats).map((cityId) => {
+    let today = todayStats[cityId]?.cases || 0;
+    let yesterday = yesterdayStats[cityId]?.cases || 0;
+    let delta = today - yesterday;
+    statsDelta.total[cityId] = { cases: today, gu: {} };
+    statsDelta.delta[cityId] = { cases: delta, gu: {} };
+
+    Object.keys(todayStats[cityId].district).map((guId) => {
+      let today = todayStats[cityId]?.district[guId] || 0;
+      let yesterday = yesterdayStats[cityId]?.district[guId] || 0;
+      let delta = today - yesterday;
+      statsDelta.total[cityId].gu[guId] = today;
+      statsDelta.delta[cityId].gu[guId] = delta;
+    });
+  });
   const delta = Number(todayTotal) - Number(yesterdayTotal);
   const todayDelta = { total: todayTotal, delta };
   return [statsDelta, todayDelta];

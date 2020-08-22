@@ -1,13 +1,15 @@
-import styled from "styled-components";
-
-import React from "react";
-import { palette } from "../styles";
-import Icon from "./Icon/Icon";
+import { palette } from "@styles";
+import Icon from "./Icon";
 import UpdateTime from "./UpdateTime";
 import { Row, Box } from "./Layout";
-import { numberWithCommas } from "@utils";
 import DeltaTag from "./DeltaTag";
+
+import { numberWithCommas } from "@utils";
 import useTheme from "@hooks/useTheme";
+
+import styled from "styled-components";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -25,19 +27,23 @@ const Td = styled(Row)<{ end?: string; flex?: string }>`
   justify-content: ${(props) => (props.end == "" ? "flex-end" : "flex-start")};
 `;
 
-const RowComponent = ({ data }) => {
+const RowComponent = ({ data, cityId }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
   const { total, today } = data;
   const onClick = () => {};
-  const theme = useTheme();
 
   const deltaPositive = today.delta > 0;
   const todayColor = deltaPositive ? "red" : "blue";
 
+  const name = t(`c${cityId}`);
+  if (name.indexOf("c") > -1) return <></>;
   return (
     <Wrapper onClick={onClick}>
       <Td flex="0 1 50px">
         <Box fontSize="13px" fontWeight="bold">
-          {"서울"}
+          {name}
         </Box>
       </Td>
       <Td flex="0 1 16px">
