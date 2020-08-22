@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Col } from "../Layout";
 import { API_ROOT, TODAY_API_ROOT } from "@consts";
-import { fetcher, getStatsWithUpdates, getStatsDeltaV2 } from "@utils";
+import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@utils";
 import useSWR from "swr";
 
 const NavBar = lazy(() => import("./NavBar"));
@@ -32,7 +32,7 @@ const Home = () => {
       </Suspense>
       {todayUpdates && (
         <Suspense fallback={<div />}>
-          <Updates data={todayUpdates}></Updates>
+          <Updates data={sortByDate(todayUpdates)}></Updates>
         </Suspense>
       )}
       {todayCases && overallStats && (
@@ -42,7 +42,9 @@ const Home = () => {
       )}
       {todayStats && overallStats && (
         <Suspense fallback={<div />}>
-          <Table today={todayStats} overall={overallStats}></Table>
+          <Table today={todayStats} overall={overallStats} updates={sortByDate(todayUpdates)}>
+            {" "}
+          </Table>
         </Suspense>
       )}
     </Col>

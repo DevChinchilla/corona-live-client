@@ -7,11 +7,17 @@ import { Col } from "./Layout";
 const Wrapper = styled(Col)`
   margin-top: 30px;
 `;
-const Table = ({ today, overall: { domestic, date } }) => {
+
+const Table = ({ today, overall: { domestic, date }, updates }) => {
   return (
     <Wrapper fadeInUp delay={6}>
       {Object.keys(domestic.total).map((cityId, i) => {
         const hasCases = today.total[cityId] != null;
+        const latestUpdate = updates.find((update) => {
+          let { city, gu } = update;
+          return city == cityId;
+        });
+
         return (
           <Row
             fadeInUp
@@ -19,6 +25,7 @@ const Table = ({ today, overall: { domestic, date } }) => {
             even={i % 2 == 0}
             key={cityId}
             cityId={cityId}
+            updateTime={latestUpdate?.datetime}
             data={{
               total: { total: domestic.total[cityId], delta: domestic.delta[cityId] },
               today: {

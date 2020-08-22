@@ -11,6 +11,7 @@ import styled, { css } from "styled-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ifProp } from "@styles/tools";
+import { theme } from "@styles/themes";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -26,16 +27,27 @@ const Wrapper = styled(Row)`
     `
   )}
 `;
-
-const Td = styled(Row)<{ end?: string; flex?: string }>`
-  align-items: center;
-  flex: ${(props) => (props.flex ? props.flex : 1)};
-  justify-content: ${(props) => (props.end == "" ? "flex-end" : "flex-start")};
+const Cases = styled(Box)`
+  font-size: 13px;
+  color: ${theme("darkGreyText")};
+  font-weight: 500;
 `;
 
-const RowComponent = ({ data, cityId, ...props }) => {
+const Divider = styled(Box)`
+  width: 1px;
+  height: 10px;
+  background: ${theme("greyText")};
+`;
+
+const Td = styled(Row)<{ end?: boolean; flex?: string }>`
+  align-items: center;
+  flex: ${(props) => (props.flex ? props.flex : 1)};
+  justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
+`;
+
+const RowComponent = ({ data, cityId, updateTime, ...props }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
+  const _theme = useTheme();
 
   const { total, today } = data;
   const onClick = () => {};
@@ -48,27 +60,21 @@ const RowComponent = ({ data, cityId, ...props }) => {
   return (
     <Wrapper onClick={onClick} {...props}>
       <Td flex="0 1 40px">
-        <Box fontSize="13px" fontWeight={700}>
-          {name}
-        </Box>
+        <Box fontSize="13px">{name}</Box>
       </Td>
       <Td flex="0 1 16px">
-        <div style={{ width: "1px", height: "10px", background: theme("greyText") }}></div>
+        <Divider></Divider>
       </Td>
-      <Td flex="0 1 114px">
-        <Box fontSize="13px" color={theme("darkGreyText") as any} fontWeight={500}>
-          {numberWithCommas(total.total)}명
-        </Box>
+      <Td flex="0 1 106px">
+        <Cases>{numberWithCommas(total.total)}명</Cases>
         <DeltaTag color={"greyText"} delta={total.delta} small></DeltaTag>
       </Td>
       <Td>
-        <Box fontSize="13px" color={theme("darkGreyText") as any} fontWeight={500}>
-          {numberWithCommas(today.total)}명
-        </Box>
-        <DeltaTag color={todayColor} delta={today.delta} small></DeltaTag>
+        <Cases>{numberWithCommas(today.total)}명</Cases>
+        <DeltaTag color={todayColor} delta={today.delta} small showBg></DeltaTag>
       </Td>
-      <Td end="">
-        <UpdateTime isOld></UpdateTime>
+      <Td end>
+        {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
         <div style={{ width: "14px" }}></div>
         <Icon name="ChevronRight" size={18}></Icon>
       </Td>

@@ -7,6 +7,7 @@ import Icon, { IconType } from "./Icon/Icon";
 import { Row } from "./Layout";
 import { theme } from "@styles/themes";
 import { media } from "@styles";
+import useTheme from "@hooks/useTheme";
 
 const Wrapper = styled(Col)`
   .overlay {
@@ -50,14 +51,13 @@ const Wrapper = styled(Col)`
   }
   .title {
     font-size: 14px;
-    font-weight: bold;
     color: ${theme("blackText")};
   }
 `;
 interface Props {
   show: boolean;
   onClose: any;
-  title: string;
+  title: string[];
   hideOverlay?: boolean;
   icon?: IconType;
 }
@@ -68,6 +68,7 @@ const Portal = ({ children }) => {
 };
 
 const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title, icon }) => {
+  const _theme = useTheme();
   useEffect(() => {
     document.querySelector("body")!.style.position = show ? "fixed" : "";
   }, [show]);
@@ -83,9 +84,11 @@ const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title, icon })
               <Icon name="ChevronLeft" size={24}></Icon>
             </div>
             <Absolute center className="title">
-              {icon && <Icon name={icon}></Icon>}
-              <Box w="8px"></Box>
-              {title}
+              {icon && <Icon name={icon} size={14} stroke={_theme("blackText")}></Icon>}
+              <Box fontWeight={700} mx="4px">
+                {title[0]}
+              </Box>
+              {title[1]}
             </Absolute>
           </Row>
           <div className="container">{children}</div>

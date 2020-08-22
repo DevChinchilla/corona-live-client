@@ -1,3 +1,8 @@
+const SECOND = 1000;
+const MINUTE = SECOND * 60;
+const HOUR = MINUTE * 60;
+const DAY = HOUR * 24;
+
 export const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
@@ -20,6 +25,20 @@ export const sortByDate = (arr, key = "datetime") => {
 
 export const addZero = (num) => {
   return num > 9 ? num : `0${num}`;
+};
+
+export const getDateDistance = (_past) => {
+  const now = new Date();
+  const past = new Date(_past);
+  const diffTime = Math.abs(now.getTime() - past.getTime());
+  if (diffTime < MINUTE) {
+    return `${Math.floor(diffTime / SECOND)}초 전`;
+  } else if (diffTime < HOUR) {
+    return `${Math.floor(diffTime / MINUTE)}분 전`;
+  } else if (diffTime < DAY) {
+    return `${Math.floor(diffTime / HOUR)}시간 전`;
+  }
+  return null;
 };
 
 export const getCurrentDateTime = () => {

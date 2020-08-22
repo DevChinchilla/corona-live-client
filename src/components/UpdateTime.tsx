@@ -6,6 +6,7 @@ import Icon from "./Icon";
 import { ifProp } from "@styles/tools";
 import useTheme from "@hooks/useTheme";
 import { theme } from "@styles/themes";
+import { getDateDistance } from "@utils";
 
 const Wrapper = styled(Row)<{ isOld?: boolean }>`
   align-items: center;
@@ -29,8 +30,9 @@ const Wrapper = styled(Row)<{ isOld?: boolean }>`
   ${ifProp(
     "isOld",
     css`
-      opacity: 0.8;
-      /* transform:scale(0.9) */
+      color: ${theme("semigreyText")};
+      transform: scale(0.9);
+      opacity: 0.9;
       /* span:after {
         display: none;
       } */
@@ -40,13 +42,15 @@ const Wrapper = styled(Row)<{ isOld?: boolean }>`
 
 interface Props {
   isOld?: boolean;
+  date?: string;
+  flex?: string;
 }
-const UpdateTime: FC<Props> = ({ isOld }) => {
+const UpdateTime: FC<Props> = ({ isOld, date, flex }) => {
   const _theme = useTheme();
   return (
-    <Wrapper isOld={isOld}>
-      {!isOld && <Icon name="Notification" size={12} stroke={_theme("semigreyText")}></Icon>}
-      <span>3분전</span>
+    <Wrapper isOld={isOld} flex={flex}>
+      {!isOld && <Icon name="Notification" size={12} stroke={_theme("greyText")}></Icon>}
+      <span>{getDateDistance(date)}</span>
     </Wrapper>
   );
 };

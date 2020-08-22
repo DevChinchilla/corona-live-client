@@ -10,15 +10,16 @@ import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
-  padding: 0px 20px;
-  height: 48px;
+  height: 52px;
+  padding: 0px 14px;
   border-top: 1px solid ${theme("blackText")}15;
   ${ifProp(
     "shadow",
     css`
+      padding: 0px 20px;
       border-top: none;
       border-radius: 6px;
       background: ${theme("bg")};
@@ -28,10 +29,10 @@ const Card = styled(Row)<{ shadow?: boolean }>`
 `;
 
 const Message = styled(Row)`
-  position: absolute;
+  /* position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   font-size: 13px;
 `;
 
@@ -77,13 +78,15 @@ const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
     <Col>
       <Report hideOverlay={true} show={showReport} onClose={() => setShowReport(false)}></Report>
       <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
-        <UpdateTime></UpdateTime>
-        <Message>
-          <Box fontWeight={700} mr="4px">
-            {`${cityName} ${guName[0] != "c" ? guName : ""}`}
-          </Box>
-          {cases}명 추가확진
-        </Message>
+        <Row flex="1">
+          <UpdateTime date={datetime} flex="0 1 90px"></UpdateTime>
+          <Message>
+            <Box fontWeight={700} mr="4px">
+              {`${cityName} ${guName[0] != "c" ? guName : ""}`}
+            </Box>
+            {cases}명 추가확진
+          </Message>
+        </Row>
         {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
       </Card>
       {showDetails && (

@@ -1,21 +1,10 @@
 import React, { FC } from "react";
-import styled, { css } from "styled-components";
 import CountUp from "react-countup";
 
 import { Row, Col, Box } from "../Layout";
 import DeltaTag from "@components/DeltaTag";
 import useTheme from "@hooks/useTheme";
-import { numberWithCommas } from "@utils";
 
-const Wrapper = styled(Row)`
-  margin: 4px 0px;
-  padding: 0px 20px;
-  & > div {
-    flex: 1;
-    justify-content: center;
-    display: flex;
-  }
-`;
 interface Props {
   title: string;
   data: any;
@@ -32,18 +21,18 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
   const _color = theme(color);
 
   return (
-    <Col {...props}>
+    <Col {...props} mt="10px">
       <Col>
         <Box fontSize="11px" mb="2px" color={_color} opacity={0.7}>
           {title}
         </Box>
         <Row ai="center">
-          <Box fontSize="26px" fontWeight="bold" color={_color}>
+          <Box fontSize="24px" fontWeight={700} color={_color}>
             <CountUp end={total} separator={","} duration={3} />
             {/* {numberWithCommas(total)} */}
           </Box>
 
-          <Box fontSize="26px" fontWeight="lighter" color={_color}>
+          <Box fontSize="24px" fontWeight={300} color={_color}>
             명
           </Box>
           <DeltaTag color={color} delta={delta} countUp></DeltaTag>

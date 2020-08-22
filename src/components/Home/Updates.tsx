@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import UpdateCard from "../UpdateCard";
 import { Col, Row } from "../Layout";
 import Modal from "../Modal";
-import { getCurrentDateTime } from "@utils";
+import { getCurrentDateTime, sortByDate } from "@utils";
 import { palette } from "@styles";
 import Report from "@components/Report";
 
@@ -30,7 +30,7 @@ const Updates = ({ data }) => {
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
-        title={"실시간 확진자 정보"}
+        title={["실시간", " 확진자 정보"]}
         icon={"Notification"}
       >
         {data.map((update, i) => (

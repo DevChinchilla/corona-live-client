@@ -53,7 +53,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay }) => {
     console.log({ email, message });
   };
   return (
-    <Modal show={show} title="제보" onClose={onClose} hideOverlay={hideOverlay}>
+    <Modal show={show} title={["제보", "하기"]} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper>
         {/* <Label>제보내용</Label> */}
 

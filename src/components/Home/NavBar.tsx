@@ -12,7 +12,7 @@ const Logo = styled(Row)`
   span {
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     &:first-child {
       color: black;
