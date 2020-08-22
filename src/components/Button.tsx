@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { palette } from "../styles";
 import { ifProp } from "@styles/tools";
+import { theme } from "@styles/themes";
 
 interface ButtonProps {
   light?: boolean;
@@ -22,13 +22,14 @@ const Button = styled.button<ButtonProps>`
   width: 72px;
   height:32px;
 
-  color:${palette.darkGrey};
-  background: ${palette.lightGrey};
+  color:${theme("darkGreyText")};
+  background: ${theme("greyBg")};
+
 
   ${ifProp(
     "light",
     css`
-      border: 1px solid ${palette.semiGrey};
+      border: 1px solid ${theme("semigreyText")};
       background: white;
     `
   )}

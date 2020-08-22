@@ -23,8 +23,9 @@
       "@styles": ["./styles/index"],
       "@styles/*": ["./styles/*"],
       "@components/*": ["./components/*"],
-      "@consts/*": ["./consts/*"],
-      "@utils/*": ["./utils/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@consts/*": ["./consts"],
+      "@utils/*": ["./utils"]
     }
   }
 }

@@ -1,10 +1,11 @@
-import styled, { css } from "styled-components";
-import React from "react";
+import styled from "styled-components";
+import React, { useContext } from "react";
 
 import Button from "./Button";
 import Icon from "./Icon";
 import { Row } from "./Layout";
-import { palette } from "../styles";
+import { palette } from "@styles";
+import useTheme from "@hooks/useTheme";
 
 const Logo = styled(Row)`
   span {
@@ -26,6 +27,7 @@ const Wrapper = styled(Row)`
   justify-content: space-between;
 `;
 const NavBar = () => {
+  const getTheme = useTheme();
   return (
     <Wrapper>
       <Button>제보</Button>
@@ -34,7 +36,7 @@ const NavBar = () => {
         <span>live</span>
       </Logo>
       <Button light>
-        <Icon name="Refresh" size={14} stroke={palette.darkGrey}></Icon>
+        <Icon name="Refresh" size={14} fill={getTheme("darkGreyText")}></Icon>
       </Button>
     </Wrapper>
   );

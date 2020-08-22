@@ -7,7 +7,7 @@ import React, { FC } from "react";
 const SBox = styled.div`
   ${mixins.BoxCss};
 `;
-export const Box: FC<BoxProps> = (props) => <SBox {...props}></SBox>;
+export const Box: FC<BoxProps> = (props: any) => <SBox {...props}></SBox>;
 
 interface FlexProps extends BoxProps {
   ai?: string;
