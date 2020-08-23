@@ -84,8 +84,10 @@ interface Props {
   onClick?: any;
   data?: any;
   animationData?: any;
+  fadeInUp?: boolean;
+  delay?: number;
 }
-const UpdateCard: FC<Props> = ({ onClick, data, animationData }) => {
+const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }) => {
   const [ct] = useTranslation();
 
   const [showDetails, setShowDetails] = useState(false);
@@ -122,6 +124,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData }) => {
       <Card
         shadow={!!animationData}
         onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}
+        {...{ fadeInUp, delay }}
       >
         {animationData ? (
           animationData.map(
@@ -138,7 +141,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData }) => {
       </Card>
 
       {showDetails && (
-        <Details>
+        <Details fadeInUp>
           <p>{currentContent.src}</p>
           <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>
         </Details>

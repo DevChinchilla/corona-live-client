@@ -124,6 +124,17 @@ const AbsoluteFull = css`
   height: 100%;
 `;
 
+const AbsoluteVerticalCenter = css`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+const AbsoluteHorizontalCenter = css`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 const FlexCenter = css`
   display: flex;
   align-items: center;
@@ -135,6 +146,8 @@ const mixins = {
   AbsoluteCenter,
   AbsoluteFull,
   FlexCenter,
+  AbsoluteVerticalCenter,
+  AbsoluteHorizontalCenter,
 };
 
 export default mixins;

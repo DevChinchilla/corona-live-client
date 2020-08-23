@@ -9,6 +9,7 @@ import X from "./X";
 import Refresh from "./Refresh";
 import Notification from "./Notification";
 import Logo from "./Logo";
+import Search from "./Search";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -23,6 +24,7 @@ const icons = {
   Refresh,
   Notification,
   Logo,
+  Search,
 };
 
 export type IconType = keyof typeof icons;

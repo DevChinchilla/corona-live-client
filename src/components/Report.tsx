@@ -63,7 +63,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
 
   return (
     <Modal show={show} title={["제보", "하기"]} onClose={onClose} hideOverlay={hideOverlay}>
-      <Wrapper>
+      <Wrapper fadeInUp delay={1}>
         <textarea
           autoFocus={!!referTo}
           ref={(el) => (textRef.current = el)}
@@ -76,7 +76,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
-        <Button big onClick={onSumbit}>
+        <Button big onClick={onSumbit} fadeInUp delay={3}>
           제보하기
         </Button>
       </Wrapper>

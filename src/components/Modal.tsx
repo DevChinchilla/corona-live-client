@@ -23,6 +23,7 @@ const Wrapper = styled(Col)`
   .container {
     flex: 1;
     overflow-y: auto;
+    box-sizing: border-box;
     /* margin-bottom: 16px; */
   }
   .modal {
@@ -79,7 +80,7 @@ const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title, icon })
       <Wrapper>
         {!hideOverlay && <div className="overlay" onClick={onClose}></div>}
         <div className="modal">
-          <Row className="header">
+          <Row className="header" fadeInUp>
             <div className="back-button" onClick={onClose}>
               <Icon name="ChevronLeft" size={24}></Icon>
             </div>

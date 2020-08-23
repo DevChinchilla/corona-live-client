@@ -37,10 +37,14 @@ export const Col: FC<FlexProps> = (props) => <SCol {...props}></SCol>;
 interface AbsoluteProps extends BoxProps {
   center?: boolean;
   full?: boolean;
+  verticalCenter?: boolean;
+  horizontalCenter?: boolean;
 }
 const SAbsolute = styled(Flex)`
   position: absolute;
   ${ifProp("center", mixins.AbsoluteCenter)}
   ${ifProp("full", mixins.AbsoluteFull)}
+  ${ifProp("verticalCenter", mixins.AbsoluteVerticalCenter)}
+  ${ifProp("horizontalCenter", mixins.AbsoluteHorizontalCenter)}
 `;
 export const Absolute: FC<AbsoluteProps> = (props) => <SAbsolute {...props}></SAbsolute>;

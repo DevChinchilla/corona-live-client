@@ -17,7 +17,8 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
   const theme = useTheme();
 
   const deltaPositive = delta > 0;
-  const color = isToday ? "blackText" : deltaPositive ? "red" : "blue";
+  const color = isToday ? "darkGreyText" : deltaPositive ? "red" : "blue";
+  const deltaColor = isToday ? "greyText" : color;
   const _color = theme(color);
 
   return (
@@ -29,13 +30,12 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
         <Row ai="center">
           <Box fontSize="24px" fontWeight={700} color={_color}>
             <CountUp end={total} separator={","} duration={3} />
-            {/* {numberWithCommas(total)} */}
           </Box>
 
           <Box fontSize="24px" fontWeight={300} color={_color}>
             명
           </Box>
-          <DeltaTag color={color} delta={delta} countUp></DeltaTag>
+          <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
       </Col>
     </Col>

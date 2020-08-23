@@ -5,7 +5,7 @@ import { Col, Row as RowLayout } from "./Layout";
 import { theme } from "@styles/themes";
 
 const Th = styled(RowLayout)`
-  font-size: 11px;
+  font-size: 10px;
   transform: translateX(4px);
   color: ${theme("greyText")};
 `;
