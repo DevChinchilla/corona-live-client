@@ -29,10 +29,6 @@ const Card = styled(Row)<{ shadow?: boolean }>`
 `;
 
 const Message = styled(Row)`
-  /* position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); */
   font-size: 13px;
 `;
 
@@ -74,17 +70,27 @@ const UpdateCard: FC<Props> = ({ onClick, data, shadow }) => {
 
   const cityName = t(`c${city}`);
   const guName = t(`c${city}/${gu}`);
+
+  const from = `${cityName} ${guName[0] != "c" ? guName : ""}`;
+  const title = `${cases}명 추가확진`;
+
+  const message = `[${datetime} ${from} ${from} ${title} 관련]`;
   return (
     <Col>
-      <Report hideOverlay={true} show={showReport} onClose={() => setShowReport(false)}></Report>
+      <Report
+        hideOverlay={true}
+        show={showReport}
+        onClose={() => setShowReport(false)}
+        referTo={message}
+      ></Report>
       <Card shadow={shadow} onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}>
         <Row flex="1">
           <UpdateTime date={datetime} flex="0 1 90px"></UpdateTime>
           <Message>
             <Box fontWeight={700} mr="4px">
-              {`${cityName} ${guName[0] != "c" ? guName : ""}`}
+              {from}
             </Box>
-            {cases}명 추가확진
+            {title}
           </Message>
         </Row>
         {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}

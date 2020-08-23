@@ -5,13 +5,13 @@ import { Row, Box } from "./Layout";
 import DeltaTag from "./DeltaTag";
 
 import { numberWithCommas } from "@utils";
-import useTheme from "@hooks/useTheme";
 
 import styled, { css } from "styled-components";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
+import { useHistory } from "react-router-dom";
+import useTranslation from "@hooks/useTranslation";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -46,21 +46,21 @@ const Td = styled(Row)<{ end?: boolean; flex?: string }>`
 `;
 
 const RowComponent = ({ data, cityId, updateTime, ...props }) => {
-  const { t } = useTranslation();
-  const _theme = useTheme();
+  const history = useHistory();
+  const [ct] = useTranslation();
 
   const { total, today } = data;
-  const onClick = () => {};
 
   const deltaPositive = today.delta > 0;
   const todayColor = deltaPositive ? "red" : "blue";
 
-  const name = t(`c${cityId}`);
-  if (name.indexOf("c") > -1) return <></>;
+  const name = ct(cityId);
+  if (!name) return <></>;
+
   return (
-    <Wrapper onClick={onClick} {...props}>
+    <Wrapper {...props} onClick={() => history.push(`./city/${cityId}`)}>
       <Td flex="0 1 40px">
-        <Box fontSize="13px">{name}</Box>
+        <Box fontSize="13px">{ct(cityId)}</Box>
       </Td>
       <Td flex="0 1 16px">
         <Divider></Divider>

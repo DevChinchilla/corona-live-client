@@ -42,7 +42,7 @@ const Home = () => {
       )}
       {todayStats && overallStats && (
         <Suspense fallback={<div />}>
-          <Table today={todayStats} overall={overallStats} updates={sortByDate(todayUpdates)}>
+          <Table today={todayStats} overall={overallStats} updates={todayUpdates}>
             {" "}
           </Table>
         </Suspense>

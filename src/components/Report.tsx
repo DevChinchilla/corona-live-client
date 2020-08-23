@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useRef, useEffect } from "react";
 import Modal from "./Modal";
 import Button from "./Button";
 import { Col, Box, Row } from "./Layout";
@@ -43,28 +43,34 @@ interface Props {
   show: boolean;
   onClose: any;
   hideOverlay?: boolean;
+  referTo?: any;
 }
-const Report: FC<Props> = ({ show, onClose, hideOverlay }) => {
-  const [message, setMessage] = useState("");
+const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
+  const [message, setMessage] = useState(referTo || "");
   const [email, setEmail] = useState("");
+  const textRef = useRef<HTMLTextAreaElement | null>();
+  useEffect(() => {
+    if (referTo && !message) {
+      setMessage(referTo);
+      textRef.current!.select();
+    }
+  }, [referTo]);
 
   const onSumbit = () => {
     if (message.trim().length == 0) alert("내용을 적어주세요");
     console.log({ email, message });
   };
+
   return (
     <Modal show={show} title={["제보", "하기"]} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper>
-        {/* <Label>제보내용</Label> */}
-
         <textarea
+          autoFocus={!!referTo}
+          ref={(el) => (textRef.current = el)}
           placeholder="제보내용 (필수)"
-          value={message}
+          value={referTo || message}
           onChange={(e) => setMessage(e.target.value)}
         ></textarea>
-
-        {/* <Label>이메일</Label> */}
-
         <input
           placeholder="이메일 (선택)"
           value={email}
