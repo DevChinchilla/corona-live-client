@@ -39,7 +39,11 @@ const Divider = styled(Box)`
   background: ${theme("greyText")};
 `;
 
-const Td = styled(Row)<{ end?: boolean; flex?: string }>`
+interface PTd {
+  end?: boolean;
+  flex?: string;
+}
+const Td = styled(Row)<PTd>`
   align-items: center;
   flex: ${(props) => (props.flex ? props.flex : 1)};
   justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
@@ -73,7 +77,7 @@ const RowComponent = ({ data, cityId, updateTime, tdFlex, ...props }) => {
         <Cases>{numberWithCommas(today.total)}명</Cases>
         <DeltaTag color={todayColor} delta={today.delta} small showBg></DeltaTag>
       </Td>
-      <Td end>
+      <Td end={true}>
         {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
         <div style={{ width: "14px" }}></div>
         <Icon name="ChevronRight" size={18}></Icon>

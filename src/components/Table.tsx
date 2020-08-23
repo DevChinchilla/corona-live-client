@@ -20,6 +20,7 @@ const Header = ({ tdFlex }) => {
     </RowLayout>
   );
 };
+
 const Table = ({ today, overall: { domestic, date }, updates, tdFlex }) => {
   return (
     <>

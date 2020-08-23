@@ -47,9 +47,7 @@ const Home = () => {
             overall={overallStats}
             updates={todayUpdates}
             tdFlex={CITY_TD_FLEX}
-          >
-            {" "}
-          </Table>
+          ></Table>
         </Suspense>
       )}
     </Col>
