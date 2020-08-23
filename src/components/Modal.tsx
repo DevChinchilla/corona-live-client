@@ -35,14 +35,15 @@ const Wrapper = styled(Col)`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 360px;
+
     height: 80%;
     padding: 20px 20px;
     background: ${theme("bg")};
     z-index: 1000;
     border-radius: 10px;
 
-    ${media.tablet} {
+    width: 400px;
+    ${media.phablet} {
       width: 80%;
     }
   }
@@ -72,9 +73,9 @@ const Portal = ({ children }) => {
 
 const Modal: FC<Props> = ({ show, children, hideOverlay, onClose, title, icon }) => {
   const _theme = useTheme();
-  useEffect(() => {
-    document.querySelector("body")!.style.position = show ? "fixed" : "";
-  }, [show]);
+  // useEffect(() => {
+  //   document.querySelector("body")!.style.position = show ? "fixed" : "";
+  // }, [show]);
   if (!show) return <></>;
 
   return (

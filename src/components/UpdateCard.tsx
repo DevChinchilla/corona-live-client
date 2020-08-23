@@ -14,12 +14,12 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
   align-items: center;
   position: relative;
-  height: 52px;
-  /* padding: 0px 14px; */
+  min-height: 50px;
   padding-left: 4px;
   padding-right: 10px;
   position: relative;
-  border-bottom: 1px solid ${theme("blackText")}15;
+  border-bottom: 1px solid ${theme("greyText")}15;
+  cursor: pointer;
   ${ifProp(
     "shadow",
     css`
@@ -41,6 +41,7 @@ const Details = styled(Col)`
   border-radius: 12px;
   background: ${theme("greyBg")};
   margin-bottom: 14px;
+  flex-shrink: 0;
   p {
     font-weight: 300;
     font-size: 13px;
@@ -115,7 +116,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }
   }, []);
 
   return (
-    <Col flexShrink={0}>
+    <>
       <Report
         hideOverlay={true}
         show={showReport}
@@ -149,7 +150,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }
           <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>
         </Details>
       )}
-    </Col>
+    </>
   );
 };
 

@@ -89,7 +89,7 @@ const Updates = ({ data }) => {
             <UpdateCard
               key={`${update.datetime}/${i}`}
               data={update}
-              fadeInUp={i < 10}
+              fadeInUp={i < 16}
               delay={3 + i}
             ></UpdateCard>
           ))}

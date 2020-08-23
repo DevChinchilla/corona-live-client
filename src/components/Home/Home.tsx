@@ -3,11 +3,22 @@ import { Col } from "../Layout";
 import { API_ROOT, TODAY_API_ROOT, CITY_TD_FLEX } from "@consts";
 import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@utils";
 import useSWR from "swr";
+import styled from "styled-components";
+import { media } from "@styles";
 
 const NavBar = lazy(() => import("./NavBar"));
 const Updates = lazy(() => import("./Updates"));
 const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
+
+const Wrapper = styled(Col)`
+  padding: 20px;
+  margin: auto;
+  width: 400px;
+  ${media.phablet} {
+    width: 100%;
+  }
+`;
 
 const Home = ({ theme, setTheme }) => {
   const { data: overallStats } = useSWR(TODAY_API_ROOT, fetcher, {
@@ -26,7 +37,7 @@ const Home = ({ theme, setTheme }) => {
   if (!todayUpdates || !yesterdayUpdates) return <div>ddd</div>;
   const [todayStats, todayCases] = getStatsDeltaV2(todayUpdates, yesterdayUpdates);
   return (
-    <Col p="20px">
+    <Wrapper>
       <Suspense fallback={<div />}>
         <NavBar {...{ theme, setTheme }}></NavBar>
       </Suspense>
@@ -50,7 +61,7 @@ const Home = ({ theme, setTheme }) => {
           ></Table>
         </Suspense>
       )}
-    </Col>
+    </Wrapper>
   );
 };
 
