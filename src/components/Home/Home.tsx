@@ -12,6 +12,7 @@ const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
 
 const Wrapper = styled(Col)`
+  box-sizing: border-box;
   padding: 20px;
   margin: auto;
   width: 400px;
@@ -21,42 +22,38 @@ const Wrapper = styled(Col)`
 `;
 
 const Home = ({ theme, setTheme }) => {
-  const { data: overallStats } = useSWR(TODAY_API_ROOT, fetcher, {
+  const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 5000,
+    refreshInterval: 10000,
   });
 
-  const { data: todayUpdates } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
+  const { data: statsData } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 5000,
+    refreshInterval: 10000,
   });
 
-  const { data: yesterdayUpdates } = useSWR(`${API_ROOT}/yesterday-updates.json`, fetcher, {
-    refreshInterval: 0,
-  });
-  if (!todayUpdates || !yesterdayUpdates) return <div>ddd</div>;
-  const [todayStats, todayCases] = getStatsDeltaV2(todayUpdates, yesterdayUpdates);
   return (
     <Wrapper>
       <Suspense fallback={<div />}>
         <NavBar {...{ theme, setTheme }}></NavBar>
       </Suspense>
-      {todayUpdates && (
+      {updatesData && (
         <Suspense fallback={<div />}>
-          <Updates data={sortByDate(todayUpdates)}></Updates>
+          <Updates data={sortByDate(updatesData)}></Updates>
         </Suspense>
       )}
-      {todayCases && overallStats && (
+      {statsData && (
         <Suspense fallback={<div />}>
-          <Board today={todayCases} total={overallStats.totalCases}></Board>
+          <Board data={statsData.overview}></Board>
         </Suspense>
       )}
-      {todayStats && overallStats && (
+
+      {statsData && updatesData && (
         <Suspense fallback={<div />}>
           <Table
-            today={todayStats}
-            overall={overallStats}
-            updates={sortByDate(todayUpdates)}
+            current={statsData.current}
+            overall={statsData.overall}
+            updates={sortByDate(updatesData)}
             tdFlex={CITY_TD_FLEX}
           ></Table>
         </Suspense>

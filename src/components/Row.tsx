@@ -49,42 +49,45 @@ const Td = styled(Row)<PTd>`
   justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
 `;
 
-const RowComponent = ({ data, cityId, updateTime, tdFlex, ...props }) => {
+const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
   const history = useHistory();
   const [ct] = useTranslation();
 
-  const { total, today } = data;
+  const { total, current } = data;
 
-  const deltaPositive = today.delta > 0;
-  const todayColor = deltaPositive ? "red" : "blue";
+  const deltaPositive = current[1] > 0;
+  const currentColor = deltaPositive ? "red" : "blue";
 
-  const name = ct(cityId);
+  const name = cityId ? ct(cityId, id) : ct(id);
   if (!name) return <></>;
-
+  console.log(`./city/${cityId || id}${cityId != null ? `/${id}` : ""}`);
   return (
-    <Wrapper {...props} onClick={() => history.push(`./city/${cityId}`)}>
+    <Wrapper
+      {...props}
+      onClick={() => history.push(`./city/${cityId || id}${cityId != null ? `/gu/${id}` : ""}`)}
+    >
       <Td flex={tdFlex[0]}>
         <Box fontSize="12px" fontWeight={400}>
-          {ct(cityId)}
+          {name}
         </Box>
       </Td>
       <Td flex={tdFlex[1]}>
         <Divider></Divider>
       </Td>
       <Td flex={tdFlex[2]}>
-        <Cases>{numberWithCommas(total.total)}</Cases>
+        <Cases>{numberWithCommas(total[0])}</Cases>
         <Box fontSize="10px" opacity={0.6} ml="2px">
           명
         </Box>
 
-        <DeltaTag color={"red"} delta={total.delta} small showBg></DeltaTag>
+        <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
       </Td>
       <Td flex={tdFlex[3]}>
-        <Cases>{numberWithCommas(today.total)}</Cases>
+        <Cases>{numberWithCommas(current[0])}</Cases>
         <Box fontSize="10px" opacity={0.6} ml="2px">
           명
         </Box>
-        <DeltaTag color={todayColor} delta={today.delta} small showBg></DeltaTag>
+        <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
       </Td>
       <Td end={true} flex={tdFlex[4]}>
         {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}

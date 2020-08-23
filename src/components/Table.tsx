@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import React from "react";
+import React, { FC } from "react";
 import Row from "./Row";
 import { Col, Row as RowLayout } from "./Layout";
 import { theme } from "@styles/themes";
@@ -22,18 +22,25 @@ const Header = ({ tdFlex }) => {
   );
 };
 
-const Table = ({ today, overall: { domestic, date }, updates, tdFlex }) => {
+interface Props {
+  cityId?: number;
+  current?: any;
+  overall?: any;
+  updates?: any;
+  tdFlex?: string[];
+}
+
+const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
   return (
     <>
       <Header tdFlex={tdFlex}></Header>
       <Col fadeInUp delay={6}>
-        {Object.keys(domestic.total).map((cityId, i) => {
-          const hasCases = today.total[cityId] != null;
+        {Object.keys(overall).map((id, i) => {
           const latestUpdate = updates.find((update) => {
             let { city, gu } = update;
-            return city == cityId;
+            if (cityId != null) return city == id;
+            return city == cityId && gu == id;
           });
-
           return (
             <Row
               tdFlex={tdFlex}
@@ -42,13 +49,11 @@ const Table = ({ today, overall: { domestic, date }, updates, tdFlex }) => {
               even={i % 2 == 0}
               key={cityId}
               cityId={cityId}
+              id={id}
               updateTime={latestUpdate?.datetime}
               data={{
-                total: { total: domestic.total[cityId], delta: domestic.delta[cityId] },
-                today: {
-                  total: hasCases ? today.total[cityId].cases : 0,
-                  delta: hasCases ? today.delta[cityId].cases : 0,
-                },
+                total: overall[id]?.cases || overall[id],
+                current: current[id]?.cases || current[id],
               }}
             ></Row>
           );

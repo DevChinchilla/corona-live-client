@@ -13,7 +13,7 @@ interface Props {
   delay?: number;
 }
 const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
-  const { total, delta } = data;
+  const [total, delta] = data;
   const theme = useTheme();
 
   const deltaPositive = delta > 0;
@@ -43,12 +43,13 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
     </Col>
   );
 };
-const Board = ({ today, total }) => {
+const Board = ({ data }) => {
+  console.log(data);
   return (
     <Row>
-      <Stat data={total} title={"총 확진자"} isToday fadeInUp delay={2}></Stat>
+      <Stat data={data.confirmed} title={"총 확진자"} isToday fadeInUp delay={2}></Stat>
       <Box w="40px"></Box>
-      <Stat data={today} title={"오늘"} fadeInUp delay={3}></Stat>
+      <Stat data={data.current} title={"오늘"} fadeInUp delay={3}></Stat>
     </Row>
   );
 };

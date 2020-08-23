@@ -12,7 +12,7 @@ const pages = [
     view: Home,
   },
   {
-    pageLink: "/city/:id",
+    pageLink: "/city/:cityId",
     view: City,
   },
 ];

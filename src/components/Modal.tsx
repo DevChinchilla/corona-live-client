@@ -42,7 +42,7 @@ const Wrapper = styled(Col)`
     z-index: 1000;
     border-radius: 10px;
 
-    width: 400px;
+    width: 360px;
     ${media.phablet} {
       width: 80%;
     }
