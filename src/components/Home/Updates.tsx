@@ -38,7 +38,11 @@ const Updates = ({ data }) => {
         ))}
       </Modal>
       <Time>{getCurrentDateTime()}</Time>
-      <UpdateCard data={data[0]} shadow onClick={() => setShowModal(true)}></UpdateCard>
+      <UpdateCard
+        data={data[0]}
+        onClick={() => setShowModal(true)}
+        animationData={data.slice(0, 5)}
+      ></UpdateCard>
     </Wrapper>
   );
 };

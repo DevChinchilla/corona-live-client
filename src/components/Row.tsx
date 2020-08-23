@@ -45,7 +45,7 @@ const Td = styled(Row)<{ end?: boolean; flex?: string }>`
   justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
 `;
 
-const RowComponent = ({ data, cityId, updateTime, ...props }) => {
+const RowComponent = ({ data, cityId, updateTime, tdFlex, ...props }) => {
   const history = useHistory();
   const [ct] = useTranslation();
 
@@ -59,13 +59,13 @@ const RowComponent = ({ data, cityId, updateTime, ...props }) => {
 
   return (
     <Wrapper {...props} onClick={() => history.push(`./city/${cityId}`)}>
-      <Td flex="0 1 40px">
+      <Td flex={tdFlex[0]}>
         <Box fontSize="13px">{ct(cityId)}</Box>
       </Td>
-      <Td flex="0 1 16px">
+      <Td flex={tdFlex[1]}>
         <Divider></Divider>
       </Td>
-      <Td flex="0 1 106px">
+      <Td flex={tdFlex[2]}>
         <Cases>{numberWithCommas(total.total)}명</Cases>
         <DeltaTag color={"greyText"} delta={total.delta} small></DeltaTag>
       </Td>

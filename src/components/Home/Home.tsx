@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Col } from "../Layout";
-import { API_ROOT, TODAY_API_ROOT } from "@consts";
+import { API_ROOT, TODAY_API_ROOT, CITY_TD_FLEX } from "@consts";
 import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@utils";
 import useSWR from "swr";
 
@@ -42,7 +42,12 @@ const Home = () => {
       )}
       {todayStats && overallStats && (
         <Suspense fallback={<div />}>
-          <Table today={todayStats} overall={overallStats} updates={todayUpdates}>
+          <Table
+            today={todayStats}
+            overall={overallStats}
+            updates={todayUpdates}
+            tdFlex={CITY_TD_FLEX}
+          >
             {" "}
           </Table>
         </Suspense>

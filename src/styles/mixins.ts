@@ -49,13 +49,13 @@ const Padding = css`
   ${ifProp(
     "py",
     css`
-      margin: ${prop("my")} 0px;
+      padding: ${prop("py")} 0px;
     `
   )}
   ${ifProp(
     "px",
     css`
-      margin: 0px ${prop("mx")};
+      padding: 0px ${prop("px")};
     `
   )}
 `;
@@ -118,9 +118,10 @@ const AbsoluteCenter = css`
 
 const AbsoluteFull = css`
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
 `;
 
 const FlexCenter = css`
