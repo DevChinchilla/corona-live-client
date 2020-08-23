@@ -18,7 +18,7 @@ const Wrapper = styled(Row)`
   flex-direction: row;
   border-radius: 6px;
   height: 48px;
-  padding: 0px 14px;
+  padding: 0px 12px;
   margin-bottom: 2px;
   ${ifProp(
     "even",
@@ -28,9 +28,9 @@ const Wrapper = styled(Row)`
   )}
 `;
 const Cases = styled(Box)`
-  font-size: 13px;
+  font-size: 12px;
   color: ${theme("darkGreyText")};
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const Divider = styled(Box)`
@@ -64,22 +64,31 @@ const RowComponent = ({ data, cityId, updateTime, tdFlex, ...props }) => {
   return (
     <Wrapper {...props} onClick={() => history.push(`./city/${cityId}`)}>
       <Td flex={tdFlex[0]}>
-        <Box fontSize="13px">{ct(cityId)}</Box>
+        <Box fontSize="12px" fontWeight={400}>
+          {ct(cityId)}
+        </Box>
       </Td>
       <Td flex={tdFlex[1]}>
         <Divider></Divider>
       </Td>
       <Td flex={tdFlex[2]}>
-        <Cases>{numberWithCommas(total.total)}명</Cases>
-        <DeltaTag color={"greyText"} delta={total.delta} small></DeltaTag>
+        <Cases>{numberWithCommas(total.total)}</Cases>
+        <Box fontSize="10px" opacity={0.6} ml="2px">
+          명
+        </Box>
+
+        <DeltaTag color={"red"} delta={total.delta} small showBg></DeltaTag>
       </Td>
-      <Td>
-        <Cases>{numberWithCommas(today.total)}명</Cases>
+      <Td flex={tdFlex[3]}>
+        <Cases>{numberWithCommas(today.total)}</Cases>
+        <Box fontSize="10px" opacity={0.6} ml="2px">
+          명
+        </Box>
         <DeltaTag color={todayColor} delta={today.delta} small showBg></DeltaTag>
       </Td>
-      <Td end={true}>
+      <Td end={true} flex={tdFlex[4]}>
         {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
-        <div style={{ width: "14px" }}></div>
+        <div style={{ width: "8px" }}></div>
         <Icon name="ChevronRight" size={18}></Icon>
       </Td>
     </Wrapper>

@@ -45,7 +45,7 @@ const Home = () => {
           <Table
             today={todayStats}
             overall={overallStats}
-            updates={todayUpdates}
+            updates={sortByDate(todayUpdates)}
             tdFlex={CITY_TD_FLEX}
           ></Table>
         </Suspense>

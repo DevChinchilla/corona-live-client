@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import React, { useState } from "react";
 import UpdateCard from "../UpdateCard";
 import { Col, Row, Absolute } from "../Layout";
@@ -14,7 +14,6 @@ const Wrapper = styled(Col)`
   width: 100%;
   justify-content: stretch;
   padding: 20px 0px;
-  /* margin-bottom: 10px; */
 `;
 
 const Time = styled(Col)`
@@ -81,18 +80,20 @@ const Updates = ({ data }) => {
           </Absolute>
           <input placeholder="주소검색" onChange={onKeywordChange} value={keyword}></input>
         </SearchInput>
-        <Row fontSize="12px" mb="10px" mt="14px" jc="center" fadeInUp>
+        {/* <Row fontSize="12px" mb="14px" mt="10px" jc="center" fadeInUp>
           <Row opacity={0.8}>{data.length != filteredData.length ? "검색 결과" : "오늘 총"}</Row>
           <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
-        </Row>
-        {sortByDate(filteredData, "datetime").map((update, i) => (
-          <UpdateCard
-            key={`${update.datetime}/${i}`}
-            data={update}
-            fadeInUp={i < 10}
-            delay={3 + i}
-          ></UpdateCard>
-        ))}
+        </Row> */}
+        <Col flex={1} overflowY="auto">
+          {sortByDate(filteredData, "datetime").map((update, i) => (
+            <UpdateCard
+              key={`${update.datetime}/${i}`}
+              data={update}
+              fadeInUp={i < 10}
+              delay={3 + i}
+            ></UpdateCard>
+          ))}
+        </Col>
       </Modal>
       <Time>{getCurrentDateTime()}</Time>
       <UpdateCard

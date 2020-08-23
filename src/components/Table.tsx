@@ -16,7 +16,8 @@ const Header = ({ tdFlex }) => {
       <Th flex={tdFlex[0]}>지역</Th>
       <Th flex={tdFlex[1]}>{""}</Th>
       <Th flex={tdFlex[2]}>총 확진자</Th>
-      <Th>오늘</Th>
+      <Th flex={tdFlex[3]}>오늘</Th>
+      <Th flex={tdFlex[4]}></Th>
     </RowLayout>
   );
 };

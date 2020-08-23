@@ -22,7 +22,9 @@ const Wrapper = styled(Col)`
   }
   .container {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     /* margin-bottom: 16px; */
   }

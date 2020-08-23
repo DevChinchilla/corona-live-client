@@ -15,14 +15,16 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   align-items: center;
   position: relative;
   height: 52px;
-  padding: 0px 14px;
+  /* padding: 0px 14px; */
+  padding-left: 4px;
+  padding-right: 10px;
   position: relative;
-  border-top: 1px solid ${theme("blackText")}15;
+  border-bottom: 1px solid ${theme("blackText")}15;
   ${ifProp(
     "shadow",
     css`
       padding: 0px 20px;
-      border-top: none;
+      border-bottom: none;
       border-radius: 6px;
       background: ${theme("bg")};
       box-shadow: 0 3px 10px ${theme("blackText")}15;
@@ -31,7 +33,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
 `;
 
 const Message = styled(Row)`
-  font-size: 13px;
+  font-size: 12px;
 `;
 
 const Details = styled(Col)`
@@ -68,7 +70,7 @@ const Content = ({ datetime, from, title, showDetails }) => {
   return (
     <>
       <Row flex="1">
-        <UpdateTime date={datetime} flex="0 1 90px"></UpdateTime>
+        <UpdateTime date={datetime} flex="0 1 80px"></UpdateTime>
         <Message>
           <Box fontWeight={700} mr="4px">
             {from}

@@ -17,8 +17,10 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
   const theme = useTheme();
 
   const deltaPositive = delta > 0;
-  const color = isToday ? "darkGreyText" : deltaPositive ? "red" : "blue";
-  const deltaColor = isToday ? "greyText" : color;
+  // const color = isToday ? "darkGreyText" : deltaPositive ? "red" : "blue";
+  const color = "darkGreyText";
+  // const deltaColor = isToday ? "greyText" : color;
+  const deltaColor = isToday ? "red" : deltaPositive ? "red" : "blue";
   const _color = theme(color);
 
   return (

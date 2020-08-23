@@ -10,7 +10,7 @@ import CountUp from "react-countup";
 const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean }>`
   color: ${prop("color")};
   border-radius: 6px;
-  padding: 6px 8px;
+  padding: 4px 8px;
   margin-left: 8px;
   align-items: center;
   ${ifProp(
@@ -25,6 +25,7 @@ const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean 
     "showBg",
     css`
       padding: 1px 4px;
+      padding-right: 6px;
       margin-left: 6px;
     `
   )}

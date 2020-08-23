@@ -138,7 +138,7 @@ export const getStatsDeltaV2 = (todayUpdates, yesterdayUpdates) => {
 
   const [todayStats, todayTotal] = getStatsWithUpdates(todayUpdates);
   const [yesterdayStats, yesterdayTotal] = getStatsWithUpdates(
-    setUpdatesTimeRange(yesterdayUpdates, "20:00:00")
+    setUpdatesTimeRange(yesterdayUpdates, currentTime)
   );
 
   Object.keys(todayStats).map((cityId) => {
