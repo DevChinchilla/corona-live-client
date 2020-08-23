@@ -21,7 +21,7 @@ const Header = ({ tdFlex }) => {
   );
 };
 
-const Table = ({ today, overall: { domestic, date }, updates, tdFlex }) => {
+const Table = ({ today, overall: { domestic, date }, data, updates, tdFlex }) => {
   return (
     <>
       <Header tdFlex={tdFlex}></Header>

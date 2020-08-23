@@ -38,10 +38,11 @@ const NavBar = () => {
         <Button onClick={() => setShowReport(true)} white>
           제보
         </Button>
-        <Logo>
+        <Icon transform="translateY(-4px)" name="Logo" height="24px" width="100px"></Icon>
+        {/* <Logo>
           <span>corona</span>
           <span>live</span>
-        </Logo>
+        </Logo> */}
         <Button white>
           <Icon name="Refresh" size={12} fill={theme("darkGreyText")}></Icon>
         </Button>

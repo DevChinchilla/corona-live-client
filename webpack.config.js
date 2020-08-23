@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "none",
@@ -19,6 +20,10 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        loader: "file-loader?name=[name].[ext]", // <-- retain original file name
+      },
     ],
   },
   output: {
@@ -28,6 +33,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
+    }),
+
+    new CopyPlugin({
+      patterns: [
+        { from: "public/fonts", to: "fonts" },
+        { from: "public/assets", to: "." },
+      ],
     }),
   ],
   devServer: {
@@ -39,4 +51,5 @@ module.exports = {
     historyApiFallback: true,
     contentBase: "/public/",
   },
+  watch: true,
 };

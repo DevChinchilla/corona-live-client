@@ -8,6 +8,7 @@ import Plus from "./Plus";
 import X from "./X";
 import Refresh from "./Refresh";
 import Notification from "./Notification";
+import Logo from "./Logo";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -21,6 +22,7 @@ const icons = {
   X,
   Refresh,
   Notification,
+  Logo,
 };
 
 export type IconType = keyof typeof icons;
@@ -33,6 +35,8 @@ interface IconProps extends BoxProps {
   hoverStroke?: string;
   strokeWidth?: string;
   size?: number;
+  height?: string;
+  width?: string;
 }
 
 const SIcon: any = styled(Row)`
@@ -44,6 +48,9 @@ const SIcon: any = styled(Row)`
       width: ${prop("size")}px;
     `
   )}
+
+  ${addIfProp("width")}
+  ${addIfProp("height")}
 
   svg {
     transition: all 0.2s ease-out;
