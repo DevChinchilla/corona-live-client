@@ -26,7 +26,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
       padding: 0px 20px;
       border-bottom: none;
       border-radius: 6px;
-      background: ${theme("bg")};
+      background: ${theme("updateCard")};
       box-shadow: 0 3px 10px ${theme("blackText")}15;
     `
   )}
@@ -39,7 +39,7 @@ const Message = styled(Row)`
 const Details = styled(Col)`
   padding: 14px 20px;
   border-radius: 12px;
-  background: ${theme("lightGreyText")};
+  background: ${theme("greyBg")};
   margin-bottom: 14px;
   p {
     font-weight: 300;

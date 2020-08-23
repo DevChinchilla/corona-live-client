@@ -9,7 +9,7 @@ const Updates = lazy(() => import("./Updates"));
 const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
 
-const Home = () => {
+const Home = ({ theme, setTheme }) => {
   const { data: overallStats } = useSWR(TODAY_API_ROOT, fetcher, {
     revalidateOnMount: true,
     refreshInterval: 5000,
@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <Col p="20px">
       <Suspense fallback={<div />}>
-        <NavBar></NavBar>
+        <NavBar {...{ theme, setTheme }}></NavBar>
       </Suspense>
       {todayUpdates && (
         <Suspense fallback={<div />}>

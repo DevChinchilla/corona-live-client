@@ -20,7 +20,7 @@ const Wrapper = styled(Col)`
     font-size: 16px;
     border: none;
     padding: 20px;
-    background: ${theme("lightGreyText")};
+    background: ${theme("greyBg")};
     border-radius: 12px;
     border: none;
     flex: 1;
@@ -30,6 +30,8 @@ const Wrapper = styled(Col)`
     border: none;
     font-size: 16px;
     margin: 10px 0px;
+    background: transparent;
+    box-shadow: none;
   }
 `;
 

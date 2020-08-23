@@ -13,6 +13,8 @@ interface ThemeProps {
 
   blue: string;
   red: string;
+
+  updateCard: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -32,22 +34,26 @@ const lightTheme: ThemeProps = {
   lightGreyText: "#F5F5F5",
   blue: "#5673EB",
   red: "#EB5374",
+
+  updateCard: "white",
 };
 
 const darkTheme: ThemeProps = {
-  bg: "",
-  text: "",
-  border: "",
-  greyBg: "",
+  bg: "#191F2C",
+  text: "#C8C9CD",
+  border: "#C8C9CD",
+  greyBg: "#2F3340",
 
-  greyText: "",
-  semigreyText: "",
-  semiDarkGreyText: "#5a5a5a",
-  darkGreyText: "",
-  lightGreyText: "",
-  blackText: "",
+  greyText: "#C8C9CD",
+  semigreyText: "#979AA0",
+  semiDarkGreyText: "#C8C9CD",
+  darkGreyText: "white",
+  lightGreyText: "#C8C9CD",
+  blackText: "white",
   blue: "#5673EB",
   red: "#EB5374",
+
+  updateCard: "#ffffff0d",
 };
 
 export default { light: lightTheme, dark: darkTheme };

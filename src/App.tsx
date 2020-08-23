@@ -18,7 +18,7 @@ const pages = [
 ];
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const location = useLocation();
 
   return (
@@ -31,7 +31,7 @@ const App = () => {
               <Route
                 exact
                 path={page.pageLink}
-                render={({ match }) => <page.view match={match} />}
+                render={({ match }) => <page.view {...{ theme, setTheme }} match={match} />}
                 key={index}
               />
             );

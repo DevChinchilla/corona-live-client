@@ -31,14 +31,15 @@ const Button = styled.button<ButtonProps>`
     "light",
     css`
       border: 1px solid ${theme("semigreyText")};
-      background: white;
+      /* background: ${theme("bg")}; */
+      background: transparent;
     `
   )}
 
 ${ifProp(
   "white",
   css`
-    background: white;
+    background: transparent;
   `
 )}
 

@@ -23,7 +23,7 @@ const Wrapper = styled(Row)`
   ${ifProp(
     "even",
     css`
-      background: ${palette.lightGrey};
+      background: ${theme("greyBg")};
     `
   )}
 `;

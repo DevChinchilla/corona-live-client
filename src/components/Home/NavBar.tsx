@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Button from "../Button";
 import Icon from "../Icon";
@@ -28,17 +28,27 @@ const Wrapper = styled(Row)`
   justify-content: space-between;
 `;
 
-const NavBar = () => {
+const NavBar = ({ theme: currentTheme, setTheme }) => {
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
+  console.log(currentTheme);
   return (
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
-        <Button onClick={() => setShowReport(true)} white>
+        {/* <Button onClick={() => setShowReport(true)} white>
           제보
+        </Button> */}
+        <Button white onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
+          <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
         </Button>
-        <Icon transform="translateY(-4px)" name="Logo" height="24px" width="100px"></Icon>
+        <Icon
+          transform="translateY(-4px)"
+          name="Logo"
+          height="24px"
+          width="100px"
+          fill={theme("blackText")}
+        ></Icon>
         {/* <Logo>
           <span>corona</span>
           <span>live</span>
