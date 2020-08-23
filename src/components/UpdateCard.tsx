@@ -115,7 +115,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }
   }, []);
 
   return (
-    <Col>
+    <Col flexShrink={0}>
       <Report
         hideOverlay={true}
         show={showReport}
@@ -124,6 +124,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }
       ></Report>
 
       <Card
+        flexShrink={0}
         shadow={!!animationData}
         onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}
         {...{ fadeInUp, delay }}
