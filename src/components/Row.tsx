@@ -75,12 +75,15 @@ const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
         <Divider></Divider>
       </Td>
       <Td flex={tdFlex[2]}>
-        <Cases>{numberWithCommas(total[0])}</Cases>
-        <Box fontSize="10px" opacity={0.6} ml="2px">
-          명
-        </Box>
-
-        <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+        {total && (
+          <>
+            <Cases>{numberWithCommas(total[0])}</Cases>
+            <Box fontSize="10px" opacity={0.6} ml="2px">
+              명
+            </Box>
+            <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+          </>
+        )}
       </Td>
       <Td flex={tdFlex[3]}>
         <Cases>{numberWithCommas(current[0])}</Cases>

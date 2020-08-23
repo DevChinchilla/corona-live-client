@@ -31,16 +31,25 @@ interface Props {
 }
 
 const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
+  const mainData = Object.keys(overall).length == 0 ? current : overall;
   return (
     <>
       <Header tdFlex={tdFlex}></Header>
       <Col fadeInUp delay={6}>
-        {Object.keys(overall).map((id, i) => {
+        {Object.keys(mainData).map((id, i) => {
           const latestUpdate = updates.find((update) => {
             let { city, gu } = update;
-            if (cityId != null) return city == id;
-            return city == cityId && gu == id;
+            // console.log(city, gu, cityId);
+            if (cityId == null) return city == id;
+            if (city == cityId && gu == id) {
+              // console.log(city, cityId, gu, id);
+              return true;
+            }
+            // return city == cityId && gu == id;
           });
+          if (latestUpdate) {
+            console.log(cityId, id, latestUpdate);
+          }
           return (
             <Row
               tdFlex={tdFlex}
