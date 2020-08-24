@@ -45,6 +45,7 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   padding: 6px 12px;
   border-radius: 6px;
   margin-right: 8px;
+  margin-bottom: 8px;
   transition: 0.3s;
   background: ${theme("greyBg")};
   color: ${theme("greyText")};
@@ -130,7 +131,7 @@ export const UpdateModal = ({ onClose, showModal, data, isDistrict }) => {
     <Modal
       show={showModal}
       onClose={onClose}
-      title={"금일 추가 확진자 알림"}
+      title={"오늘 추가 확진자 알림"}
       actionIcon={isDistrict ? [] : !showCategories ? ["Category", 18] : ["Search", 14]}
       onActionClick={onToggle}
     >
