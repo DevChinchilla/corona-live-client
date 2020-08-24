@@ -12,9 +12,9 @@ const Th = styled(RowLayout)`
 
 const Header = ({ tdFlex }) => {
   return (
-    <RowLayout alignItems="center" mb="12px" mt="30px" px="10px" fadeInUp>
+    <RowLayout alignItems="center" mb="12px" mt="30px" px="12px" fadeInUp>
       <Th flex={tdFlex[0]}>지역</Th>
-      <Th flex={tdFlex[1]}>{""}</Th>
+      <Th flex={tdFlex[1]}></Th>
       <Th flex={tdFlex[2]}>총 확진자</Th>
       <Th flex={tdFlex[3]}>오늘</Th>
       <Th flex={tdFlex[4]}></Th>
@@ -39,17 +39,12 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
         {Object.keys(mainData).map((id, i) => {
           const latestUpdate = updates.find((update) => {
             let { city, gu } = update;
-            // console.log(city, gu, cityId);
             if (cityId == null) return city == id;
             if (city == cityId && gu == id) {
-              // console.log(city, cityId, gu, id);
               return true;
             }
-            // return city == cityId && gu == id;
           });
-          if (latestUpdate) {
-            console.log(cityId, id, latestUpdate);
-          }
+
           return (
             <Row
               tdFlex={tdFlex}

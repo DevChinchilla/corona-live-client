@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Col } from "../Layout";
 import { API_ROOT, TODAY_API_ROOT, CITY_TD_FLEX } from "@consts";
 import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@utils";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import styled from "styled-components";
 import { media } from "@styles";
 
@@ -24,13 +24,15 @@ const Wrapper = styled(Col)`
 const Home = ({ theme, setTheme }) => {
   const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 10000,
+    refreshInterval: 5000,
   });
 
   const { data: statsData } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 10000,
+    refreshInterval: 5000,
   });
+
+  console.log("rendered");
 
   return (
     <Wrapper>

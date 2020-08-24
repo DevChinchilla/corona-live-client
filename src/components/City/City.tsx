@@ -13,6 +13,7 @@ import Icon from "@components/Icon";
 import Button from "@components/Button";
 import useTheme from "@hooks/useTheme";
 import { theme } from "@styles/themes";
+import useScrollTop from "@hooks/useScrollTop";
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;
@@ -41,6 +42,7 @@ const Title = styled.div`
 `;
 
 const City = ({ match }) => {
+  useScrollTop();
   const { t } = useTranslation();
 
   const cityId = match.params.cityId;

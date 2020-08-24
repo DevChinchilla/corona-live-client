@@ -7,6 +7,8 @@ import { Row } from "../Layout";
 import { palette } from "@styles";
 import useTheme from "@hooks/useTheme";
 import Report from "@components/Report";
+import { mutate } from "swr";
+import { API_ROOT } from "@consts";
 
 const Logo = styled(Row)`
   span {
@@ -32,6 +34,7 @@ const NavBar = ({ theme: currentTheme, setTheme }) => {
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
   console.log(currentTheme);
+
   return (
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
@@ -49,12 +52,14 @@ const NavBar = ({ theme: currentTheme, setTheme }) => {
           width="100px"
           fill={theme("blackText")}
         ></Icon>
-        {/* <Logo>
-          <span>corona</span>
-          <span>live</span>
-        </Logo> */}
+
         <Button white>
-          <Icon name="Refresh" size={12} fill={theme("darkGreyText")}></Icon>
+          <Icon
+            name="Refresh"
+            size={12}
+            fill={theme("darkGreyText")}
+            onClick={() => mutate(`${API_ROOT}/stats.json`)}
+          ></Icon>
         </Button>
       </Wrapper>
     </>

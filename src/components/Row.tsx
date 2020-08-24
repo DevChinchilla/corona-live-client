@@ -60,14 +60,13 @@ const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
 
   const name = cityId ? ct(cityId, id) : ct(id);
   if (!name) return <></>;
-  console.log(`./city/${cityId || id}${cityId != null ? `/${id}` : ""}`);
   return (
     <Wrapper
       {...props}
       onClick={() => history.push(`./city/${cityId || id}${cityId != null ? `/gu/${id}` : ""}`)}
     >
       <Td flex={tdFlex[0]}>
-        <Box fontSize="12px" fontWeight={400}>
+        <Box fontSize="12px" fontWeight={500}>
           {name}
         </Box>
       </Td>
@@ -75,7 +74,7 @@ const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
         <Divider></Divider>
       </Td>
       <Td flex={tdFlex[2]}>
-        {total && (
+        {total ? (
           <>
             <Cases>{numberWithCommas(total[0])}</Cases>
             <Box fontSize="10px" opacity={0.6} ml="2px">
@@ -83,6 +82,10 @@ const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
             </Box>
             <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
           </>
+        ) : (
+          <Box fontSize="12px" opacity={0.8} ml="2px">
+            NA
+          </Box>
         )}
       </Td>
       <Td flex={tdFlex[3]}>

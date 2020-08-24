@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UpdateCard from "../UpdateCard";
 import { Col, Row, Absolute } from "../Layout";
 import Modal from "../Modal";
@@ -66,6 +66,11 @@ const Updates = ({ data }) => {
     setData(filtered);
   };
 
+  useEffect(() => {
+    setData(data);
+  }, [data]);
+
+  if (data.length == 0) return <></>;
   return (
     <Wrapper fadeInUp>
       <Modal

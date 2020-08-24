@@ -44,7 +44,6 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
   );
 };
 const Board = ({ data }) => {
-  console.log(data);
   return (
     <Row>
       <Stat data={data.confirmed} title={"총 확진자"} isToday fadeInUp delay={2}></Stat>

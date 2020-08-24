@@ -7,8 +7,8 @@ const useTranslation = () => {
     cityName = cityName.indexOf("c") == -1 ? cityName : "";
 
     let guName = t(`c${cityId}/${guId}`);
-    guName = guName.indexOf("c") == -1 ? guName : "";
-
+    guName = guName == cityName || guId == "_" ? "전체" : guName;
+    guName = guName.indexOf("c") > -1 ? "" : guName;
     return guName != "" ? guName : cityName;
   };
 
