@@ -5,6 +5,7 @@ import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@util
 import useSWR, { mutate } from "swr";
 import styled from "styled-components";
 import { media } from "@styles";
+import useScrollTop from "@hooks/useScrollTop";
 
 const NavBar = lazy(() => import("./NavBar"));
 const Updates = lazy(() => import("./Updates"));
@@ -22,6 +23,7 @@ const Wrapper = styled(Col)`
 `;
 
 const Home = ({ theme, setTheme }) => {
+  useScrollTop();
   const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
     refreshInterval: 20000,
