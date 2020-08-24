@@ -47,6 +47,7 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
 
           return (
             <Row
+              updates={updates.filter(({ city, gu }) => city == cityId && gu == id)}
               tdFlex={tdFlex}
               fadeInUp
               delay={i * 1.5}
