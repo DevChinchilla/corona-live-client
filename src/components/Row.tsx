@@ -74,6 +74,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
   return (
     <>
       <UpdateModal
+        isDistrict={cityId != null}
         {...{ onClose: () => setShowModal(false), showModal, data: updates }}
       ></UpdateModal>
 
@@ -93,7 +94,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
               <Box fontSize="10px" opacity={0.6} ml="2px">
                 명
               </Box>
-              <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+              {cityId == null && <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>}
             </>
           ) : (
             <Box fontSize="12px" opacity={0.8} ml="2px">

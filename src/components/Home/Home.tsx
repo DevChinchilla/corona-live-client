@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import { Col } from "../Layout";
-import { API_ROOT, TODAY_API_ROOT, CITY_TD_FLEX } from "@consts";
-import { fetcher, getStatsWithUpdates, getStatsDeltaV2, sortByDate } from "@utils";
+import { API_ROOT, CITY_TD_FLEX } from "@consts";
+import { fetcher, sortByDate } from "@utils";
 import useSWR, { mutate } from "swr";
 import styled from "styled-components";
 import { media } from "@styles";
@@ -11,6 +11,7 @@ const NavBar = lazy(() => import("./NavBar"));
 const Updates = lazy(() => import("./Updates"));
 const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
+const Footer = lazy(() => import("../Footer"));
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;
@@ -33,8 +34,6 @@ const Home = ({ theme, setTheme }) => {
     revalidateOnMount: true,
     refreshInterval: 20000,
   });
-
-  console.log("rendered");
 
   return (
     <Wrapper>
@@ -62,6 +61,11 @@ const Home = ({ theme, setTheme }) => {
             updates={sortByDate(updatesData)}
             tdFlex={CITY_TD_FLEX}
           ></Table>
+        </Suspense>
+      )}
+      {statsData && updatesData && (
+        <Suspense fallback={<div />}>
+          <Footer></Footer>
         </Suspense>
       )}
     </Wrapper>

@@ -81,7 +81,7 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
     <CategoryContainer fadeInUp delay={1}>
       <CategoryBox onClick={() => onSearchKeyword("")} active={keyword == ""}>
         전체
-        <CategoryCount>{data.length}</CategoryCount>
+        <CategoryCount>{data.length}건</CategoryCount>
       </CategoryBox>
 
       {CITY_IDS.map((cityId) => {
@@ -89,7 +89,7 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
         return (
           <CategoryBox onClick={() => onSearchKeyword(name)} active={keyword == name}>
             {name}
-            <CategoryCount>{categoryCounts[cityId]}</CategoryCount>
+            <CategoryCount>{categoryCounts[cityId] || 0}건</CategoryCount>
           </CategoryBox>
         );
       })}
@@ -97,7 +97,7 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
   );
 };
 
-export const UpdateModal = ({ onClose, showModal, data }) => {
+export const UpdateModal = ({ onClose, showModal, data, isDistrict }) => {
   const _theme = useTheme();
   const [ct] = useTranslation();
 
@@ -130,30 +130,34 @@ export const UpdateModal = ({ onClose, showModal, data }) => {
     <Modal
       show={showModal}
       onClose={onClose}
-      title={"금일 추가 확진자"}
-      actionIcon={!showCategories ? ["Category", 18] : ["Search", 14]}
+      title={"금일 추가 확진자 알림"}
+      actionIcon={isDistrict ? [] : !showCategories ? ["Category", 18] : ["Search", 14]}
       onActionClick={onToggle}
     >
-      {showCategories ? (
-        <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
-      ) : (
+      {!isDistrict && (
         <>
-          <SearchInput fadeInUp delay={1}>
-            <Absolute right="18px" verticalCenter onClick={() => onSearchKeyword(keyword)}>
-              <Icon name="Search" fill={_theme("darkGreyText")} size={14}></Icon>
-            </Absolute>
-            <input
-              placeholder="지역 검색"
-              onChange={(e) => setKeyword(e.target.value)}
-              onKeyUp={onEnter((e) => onSearchKeyword(e.target.value))}
-              value={keyword}
-            ></input>
-          </SearchInput>
-          {filteredData && (
-            <Row fontSize="10px" jc="center" mb="10px" fadeInUp>
-              <Row opacity={0.8}>{"검색 결과"}</Row>
-              <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
-            </Row>
+          {showCategories ? (
+            <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
+          ) : (
+            <>
+              <SearchInput fadeInUp delay={1}>
+                <Absolute right="18px" verticalCenter onClick={() => onSearchKeyword(keyword)}>
+                  <Icon name="Search" fill={_theme("darkGreyText")} size={14}></Icon>
+                </Absolute>
+                <input
+                  placeholder="지역 검색"
+                  onChange={(e) => setKeyword(e.target.value)}
+                  onKeyUp={onEnter((e) => onSearchKeyword(e.target.value))}
+                  value={keyword}
+                ></input>
+              </SearchInput>
+              {filteredData && (
+                <Row fontSize="10px" jc="center" mb="10px" fadeInUp>
+                  <Row opacity={0.8}>{"검색 결과"}</Row>
+                  <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
+                </Row>
+              )}
+            </>
           )}
         </>
       )}

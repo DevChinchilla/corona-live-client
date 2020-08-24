@@ -15,6 +15,7 @@ import useTheme from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import useScrollTop from "@hooks/useScrollTop";
 import Underline from "@components/Underline";
+import Footer from "@components/Footer";
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;
@@ -81,6 +82,7 @@ const City = ({ match }) => {
           ></Table>
         </Suspense>
       )}
+      {statsData && updatesData && <Footer></Footer>}
     </Wrapper>
   );
 };

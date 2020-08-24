@@ -13,6 +13,11 @@ import Search from "./Search";
 import Dark from "./Dark";
 import Light from "./Light";
 import Category from "./Category";
+import Facebook from "./Facebook";
+import KakaoTalk from "./KakaoTalk";
+import Twitter from "./Twitter";
+import Blog from "./Blog";
+import Link from "./Link";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -31,6 +36,11 @@ const icons = {
   Dark,
   Light,
   Category,
+  Facebook,
+  KakaoTalk,
+  Twitter,
+  Link,
+  Blog,
 };
 
 export type IconType = keyof typeof icons;
