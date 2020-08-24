@@ -59,12 +59,19 @@ const RowComponent = ({ data, cityId, id, updateTime, tdFlex, ...props }) => {
   const currentColor = deltaPositive ? "red" : "blue";
 
   const name = cityId ? ct(cityId, id) : ct(id);
+
   if (!name) return <></>;
+
+  const onClick = () => {
+    if (cityId == null) {
+      history.push(`./city/${cityId || id}`);
+    } else {
+      console.log("hello");
+    }
+  };
+
   return (
-    <Wrapper
-      {...props}
-      onClick={() => history.push(`./city/${cityId || id}${cityId != null ? `/gu/${id}` : ""}`)}
-    >
+    <Wrapper {...props} onClick={onClick}>
       <Td flex={tdFlex[0]}>
         <Box fontSize="12px" fontWeight={500}>
           {name}

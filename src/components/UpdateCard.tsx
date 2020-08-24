@@ -90,7 +90,7 @@ interface Props {
   fadeInUp?: boolean;
   delay?: number;
 }
-const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }) => {
+export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }) => {
   const [ct] = useTranslation();
 
   const [showDetails, setShowDetails] = useState(false);
