@@ -134,7 +134,7 @@ const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }
           animationData.map(
             ({ datetime }, i) =>
               contentIndex.current == i && (
-                <AnimationContainer fadeInUp key={datetime}>
+                <AnimationContainer fadeInUp key={`${datetime}/${i}`}>
                   <Content {...{ datetime, from, title, showDetails }}></Content>
                 </AnimationContainer>
               )

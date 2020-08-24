@@ -20,10 +20,12 @@
       content="코로나, 코로나라이브, 코로나현황, 실시간코로나, 코로나멥, 확진자"
     />
     <base href="/" />
-    <!-- <link rel="preconnect" href="" as="fetch" /> -->
+
+    <link rel="preconnect" href="https://api.corona-live.com/stats.json" as="fetch" />
+    <link rel="preconnect" href="https://api.corona-live.com/updates.json" as="fetch" />
 
     <!-- Font Preloading -->
-    <link
+    <!-- <link
       rel="preload"
       href="/fonts/noto-sans-kr-v12-korean-300.woff2"
       as="font"
@@ -50,7 +52,7 @@
       as="font"
       type="font/woff2"
       crossorigin
-    />
+    /> -->
 
     <style>
       /* noto-sans-kr-300 - korean */
@@ -130,7 +132,9 @@
     <div id="root"></div>
     <div id="root-portal"></div>
   </body>
-
+  <script>
+    console.log("got em");
+  </script>
   <!-- Google Analytics -->
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176122432-1"></script>

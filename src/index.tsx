@@ -1,14 +1,20 @@
+import * as serviceWorker from "./serviceWorker";
 import "./i18n";
-import React, { Suspense } from "react";
-import ReactDOM from "react-dom";
+import React, { Suspense, lazy } from "react";
+import { render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import App from "./App";
+const App = lazy(() => import("./App"));
+const rootElement = document.getElementById("root");
 
-ReactDOM.render(
-  <Suspense fallback={<div></div>}>
-    <Router>
-      <App />
-    </Router>
-  </Suspense>,
-  document.getElementById("root")
-);
+const main = () =>
+  render(
+    <Suspense fallback={<div />}>
+      <Router>
+        <App />
+      </Router>
+    </Suspense>,
+    rootElement
+  );
+
+main();
+serviceWorker.register();

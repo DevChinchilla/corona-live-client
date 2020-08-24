@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   mode: "none",
@@ -34,13 +36,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
     }),
-
     new CopyPlugin({
       patterns: [
         { from: "public/fonts", to: "fonts" },
         { from: "public/assets", to: "." },
       ],
     }),
+    // new BrotliPlugin({
+    //   asset: "[path].br[query]",
+    //   test: /\.(js|css|html|svg)$/,
+    //   threshold: 10240,
+    //   minRatio: 0.8,
+    // }),
+    new CompressionPlugin(),
   ],
   devServer: {
     contentBase: __dirname + "/dist/",

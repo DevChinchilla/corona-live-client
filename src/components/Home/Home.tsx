@@ -24,12 +24,12 @@ const Wrapper = styled(Col)`
 const Home = ({ theme, setTheme }) => {
   const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 5000,
+    refreshInterval: 20000,
   });
 
   const { data: statsData } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
     revalidateOnMount: true,
-    refreshInterval: 5000,
+    refreshInterval: 20000,
   });
 
   console.log("rendered");
@@ -39,11 +39,13 @@ const Home = ({ theme, setTheme }) => {
       <Suspense fallback={<div />}>
         <NavBar {...{ theme, setTheme }}></NavBar>
       </Suspense>
+
       {updatesData && (
         <Suspense fallback={<div />}>
           <Updates data={sortByDate(updatesData)}></Updates>
         </Suspense>
       )}
+
       {statsData && (
         <Suspense fallback={<div />}>
           <Board data={statsData.overview}></Board>
