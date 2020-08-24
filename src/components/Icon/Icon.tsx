@@ -18,6 +18,7 @@ import KakaoTalk from "./KakaoTalk";
 import Twitter from "./Twitter";
 import Blog from "./Blog";
 import Link from "./Link";
+import LogoIcon from "./LogoIcon";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -41,6 +42,7 @@ const icons = {
   Twitter,
   Link,
   Blog,
+  LogoIcon,
 };
 
 export type IconType = keyof typeof icons;

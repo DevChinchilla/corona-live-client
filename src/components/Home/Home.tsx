@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Col } from "../Layout";
 import { API_ROOT, CITY_TD_FLEX } from "@consts";
 import { fetcher, sortByDate } from "@utils";
@@ -6,12 +6,14 @@ import useSWR, { mutate } from "swr";
 import styled from "styled-components";
 import { media } from "@styles";
 import useScrollTop from "@hooks/useScrollTop";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 
 const NavBar = lazy(() => import("./NavBar"));
 const Updates = lazy(() => import("./Updates"));
 const Board = lazy(() => import("./Board"));
 const Table = lazy(() => import("../Table"));
 const Footer = lazy(() => import("../Footer"));
+const Popup = lazy(() => import("../Popup"));
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;
@@ -25,6 +27,9 @@ const Wrapper = styled(Col)`
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
+
+  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
+
   const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
     refreshInterval: 20000,
@@ -37,6 +42,10 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Wrapper>
+      <Suspense fallback={<div />}>
+        <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
+      </Suspense>
+
       <Suspense fallback={<div />}>
         <NavBar {...{ theme, setTheme }}></NavBar>
       </Suspense>

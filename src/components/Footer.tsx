@@ -60,7 +60,8 @@ const Footer = (props) => {
   function copyToClipboard(e) {
     textAreaRef.current!.select();
     document.execCommand("copy");
-    e.target.focus();
+    textAreaRef.current!.blur();
+    e.target.blur();
     setCopySuccess(true);
     setTimeout(() => {
       setCopySuccess(false);
