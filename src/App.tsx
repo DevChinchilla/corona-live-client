@@ -2,6 +2,7 @@ import React, { useState, lazy, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, themes } from "@styles";
 import { Switch, Redirect, Route, useLocation } from "react-router-dom";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 
 const Home = lazy(() => import("@components/Home"));
 const City = lazy(() => import("@components/City"));
@@ -18,7 +19,7 @@ const pages = [
 ];
 
 const App = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useLocalStorage("theme", "dark");
   const location = useLocation();
 
   return (

@@ -33,7 +33,6 @@ const Wrapper = styled(Row)`
 const NavBar = ({ theme: currentTheme, setTheme }) => {
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
-  console.log(currentTheme);
 
   return (
     <>
