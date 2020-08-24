@@ -12,6 +12,7 @@ import Logo from "./Logo";
 import Search from "./Search";
 import Dark from "./Dark";
 import Light from "./Light";
+import Category from "./Category";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -29,6 +30,7 @@ const icons = {
   Search,
   Dark,
   Light,
+  Category,
 };
 
 export type IconType = keyof typeof icons;

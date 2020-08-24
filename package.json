@@ -6,7 +6,7 @@
     "scripts": {
         "bundle": "webpack",
         "build": "webpack -p --mode=production",
-        "start": "webpack-dev-server --mode development --open --hot --compress",
+        "start": "webpack-dev-server --mode development --open --hot ",
         "check-types": "tsc"
     },
     "keywords": [],

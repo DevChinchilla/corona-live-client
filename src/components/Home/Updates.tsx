@@ -23,7 +23,7 @@ const Time = styled(Col)`
 `;
 
 const Updates = ({ data }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   if (data.length == 0) return <></>;
   return (

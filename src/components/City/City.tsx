@@ -14,6 +14,7 @@ import Button from "@components/Button";
 import useTheme from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import useScrollTop from "@hooks/useScrollTop";
+import Underline from "@components/Underline";
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;
@@ -22,22 +23,6 @@ const Wrapper = styled(Col)`
   width: 400px;
   ${media.phablet} {
     width: 100%;
-  }
-`;
-
-const Title = styled.div`
-  position: relative;
-  font-weight: 900;
-  font-size: 18px;
-  &:after {
-    content: "";
-    position: absolute;
-    left: 2px;
-    bottom: 0px;
-    width: 110%;
-    height: 8px;
-    background: ${theme("lightGreyText")};
-    z-index: -1;
   }
 `;
 
@@ -66,11 +51,13 @@ const City = ({ match }) => {
   const current = {};
   return (
     <Wrapper>
-      <Row jc="space-between" ai="center" mb="20px" mt="0px">
+      <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
         <Button onClick={() => history.push("/")} white>
           <Icon name="ChevronLeft" stroke={_theme("darkGreyText")} size={20}></Icon>
         </Button>
-        <Title>{t(`c${cityId}`)}</Title>
+        <Underline fontSize="18px " fontWeight={900}>
+          {t(`c${cityId}`)}
+        </Underline>
         <Button white>
           <Icon name="Refresh" size={12} fill={_theme("darkGreyText")}></Icon>
         </Button>

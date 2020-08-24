@@ -45,7 +45,7 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
 };
 const Board = ({ data }) => {
   return (
-    <Row>
+    <Row jc="space-evenly">
       <Stat data={data.confirmed} title={"총 확진자"} isToday fadeInUp delay={2}></Stat>
       <Box w="40px"></Box>
       <Stat data={data.current} title={"오늘"} fadeInUp delay={3}></Stat>
