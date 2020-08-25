@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import CountUp from "react-countup";
 
-import { Row, Col, Box } from "../Layout";
+import { Row, Col, Box } from "./Layout";
 import DeltaTag from "@components/DeltaTag";
 import { useTheme } from "@hooks/useTheme";
 

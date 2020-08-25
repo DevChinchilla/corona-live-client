@@ -3,6 +3,7 @@ import styled, { css, ThemedStyledFunction, keyframes } from "styled-components"
 
 import mixins, { BoxProps } from "@styles/mixins";
 import { addIfProp, ifProp } from "@styles/tools";
+import { media } from "@styles";
 
 const SBox = styled.div`
   ${mixins.BoxCss};
@@ -48,3 +49,14 @@ const SAbsolute = styled(Flex)`
   ${ifProp("horizontalCenter", mixins.AbsoluteHorizontalCenter)}
 `;
 export const Absolute: FC<AbsoluteProps> = (props) => <SAbsolute {...props}></SAbsolute>;
+
+const SPage = styled(Col)`
+  box-sizing: border-box;
+  padding: 20px;
+  margin: auto;
+  width: 400px;
+  ${media.phablet} {
+    width: 100%;
+  }
+`;
+export const Page: FC<AbsoluteProps> = (props) => <SPage {...props}></SPage>;

@@ -1,53 +1,34 @@
 import React, { lazy, Suspense, useState } from "react";
-import { Col } from "../Layout";
-import { API_ROOT, CITY_TD_FLEX } from "@consts";
-import { fetcher, sortByDate } from "@utils";
-import useSWR, { mutate } from "swr";
-import styled from "styled-components";
-import { media } from "@styles";
+
+import { Page } from "@components/Layout";
+
+import { sortByDate } from "@utils";
+import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
+import { useData } from "@hooks/useData";
 
-const NavBar = lazy(() => import("./NavBar"));
-const Updates = lazy(() => import("./Updates"));
-const Board = lazy(() => import("./Board"));
-const Table = lazy(() => import("../Table"));
-const Footer = lazy(() => import("../Footer"));
-const Popup = lazy(() => import("../Popup"));
-
-const Wrapper = styled(Col)`
-  box-sizing: border-box;
-  padding: 20px;
-  margin: auto;
-  width: 400px;
-  ${media.phablet} {
-    width: 100%;
-  }
-`;
+const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
+const Updates = lazy(() => import("@components/Home/Updates"));
+const Board = lazy(() => import("@components/Board"));
+const Table = lazy(() => import("@components/Table"));
+const Footer = lazy(() => import("@components/Footer"));
+const Popup = lazy(() => import("@components/Popup"));
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
 
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-
-  const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
-    revalidateOnMount: true,
-    refreshInterval: 20000,
-  });
-
-  const { data: statsData } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
-    revalidateOnMount: true,
-    refreshInterval: 20000,
-  });
+  const [updatesData, statsData, mutateData] = useData();
 
   return (
-    <Wrapper>
+    <Page>
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
 
       <Suspense fallback={<div />}>
-        <NavBar {...{ theme, setTheme }}></NavBar>
+        <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
       {updatesData && (
@@ -77,7 +58,7 @@ const Home = ({ theme, setTheme }) => {
           <Footer></Footer>
         </Suspense>
       )}
-    </Wrapper>
+    </Page>
   );
 };
 

@@ -31,7 +31,7 @@ const Wrapper = styled(Row)`
   justify-content: space-between;
 `;
 
-const NavBar = ({ theme: currentTheme, setTheme }) => {
+const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
 
@@ -58,7 +58,7 @@ const NavBar = ({ theme: currentTheme, setTheme }) => {
             name="Refresh"
             size={12}
             fill={theme("darkGreyText")}
-            onClick={() => mutate(`${API_ROOT}/stats.json`)}
+            onClick={() => mutateData()}
           ></Icon>
         </Button>
       </Wrapper>
