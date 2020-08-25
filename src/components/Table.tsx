@@ -55,7 +55,6 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
               fadeInUp
               delay={i * 1.5}
               even={i % 2 == 0}
-              key={cityId}
               cityId={cityId}
               id={id}
               updateTime={latestUpdate?.datetime}
@@ -63,6 +62,7 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
                 total: overall[id]?.cases || overall[id],
                 current: current[id]?.cases || current[id],
               }}
+              key={`${cityId}/${id}`}
             ></Row>
           );
         })}

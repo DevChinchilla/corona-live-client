@@ -69,7 +69,7 @@ const Footer = (props) => {
 
   return (
     <Wrapper fadeInUp delay={6}>
-      <textarea ref={textAreaRef} value={WEBSITE_URL} />
+      <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
 
       <Row fontSize="11px" mb="14px" opacity={0.5}>
         공유하기

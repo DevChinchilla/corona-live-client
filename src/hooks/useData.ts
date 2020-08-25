@@ -24,6 +24,7 @@ export const useData = () => {
   const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesSuccess = (data: UpdateType[]) => {
+    if (!updates.data) setUpdates({ data });
     const isChanged = jsonCompare(data, updates.data) == false;
     if (isChanged && isInitialised) {
       const newUpdates = data.filter(
@@ -40,11 +41,10 @@ export const useData = () => {
       setNotification({ counts: updatedCitiesCount, total: updatedTotal });
       setUpdates({ data });
     }
-
-    if (!updates.data) setUpdates({ data });
   };
 
   const onStatsSuccess = (data: StatsType) => {
+    if (!stats.data) setStats({ data });
     const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
     const [cases, delta] = data?.overview?.current || [0, 0];
     const isChanged = prevCases != cases || prevDelta != delta;
@@ -57,8 +57,6 @@ export const useData = () => {
       });
       setStats({ data });
     }
-
-    if (!stats.data) setStats({ data });
   };
 
   const { mutate: mutateUpdates, isValidating: updatesValidating } = useSWR(
@@ -67,6 +65,7 @@ export const useData = () => {
     {
       refreshInterval: 30000,
       revalidateOnReconnect: true,
+      revalidateOnMount: true,
       onSuccess: onUpdatesSuccess,
     }
   );
@@ -77,6 +76,8 @@ export const useData = () => {
     {
       refreshInterval: 30000,
       revalidateOnReconnect: true,
+      revalidateOnMount: true,
+
       onSuccess: onStatsSuccess,
     }
   );

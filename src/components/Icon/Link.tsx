@@ -3,7 +3,7 @@ import React from "react";
 function Link() {
   return (
     <svg
-      enable-background="new 0 0 515.556 515.556"
+      enableBackground="new 0 0 515.556 515.556"
       height="12"
       viewBox="0 0 515.556 515.556"
       style={{ transform: "scale(0.9)" }}
