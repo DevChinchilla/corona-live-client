@@ -1,8 +1,12 @@
+import { useState } from "react";
 import useSWR, { mutate } from "swr";
+
 import { API_ROOT } from "@consts";
 import { fetcher } from "@utils";
 
 export const useData = () => {
+  const [isUpating, setIsUpating] = useState(false);
+
   const { data: updatesData } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
     revalidateOnMount: true,
     refreshInterval: 20000,
@@ -18,5 +22,5 @@ export const useData = () => {
     mutate(`${API_ROOT}/stats.json`);
   };
 
-  return [updatesData, statsData, mutateData];
+  return [updatesData, statsData, mutateData, isUpating];
 };

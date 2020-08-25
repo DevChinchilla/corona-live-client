@@ -8,6 +8,7 @@ import { UpdateModal } from "@components/UpdateModal";
 import { theme } from "@styles/themes";
 import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
+import Spinner from "@components/Spinner";
 
 const Wrapper = styled(Col)`
   width: 100%;
@@ -26,19 +27,22 @@ const Time = styled(Col)`
 `;
 
 const RefreshButton = styled(Row)`
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: 6px;
+  width: 50px;
   background: ${theme("updateCard")};
+  margin-left: 6px;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
   svg {
     fill: ${theme("darkGreyText")};
   }
+  div:after,
+  div:before {
+    background: ${theme("updateCard")}!important;
+  }
 `;
 
-const Updates = ({ data }) => {
+const Updates = ({ data, mutateData, isUpdating }) => {
   const [showModal, setShowModal] = useState(false);
   if (data.length == 0) return <></>;
   return (
@@ -52,7 +56,11 @@ const Updates = ({ data }) => {
           animationData={data.slice(0, 5)}
         ></UpdateCard>
         <RefreshButton>
-          <Icon name="Refresh" size={24}></Icon>
+          {isUpdating ? (
+            <Spinner size={16} color={"darkGreyText"}></Spinner>
+          ) : (
+            <Icon name="Refresh" size={24}></Icon>
+          )}
         </RefreshButton>
       </Row>
     </Wrapper>

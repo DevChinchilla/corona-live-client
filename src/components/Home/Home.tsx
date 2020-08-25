@@ -20,11 +20,10 @@ const Home = ({ theme, setTheme }) => {
   useScrollTop();
 
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-  const [updatesData, statsData, mutateData] = useData();
+  const [updatesData, statsData, mutateData, isUpdating] = useData();
 
   return (
     <Page>
-      <Spinner size={20}></Spinner>
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
@@ -35,7 +34,7 @@ const Home = ({ theme, setTheme }) => {
 
       {updatesData && (
         <Suspense fallback={<div />}>
-          <Updates data={sortByDate(updatesData)}></Updates>
+          <Updates data={sortByDate(updatesData)} {...{ mutateData, isUpdating }}></Updates>
         </Suspense>
       )}
 
