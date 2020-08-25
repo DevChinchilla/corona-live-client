@@ -29,7 +29,6 @@ const Wrapper = styled(Col)`
     padding: 10px;
     /* background: ${theme("greyBg")}; */
     background: transparent;
-    border-radius: 12px;
     border: none;
     flex: 1;
   }

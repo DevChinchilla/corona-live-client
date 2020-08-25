@@ -8,10 +8,7 @@ export const numberWithCommas = (number) => {
 };
 
 export const fetcher = (url) => {
-  // return fetch(`${url}?timestamp=${new Date().getTime()}`).then((response) => {
-  //   return response.json();
-  // });
-  return fetch(url).then((response) => {
+  return fetch(`${url}?timestamp=${new Date().getTime()}`).then((response) => {
     return response.json();
   });
 };

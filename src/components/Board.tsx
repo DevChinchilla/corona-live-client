@@ -67,7 +67,7 @@ const Board = ({ data }) => {
         isToday
         fadeInUp
         delay={2}
-        info="어제 증가수 (공식)"
+        info="어제 증가수"
       ></Stat>
       <Box w="40px"></Box>
       <Stat
