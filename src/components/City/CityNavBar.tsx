@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 
-import { Col, Row, Box } from "@components/Layout";
+import { Row } from "@components/Layout";
 import Icon from "@components/Icon";
 import Button from "@components/Button";
 import Underline from "@components/Underline";
+import Report from "@components/Report";
 
 import { useTheme } from "@hooks/useTheme";
 import { useHistory } from "react-router-dom";
@@ -17,19 +18,23 @@ type Props = {
 const CityNavBar: React.FC<Props> = ({ cityId, mutateData }) => {
   const [ct] = useTranslation();
   const history = useHistory();
+  const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
   return (
-    <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
-      <Button onClick={() => history.push("/")} white>
-        <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={20}></Icon>
-      </Button>
-      <Underline fontSize="18px " fontWeight={900}>
-        {ct(cityId)}
-      </Underline>
-      <Button white>
-        <Icon name="SendMessage" size={12} fill={theme("darkGreyText")}></Icon>
-      </Button>
-    </Row>
+    <>
+      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
+      <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
+        <Row px="10px" onClick={() => history.push("/")}>
+          <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
+        </Row>
+        <Underline fontSize="18px " fontWeight={900}>
+          {ct(cityId)}
+        </Underline>
+        <Row px="10px" onClick={() => setShowReport(true)}>
+          <Icon name="SendMessage" size={24} fill={theme("darkGreyText")}></Icon>
+        </Row>
+      </Row>
+    </>
   );
 };
 

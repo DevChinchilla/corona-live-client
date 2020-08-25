@@ -39,9 +39,6 @@ const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
-        {/* <Button onClick={() => setShowReport(true)} white>
-          제보
-        </Button> */}
         <Row px="10px" onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
           <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
         </Row>
@@ -54,12 +51,7 @@ const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
         ></Icon>
 
         <Row px="10px" onClick={() => setShowReport(true)}>
-          <Icon
-            name="SendMessage"
-            size={24}
-            fill={theme("darkGreyText")}
-            onClick={() => mutateData()}
-          ></Icon>
+          <Icon name="SendMessage" size={24} fill={theme("darkGreyText")}></Icon>
         </Row>
       </Wrapper>
     </>
