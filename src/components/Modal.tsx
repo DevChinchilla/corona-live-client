@@ -64,7 +64,7 @@ interface Props {
   hideOverlay?: boolean;
   onActionClick?: any;
   style?: any;
-  actionIcon?: any[];
+  actionIcon?: any;
 }
 
 const Modal: FC<Props> = ({

@@ -132,7 +132,7 @@ export const UpdateModal = ({ onClose, showModal, data, isDistrict }) => {
       show={showModal}
       onClose={onClose}
       title={"오늘 추가 확진자 알림"}
-      actionIcon={isDistrict ? [] : !showCategories ? ["Category", 18] : ["Search", 14]}
+      actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
       onActionClick={onToggle}
     >
       {!isDistrict && (
@@ -162,7 +162,7 @@ export const UpdateModal = ({ onClose, showModal, data, isDistrict }) => {
           )}
         </>
       )}
-      <Col flex={1} overflowY="auto">
+      <Col flex={1} overflowY="auto" overflowX="hidden">
         {filteredData &&
           sortByDate(filteredData, "datetime").map((update, i) => (
             <UpdateCard
