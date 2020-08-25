@@ -7,7 +7,7 @@ import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
-import Spinner from "@components/Spinner";
+import { CurrentType, OverallType } from "@types";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -20,7 +20,7 @@ const Home = ({ theme, setTheme }) => {
   useScrollTop();
 
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-  const [updatesData, statsData, mutateData, isUpdating] = useData();
+  const { updatesData, statsData, mutateData, isUpdating } = useData();
 
   return (
     <Page>
@@ -47,8 +47,8 @@ const Home = ({ theme, setTheme }) => {
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
           <Table
-            current={statsData.current}
-            overall={statsData.overall}
+            current={statsData.current as CurrentType}
+            overall={statsData.overall as OverallType}
             updates={sortByDate(updatesData)}
             tdFlex={CITY_TD_FLEX}
           ></Table>

@@ -55,7 +55,7 @@ const Updates = ({ data, mutateData, isUpdating }) => {
           onClick={() => setShowModal(true)}
           animationData={data.slice(0, 5)}
         ></UpdateCard>
-        <RefreshButton>
+        <RefreshButton onClick={() => (!isUpdating ? mutateData() : null)}>
           {isUpdating ? (
             <Spinner size={16} color={"darkGreyText"}></Spinner>
           ) : (
