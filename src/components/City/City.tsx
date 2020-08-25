@@ -25,7 +25,7 @@ const City = ({ match }) => {
     notification,
     removeNotification,
   } = useData();
-  console.log({ updatesData, statsData });
+
   return (
     <Page>
       <CityNavBar {...{ cityId, mutateData }}></CityNavBar>

@@ -138,9 +138,9 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
       >
         {animationData ? (
           animationData.map(
-            ({ datetime }, i) =>
+            ({ datetime, city }, i) =>
               contentIndex.current == i && (
-                <AnimationContainer fadeInUp key={`${datetime}/${i}`}>
+                <AnimationContainer fadeInUp key={`${datetime}/${city}/${i}`}>
                   <Content {...{ datetime, from, title, showDetails }}></Content>
                 </AnimationContainer>
               )

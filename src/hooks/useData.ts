@@ -65,7 +65,7 @@ export const useData = () => {
     {
       refreshInterval: 30000,
       revalidateOnReconnect: true,
-      revalidateOnMount: true,
+      revalidateOnMount: false,
       onSuccess: onUpdatesSuccess,
     }
   );
@@ -76,8 +76,7 @@ export const useData = () => {
     {
       refreshInterval: 30000,
       revalidateOnReconnect: true,
-      revalidateOnMount: true,
-
+      revalidateOnMount: false,
       onSuccess: onStatsSuccess,
     }
   );
@@ -101,6 +100,11 @@ export const useData = () => {
   };
 
   const isLoading = updates.loading;
+
+  useEffect(() => {
+    console.log({ isInitialised, isLoading });
+    if (!isInitialised && !isLoading) mutateData();
+  }, [isInitialised]);
 
   const removeNotification = () => setNotification(null, true);
 

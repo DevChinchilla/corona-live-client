@@ -4,22 +4,32 @@ import CountUp from "react-countup";
 import { Row, Col, Box } from "./Layout";
 import DeltaTag from "@components/DeltaTag";
 import { useTheme } from "@hooks/useTheme";
+import Icon from "./Icon";
+import styled from "styled-components";
 
+const Info = styled(Row)`
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 4px;
+  align-items: center;
+  span {
+    margin-left: 2px;
+  }
+`;
 interface Props {
   title: string;
   data: any;
   isToday?: boolean;
   fadeInUp?: boolean;
   delay?: number;
+  info: string;
 }
-const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
+const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
   const [total, delta] = data;
   const theme = useTheme();
 
   const deltaPositive = delta > 0;
-  // const color = isToday ? "darkGreyText" : deltaPositive ? "red" : "blue";
   const color = "darkGreyText";
-  // const deltaColor = isToday ? "greyText" : color;
   const deltaColor = isToday ? "red" : deltaPositive ? "red" : "blue";
   const _color = theme(color);
 
@@ -39,16 +49,34 @@ const Stat: FC<Props> = ({ title, data, isToday, ...props }) => {
           </Box>
           <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
+        <Info>
+          <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
+          <span>{info}</span>
+        </Info>
       </Col>
     </Col>
   );
 };
+
 const Board = ({ data }) => {
   return (
     <Row jc="space-evenly">
-      <Stat data={data.confirmed} title={"총 확진자"} isToday fadeInUp delay={2}></Stat>
+      <Stat
+        data={data.confirmed}
+        title={"총 확진자 (공식)"}
+        isToday
+        fadeInUp
+        delay={2}
+        info="어제 증가수 (공식)"
+      ></Stat>
       <Box w="40px"></Box>
-      <Stat data={data.current} title={"오늘"} fadeInUp delay={3}></Stat>
+      <Stat
+        data={data.current}
+        title={"오늘 (비공식)"}
+        fadeInUp
+        delay={3}
+        info="어제 동시간 대비 증가수"
+      ></Stat>
     </Row>
   );
 };

@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import { mutate } from "swr";
-
-import Button from "@components/Button";
 import Icon from "@components/Icon";
 import { Row } from "@components/Layout";
 import Report from "@components/Report";
 
-import { palette } from "@styles";
 import { useTheme } from "@hooks/useTheme";
-import { API_ROOT } from "@consts";
+import { theme } from "@styles/themes";
 
 const Logo = styled(Row)`
   span {
@@ -21,7 +17,7 @@ const Logo = styled(Row)`
       color: black;
     }
     &:last-child {
-      color: ${palette.blue};
+      color: ${theme("blue")};
     }
   }
 `;

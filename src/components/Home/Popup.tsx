@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Modal from "@components/Modal";
-import { Col, Box } from "@components/Layout";
+import { Col } from "@components/Layout";
 import Icon from "@components/Icon";
 import Button from "@components/Button";
 import { IMPORTANT_MESSAGE } from "@consts";
@@ -35,7 +35,6 @@ const Popup = ({ show, onClose }) => {
     <Modal show={show} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
         <Icon height="190px" width="300px" name="LogoIcon" transform="translateY(-10px)"></Icon>
-        {/* <Box fontWeight={700}>코로나 라이브 이용안내</Box> */}
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
         <Button big onClick={onClose}>
           닫기

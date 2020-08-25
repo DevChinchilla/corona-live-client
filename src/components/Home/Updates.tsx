@@ -30,7 +30,7 @@ const RefreshButton = styled(Row)`
   width: 50px;
   background: ${theme("updateCard")};
   margin-left: 6px;
-  border-radius: 4px;
+  border-radius: 6px;
   align-items: center;
   justify-content: center;
   svg {

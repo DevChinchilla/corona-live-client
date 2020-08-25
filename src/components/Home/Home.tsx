@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 
 import { Page } from "@components/Layout";
 
@@ -19,8 +19,8 @@ const Popup = lazy(() => import("@components/Home/Popup"));
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
-  console.log("rendered");
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
+  const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
     statsData,
@@ -29,6 +29,12 @@ const Home = ({ theme, setTheme }) => {
     notification,
     removeNotification,
   } = useData();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setrenderIt(true);
+    }, 2000);
+  }, []);
   return (
     <Page>
       {!isLoading && !!notification && (
@@ -45,7 +51,7 @@ const Home = ({ theme, setTheme }) => {
       </Suspense>
 
       {updatesData && (
-        <Suspense fallback={<div />}>
+        <Suspense fallback={<div style={{ height: "120px" }} />}>
           <Updates data={sortByDate(updatesData)} {...{ mutateData, isLoading }}></Updates>
         </Suspense>
       )}
