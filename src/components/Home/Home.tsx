@@ -11,6 +11,7 @@ import { CurrentType, OverallType } from "@types";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
+const Notification = lazy(() => import("@components/Notification"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
@@ -20,10 +21,21 @@ const Home = ({ theme, setTheme }) => {
   useScrollTop();
 
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-  const { updatesData, statsData, mutateData, isUpdating } = useData();
-
+  const {
+    updatesData,
+    statsData,
+    mutateData,
+    isLoading,
+    notification,
+    removeNotification,
+  } = useData();
   return (
     <Page>
+      {!isLoading && !!notification && (
+        <Suspense fallback={<div />}>
+          <Notification notification={notification} onClose={removeNotification}></Notification>
+        </Suspense>
+      )}
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
@@ -34,7 +46,7 @@ const Home = ({ theme, setTheme }) => {
 
       {updatesData && (
         <Suspense fallback={<div />}>
-          <Updates data={sortByDate(updatesData)} {...{ mutateData, isUpdating }}></Updates>
+          <Updates data={sortByDate(updatesData)} {...{ mutateData, isLoading }}></Updates>
         </Suspense>
       )}
 

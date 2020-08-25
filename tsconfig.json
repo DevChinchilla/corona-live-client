@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./src",
-    "lib": ["es2015", "dom.iterable", "es2016.array.include", "es2017.object", "dom"],
+    "lib": ["es5", "es6", "dom", "dom.iterable", "es2015", "es2016.array.include", "es2017.object"],
     "module": "esnext",
     "removeComments": true,
     "alwaysStrict": true,

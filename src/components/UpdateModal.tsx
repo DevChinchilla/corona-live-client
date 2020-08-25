@@ -71,7 +71,6 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
   const categoryCounts = useMemo(
     () =>
       data.reduce((obj, { city }) => {
-        console.log("Categories rendered");
         if (!obj[city]) obj[city] = 0;
         obj[city]++;
         return obj;
@@ -79,7 +78,6 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
     []
   );
 
-  console.log(categoryCounts);
   return (
     <CategoryContainer fadeInUp delay={1}>
       <CategoryBox onClick={() => onSearchKeyword("")} active={keyword == ""}>

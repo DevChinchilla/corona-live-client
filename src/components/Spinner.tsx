@@ -39,7 +39,7 @@ const Wrapper = styled.div<{ size: number; color: ThemeType }>`
   &:after {
     left: ${(props) => props.size / 2}px;
     transform-origin: 0em ${(props) => props.size / 2}px;
-    animation: ${keyFrame} 2s infinite ease;
+    animation: ${keyFrame} 1.5s infinite ease;
   }
 `;
 type Props = {

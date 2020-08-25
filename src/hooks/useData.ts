@@ -1,58 +1,125 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useSWR, { mutate } from "swr";
 
 import { API_ROOT } from "@consts";
-import { fetcher } from "@utils";
-import { StatsType, UpdateType } from "@types";
+import { fetcher, jsonCompare, sleep } from "@utils";
+import { StatsType, UpdateType, NotificationType } from "@types";
+import { useTimeoutState } from "./useTimeoutState";
+import { useObjectState } from "./useObjectState";
+
+interface StatsState {
+  data: StatsType | null;
+  loading: boolean;
+}
+interface UpdatesState {
+  data: UpdateType[] | null;
+  loading: boolean;
+}
 
 export const useData = () => {
-  const [stats, setStats] = useState<{
-    data: StatsType | null;
-    loading: boolean;
-  }>({ data: null, loading: false });
+  // const [notification, setNotification] = useTimeoutState<NotificationType>(null, 3000);
+  const [notification, setNotification] = useObjectState<NotificationType | null>(null);
+  const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
+  const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
 
-  const [updates, setUpdates] = useState<{
-    data: UpdateType[] | null;
-    loading: boolean;
-  }>({ data: null, loading: false });
+  const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesSuccess = (data: UpdateType[]) => {
-    console.log(`[UPDATES] before: ${(updates.data || []).length}, after: ${data.length}`);
-    setUpdates({ data, loading: false });
+    if (isInitialised) {
+      setTimeout(() => {
+        setUpdates({ data, loading: false });
+      }, 1000);
+    } else {
+      setUpdates({ data, loading: false });
+    }
+
+    const isChanged = jsonCompare(data, updates.data) == false;
+
+    if (isChanged && isInitialised) {
+      const newUpdates = data.filter(
+        (newUpdate) => !updates.data?.find((update) => jsonCompare(newUpdate, update))
+      );
+      let updatedTotal = 0;
+      const updatedCitiesCount = newUpdates.reduce((count, { city, cases }) => {
+        if (!count[city]) count[city] = 0;
+        count[city] += cases;
+        updatedTotal += cases;
+        return count;
+      }, {});
+      console.log(`[UPDATES CHANGED]`);
+      setNotification({ counts: updatedCitiesCount, total: updatedTotal });
+      setNotification(
+        (a) =>
+          ({ ...(a || {}), counts: updatedCitiesCount, total: updatedTotal } as NotificationType)
+      );
+    }
   };
 
   const onStatsSuccess = (data: StatsType) => {
-    console.log(
-      `[STATS] before: ${stats.data?.overview?.confirmed}, after: ${data?.overview?.confirmed}`
-    );
     setStats({ data, loading: false });
+
+    const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
+    const [cases, delta] = data?.overview?.current || [0, 0];
+    const isChanged = prevCases != cases || prevDelta != delta;
+
+    if (isChanged && isInitialised) {
+      console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
+      setNotification(
+        (a) =>
+          ({
+            ...(a || {}),
+            current: cases - prevCases,
+            delta: delta - prevDelta,
+          } as NotificationType)
+      );
+    }
   };
 
-  const { mutate: mutateUpdates } = useSWR(`${API_ROOT}/updates.json`, fetcher, {
-    refreshInterval: 20000,
-    revalidateOnReconnect: true,
-    onSuccess: onUpdatesSuccess,
-  });
+  const { mutate: mutateUpdates, isValidating: updatesValidating } = useSWR(
+    `${API_ROOT}/updates.json`,
+    fetcher,
+    {
+      refreshInterval: 5000,
+      revalidateOnReconnect: true,
+      onSuccess: onUpdatesSuccess,
+    }
+  );
 
-  const { mutate: mutateStats } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
-    refreshInterval: 20000,
-    revalidateOnReconnect: true,
-    onSuccess: onStatsSuccess,
-  });
+  const { mutate: mutateStats, isValidating: statsValidating } = useSWR(
+    `${API_ROOT}/stats.json`,
+    fetcher,
+    {
+      refreshInterval: 5000,
+      revalidateOnReconnect: true,
+      onSuccess: onStatsSuccess,
+    }
+  );
 
-  // useEffect(() => {
-  //   console.log({ updatesLoading, statsLoading });
-  // }, [updatesLoading, statsLoading]);
+  useEffect(() => {
+    if (updatesValidating || statsValidating) {
+      setUpdates((a) => ({ ...a, loading: true }));
+    }
+  }, [updatesValidating, statsValidating]);
 
-  const mutateData = () => {
-    mutateUpdates();
-    mutateStats();
-
+  const mutateData = async () => {
     setStats((a) => ({ ...a, loading: true }));
     setUpdates((a) => ({ ...a, loading: true }));
+
+    await sleep(2000);
+    mutateUpdates();
+    mutateStats();
   };
 
-  const isUpdating = stats.loading || updates.loading;
+  const isLoading = stats.loading || updates.loading;
 
-  return { updatesData: updates.data, statsData: stats.data, mutateData, isUpdating };
+  const removeNotification = () => setNotification(null);
+
+  return {
+    updatesData: updates.data,
+    statsData: stats.data,
+    mutateData,
+    isLoading,
+    notification,
+    removeNotification,
+  };
 };

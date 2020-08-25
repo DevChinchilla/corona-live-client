@@ -28,3 +28,10 @@ export interface UpdateType {
   cases: number;
   datetime: string;
 }
+
+export interface NotificationType {
+  counts: { [cityId: string]: number };
+  total: number;
+  current: number;
+  delta: number;
+}

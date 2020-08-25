@@ -69,3 +69,50 @@ export const onEnter = (func) => (e) => {
   console.log(e.key == "Enter");
   if (e.key == "Enter") func(e);
 };
+
+export const jsonCompare = (a, b) => {
+  return JSON.stringify(a) == JSON.stringify(b);
+};
+
+export const sleep = (timeout) => {
+  return new Promise((res) => setTimeout(res, timeout));
+};
+
+// function deepCompareArray(dataA, dataB) {
+//   if (dataA.length != dataB.length) return false;
+//   return (
+//     dataA.filter((objA) =>
+//       dataB.find((objB) =>
+//         Object.keys(objA).filter((key) => {
+//           return objA[key] == objB[key];
+//         })
+//       )
+//     ).length == 0
+//   );
+// }
+
+// function deepCompareArray(dataA, dataB) {
+//   if (dataA.length != dataB.length) return false;
+//   return (
+//     dataA.filter((_, i) => {
+//       if (typeof dataA[i] == "object") {
+//         return deepCompareArray(Object.keys(dataA), Object.keys(dataB));
+//       } else {
+//         return dataA[i] != dataB[i];
+//       }
+//     }).length == 0
+//   );
+// }
+
+// function deepCompareArray(dataA, dataB) {
+//   if (dataA.length != dataB.length) return false;
+//   return dataA.filter((index) => {
+//     console.log({ dataA, dataB, index });
+
+//     if (typeof index == "object") {
+//       return deepCompareArray(Object.keys(dataA), Object.keys(dataB));
+//     } else {
+//       return !dataB.find((comparingindex) => dataB[comparingindex] == dataA[index]);
+//     }
+//   });
+// }

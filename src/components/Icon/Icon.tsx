@@ -20,6 +20,7 @@ import Blog from "./Blog";
 import Link from "./Link";
 import LogoIcon from "./LogoIcon";
 import SendMessage from "./SendMessage";
+import NotificationFilled from "./NotificationFilled";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -45,6 +46,7 @@ const icons = {
   Blog,
   LogoIcon,
   SendMessage,
+  NotificationFilled,
 };
 
 export type IconType = keyof typeof icons;

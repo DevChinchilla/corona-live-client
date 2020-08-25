@@ -42,7 +42,7 @@ const RefreshButton = styled(Row)`
   }
 `;
 
-const Updates = ({ data, mutateData, isUpdating }) => {
+const Updates = ({ data, mutateData, isLoading }) => {
   const [showModal, setShowModal] = useState(false);
   if (data.length == 0) return <></>;
   return (
@@ -55,11 +55,11 @@ const Updates = ({ data, mutateData, isUpdating }) => {
           onClick={() => setShowModal(true)}
           animationData={data.slice(0, 5)}
         ></UpdateCard>
-        <RefreshButton onClick={() => (!isUpdating ? mutateData() : null)}>
-          {isUpdating ? (
+        <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
+          {isLoading ? (
             <Spinner size={16} color={"darkGreyText"}></Spinner>
           ) : (
-            <Icon name="Refresh" size={24}></Icon>
+            <Icon name="Refresh" size={24} fadeInUp></Icon>
           )}
         </RefreshButton>
       </Row>

@@ -9,6 +9,7 @@ import Underline from "@components/Underline";
 import { theme } from "@styles/themes";
 import { media } from "@styles";
 import { useTheme } from "@hooks/useTheme";
+import Overlay from "./Overlay";
 
 const Children = styled.div`
   flex: 1;
@@ -17,17 +18,6 @@ const Children = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   overflow-x: hidden;
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  opacity: 0.5;
-  z-index: 999;
 `;
 
 const ModalContainer = styled(Col)`

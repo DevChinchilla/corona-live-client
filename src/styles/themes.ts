@@ -21,6 +21,8 @@ interface ThemeProps {
   blog: string;
   twitter: string;
   link: string;
+
+  notification: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -48,6 +50,8 @@ const lightTheme: ThemeProps = {
   blog: "#57C04F",
   twitter: "#4A9AE5",
   link: "#999999",
+
+  notification: "#000000d6",
 };
 const darkTheme: ThemeProps = {
   bg: "#191F2C",
@@ -71,6 +75,8 @@ const darkTheme: ThemeProps = {
   blog: "#57C04F",
   twitter: "#4A9AE5",
   link: "#ffffff",
+
+  notification: "#000000d6",
 };
 
 export default { light: lightTheme, dark: darkTheme };
