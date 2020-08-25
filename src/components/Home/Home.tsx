@@ -13,7 +13,7 @@ const Updates = lazy(() => import("@components/Home/Updates"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
-const Popup = lazy(() => import("@components/Popup"));
+const Popup = lazy(() => import("@components/Home/Popup"));
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
