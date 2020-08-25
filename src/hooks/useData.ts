@@ -17,7 +17,6 @@ interface UpdatesState {
 }
 
 export const useData = () => {
-  // const [notification, setNotification] = useTimeoutState<NotificationType>(null, 3000);
   const [notification, setNotification] = useObjectState<NotificationType | null>(null);
   const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
   const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
@@ -25,16 +24,7 @@ export const useData = () => {
   const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesSuccess = (data: UpdateType[]) => {
-    if (isInitialised) {
-      setTimeout(() => {
-        setUpdates({ data, loading: false });
-      }, 1000);
-    } else {
-      setUpdates({ data, loading: false });
-    }
-
     const isChanged = jsonCompare(data, updates.data) == false;
-
     if (isChanged && isInitialised) {
       const newUpdates = data.filter(
         (newUpdate) => !updates.data?.find((update) => jsonCompare(newUpdate, update))
@@ -48,31 +38,23 @@ export const useData = () => {
       }, {});
       console.log(`[UPDATES CHANGED]`);
       setNotification({ counts: updatedCitiesCount, total: updatedTotal });
-      setNotification(
-        (a) =>
-          ({ ...(a || {}), counts: updatedCitiesCount, total: updatedTotal } as NotificationType)
-      );
     }
+    setUpdates({ data });
   };
 
   const onStatsSuccess = (data: StatsType) => {
-    setStats({ data, loading: false });
-
     const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
     const [cases, delta] = data?.overview?.current || [0, 0];
     const isChanged = prevCases != cases || prevDelta != delta;
 
     if (isChanged && isInitialised) {
       console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
-      setNotification(
-        (a) =>
-          ({
-            ...(a || {}),
-            current: cases - prevCases,
-            delta: delta - prevDelta,
-          } as NotificationType)
-      );
+      setNotification({
+        current: cases - prevCases,
+        delta: delta - prevDelta,
+      });
     }
+    setStats({ data });
   };
 
   const { mutate: mutateUpdates, isValidating: updatesValidating } = useSWR(
@@ -96,14 +78,18 @@ export const useData = () => {
   );
 
   useEffect(() => {
-    if (updatesValidating || statsValidating) {
-      setUpdates((a) => ({ ...a, loading: true }));
+    if (updatesValidating == true) {
+      setUpdates({ loading: !!notification ? false : true });
+    } else {
+      setTimeout(() => {
+        setUpdates({ loading: updatesValidating });
+      }, 2000);
     }
   }, [updatesValidating, statsValidating]);
 
   const mutateData = async () => {
-    setStats((a) => ({ ...a, loading: true }));
-    setUpdates((a) => ({ ...a, loading: true }));
+    setStats({ loading: true });
+    setUpdates({ loading: true });
 
     await sleep(2000);
     mutateUpdates();
@@ -112,7 +98,7 @@ export const useData = () => {
 
   const isLoading = stats.loading || updates.loading;
 
-  const removeNotification = () => setNotification(null);
+  const removeNotification = () => setNotification(null, true);
 
   return {
     updatesData: updates.data,

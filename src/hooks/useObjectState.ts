@@ -2,13 +2,22 @@ import { useState, SetStateAction } from "react";
 
 export const useObjectState = <T>(
   initialValue: T
-): [T, React.Dispatch<React.SetStateAction<any>>] => {
+): [T, (values: SetStateAction<any>, force?: boolean) => void] => {
   const [value, setValue] = useState<T>(initialValue);
 
   const setObjectValue = (values: SetStateAction<any>): void => {
-    setValue((prev: any) => {
-      return { ...(prev || {}), ...values };
-    });
+    if (values == null) {
+      setValue(values);
+    } else {
+      try {
+        setValue((prev: any) => {
+          return { ...(prev || {}), ...values };
+        });
+      } catch (error) {
+        console.log(error);
+        setValue(values);
+      }
+    }
   };
 
   return [value, setObjectValue];

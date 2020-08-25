@@ -71,7 +71,7 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ notification, onClose }) => {
   const [ct] = useTranslation();
-  if (notification.delta < 0) return <></>;
+  if (notification.total < 0) return <></>;
   return (
     <>
       <Overlay fadeInUp></Overlay>
