@@ -20,7 +20,11 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   padding-right: 10px;
   position: relative;
   border-top: 1px solid ${theme("greyText")}15;
-  flex: 1 0;
+  width: 100%;
+  flex-shrink: 0;
+  /* flex: 1 0; */
+  box-sizing: border-box;
+  flex-shrink: 0;
   cursor: pointer;
   ${ifProp(
     "shadow",

@@ -38,8 +38,10 @@ export const useData = () => {
       }, {});
       console.log(`[UPDATES CHANGED]`);
       setNotification({ counts: updatedCitiesCount, total: updatedTotal });
+      setUpdates({ data });
     }
-    setUpdates({ data });
+
+    if (!updates.data) setUpdates({ data });
   };
 
   const onStatsSuccess = (data: StatsType) => {
@@ -53,15 +55,17 @@ export const useData = () => {
         current: cases - prevCases,
         delta: delta - prevDelta,
       });
+      setStats({ data });
     }
-    setStats({ data });
+
+    if (!stats.data) setStats({ data });
   };
 
   const { mutate: mutateUpdates, isValidating: updatesValidating } = useSWR(
     `${API_ROOT}/updates.json`,
     fetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: 30000,
       revalidateOnReconnect: true,
       onSuccess: onUpdatesSuccess,
     }
@@ -71,7 +75,7 @@ export const useData = () => {
     `${API_ROOT}/stats.json`,
     fetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: 30000,
       revalidateOnReconnect: true,
       onSuccess: onStatsSuccess,
     }
@@ -91,12 +95,11 @@ export const useData = () => {
     setStats({ loading: true });
     setUpdates({ loading: true });
 
-    await sleep(2000);
     mutateUpdates();
     mutateStats();
   };
 
-  const isLoading = stats.loading || updates.loading;
+  const isLoading = updates.loading;
 
   const removeNotification = () => setNotification(null, true);
 

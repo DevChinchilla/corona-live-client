@@ -50,11 +50,13 @@ const Updates = ({ data, mutateData, isLoading }) => {
       <UpdateModal {...{ onClose: () => setShowModal(false), showModal, data }}></UpdateModal>
       <Time>{getCurrentDateTime()}</Time>
       <Row>
-        <UpdateCard
-          data={data[0]}
-          onClick={() => setShowModal(true)}
-          animationData={data.slice(0, 5)}
-        ></UpdateCard>
+        <Row flex={1}>
+          <UpdateCard
+            data={data[0]}
+            onClick={() => setShowModal(true)}
+            animationData={data.slice(0, 5)}
+          ></UpdateCard>
+        </Row>
         <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
           {isLoading ? (
             <Spinner size={16} color={"darkGreyText"}></Spinner>

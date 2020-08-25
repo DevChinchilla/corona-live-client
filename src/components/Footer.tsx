@@ -7,6 +7,7 @@ import Icon from "@components/Icon";
 import { theme, ThemeType } from "@styles/themes";
 import { FACEBOOK_URL, BLOG_URL, TWITTER_URL, WEBSITE_URL } from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
+import { useTimeoutState } from "@hooks/useTimeoutState";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -55,7 +56,7 @@ const LinkCopyMsg = styled(Row)`
 
 const Footer = (props) => {
   useKakaoButton();
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copySuccess, setCopySuccess] = useTimeoutState(false, 2000);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   function copyToClipboard(e) {
@@ -64,9 +65,6 @@ const Footer = (props) => {
     textAreaRef.current!.blur();
     e.target.blur();
     setCopySuccess(true);
-    setTimeout(() => {
-      setCopySuccess(false);
-    }, 2000);
   }
 
   return (
@@ -77,7 +75,7 @@ const Footer = (props) => {
         공유하기
       </Row>
       <Row jc="center" position="relative">
-        <LinkCopyMsg fadeInUp={copySuccess} fadeInDown={!copySuccess}>
+        <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
           링크가 복사 되었습니다
         </LinkCopyMsg>
         <IconBox type="blog" href={BLOG_URL}>

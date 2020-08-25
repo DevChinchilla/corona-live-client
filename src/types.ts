@@ -1,4 +1,4 @@
-type CasesType = [number, number];
+export type CasesType = [number, number];
 
 export interface OverviewType {
   current: CasesType;
@@ -17,9 +17,9 @@ interface CityGuType {
 export interface CurrentType extends CityGuType {}
 export interface OverallType extends CityGuType {}
 export interface StatsType {
-  overview?: OverviewType;
-  current?: CurrentType;
-  overall?: OverallType;
+  overview: OverviewType;
+  current: CurrentType;
+  overall: OverallType;
 }
 export interface UpdateType {
   src: string;

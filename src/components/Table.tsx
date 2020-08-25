@@ -5,7 +5,7 @@ import Row from "@components/Row";
 import { Col, Row as RowLayout } from "@components/Layout";
 
 import { theme } from "@styles/themes";
-import { CurrentType, OverallType, UpdateType } from "@types";
+import { CurrentType, OverallType, UpdateType, CasesType } from "@types";
 
 const Th = styled(RowLayout)`
   font-size: 10px;
@@ -27,8 +27,8 @@ const Header = ({ tdFlex }) => {
 
 interface Props {
   cityId?: string | number;
-  current: CurrentType;
-  overall: OverallType;
+  current: CurrentType | { [guId: number]: CasesType };
+  overall: OverallType | { [guId: number]: CasesType };
   updates: UpdateType[];
   tdFlex: string[];
 }

@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "@hooks/useTranslation";
 
 type Props = {
-  cityId: number;
+  cityId: string;
   mutateData: any;
 };
 

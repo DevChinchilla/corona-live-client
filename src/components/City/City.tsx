@@ -15,9 +15,16 @@ import { useData } from "@hooks/useData";
 const City = ({ match }) => {
   useScrollTop();
 
-  const cityId = match.params.cityId;
+  const cityId: string = match.params.cityId;
 
-  const [updatesData, statsData, mutateData] = useData();
+  const {
+    updatesData,
+    statsData,
+    mutateData,
+    isLoading,
+    notification,
+    removeNotification,
+  } = useData();
 
   return (
     <Page>

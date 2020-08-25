@@ -12,7 +12,7 @@ import Button from "./Button";
 const Wrapper = styled(Col)`
   ${mixins.AbsoluteCenter};
   position: fixed;
-  z-index: 100000;
+  z-index: 100001;
   width: fit-content;
 `;
 const Container = styled(Col)`
@@ -74,7 +74,7 @@ const Notification: React.FC<Props> = ({ notification, onClose }) => {
   if (notification.total < 0) return <></>;
   return (
     <>
-      <Overlay fadeInUp></Overlay>
+      <Overlay fadeInUp zIndex={100000}></Overlay>
       <Wrapper>
         <Container fadeInUp>
           <NotificationIcon fadeInUp>

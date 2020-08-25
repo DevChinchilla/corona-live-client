@@ -105,7 +105,7 @@ interface Props {
   isDistrict?: boolean;
 }
 
-export const UpdateModal: FC<Props> = ({ onClose, showModal, data, isDistrict }) => {
+export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, isDistrict }) => {
   const _theme = useTheme();
   const [ct] = useTranslation();
 
@@ -114,13 +114,13 @@ export const UpdateModal: FC<Props> = ({ onClose, showModal, data, isDistrict })
   const [showCategories, setShowCategories] = useState(true);
 
   useEffect(() => {
-    setData(data);
+    onSearchKeyword(keyword);
   }, [data]);
 
   const onSearchKeyword = (newKeyword) => {
     setKeyword(newKeyword);
     const filtered = data.filter(({ gu, city }) => {
-      return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) > -1;
+      return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) == 0;
     });
     setData(filtered);
   };
@@ -169,17 +169,12 @@ export const UpdateModal: FC<Props> = ({ onClose, showModal, data, isDistrict })
           )}
         </>
       )}
-      <Col flex={1} overflowY="auto" overflowX="hidden">
+      <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
         {filteredData &&
           sortByDate(filteredData, "datetime").map((update, i) => (
-            <UpdateCard
-              key={`${update.datetime}/${i}`}
-              data={update}
-              fadeInUp={i < 16}
-              delay={3 + i}
-            ></UpdateCard>
+            <UpdateCard key={`${update.datetime}/${i}`} data={update}></UpdateCard>
           ))}
       </Col>
     </Modal>
   );
-};
+});

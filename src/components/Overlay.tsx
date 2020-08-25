@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Row } from "./Layout";
 import styled from "styled-components";
+import { addIfProp } from "@styles/tools";
 
 const Overlay = styled(Row)`
   position: fixed;
@@ -11,6 +12,7 @@ const Overlay = styled(Row)`
   background: #000000ad;
   /* opacity: 0.5; */
   z-index: 999;
+  ${addIfProp("zIndex")};
 `;
 
 export default Overlay;
