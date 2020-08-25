@@ -1,17 +1,17 @@
-import Icon from "./Icon";
-import UpdateTime from "./UpdateTime";
-import { Row, Box } from "./Layout";
-import DeltaTag from "./DeltaTag";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
+import { useHistory } from "react-router-dom";
+
+import Icon from "@components/Icon";
+import UpdateTime from "@components/UpdateTime";
+import { Row, Box } from "@components/Layout";
+import DeltaTag from "@components/DeltaTag";
+import { UpdateModal } from "@components/UpdateModal";
 
 import { numberWithCommas } from "@utils";
-
-import styled, { css } from "styled-components";
-import React, { useState } from "react";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
-import { useHistory } from "react-router-dom";
-import useTranslation from "@hooks/useTranslation";
-import { UpdateModal } from "./UpdateModal";
+import { useTranslation } from "@hooks/useTranslation";
 
 const Wrapper = styled(Row)`
   display: flex;

@@ -1,8 +1,8 @@
+import React, { FC } from "react";
 import styled, { css, ThemedStyledFunction, keyframes } from "styled-components";
 
 import mixins, { BoxProps } from "@styles/mixins";
 import { addIfProp, ifProp } from "@styles/tools";
-import React, { FC } from "react";
 
 const SBox = styled.div`
   ${mixins.BoxCss};

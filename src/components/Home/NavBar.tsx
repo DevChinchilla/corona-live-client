@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import React, { useState, useContext } from "react";
-
-import Button from "../Button";
-import Icon from "../Icon";
-import { Row } from "../Layout";
-import { palette } from "@styles";
-import useTheme from "@hooks/useTheme";
-import Report from "@components/Report";
+import React, { useState } from "react";
 import { mutate } from "swr";
+
+import Button from "@components/Button";
+import Icon from "@components/Icon";
+import { Row } from "@components/Layout";
+import Report from "@components/Report";
+
+import { palette } from "@styles";
+import { useTheme } from "@hooks/useTheme";
 import { API_ROOT } from "@consts";
 
 const Logo = styled(Row)`

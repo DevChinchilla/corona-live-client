@@ -12,7 +12,8 @@
           "@styles": "./src/styles",
           "@hooks": "./src/hooks",
           "@utils": "./src/utils",
-          "@consts": "./src/consts"
+          "@consts": "./src/consts",
+          "@types": "./src/consts"
         }
       }
     ]

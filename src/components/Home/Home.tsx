@@ -5,7 +5,7 @@ import { fetcher, sortByDate } from "@utils";
 import useSWR, { mutate } from "swr";
 import styled from "styled-components";
 import { media } from "@styles";
-import useScrollTop from "@hooks/useScrollTop";
+import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 
 const NavBar = lazy(() => import("./NavBar"));

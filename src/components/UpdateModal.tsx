@@ -1,15 +1,17 @@
 import styled, { css } from "styled-components";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import UpdateCard from "./UpdateCard";
-import { Col, Row, Absolute } from "./Layout";
-import Modal from "./Modal";
-import { sortByDate, onEnter } from "@utils";
-import { theme } from "@styles/themes";
+import React, { useState, useEffect, useMemo, FC } from "react";
+
+import UpdateCard from "@components/UpdateCard";
+import { Col, Row, Absolute } from "@components/Layout";
+import Modal from "@components/Modal";
 import Icon from "@components/Icon";
-import useTheme from "@hooks/useTheme";
-import useTranslation from "@hooks/useTranslation";
+
+import { useTheme } from "@hooks/useTheme";
+import { useTranslation } from "@hooks/useTranslation";
+import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
+import { sortByDate, onEnter } from "@utils";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -98,7 +100,14 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
   );
 };
 
-export const UpdateModal = ({ onClose, showModal, data, isDistrict }) => {
+interface Props {
+  showModal: boolean;
+  onClose: any;
+  data?: any;
+  isDistrict?: boolean;
+}
+
+export const UpdateModal: FC<Props> = ({ onClose, showModal, data, isDistrict }) => {
   const _theme = useTheme();
   const [ct] = useTranslation();
 

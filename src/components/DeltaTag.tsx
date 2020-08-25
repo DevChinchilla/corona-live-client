@@ -1,11 +1,13 @@
 import React, { FC } from "react";
-import { Box, Row } from "./Layout";
-import useTheme from "@hooks/useTheme";
-import Icon from "./Icon";
 import styled, { css } from "styled-components";
+import CountUp from "react-countup";
+
+import { Box, Row } from "@components/Layout";
+import Icon from "@components/Icon";
+
+import { useTheme } from "@hooks/useTheme";
 import { prop, ifProp } from "@styles/tools";
 import { ThemeType } from "@styles/themes";
-import CountUp from "react-countup";
 
 const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean }>`
   color: ${prop("color")};

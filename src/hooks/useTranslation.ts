@@ -1,6 +1,6 @@
 import { useTranslation as useTranslationHook } from "react-i18next";
 
-const useTranslation = () => {
+export const useTranslation = () => {
   const { t } = useTranslationHook();
   const ct = (cityId, guId = null) => {
     let cityName = t(`c${cityId}`);
@@ -15,5 +15,3 @@ const useTranslation = () => {
 
   return [ct, t];
 };
-
-export default useTranslation;

@@ -1,7 +1,9 @@
-import styled, { css } from "styled-components";
 import React, { FC } from "react";
-import Row from "./Row";
-import { Col, Row as RowLayout } from "./Layout";
+import styled, { css } from "styled-components";
+
+import Row from "@components/Row";
+import { Col, Row as RowLayout } from "@components/Layout";
+
 import { theme } from "@styles/themes";
 
 const Th = styled(RowLayout)`

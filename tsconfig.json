@@ -25,7 +25,8 @@
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
       "@utils": ["./utils"],
-      "@consts": ["./consts"]
+      "@consts": ["./consts"],
+      "@types": ["./types"]
     }
   }
 }

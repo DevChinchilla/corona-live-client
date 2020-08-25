@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import { UpdateCard } from "../UpdateCard";
-import { Col } from "../Layout";
-import { getCurrentDateTime } from "@utils";
-import { theme } from "@styles/themes";
+
+import { UpdateCard } from "@components/UpdateCard";
+import { Col } from "@components/Layout";
 import { UpdateModal } from "@components/UpdateModal";
+
+import { theme } from "@styles/themes";
+import { getCurrentDateTime } from "@utils";
 
 const Wrapper = styled(Col)`
   width: 100%;

@@ -1,9 +1,12 @@
 import React, { useState, FC, useRef, useEffect } from "react";
-import Modal from "./Modal";
-import Button from "./Button";
-import { Col, Box, Row } from "./Layout";
 import styled from "styled-components";
+
+import Modal from "@components/Modal";
+import Button from "@components/Button";
+import { Col, Box, Row } from "@components/Layout";
+
 import { theme } from "@styles/themes";
+
 const Wrapper = styled(Col)`
   height: 100%;
   input,
@@ -64,7 +67,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
   };
 
   return (
-    <Modal show={show} title={["제보", "하기"]} onClose={onClose} hideOverlay={hideOverlay}>
+    <Modal show={show} title={"제보하기"} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper fadeInUp delay={1}>
         <textarea
           autoFocus={!!referTo}
@@ -78,7 +81,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
-        <Button big onClick={onSumbit} fadeInUp delay={3}>
+        <Button big onClick={onSumbit}>
           제보하기
         </Button>
       </Wrapper>

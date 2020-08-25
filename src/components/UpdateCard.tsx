@@ -1,14 +1,15 @@
-import { Col, Row, Box, Absolute } from "./Layout";
-import Icon from "./Icon";
-import UpdateTime from "./UpdateTime";
-import Report from "./Report";
-import { theme } from "@styles/themes";
-import { ifProp } from "@styles/tools";
-
 import React, { useState, FC, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
+
+import { Col, Row, Box, Absolute } from "@components/Layout";
+import Icon from "@components/Icon";
+import UpdateTime from "@components/UpdateTime";
+import Report from "@components/Report";
+
+import { theme } from "@styles/themes";
+import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
-import useTranslation from "@hooks/useTranslation";
+import { useTranslation } from "@hooks/useTranslation";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;

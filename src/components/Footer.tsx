@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import { Col, Row } from "./Layout";
+
+import { Col, Row } from "@components/Layout";
+import Icon from "@components/Icon";
+
 import { theme, ThemeType } from "@styles/themes";
-import { prop } from "@styles/tools";
-import Icon from "./Icon";
 import { FACEBOOK_URL, BLOG_URL, TWITTER_URL, WEBSITE_URL } from "@consts";
-import { mixins } from "@styles";
-const Kakao = window["Kakao"];
+import { useKakaoButton } from "@hooks/useKakaoButton";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -54,6 +54,7 @@ const LinkCopyMsg = styled(Row)`
 `;
 
 const Footer = (props) => {
+  useKakaoButton();
   const [copySuccess, setCopySuccess] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -68,34 +69,6 @@ const Footer = (props) => {
     }, 2000);
   }
 
-  React.useEffect(() => {
-    Kakao.Link.createDefaultButton({
-      container: "#kakaoShare",
-      objectType: "feed",
-      content: {
-        title: "코로나 라이브 | 실시간 코로나 현황",
-        description: "오늘 코로나 확진자 발생 정보를 실시간으로 제공합니다",
-        imageUrl: "https://corona-live.com/thumbnail.png",
-        link: {
-          mobileWebUrl: "https://corona-live.com",
-          androidExecParams: "test",
-        },
-      },
-      social: {
-        likeCount: 5394,
-        commentCount: 302,
-        sharedCount: 4690,
-      },
-      buttons: [
-        {
-          title: "실시간 현황 보기",
-          link: {
-            mobileWebUrl: "https://corona-live.com",
-          },
-        },
-      ],
-    });
-  }, []);
   return (
     <Wrapper fadeInUp delay={6}>
       <textarea ref={textAreaRef} value={WEBSITE_URL} />

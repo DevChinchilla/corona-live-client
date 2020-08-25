@@ -2,20 +2,21 @@ import React, { Suspense } from "react";
 import { useLocation, useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Col, Row, Box } from "@components/Layout";
-import { media } from "@styles";
 import useSWR from "swr";
-import { API_ROOT, DISTRICT_TD_FLEX } from "@consts";
-import { fetcher, sortByDate } from "@utils";
+
+import { Col, Row, Box } from "@components/Layout";
 import Table from "@components/Table";
 import Board from "@components/Home/Board";
 import Icon from "@components/Icon";
 import Button from "@components/Button";
-import useTheme from "@hooks/useTheme";
-import { theme } from "@styles/themes";
-import useScrollTop from "@hooks/useScrollTop";
 import Underline from "@components/Underline";
 import Footer from "@components/Footer";
+
+import { media } from "@styles";
+import { API_ROOT, DISTRICT_TD_FLEX } from "@consts";
+import { fetcher, sortByDate } from "@utils";
+import { useTheme } from "@hooks/useTheme";
+import { useScrollTop } from "@hooks/useScrollTop";
 
 const Wrapper = styled(Col)`
   box-sizing: border-box;

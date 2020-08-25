@@ -3,7 +3,7 @@ import CountUp from "react-countup";
 
 import { Row, Col, Box } from "../Layout";
 import DeltaTag from "@components/DeltaTag";
-import useTheme from "@hooks/useTheme";
+import { useTheme } from "@hooks/useTheme";
 
 interface Props {
   title: string;

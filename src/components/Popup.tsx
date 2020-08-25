@@ -1,9 +1,10 @@
 import React from "react";
-import Modal from "./Modal";
-import { Col, Box } from "./Layout";
 import styled from "styled-components";
-import Icon from "./Icon";
-import Button from "./Button";
+
+import Modal from "@components/Modal";
+import { Col, Box } from "@components/Layout";
+import Icon from "@components/Icon";
+import Button from "@components/Button";
 
 const Wrapper = styled(Col)`
   p {

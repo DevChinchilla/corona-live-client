@@ -2,12 +2,13 @@ import React, { useEffect, FC } from "react";
 import styled from "styled-components";
 import * as ReactDOM from "react-dom";
 
-import Icon, { IconType } from "./Icon/Icon";
-import { Row, Box, Flex, Col } from "./Layout";
+import Icon, { IconType } from "@components/Icon/Icon";
+import { Row, Box, Flex, Col } from "@components/Layout";
+import Underline from "@components/Underline";
+
 import { theme } from "@styles/themes";
 import { media } from "@styles";
-import useTheme from "@hooks/useTheme";
-import Underline from "./Underline";
+import { useTheme } from "@hooks/useTheme";
 
 const Children = styled.div`
   flex: 1;
