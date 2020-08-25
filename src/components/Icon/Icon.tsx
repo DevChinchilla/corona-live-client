@@ -19,6 +19,7 @@ import Twitter from "./Twitter";
 import Blog from "./Blog";
 import Link from "./Link";
 import LogoIcon from "./LogoIcon";
+import SendMessage from "./SendMessage";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -43,6 +44,7 @@ const icons = {
   Link,
   Blog,
   LogoIcon,
+  SendMessage,
 };
 
 export type IconType = keyof typeof icons;

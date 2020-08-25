@@ -27,7 +27,7 @@ const CityNavBar: React.FC<Props> = ({ cityId, mutateData }) => {
         {ct(cityId)}
       </Underline>
       <Button white>
-        <Icon name="Refresh" size={12} fill={theme("darkGreyText")}></Icon>
+        <Icon name="SendMessage" size={12} fill={theme("darkGreyText")}></Icon>
       </Button>
     </Row>
   );

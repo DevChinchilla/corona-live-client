@@ -20,6 +20,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   padding-right: 10px;
   position: relative;
   border-top: 1px solid ${theme("greyText")}15;
+  flex: 1 0;
   cursor: pointer;
   ${ifProp(
     "shadow",
@@ -127,7 +128,6 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
       ></Report>
 
       <Card
-        flexShrink={0}
         shadow={!!animationData}
         onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}
         {...{ fadeInUp, delay }}

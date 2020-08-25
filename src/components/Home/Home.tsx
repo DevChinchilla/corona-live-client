@@ -7,6 +7,7 @@ import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
+import Spinner from "@components/Spinner";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -23,6 +24,7 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
+      <Spinner size={20}></Spinner>
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
