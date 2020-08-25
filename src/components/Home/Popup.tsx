@@ -34,7 +34,7 @@ const Popup = ({ show, onClose }) => {
   return (
     <Modal show={show} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
-        <Icon height="190px" width="300px" name="LogoIcon" transform="translateY(-10px)"></Icon>
+        <Icon height="170px" width="280px" name="LogoIcon" transform="translateY(-10px)"></Icon>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
         <Button big onClick={onClose}>
           닫기

@@ -12,7 +12,7 @@ const keyFrame = keyframes`
     }
 `;
 
-const Wrapper = styled.div<{ size: number; color: ThemeType }>`
+const Wrapper = styled.div<{ size: number; color: ThemeType; bg: ThemeType }>`
   position: relative;
   width: ${prop("size")}px;
   height: ${prop("size")}px;
@@ -24,7 +24,7 @@ const Wrapper = styled.div<{ size: number; color: ThemeType }>`
   &:after {
     content: "";
     position: absolute;
-    background: ${theme("bg")};
+    background: ${(props) => theme(props.bg)};
     width: ${(props) => props.size / 2}px;
     height: ${prop("size")}px;
     top: 0em;
@@ -45,10 +45,11 @@ const Wrapper = styled.div<{ size: number; color: ThemeType }>`
 type Props = {
   size: number;
   color?: ThemeType;
+  bg?: ThemeType;
 };
 
-const Spinner: React.FC<Props> = ({ size, color }) => {
-  return <Wrapper size={size} color={color || "blackText"}></Wrapper>;
+const Spinner: React.FC<Props> = ({ size, color, bg }) => {
+  return <Wrapper size={size} color={color || "blackText"} bg={bg || "bg"}></Wrapper>;
 };
 
 export default Spinner;

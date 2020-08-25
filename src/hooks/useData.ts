@@ -50,11 +50,11 @@ export const useData = () => {
     const isChanged = prevCases != cases || prevDelta != delta;
 
     if (isChanged && isInitialised) {
-      console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
-      setNotification({
-        current: cases - prevCases,
-        delta: delta - prevDelta,
-      });
+      // console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
+      // setNotification({
+      //   current: cases - prevCases,
+      //   delta: delta - prevDelta,
+      // });
       setStats({ data });
     }
   };

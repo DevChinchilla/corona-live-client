@@ -57,7 +57,7 @@ const darkTheme: ThemeProps = {
   bg: "#191F2C",
   text: "#C8C9CD",
   border: "#C8C9CD",
-  greyBg: "#ffffff0d",
+  greyBg: "#272b38",
 
   greyText: "#828284",
   semigreyText: "#979AA0",

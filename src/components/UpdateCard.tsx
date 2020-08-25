@@ -109,7 +109,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
   const from = `${ct(city)} ${ct(city, gu)}`;
   const title = `${cases}명 추가확진`;
 
-  const message = `[${datetime} ${from} ${from} ${title} 관련]`;
+  const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
   useEffect(() => {
     let interval;
     if (animationData) {
