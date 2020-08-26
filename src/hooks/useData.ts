@@ -37,7 +37,7 @@ export const useData = () => {
         updatedTotal += cases;
         return count;
       }, {});
-      console.log(`[UPDATES CHANGED]`);
+      console.log(`[UPDATES CHANGED]`, { old: updates.data, new: data });
       setNotification({ counts: updatedCitiesCount, total: updatedTotal });
       setUpdates({ data });
     }

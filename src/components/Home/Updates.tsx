@@ -28,11 +28,12 @@ const Time = styled(Col)`
 
 const RefreshButton = styled(Row)`
   width: 50px;
-  background: ${theme("updateCard")};
+  background: ${theme("greyBg")};
   margin-left: 6px;
   border-radius: 6px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   svg {
     fill: ${theme("darkGreyText")};
   }

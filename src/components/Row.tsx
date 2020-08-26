@@ -20,6 +20,7 @@ const Wrapper = styled(Row)`
   height: 48px;
   padding: 0px 12px;
   margin-bottom: 2px;
+  cursor: pointer;
   ${ifProp(
     "even",
     css`

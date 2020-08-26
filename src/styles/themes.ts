@@ -64,7 +64,7 @@ const darkTheme: ThemeProps = {
   semiDarkGreyText: "#C8C9CD",
   darkGreyText: "#E0E0E0",
   lightGreyText: "#3E3E3E",
-  blackText: "white",
+  blackText: "#ffffff",
   blue: "#5673EB",
   red: "#EB5374",
 

@@ -7,6 +7,11 @@ export interface OverviewType {
   confirmed: CasesType;
 }
 
+export interface TimerseriesType {
+  today: { [time: number]: CasesType };
+  yesterday: { [time: number]: CasesType };
+}
+
 interface CityGuType {
   [cityId: string]: {
     cases: CasesType;
@@ -20,6 +25,7 @@ export interface StatsType {
   overview: OverviewType;
   current: CurrentType;
   overall: OverallType;
+  timeseries: TimerseriesType;
 }
 export interface UpdateType {
   src: string;

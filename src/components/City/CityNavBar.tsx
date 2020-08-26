@@ -22,7 +22,7 @@ const CityNavBar: React.FC<Props> = ({ cityId, mutateData }) => {
   const theme = useTheme();
   return (
     <>
-      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
+      <Report show={showReport} onClose={() => setShowReport(false)} referTo={ct(cityId)}></Report>
       <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
         <Row px="10px" onClick={() => history.push("/")}>
           <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>

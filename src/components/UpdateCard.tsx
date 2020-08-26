@@ -22,18 +22,18 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   border-top: 1px solid ${theme("greyText")}15;
   width: 100%;
   flex-shrink: 0;
-  /* flex: 1 0; */
   box-sizing: border-box;
   flex-shrink: 0;
   cursor: pointer;
+
   ${ifProp(
     "shadow",
     css`
       padding: 0px 20px;
       border-top: none;
       border-radius: 6px;
-      background: ${theme("updateCard")};
-      box-shadow: 0 3px 10px ${theme("blackText")}15;
+      background: ${theme("greyBg")};
+      /* box-shadow: 0 3px 10px ${theme("blackText")}15; */
     `
   )}
 `;

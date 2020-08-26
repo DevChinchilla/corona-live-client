@@ -16,7 +16,7 @@ const Wrapper = styled(Col)`
   width: fit-content;
 `;
 const Container = styled(Col)`
-  padding: 24px 50px;
+  padding: 24px 70px;
   border-radius: 10px;
   background: ${theme("bg")};
   align-items: center;
@@ -71,7 +71,7 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ notification, onClose }) => {
   const [ct] = useTranslation();
-  if (notification.total < 0) return <></>;
+  if (notification.total < 1) return <></>;
   return (
     <>
       <Overlay fadeInUp zIndex={100000}></Overlay>

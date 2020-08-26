@@ -49,10 +49,12 @@ const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
           </Box>
           <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
-        <Info>
-          <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
-          <span>{info}</span>
-        </Info>
+        {delta != 0 && (
+          <Info>
+            <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
+            <span>{info}</span>
+          </Info>
+        )}
       </Col>
     </Col>
   );
@@ -60,6 +62,7 @@ const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
 
 const Board = ({ data }) => {
   return (
+    // <Row >
     <Row jc="space-evenly">
       <Stat
         data={data.confirmed}

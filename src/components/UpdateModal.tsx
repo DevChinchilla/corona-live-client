@@ -47,7 +47,7 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   padding: 6px 12px;
   border-radius: 6px;
   margin-right: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   transition: 0.3s;
   background: ${theme("greyBg")};
   color: ${theme("greyText")};

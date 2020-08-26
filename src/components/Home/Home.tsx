@@ -1,13 +1,14 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 
-import { Page } from "@components/Layout";
+import { Page, Row } from "@components/Layout";
 
 import { sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
-import { CurrentType, OverallType } from "@types";
+import { CurrentType, OverallType, TimerseriesType } from "@types";
+import Graph from "@components/Graph";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -50,15 +51,23 @@ const Home = ({ theme, setTheme }) => {
         <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
-      {updatesData && (
+      {updatesData ? (
         <Suspense fallback={<div style={{ height: "120px" }} />}>
           <Updates data={sortByDate(updatesData)} {...{ mutateData, isLoading }}></Updates>
         </Suspense>
+      ) : (
+        <Row h="30px"></Row>
       )}
 
       {statsData && (
-        <Suspense fallback={<div />}>
+        <Suspense fallback={<div style={{ height: "110px" }} />}>
           <Board data={statsData.overview}></Board>
+        </Suspense>
+      )}
+
+      {statsData && updatesData && (
+        <Suspense fallback={<div />}>
+          <Graph timeseries={statsData?.timeseries as TimerseriesType}></Graph>
         </Suspense>
       )}
 
