@@ -71,7 +71,6 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ notification, onClose }) => {
   const [ct] = useTranslation();
-  return <></>;
   if (notification.total < 1) return <></>;
   return (
     <>
