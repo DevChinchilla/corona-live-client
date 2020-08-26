@@ -5,7 +5,7 @@ import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
 
 import { theme, ThemeType } from "@styles/themes";
-import { FACEBOOK_URL, BLOG_URL, TWITTER_URL, WEBSITE_URL } from "@consts";
+import { FACEBOOK_URL, BLOG_URL, TWITTER_URL, WEBSITE_URL, IMPORTANT_MESSAGE } from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 
@@ -98,14 +98,7 @@ const Footer = (props) => {
         )}
       </Row>
 
-      <p>
-        코로나 라이브는 재난문자와 각 지자체에서 제공하는 자료, 언론 기사등을 토대로 당일 코로나
-        확진 환자를 업데이트를 하고있으나, 민간이 취합한 집계이므로 공식적인 근거 자료 활용될수
-        없고, 다음날 제공하는 질본 수치와 <strong> 오차가 발생할수 있습니다.</strong>
-        <br></br> <br></br>본 사이트 정보 공유로 인해 발생된 문제에 코로나 라이브는{" "}
-        <strong> 어떠한 책임도 지지 않습니다.</strong> 이점 양해 부탁드리겠습니다. 본사이트에 나온
-        정보 사용에 대한 책임은 전적으로 사용자에게 있습니다.
-      </p>
+      <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
     </Wrapper>
   );
 };

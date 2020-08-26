@@ -28,12 +28,13 @@ const ModalContainer = styled(Col)`
   top: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  height: 80%;
+  max-height: 80%;
   padding: 20px 20px;
   background: ${theme("bg")};
   z-index: 1000;
   border-radius: 10px;
   overflow-x: hidden;
+  overflow-y: scroll;
   width: 360px;
   ${media.phablet} {
     width: 85%;
