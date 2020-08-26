@@ -10,6 +10,7 @@ import { theme } from "@styles/themes";
 import { media } from "@styles";
 import { useTheme } from "@hooks/useTheme";
 import Overlay from "./Overlay";
+import Button from "./Button";
 
 const Children = styled.div`
   flex: 1;
@@ -78,22 +79,20 @@ const Modal: FC<Props> = ({
       <ModalContainer {...props}>
         {!noHeader && (
           <Header fadeInUp>
-            <Icon
-              name="ChevronLeft"
-              size={24}
-              stroke={_theme("darkGreyText")}
-              onClick={onClose}
-            ></Icon>
+            <Button icon square onClick={onClose}>
+              <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
+            </Button>
             <Underline fontSize="14px" fontWeight={900} lineHeight="6px">
               {title}
             </Underline>
             {actionIcon ? (
-              <Icon
-                name={actionIcon[0]}
-                size={actionIcon[1]}
-                fill={_theme("darkGreyText")}
-                onClick={onActionClick}
-              ></Icon>
+              <Button icon square onClick={onActionClick}>
+                <Icon
+                  name={actionIcon[0]}
+                  size={actionIcon[1]}
+                  fill={_theme("darkGreyText")}
+                ></Icon>
+              </Button>
             ) : (
               <Row width="24px"></Row>
             )}

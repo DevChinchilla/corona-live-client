@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     width: calc(100% + 4px);
     height: 8px;
     z-index: -1;
-    background: ${theme("lightGreyText")}60;
+    background: ${theme("greyBg")};
     ${addIfProp("height", "lineHeight")}
   }
 `;

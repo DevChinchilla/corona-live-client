@@ -68,7 +68,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
     if (cityId == null) {
       history.push(`./city/${cityId || id}`);
     } else {
-      setShowModal(true);
+      if (updateTime || updates.length != 0) setShowModal(true);
     }
   };
 

@@ -8,6 +8,7 @@ interface ButtonProps {
   big?: boolean;
   full?: boolean;
   icon?: boolean;
+  square?: boolean;
 }
 const Button = styled.button<ButtonProps>`
   display:flex;
@@ -60,13 +61,27 @@ ${ifProp(
     `
   )}
 
-${ifProp(
-  "icon",
-  css`
-    padding: 0px 10px;
-    width: 60px;
-  `
-)}
+  ${ifProp(
+    "icon",
+    css`
+      width: 60px;
+      svg {
+        transition: 0.3s;
+        :hover {
+          transform: scale(0.9);
+        }
+      }
+    `
+  )}
+
+  ${ifProp(
+    "square",
+    css`
+      width: 32px;
+      height: 32px;
+      padding: 0px;
+    `
+  )}
 `;
 
 export default Button;

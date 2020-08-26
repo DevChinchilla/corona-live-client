@@ -53,11 +53,15 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   color: ${theme("greyText")};
   flex-shrink: 0;
   font-size: 12px;
+  cursor: pointer;
+  border: 1px solid ${theme("greyBg")};
+
   ${ifProp(
     "active",
     css`
       background: ${theme("blue")}20;
       color: ${theme("blue")};
+      /* border: 1px solid ${theme("blue")}90; */
     `
   )};
 `;
