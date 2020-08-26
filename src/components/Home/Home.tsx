@@ -13,6 +13,7 @@ import Graph from "@components/Graph";
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
+const Announcement = lazy(() => import("@components/Home/Announcement"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
@@ -21,6 +22,7 @@ const Popup = lazy(() => import("@components/Home/Popup"));
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
+  const [showAnnouncment, setAnnouncment] = useLocalStorage("announcment");
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
@@ -43,6 +45,12 @@ const Home = ({ theme, setTheme }) => {
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
       )}
+      <Suspense fallback={<div />}>
+        <Announcement
+          show={showAnnouncment == undefined}
+          onClose={() => setAnnouncment(true)}
+        ></Announcement>
+      </Suspense>
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
