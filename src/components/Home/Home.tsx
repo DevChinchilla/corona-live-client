@@ -45,12 +45,12 @@ const Home = ({ theme, setTheme }) => {
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
       )}
-      <Suspense fallback={<div />}>
+      {/* <Suspense fallback={<div />}>
         <Announcement
           show={showAnnouncment == undefined}
           onClose={() => setAnnouncment(true)}
         ></Announcement>
-      </Suspense>
+      </Suspense> */}
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
