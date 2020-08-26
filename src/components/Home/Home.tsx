@@ -22,7 +22,7 @@ const Popup = lazy(() => import("@components/Home/Popup"));
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-  const [showAnnouncment, setAnnouncment] = useLocalStorage("announcment");
+  const [showAnnouncment, setAnnouncment] = useLocalStorage("announcment2");
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
