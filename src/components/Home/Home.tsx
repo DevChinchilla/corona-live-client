@@ -33,11 +33,12 @@ const Home = ({ theme, setTheme }) => {
     removeNotification,
   } = useData();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setrenderIt(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setrenderIt(true);
+  //   }, 2000);
+  // }, []);
+  console.log({ updatesData, statsData });
   return (
     <Page>
       {!isLoading && !!notification && (

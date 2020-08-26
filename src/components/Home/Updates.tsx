@@ -41,7 +41,7 @@ const RefreshButton = styled(Row)`
 
 const Updates = ({ data, mutateData, isLoading }) => {
   const [showModal, setShowModal] = useState(false);
-  if (data.length == 0) return <></>;
+  if (data.length == 0) return <div style={{ height: "30px" }}></div>;
   return (
     <Wrapper fadeInUp>
       <UpdateModal {...{ onClose: () => setShowModal(false), showModal, data }}></UpdateModal>

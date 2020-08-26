@@ -110,7 +110,7 @@ const Tooltip = styled(Col)`
 type Props = { timeseries: TimerseriesType };
 
 const Graph: React.FC<Props> = ({ timeseries }) => {
-  if (!timeseries) return <></>;
+  if (!timeseries) return <div style={{ height: "10px" }}></div>;
   const [dataType, setDataType]: [string, any] = useState("accumulated");
   const isDelta = dataType == "delta";
   const [showTooltip, setShowTooltip] = useState(true);
