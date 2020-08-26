@@ -17,23 +17,30 @@ const DATA: ChartData<Chart.ChartData> = {
       fill: true,
       backgroundColor: `${PRIMARY_COLOR}`,
       borderColor: `${PRIMARY_COLOR}90`,
-      pointRadius: 4,
+      pointRadius: 5,
       pointBackgroundColor: `${PRIMARY_COLOR}`,
-      // pointBorderColor: `${PRIMARY_COLOR}60`,
-      pointBorderWidth: 1,
+      pointBorderColor: Array(24).fill(`${PRIMARY_COLOR}50`),
+      pointBorderWidth: Array(24).fill(1),
+      hoverBackgroundColor: `${PRIMARY_COLOR}`,
+      hoverBorderWidth: 20,
+      pointHoverBorderColor: `${PRIMARY_COLOR}50`,
+      hoverRadius: 5,
       lineTension: 0,
       borderWidth: 2,
     },
     {
       label: "어제",
       fill: true,
-      pointRadius: 4,
+      pointRadius: 5,
       pointBackgroundColor: `${SECONDARY_COLOR}`,
       // pointBorderColor: `${SECONDARY_COLOR}60`,
+      pointBorderColor: Array(10).fill(`${PRIMARY_COLOR}60`),
+      hoverBackgroundColor: `${SECONDARY_COLOR}`,
+      pointBorderWidth: Array(24).fill(1),
       backgroundColor: "transparent",
+      hoverRadius: 5,
       borderColor: `${SECONDARY_COLOR}40`,
       // pointBorderWidth: 6,
-      pointBorderWidth: 1,
       lineTension: 0,
       borderWidth: 2,
     },
@@ -52,7 +59,7 @@ const Wrapper = styled(Col)`
   }
 `;
 
-const Tooltip = styled.div`
+const Tooltip = styled(Col)`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -106,6 +113,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
   if (!timeseries) return <></>;
   const [dataType, setDataType]: [string, any] = useState("accumulated");
   const isDelta = dataType == "delta";
+  const [showTooltip, setShowTooltip] = useState(true);
 
   const { today, yesterday } = timeseries;
   const todayStats = Object.keys(today).map((a) => today[a][isDelta ? 1 : 0]);
@@ -132,47 +140,70 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
     let _datasets = datasets?.map((set, i) => {
       let backgroundColor = i == 0 ? setGradient(canvas, set.backgroundColor) : "transparent";
 
-      let pointBorderColor = timePeriod.map((_, j) =>
-        j == activeIndex ? "white" : set.pointBorderColor
-      );
+      let pointBorderWidth = timePeriod.map((_, j) => (j == activeIndex && i == 0 ? 20 : 1));
       let data = i == 0 ? todayStats : yesterdayStats;
       console.log(data);
-      return { ...set, backgroundColor, pointBorderColor, data };
+      return { ...set, backgroundColor, data, pointBorderWidth };
     });
     return { datasets: _datasets, labels: timePeriod };
   };
 
   useEffect(() => {
-    const chart: any = chartRef.current?.chartInstance;
-    chart!.data!.datasets[0]!.pointBorderColor[1] = "white";
-    chart.data.datasets[1].pointBorderColor[1] = "white";
-    chart.update();
-    chart.draw();
+    // const chart: any = chartRef.current?.chartInstance;
+    // chart!.data!.datasets[0]!.pointBorderColor[1] = "white";
+    // chart.data.datasets[1].pointBorderColor[1] = "white";
+    // chart.update();
+    // chart.draw();
   }, []);
 
   return (
     <>
       <Wrapper fadeInUp delay={8}>
-        <Tooltip>
-          <span className="time">{timePeriod[activeIndex] % 24}시 기준</span>
-          <div className="grey">
-            어제 <strong> &nbsp;{yesterdayStats[activeIndex] || 0}명</strong>{" "}
-          </div>
-          {todayStats.length - 1 >= activeIndex && (
-            <div className="blue">
-              오늘 <strong>&nbsp;{todayStats[activeIndex]}명</strong>{" "}
+        {showTooltip && (
+          <Tooltip fadeInUp>
+            <span className="time">{timePeriod[activeIndex] % 24}시 기준</span>
+            <div className="grey">
+              어제 <strong> &nbsp;{yesterdayStats[activeIndex] || 0}명</strong>{" "}
             </div>
-          )}
-        </Tooltip>
+            {todayStats.length - 1 >= activeIndex && (
+              <div className="blue">
+                오늘 <strong>&nbsp;{todayStats[activeIndex]}명</strong>{" "}
+              </div>
+            )}
+          </Tooltip>
+        )}
 
         <Line
           data={getData as any}
           ref={(el) => (chartRef.current = el)}
           options={{
             responsive: true,
-            onClick: (_, activeElements: any) => {
+
+            onClick: (el, activeElements: any) => {
               let index = activeElements[0] && activeElements[0]._index;
-              setActiveIndex((prevIndex) => index || prevIndex);
+
+              if (index != null) {
+                const chart: any = chartRef.current?.chartInstance;
+                console.log(chart);
+                // chart!.data!.datasets[0]!.pointBorderColor[index] = `${PRIMARY_COLOR}50`;
+                // chart!.data!.datasets[0]!.pointBorderColor[index] = "white";
+                // chart!.data.datasets[1].pointBorderColor[index] = "white";
+                chart!.data!.datasets[0]!.pointBorderWidth = Array(20).fill(1);
+                chart!.data!.datasets[0]!.pointBorderWidth[index] = 20;
+                // chart!.data!.datasets[1]!.pointBorderWidth[index] = 2;
+                // chart!.data!.datasets[1]!.pointBorderWidth = 10;
+                setShowTooltip((a) => !a);
+                setShowTooltip((a) => !a);
+                setActiveIndex((prevIndex) => index || prevIndex);
+                chart.update();
+                chart.draw();
+              }
+              // let index = activeElements[0] && activeElements[0]._index;
+              // setActiveIndex((prevIndex) => index || prevIndex);
+              // if (index != null) {
+              //   setShowTooltip((a) => !a);
+              //   setShowTooltip((a) => !a);
+              // }
             },
             tooltips: {
               enabled: false,
@@ -231,7 +262,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
             },
           }}
         ></Line>
-        <Row jc="center" mt="10px">
+        <Row jc="center" mt="10px" fadeInUp>
           <OptionButton
             active={dataType == "accumulated"}
             onClick={() => setDataType("accumulated")}

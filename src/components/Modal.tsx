@@ -82,9 +82,9 @@ const Modal: FC<Props> = ({
             <Button icon square onClick={onClose}>
               <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
             </Button>
-            <Underline fontSize="14px" fontWeight={900} lineHeight="6px">
+            <Row fontSize="14px" fontWeight={700} lineHeight="6px">
               {title}
-            </Underline>
+            </Row>
             {actionIcon ? (
               <Button icon square onClick={onActionClick}>
                 <Icon
