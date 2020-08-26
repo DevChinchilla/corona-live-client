@@ -1,6 +1,7 @@
 import { css } from "styled-components";
 import { addIfProp, CssType, ifProp, prop } from "./tools";
 import CSS from "csstype";
+import { theme } from "./themes";
 
 interface MarginProps {
   m?: string;
@@ -141,6 +142,26 @@ const FlexCenter = css`
   justify-content: center;
 `;
 
+const ScrollBar = css`
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${theme("lightGreyText")}C0;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${theme("lightGreyText")};
+  }
+`;
 const mixins = {
   BoxCss,
   AbsoluteCenter,
@@ -148,6 +169,7 @@ const mixins = {
   FlexCenter,
   AbsoluteVerticalCenter,
   AbsoluteHorizontalCenter,
+  ScrollBar,
 };
 
 export default mixins;

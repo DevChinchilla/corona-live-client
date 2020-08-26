@@ -52,7 +52,7 @@ const Details = styled(Col)`
     font-weight: 300;
     font-size: 13px;
     color: ${theme("darkGreyText")};
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 `;
 
