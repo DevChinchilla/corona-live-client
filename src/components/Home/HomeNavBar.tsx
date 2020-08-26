@@ -6,6 +6,7 @@ import Report from "@components/Report";
 
 import { useTheme } from "@hooks/useTheme";
 import { theme } from "@styles/themes";
+import Button from "@components/Button";
 
 const Logo = styled(Row)`
   span {
@@ -35,9 +36,9 @@ const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
-        <Row px="10px" onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
+        <Button icon onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
           <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
-        </Row>
+        </Button>
         <Icon
           transform="translateY(-4px)"
           name="Logo"
@@ -46,9 +47,9 @@ const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
           fill={theme("blackText")}
         ></Icon>
 
-        <Row px="10px" onClick={() => setShowReport(true)}>
-          <Icon name="SendMessage" size={24} fill={theme("darkGreyText")}></Icon>
-        </Row>
+        <Button icon onClick={() => setShowReport(true)}>
+          <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>
+        </Button>
       </Wrapper>
     </>
   );

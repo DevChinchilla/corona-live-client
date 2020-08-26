@@ -39,6 +39,7 @@ const IconBox = styled.a<{ type: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   svg {
     fill: ${(props) => theme(props.type as any)};
   }

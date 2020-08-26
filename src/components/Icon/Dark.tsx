@@ -2,15 +2,7 @@ import React from "react";
 
 function Dark() {
   return (
-    <svg
-      version="1.1"
-      id="Capa_1"
-      x="0px"
-      y="0px"
-      width="913.059px"
-      height="913.059px"
-      viewBox="0 0 913.059 913.059"
-    >
+    <svg version="1.1" id="Capa_1" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32">
       <g>
         <path
           d="M789.581,777.485c62.73-62.73,103.652-139.002,122.785-219.406c5.479-23.031-22.826-38.58-39.524-21.799

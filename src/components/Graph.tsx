@@ -152,7 +152,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
 
   return (
     <>
-      <Wrapper fadeInUp delay={5}>
+      <Wrapper fadeInUp delay={8}>
         <Tooltip>
           <span className="time">{timePeriod[activeIndex] % 24}시 기준</span>
           <div className="grey">

@@ -7,6 +7,7 @@ interface ButtonProps {
   white?: boolean;
   big?: boolean;
   full?: boolean;
+  icon?: boolean;
 }
 const Button = styled.button<ButtonProps>`
   display:flex;
@@ -25,7 +26,7 @@ const Button = styled.button<ButtonProps>`
 
   color:${theme("darkGreyText")};
   background: ${theme("greyBg")};
-
+  cursor:pointer;
 
   ${ifProp(
     "light",
@@ -58,6 +59,14 @@ ${ifProp(
       width: 100%;
     `
   )}
+
+${ifProp(
+  "icon",
+  css`
+    padding: 0px 10px;
+    width: 60px;
+  `
+)}
 `;
 
 export default Button;

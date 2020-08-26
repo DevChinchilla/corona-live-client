@@ -24,15 +24,15 @@ const CityNavBar: React.FC<Props> = ({ cityId, mutateData }) => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)} referTo={ct(cityId)}></Report>
       <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
-        <Row px="10px" onClick={() => history.push("/")}>
+        <Button icon onClick={() => history.push("/")}>
           <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
-        </Row>
+        </Button>
         <Underline fontSize="18px " fontWeight={900}>
           {ct(cityId)}
         </Underline>
-        <Row px="10px" onClick={() => setShowReport(true)}>
-          <Icon name="SendMessage" size={24} fill={theme("darkGreyText")}></Icon>
-        </Row>
+        <Button icon onClick={() => setShowReport(true)}>
+          <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>
+        </Button>
       </Row>
     </>
   );
