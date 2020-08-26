@@ -31,8 +31,8 @@ const Wrapper = styled(Col)`
     }
   }
 `;
-const IMPORTANT_MESSAGE = `서버 폭주로 인해 업데이트가 지연된점 죄송합니다<br></br> 현재 웹서버를 긴급 증설하여 문제를 해결하였습니다<br></br> 
-감사합니다 `;
+const IMPORTANT_MESSAGE = `오늘 아침에 추가한 광주 확진자 7명이 어제 집계되었던것으로 파악되서 수정했습니다. 혼란을 잃으킨점 죄송합니다 <br></br>더 정확한 정보를 위해 현재 오늘 누락된 확진자들을 찾고 있으니 시간이 걸려도 양해 부탁드리겠습니다.<br></br> 제보 많이 부탁드리겠습니다 감사합니다
+ `;
 
 const Announcement = ({ show, onClose }) => {
   return (
