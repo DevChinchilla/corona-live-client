@@ -37,10 +37,6 @@ const RefreshButton = styled(Row)`
   svg {
     fill: ${theme("darkGreyText")};
   }
-  div:after,
-  div:before {
-    background: ${theme("updateCard")}!important;
-  }
 `;
 
 const Updates = ({ data, mutateData, isLoading }) => {
@@ -60,7 +56,7 @@ const Updates = ({ data, mutateData, isLoading }) => {
         </Row>
         <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
           {isLoading ? (
-            <Spinner size={16} color={"darkGreyText"}></Spinner>
+            <Spinner size={16} color={"darkGreyText"} bg={"greyBg"}></Spinner>
           ) : (
             <Icon name="Refresh" size={24} fadeInUp></Icon>
           )}

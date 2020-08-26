@@ -148,14 +148,6 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
     return { datasets: _datasets, labels: timePeriod };
   };
 
-  useEffect(() => {
-    // const chart: any = chartRef.current?.chartInstance;
-    // chart!.data!.datasets[0]!.pointBorderColor[1] = "white";
-    // chart.data.datasets[1].pointBorderColor[1] = "white";
-    // chart.update();
-    // chart.draw();
-  }, []);
-
   return (
     <>
       <Wrapper fadeInUp delay={8}>
@@ -228,7 +220,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
                     beginAtZero: false,
                     fontColor: `${_theme("blackText")}B0`,
                     fontSize: 11,
-                    stepSize: isDelta ? 20 : 30,
+                    stepSize: isDelta ? 20 : 100,
                     autoSkip: true,
                     callback: (value, index) => {
                       if (value !== 0) return value;

@@ -49,6 +49,7 @@ type Props = {
 };
 
 const Spinner: React.FC<Props> = ({ size, color, bg }) => {
+  console.log(bg || "bg");
   return <Wrapper size={size} color={color || "blackText"} bg={bg || "bg"}></Wrapper>;
 };
 
