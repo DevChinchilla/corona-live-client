@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import * as ReactDOM from "react-dom";
 
 import Icon, { IconType } from "@components/Icon/Icon";
@@ -11,6 +11,7 @@ import { media } from "@styles";
 import { useTheme } from "@hooks/useTheme";
 import Overlay from "./Overlay";
 import Button from "./Button";
+import { ifProp } from "@styles/tools";
 
 const Children = styled.div`
   flex: 1;
@@ -21,7 +22,7 @@ const Children = styled.div`
   overflow-x: hidden;
 `;
 
-const ModalContainer = styled(Col)`
+const ModalContainer = styled(Col)<{ fixedHeight?: boolean }>`
   position: fixed;
   left: 50%;
   box-sizing: border-box;
@@ -29,6 +30,12 @@ const ModalContainer = styled(Col)`
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   max-height: 80%;
+  ${ifProp(
+    "fixedHeight",
+    css`
+      height: 80%;
+    `
+  )}
   padding: 20px 20px;
   background: ${theme("bg")};
   z-index: 1000;
@@ -58,6 +65,7 @@ interface Props {
   onActionClick?: any;
   style?: any;
   actionIcon?: any;
+  dynamic?: boolean;
 }
 
 const Modal: FC<Props> = ({
@@ -69,6 +77,7 @@ const Modal: FC<Props> = ({
   onActionClick,
   actionIcon,
   noHeader,
+  dynamic,
   ...props
 }) => {
   const _theme = useTheme();
@@ -77,7 +86,7 @@ const Modal: FC<Props> = ({
   const component = (
     <>
       {!hideOverlay && <Overlay onClick={onClose}></Overlay>}
-      <ModalContainer {...props}>
+      <ModalContainer {...props} fixedHeight={!dynamic}>
         {!noHeader && (
           <Header fadeInUp>
             <Button icon square onClick={onClose}>

@@ -38,7 +38,8 @@ const Announcement = ({ show, onClose }) => {
   return (
     <Modal show={show} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
-        <Icon height="170px" width="280px" name="LogoIcon" transform="translateY(-10px)"></Icon>
+        <Row>공지</Row>
+        {/* <Icon height="170px" width="280px" name="LogoIcon" transform="translateY(-10px)"></Icon> */}
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
       </Wrapper>
       <Row h="20px"></Row>

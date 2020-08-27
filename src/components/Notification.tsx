@@ -90,7 +90,7 @@ const Notification: React.FC<Props> = ({ notification, onClose }) => {
             ))}
           </Col>
           <Button full onClick={onClose}>
-            딛기
+            닫기
           </Button>
         </Container>
       </Wrapper>

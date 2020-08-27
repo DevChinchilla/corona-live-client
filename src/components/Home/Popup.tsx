@@ -37,7 +37,9 @@ const Popup = ({ show, onClose }) => {
   return (
     <Modal show={show} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
-        <Icon height="170px" width="280px" name="LogoIcon" transform="translateY(-10px)"></Icon>
+        <Row bg="#272b38" borderRadius="10px">
+          <Icon height="150px" width="150px" name="LogoIcon" transform="translateY(-10px)"></Icon>
+        </Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
       </Wrapper>
       <Row h="20px"></Row>

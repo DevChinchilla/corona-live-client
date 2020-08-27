@@ -2,7 +2,7 @@ import React from "react";
 
 function IconTemplate() {
   return (
-    <svg width="394" height="178" viewBox="0 0 394 378">
+    <svg width="394" height="130" viewBox="0 0 394 378">
       <defs>
         <filter id="Ellipse_4" x="147" y="140" width="34" height="35" filterUnits="userSpaceOnUse">
           <feOffset dy="3" />
@@ -40,17 +40,8 @@ function IconTemplate() {
           <feComposite in="SourceGraphic" />
         </filter>
       </defs>
-      <g id="Group_65" data-name="Group 65" transform="translate(-403 -100)">
+      <g id="Group_65" data-name="Group 65" transform="translate(-403 -80)">
         <g id="Group_64" data-name="Group 64">
-          <rect
-            id="Rectangle_36"
-            data-name="Rectangle 36"
-            width="394"
-            height="278"
-            rx="45"
-            transform="translate(403 100)"
-            fill="#191e2c"
-          />
           <g id="Group_63" data-name="Group 63">
             <g id="Group_46" data-name="Group 46" transform="translate(550.051 197.362)">
               <path
