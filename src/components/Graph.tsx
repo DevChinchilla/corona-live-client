@@ -151,7 +151,11 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
       <Wrapper fadeInUp delay={8}>
         {showTooltip && (
           <Tooltip fadeInUp>
-            <span className="time">{timePeriod[activeIndex] % 24}시 기준</span>
+            <span className="time">
+              {`${isDelta ? ((timePeriod[activeIndex] - 1) % 24) + "시" : ""}  ~ ${
+                timePeriod[activeIndex] % 24
+              }시`}
+            </span>
             <div className="grey">
               어제 <strong> &nbsp;{yesterdayStats[activeIndex] || 0}명</strong>{" "}
             </div>

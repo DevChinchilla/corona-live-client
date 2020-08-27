@@ -75,7 +75,7 @@ const Board = ({ data }) => {
       <Box w="40px"></Box>
       <Stat
         data={data.current}
-        title={"오늘 (비공식)"}
+        title={"실시간 (비공식)"}
         fadeInUp
         delay={3}
         info="어제 동시간 대비 증가수"
