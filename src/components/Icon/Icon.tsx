@@ -69,6 +69,7 @@ interface IconProps extends BoxProps {
 
 const SIcon: any = styled(Row)`
   position: relative;
+  flex-shrink: 0;
   ${ifProp(
     "size",
     css`
