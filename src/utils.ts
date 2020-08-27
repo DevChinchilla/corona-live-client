@@ -49,7 +49,7 @@ export const getCurrentDateTime = () => {
   let minutes = addZero(date.getMinutes());
 
   let ampm = "AM";
-  if (hours > 12) {
+  if (hours >= 12) {
     hours -= 12;
     ampm = "PM";
   }
