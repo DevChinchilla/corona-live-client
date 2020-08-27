@@ -35,7 +35,7 @@ const Wrapper = styled(Col)`
 
 const Popup = ({ show, onClose }) => {
   return (
-    <Modal show={show} noHeader style={{ height: "initial" }}>
+    <Modal show={show} noHeader style={{ height: "initial" }} zIndex={1000000}>
       <Wrapper fadeInUp ai="center">
         <Row bg="#1a1f2c" borderRadius="10px">
           <Icon height="150px" width="150px" name="LogoIcon" transform="translateY(-10px)"></Icon>

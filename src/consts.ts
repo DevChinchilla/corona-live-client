@@ -19,7 +19,7 @@ export const EMAIL_API = `https://64t2pyuhje.execute-api.ap-northeast-2.amazonaw
 
 export const IMPORTANT_MESSAGE = `
 코로나 라이브는 재난문자와 각 지자체및 질병관리본부에서 <strong>금일 제공하는 자료</strong>를
-기반으로 코로나 현황을 실시간으로 제공 하고있습니다 <br><br> 하지만 민간이 취합한 집계이므로 공식적인
+기반으로 코로나 현황을 실시간으로 제공 하고있습니다 (대구, 검역 미포함) <br><br> 하지만 민간이 취합한 집계이므로 공식적인
 근거 자료로 활용될수 없고, 본사이트에서 제공하는 오늘 확진자수는 다음날 제공하는 질본 수치와 <strong> 오차가 발생할수 있습니다</strong>
 <br><br>  본사이트에서 제공하는 정보 사용/공유로 인해 발생된 문제의 책임은<strong>
 전적으로 사용자에게 있습니다.</strong>

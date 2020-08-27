@@ -56,6 +56,7 @@ const Home = ({ theme, setTheme }) => {
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
       )} */}
+
       {statsData?.announcements && (
         <Suspense fallback={<div />}>
           <AnnouncementPopup announcement={statsData?.announcements[0]}></AnnouncementPopup>

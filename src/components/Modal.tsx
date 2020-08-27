@@ -71,6 +71,7 @@ interface Props {
   style?: any;
   actionIcon?: any;
   dynamic?: boolean;
+  zIndex?: number;
 }
 
 const Modal: FC<Props> = ({
@@ -83,6 +84,7 @@ const Modal: FC<Props> = ({
   actionIcon,
   noHeader,
   dynamic,
+  zIndex,
   ...props
 }) => {
   const _theme = useTheme();
@@ -91,7 +93,7 @@ const Modal: FC<Props> = ({
   const component = (
     <>
       {!hideOverlay && <Overlay onClick={onClose}></Overlay>}
-      <ModalContainer {...props} fixedHeight={!dynamic}>
+      <ModalContainer {...props} fixedHeight={!dynamic} zIndex={zIndex || 1000}>
         {!noHeader && (
           <Header fadeInUp>
             <Button icon square onClick={onClose}>
