@@ -11,7 +11,7 @@ import { media } from "@styles";
 import { useTheme } from "@hooks/useTheme";
 import Overlay from "./Overlay";
 import Button from "./Button";
-import { ifProp } from "@styles/tools";
+import { ifProp, prop } from "@styles/tools";
 
 const Children = styled.div`
   flex: 1;
@@ -38,7 +38,7 @@ const ModalContainer = styled(Col)<{ fixedHeight?: boolean }>`
   )}
   padding: 20px 20px;
   background: ${theme("bg")};
-  z-index: 1000;
+  z-index: ${prop("zIndex")};
   border-radius: 10px;
   overflow-x: hidden;
   overflow-y: scroll;

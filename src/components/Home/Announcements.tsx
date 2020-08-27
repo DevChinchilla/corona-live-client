@@ -37,6 +37,7 @@ const Button = styled(Row)`
 `;
 
 const Announcement = styled(Col)`
+  overflow: scroll;
   margin-bottom: 16px;
   span {
     font-size: 12px;
@@ -103,6 +104,9 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
             <span>공지사항이 없습니다</span>
           )}
         </Announcement>
+        <Row fontSize="11px" mb="14px" mt="30px" opacity={0.5}>
+          SNS로 보기
+        </Row>
       </Modal>
       <Wrapper fadeInUp delay={2}>
         <Button onClick={() => setShowAnnouncements(true)}>

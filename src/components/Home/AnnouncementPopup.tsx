@@ -6,7 +6,30 @@ import { Col, Row } from "@components/Layout";
 import Button from "@components/Button";
 import { theme } from "@styles/themes";
 import { useLocalStorage } from "@hooks/useLocalStorage";
-
+import {
+  FACEBOOK_URL,
+  BLOG_URL,
+  TWITTER_URL,
+  WEBSITE_URL,
+  IMPORTANT_MESSAGE,
+  TWITTER_SNS_URL,
+  INSTA_SNS_URL,
+} from "@consts";
+import Icon from "@components/Icon";
+const IconBox = styled.a<{ type: string }>`
+  background: ${(props) => theme(props.type as any)}30;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  margin: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg {
+    fill: ${(props) => theme(props.type as any)};
+  }
+`;
 const Wrapper = styled(Col)`
   overflow-y: auto;
   overflow-x: hidden;
@@ -57,6 +80,14 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
         <Header>공지</Header>
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
       </Wrapper>
+      <Row jc="center" position="relative">
+        <IconBox type="twitter" href={TWITTER_SNS_URL}>
+          <Icon name="Twitter" size={14}></Icon>
+        </IconBox>
+        <IconBox type="instagram" href={INSTA_SNS_URL}>
+          <Icon name="Instagram" size={14}></Icon>
+        </IconBox>
+      </Row>
       <Row h="20px"></Row>
       <Button
         big

@@ -98,7 +98,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
         <textarea
           autoFocus={!!referTo}
           ref={(el) => (textRef.current = el)}
-          placeholder="확진자 제보일시 확진자명수랑 지자체 사이트 링크/블로그 링크/재난문자를 첨부해주세요 (뉴스 x)"
+          placeholder="제보하시기전에 공지확인 부탁드리겠습니다. 확진자명수랑 지자체 사이트 링크/블로그 링크/재난문자를 꼭 첨부해주세요 (뉴스 x)"
           value={message}
           onChange={onChange}
           name="message"
