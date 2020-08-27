@@ -111,6 +111,7 @@ export const useData = () => {
   return {
     updatesData: updates.data,
     statsData: stats.data,
+
     mutateData,
     isLoading,
     notification,

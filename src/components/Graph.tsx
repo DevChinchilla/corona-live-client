@@ -135,14 +135,12 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
   if (!DATA) return <></>;
 
   const getData = (canvas) => {
-    console.log("rendered");
     const { datasets } = DATA;
     let _datasets = datasets?.map((set, i) => {
       let backgroundColor = i == 0 ? setGradient(canvas, set.backgroundColor) : "transparent";
 
       let pointBorderWidth = timePeriod.map((_, j) => (j == activeIndex && i == 0 ? 20 : 1));
       let data = i == 0 ? todayStats : yesterdayStats;
-      console.log(data);
       return { ...set, backgroundColor, data, pointBorderWidth };
     });
     return { datasets: _datasets, labels: timePeriod };
@@ -176,7 +174,6 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
 
               if (index != null) {
                 const chart: any = chartRef.current?.chartInstance;
-                console.log(chart);
                 // chart!.data!.datasets[0]!.pointBorderColor[index] = `${PRIMARY_COLOR}50`;
                 // chart!.data!.datasets[0]!.pointBorderColor[index] = "white";
                 // chart!.data.datasets[1].pointBorderColor[index] = "white";

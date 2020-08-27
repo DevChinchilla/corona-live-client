@@ -3,7 +3,7 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Page, Row } from "@components/Layout";
 
 import { sortByDate } from "@utils";
-import { CITY_TD_FLEX } from "@consts";
+import { CITY_TD_FLEX, IMPORTANT_MESSAGE } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
@@ -13,16 +13,17 @@ import Graph from "@components/Graph";
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
-const Announcement = lazy(() => import("@components/Home/Announcement"));
+const AnnouncementPopup = lazy(() => import("@components/Home/AnnouncementPopup"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
 const Popup = lazy(() => import("@components/Home/Popup"));
 
+const announcement = { content: IMPORTANT_MESSAGE, date: 123213 };
+
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit");
-  const [showAnnouncment, setAnnouncment] = useLocalStorage("announcment3");
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
@@ -38,7 +39,8 @@ const Home = ({ theme, setTheme }) => {
   //     setrenderIt(true);
   //   }, 2000);
   // }, []);
-  console.log({ updatesData, statsData });
+  // console.log({ updatesData, statsData });
+  console.log(statsData?.announcements);
   return (
     <Page>
       {!isLoading && !!notification && (
@@ -46,12 +48,11 @@ const Home = ({ theme, setTheme }) => {
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
       )}
-      {/* <Suspense fallback={<div />}>
-        <Announcement
-          show={showAnnouncment == undefined}
-          onClose={() => setAnnouncment(true)}
-        ></Announcement>
-      </Suspense> */}
+      {statsData?.announcements && (
+        <Suspense fallback={<div />}>
+          <AnnouncementPopup announcement={statsData?.announcements[0]}></AnnouncementPopup>
+        </Suspense>
+      )}
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>

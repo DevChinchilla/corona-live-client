@@ -12,6 +12,11 @@ export interface TimerseriesType {
   yesterday: { [time: number]: CasesType };
 }
 
+export interface AnnouncementsType {
+  content: string;
+  date: number;
+}
+
 interface CityGuType {
   [cityId: string]: {
     cases: CasesType;
@@ -26,6 +31,7 @@ export interface StatsType {
   current: CurrentType;
   overall: OverallType;
   timeseries: TimerseriesType;
+  announcements: AnnouncementsType;
 }
 export interface UpdateType {
   src: string;

@@ -36,7 +36,7 @@ const Wrapper = styled(Col)`
     height: 40px;
     border: none;
     font-size: 14px;
-    padding:0px 10px;
+    padding: 0px 10px;
     border-bottom: 1px solid ${theme("darkGreyText")}20;
     background: transparent;
     box-shadow: none;
@@ -98,7 +98,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
         <textarea
           autoFocus={!!referTo}
           ref={(el) => (textRef.current = el)}
-          placeholder="제보내용 (필수)"
+          placeholder="확진자 제보일시 확진자명수랑 지자체 사이트 링크/블로그 링크/재난문자를 첨부해주세요 (뉴스 x)"
           value={message}
           onChange={onChange}
           name="message"
