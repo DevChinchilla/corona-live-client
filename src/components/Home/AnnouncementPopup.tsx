@@ -17,7 +17,9 @@ const Wrapper = styled(Col)`
     font-weight: 300;
     word-break: keep-all;
     text-align: center;
-
+    * {
+      color: ${theme("darkGreyText")} !important;
+    }
     strong {
       font-weight: 500;
     }
@@ -39,9 +41,8 @@ interface Props {
 
 const Header = styled(Row)`
   background: ${theme("greyBg")};
-  /* width: 100%; */
-  font-weight: bold;
   padding: 0px 10px;
+  font-weight: bold;
   margin-bottom: 18px;
 `;
 const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {

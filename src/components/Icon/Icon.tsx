@@ -22,6 +22,7 @@ import LogoIcon from "./LogoIcon";
 import SendMessage from "./SendMessage";
 import NotificationFilled from "./NotificationFilled";
 import Info from "./Info";
+import Instagram from "./Instagram";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -49,6 +50,7 @@ const icons = {
   SendMessage,
   NotificationFilled,
   Info,
+  Instagram,
 };
 
 export type IconType = keyof typeof icons;

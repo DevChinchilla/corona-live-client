@@ -21,6 +21,7 @@ interface ThemeProps {
   blog: string;
   twitter: string;
   link: string;
+  instagram: string;
 
   notification: string;
 }
@@ -50,6 +51,7 @@ const lightTheme: ThemeProps = {
   blog: "#57C04F",
   twitter: "#4A9AE5",
   link: "#999999",
+  instagram: "#bf2e70",
 
   notification: "#000000d6",
 };
@@ -75,7 +77,7 @@ const darkTheme: ThemeProps = {
   blog: "#57C04F",
   twitter: "#4A9AE5",
   link: "#ffffff",
-
+  instagram: "#bf2e70",
   notification: "#000000d6",
 };
 

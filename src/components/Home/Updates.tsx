@@ -13,7 +13,8 @@ import Spinner from "@components/Spinner";
 const Wrapper = styled(Col)`
   width: 100%;
   justify-content: stretch;
-  padding: 20px 0px;
+  padding-bottom: 20px;
+  padding-top: 10px;
 `;
 
 const Time = styled(Col)`
@@ -29,7 +30,7 @@ const Time = styled(Col)`
 const RefreshButton = styled(Row)`
   width: 50px;
   background: ${theme("greyBg")};
-  margin-left: 6px;
+  margin-left: 10px;
   border-radius: 6px;
   align-items: center;
   justify-content: center;
@@ -45,7 +46,7 @@ const Updates = ({ data, mutateData, isLoading }) => {
   return (
     <Wrapper fadeInUp>
       <UpdateModal {...{ onClose: () => setShowModal(false), showModal, data }}></UpdateModal>
-      <Time>{getCurrentDateTime()}</Time>
+      {/* <Time>{getCurrentDateTime()}</Time> */}
       <Row>
         <Row flex={1}>
           <UpdateCard

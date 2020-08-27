@@ -152,7 +152,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
         {showTooltip && (
           <Tooltip fadeInUp>
             <span className="time">
-              {`${isDelta ? ((timePeriod[activeIndex] - 1) % 24) + "시" : ""}  ~ ${
+              {`${isDelta ? ((timePeriod[activeIndex] - 1) % 24) + "시" : ""} ~ ${
                 timePeriod[activeIndex] % 24
               }시`}
             </span>

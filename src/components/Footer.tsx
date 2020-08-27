@@ -5,7 +5,15 @@ import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
 
 import { theme, ThemeType } from "@styles/themes";
-import { FACEBOOK_URL, BLOG_URL, TWITTER_URL, WEBSITE_URL, IMPORTANT_MESSAGE } from "@consts";
+import {
+  FACEBOOK_URL,
+  BLOG_URL,
+  TWITTER_URL,
+  WEBSITE_URL,
+  IMPORTANT_MESSAGE,
+  TWITTER_SNS_URL,
+  INSTA_SNS_URL,
+} from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 
@@ -97,7 +105,17 @@ const Footer = (props) => {
           </IconBox>
         )}
       </Row>
-
+      <Row fontSize="11px" mb="14px" mt="30px" opacity={0.5}>
+        SNS로 보기
+      </Row>
+      <Row jc="center" position="relative">
+        <IconBox type="twitter" href={TWITTER_SNS_URL}>
+          <Icon name="Twitter" size={14}></Icon>
+        </IconBox>
+        <IconBox type="instagram" href={INSTA_SNS_URL}>
+          <Icon name="Instagram" size={14}></Icon>
+        </IconBox>
+      </Row>
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
     </Wrapper>
   );

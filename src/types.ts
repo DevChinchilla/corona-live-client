@@ -31,7 +31,7 @@ export interface StatsType {
   current: CurrentType;
   overall: OverallType;
   timeseries: TimerseriesType;
-  announcements: AnnouncementsType;
+  announcements: AnnouncementsType[];
 }
 export interface UpdateType {
   src: string;

@@ -12,6 +12,9 @@ export const FACEBOOK_URL = `https://www.facebook.com/sharer/sharer.php?u=${WEBS
 export const BLOG_URL = `http://blog.naver.com/openapi/share?url=${WEBSITE_URL}&title=[코로나 라이브] 코로나 현황 실시간으로 보기`;
 export const TWITTER_URL = `http://twitter.com/share?url=${WEBSITE_URL}&text=코로나 현황 실시간으로 보기`;
 
+export const TWITTER_SNS_URL = `https://twitter.com/kCm2v4r1PvpSE7A`;
+export const INSTA_SNS_URL = `https://www.instagram.com/corona.live.kr/`;
+
 export const EMAIL_API = `https://64t2pyuhje.execute-api.ap-northeast-2.amazonaws.com/corona-live-email`;
 
 export const IMPORTANT_MESSAGE = `

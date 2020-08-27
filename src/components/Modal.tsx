@@ -56,6 +56,11 @@ const Header = styled(Row)`
   justify-content: space-between;
 `;
 
+const Title = styled(Row)`
+  background: ${theme("greyBg")};
+  padding: 0px 10px;
+`;
+
 interface Props {
   show: boolean;
   noHeader?: boolean;
@@ -92,9 +97,9 @@ const Modal: FC<Props> = ({
             <Button icon square onClick={onClose}>
               <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
             </Button>
-            <Row fontSize="14px" fontWeight={700} lineHeight="6px">
+            <Title fontSize="14px" fontWeight={700}>
               {title}
-            </Row>
+            </Title>
             {actionIcon ? (
               <Button icon square onClick={onActionClick}>
                 <Icon

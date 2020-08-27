@@ -14,6 +14,7 @@ const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
 const AnnouncementPopup = lazy(() => import("@components/Home/AnnouncementPopup"));
+const Announcements = lazy(() => import("@components/Home/Announcements"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
@@ -40,19 +41,27 @@ const Home = ({ theme, setTheme }) => {
   //   }, 2000);
   // }, []);
   // console.log({ updatesData, statsData });
-  console.log(statsData?.announcements);
+  // const announcements = [
+  //   {
+  //     content: `SNS로도 보실수 있게 계정을 만들었습니다. 한시간 간격으로 현황 업로드가 될겄이니 편한곳에서 보시기 바랍니다<br></br><a href="https://twitter.com/kCm2v4r1PvpSE7A">트위터 계정</a> | <a href="https://www.instagram.com/corona.live.kr/">인스타 계정</a>`,
+  //     date: 1598518334473,
+  //   },
+  //   { content: "안녀하세요<br></br>감사합니다", date: 1598518334233 },
+  // ];
+  // console.log(statsData?.announcements);
   return (
     <Page>
-      {!isLoading && !!notification && (
+      {/* {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
-      )}
+      )} */}
       {statsData?.announcements && (
         <Suspense fallback={<div />}>
           <AnnouncementPopup announcement={statsData?.announcements[0]}></AnnouncementPopup>
         </Suspense>
       )}
+
       <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
       </Suspense>
@@ -61,8 +70,16 @@ const Home = ({ theme, setTheme }) => {
         <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
+      {statsData?.announcements ? (
+        <Suspense fallback={<div style={{ height: "50px" }} />}>
+          <Announcements announcements={statsData?.announcements}></Announcements>
+        </Suspense>
+      ) : (
+        <Row h="30px"></Row>
+      )}
+
       {updatesData ? (
-        <Suspense fallback={<div style={{ height: "120px" }} />}>
+        <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Updates data={sortByDate(updatesData)} {...{ mutateData, isLoading }}></Updates>
         </Suspense>
       ) : (
