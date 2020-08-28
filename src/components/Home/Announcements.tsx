@@ -4,6 +4,7 @@ import { Row, Col } from "@components/Layout";
 import { theme } from "@styles/themes";
 import Modal from "@components/Modal";
 import { getDateDistance } from "@utils";
+import { IMPORTANT_MESSAGE } from "@consts";
 
 const Wrapper = styled(Row)``;
 
@@ -91,6 +92,7 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
         title={"공지사항"}
       >
         <Announcement>
+          <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
           {announcements.length > 0 ? (
             announcements.map(({ date, content }) => {
               return (
@@ -104,9 +106,6 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
             <span>공지사항이 없습니다</span>
           )}
         </Announcement>
-        <Row fontSize="11px" mb="14px" mt="30px" opacity={0.5}>
-          SNS로 보기
-        </Row>
       </Modal>
       <Wrapper fadeInUp delay={2}>
         <Button onClick={() => setShowAnnouncements(true)}>
