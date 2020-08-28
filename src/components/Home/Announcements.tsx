@@ -17,6 +17,7 @@ const Button = styled(Row)`
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  flex-shrink: 0;
   cursor: pointer;
   div {
     font-weight: bold;
@@ -92,7 +93,11 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
         title={"공지사항"}
       >
         <Announcement>
-          <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
+          <p
+            dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}
+            style={{ minHeight: "130px", overflowY: "auto", marginBottom: "10px" }}
+          ></p>
+          {/* <Button></Button> */}
           {announcements.length > 0 ? (
             announcements.map(({ date, content }) => {
               return (
