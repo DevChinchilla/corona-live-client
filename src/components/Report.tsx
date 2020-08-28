@@ -55,6 +55,7 @@ interface Props {
   hideOverlay?: boolean;
   referTo?: any;
 }
+
 const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
   const [{ message, email, title }, setForm] = useObjectState({
     message: "",
@@ -73,6 +74,17 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
       setForm({ title: referTo });
     }
   }, [referTo]);
+
+  useEffect(() => {
+    if (show) {
+      setisLoading(false);
+      setForm({
+        message: "",
+        email: "",
+        title: referTo || "",
+      });
+    }
+  }, [show]);
 
   const onSumbit = async () => {
     if (isLoading) return;
