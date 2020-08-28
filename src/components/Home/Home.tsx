@@ -51,11 +51,11 @@ const Home = ({ theme, setTheme }) => {
   // console.log(statsData?.announcements);
   return (
     <Page>
-      {/* {!isLoading && !!notification && (
+      {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} onClose={removeNotification}></Notification>
         </Suspense>
-      )} */}
+      )}
 
       {statsData?.announcements && (
         <Suspense fallback={<div />}>
