@@ -148,6 +148,9 @@ const Footer = (props) => {
         통해 공개)
       </Row>
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
+      <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
+        corona.live.kr@gmail.com
+      </Row>
     </Wrapper>
   );
 };

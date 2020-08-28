@@ -15,6 +15,7 @@ const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
 const AnnouncementPopup = lazy(() => import("@components/Home/AnnouncementPopup"));
 const Announcements = lazy(() => import("@components/Home/Announcements"));
+const Message = lazy(() => import("@components/Home/Message"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
@@ -99,6 +100,11 @@ const Home = ({ theme, setTheme }) => {
             timeseries={statsData?.timeseries as TimerseriesType}
             current={statsData.overview.current}
           ></Graph>
+        </Suspense>
+      )}
+      {statsData && updatesData && (
+        <Suspense fallback={<div />}>
+          <Message></Message>
         </Suspense>
       )}
 
