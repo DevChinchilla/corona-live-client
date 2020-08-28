@@ -80,6 +80,9 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
         <Header>공지</Header>
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
       </Wrapper>
+      <Row fontSize="10px" mb="16px" mt="12px" opacity={0.5} jc="center" width="100%">
+        코로나 라이브 SNS로 보기
+      </Row>
       <Row jc="center" position="relative">
         <IconBox type="twitter" href={TWITTER_SNS_URL}>
           <Icon name="Twitter" size={14}></Icon>
@@ -88,7 +91,7 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
           <Icon name="Instagram" size={14}></Icon>
         </IconBox>
       </Row>
-      <Row h="20px"></Row>
+      <Row h="40px"></Row>
       <Button
         big
         onClick={() => {
