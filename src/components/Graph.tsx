@@ -126,7 +126,7 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
     ...Object.keys(yesterday).map((a) => yesterday[a][isDelta ? 1 : 0]),
     isDelta ? current[0] - current[1] - yesterday[currentTime][0] : current[0] - current[1],
   ];
-  const timePeriod = [...Object.keys(today), "지금"];
+  const timePeriod = [...Object.keys(today), "현재"];
   // const [activeIndex, setActiveIndex] = useState(Object.keys(today).length - 1);
   const [activeIndex, setActiveIndex] = useState(Object.keys(today).length);
 
@@ -166,7 +166,7 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
                   ? ((timePeriod[activeIndex] - 1) % 24) + "시"
                   : ""
               } ${
-                parseInt(timePeriod[activeIndex]) ? `~ ${timePeriod[activeIndex] % 24}시` : "지금"
+                parseInt(timePeriod[activeIndex]) ? `~ ${timePeriod[activeIndex] % 24}시` : "현재"
               }`}
             </span>
             <div className="grey">

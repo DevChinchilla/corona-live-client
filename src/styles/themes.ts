@@ -17,6 +17,7 @@ interface ThemeProps {
   updateCard: string;
 
   kakao: string;
+  kakaoBg: string;
   facebook: string;
   blog: string;
   twitter: string;
@@ -46,7 +47,8 @@ const lightTheme: ThemeProps = {
 
   updateCard: "white",
 
-  kakao: "#EFDB48",
+  kakao: "#564a00",
+  kakaoBg: "#efdb4866",
   facebook: "#3672E4",
   blog: "#57C04F",
   twitter: "#4A9AE5",
@@ -55,6 +57,7 @@ const lightTheme: ThemeProps = {
 
   notification: "#000000d6",
 };
+
 const darkTheme: ThemeProps = {
   bg: "#191F2C",
   text: "#C8C9CD",
@@ -71,7 +74,7 @@ const darkTheme: ThemeProps = {
   red: "#EB5374",
 
   updateCard: "#272b38",
-
+  kakaoBg: "#EFDB4830",
   kakao: "#EFDB48",
   facebook: "#3672E4",
   blog: "#57C04F",

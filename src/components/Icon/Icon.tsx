@@ -23,6 +23,7 @@ import SendMessage from "./SendMessage";
 import NotificationFilled from "./NotificationFilled";
 import Info from "./Info";
 import Instagram from "./Instagram";
+import KakaoPay from "./KakaoPay";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -51,6 +52,7 @@ const icons = {
   NotificationFilled,
   Info,
   Instagram,
+  KakaoPay,
 };
 
 export type IconType = keyof typeof icons;

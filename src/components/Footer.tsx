@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
@@ -13,9 +13,11 @@ import {
   IMPORTANT_MESSAGE,
   TWITTER_SNS_URL,
   INSTA_SNS_URL,
+  KAKAOPAY_URL,
 } from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
+import { ifProp, ifProps } from "@styles/tools";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -34,11 +36,11 @@ const Wrapper = styled(Col)`
 
     margin-top: 50px;
     text-align: center;
-    opacity: 0.5;
+    opacity: 0.7;
   }
 `;
 
-const IconBox = styled.a<{ type: string }>`
+const IconBox = styled.a<{ type: string; kakaoPay?: boolean }>`
   background: ${(props) => theme(props.type as any)}30;
   width: 30px;
   height: 30px;
@@ -51,6 +53,23 @@ const IconBox = styled.a<{ type: string }>`
   svg {
     fill: ${(props) => theme(props.type as any)};
   }
+  ${ifProps(
+    { type: "kakao" },
+    css`
+      background: ${theme("kakaoBg")};
+    `
+  )}
+  ${ifProp(
+    "kakaoPay",
+    css`
+      width: auto !important;
+      background: transparent;
+      border: 1px solid ${theme("darkGreyText")}80;
+      svg {
+        fill: ${theme("darkGreyText")};
+      }
+    `
+  )}
 `;
 
 const LinkCopyMsg = styled(Row)`
@@ -80,7 +99,7 @@ const Footer = (props) => {
     <Wrapper fadeInUp delay={6}>
       <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
 
-      <Row fontSize="11px" mb="14px" opacity={0.5}>
+      <Row fontSize="12px" mb="14px" opacity={0.7}>
         공유하기
       </Row>
       <Row jc="center" position="relative">
@@ -105,7 +124,7 @@ const Footer = (props) => {
           </IconBox>
         )}
       </Row>
-      <Row fontSize="11px" mb="14px" mt="30px" opacity={0.5}>
+      <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
         SNS로 보기
       </Row>
       <Row jc="center" position="relative">
@@ -115,6 +134,18 @@ const Footer = (props) => {
         <IconBox type="instagram" href={INSTA_SNS_URL}>
           <Icon name="Instagram" size={14}></Icon>
         </IconBox>
+      </Row>
+      <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
+        후원하기
+      </Row>
+      <Row jc="center" position="relative">
+        <IconBox type="kakao" href={KAKAOPAY_URL} kakaoPay>
+          <Icon name="KakaoPay" height="12px" width="100px"></Icon>
+        </IconBox>
+      </Row>
+      <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
+        서비비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
+        통해 공개)
       </Row>
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
     </Wrapper>
