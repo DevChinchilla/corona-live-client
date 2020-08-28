@@ -95,7 +95,10 @@ const Home = ({ theme, setTheme }) => {
 
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
-          <Graph timeseries={statsData?.timeseries as TimerseriesType}></Graph>
+          <Graph
+            timeseries={statsData?.timeseries as TimerseriesType}
+            current={statsData.overview.current}
+          ></Graph>
         </Suspense>
       )}
 

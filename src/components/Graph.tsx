@@ -3,7 +3,7 @@ import { Line, ChartData } from "react-chartjs-2";
 import styled, { css } from "styled-components";
 import { theme } from "@styles/themes";
 import { useTheme } from "@hooks/useTheme";
-import { TimerseriesType } from "@types";
+import { TimerseriesType, CurrentType } from "@types";
 import { Row, Col } from "./Layout";
 import { ifProp } from "@styles/tools";
 
@@ -107,19 +107,28 @@ const Tooltip = styled(Col)`
   }
 `;
 
-type Props = { timeseries: TimerseriesType };
+type Props = { timeseries: TimerseriesType; current: any };
 
-const Graph: React.FC<Props> = ({ timeseries }) => {
+const Graph: React.FC<Props> = ({ timeseries, current }) => {
+  console.log({ current });
   if (!timeseries) return <div style={{ height: "10px" }}></div>;
   const [dataType, setDataType]: [string, any] = useState("accumulated");
   const isDelta = dataType == "delta";
   const [showTooltip, setShowTooltip] = useState(true);
 
   const { today, yesterday } = timeseries;
-  const todayStats = Object.keys(today).map((a) => today[a][isDelta ? 1 : 0]);
-  const yesterdayStats = Object.keys(yesterday).map((a) => yesterday[a][isDelta ? 1 : 0]);
-  const timePeriod = Object.keys(yesterday);
-  const [activeIndex, setActiveIndex] = useState(Object.keys(today).length - 1);
+  const currentTime = Math.max(...Object.keys(today));
+  const todayStats = [
+    ...Object.keys(today).map((a) => today[a][isDelta ? 1 : 0]),
+    isDelta ? current[0] - today[currentTime][0] : current[0],
+  ];
+  const yesterdayStats = [
+    ...Object.keys(yesterday).map((a) => yesterday[a][isDelta ? 1 : 0]),
+    isDelta ? current[0] - current[1] - yesterday[currentTime][0] : current[0] - current[1],
+  ];
+  const timePeriod = [...Object.keys(today), "지금"];
+  // const [activeIndex, setActiveIndex] = useState(Object.keys(today).length - 1);
+  const [activeIndex, setActiveIndex] = useState(Object.keys(today).length);
 
   const chartRef = useRef<Line | null>();
   const _theme = useTheme();
@@ -152,9 +161,13 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
         {showTooltip && (
           <Tooltip fadeInUp>
             <span className="time">
-              {`${isDelta ? ((timePeriod[activeIndex] - 1) % 24) + "시" : ""} ~ ${
-                timePeriod[activeIndex] % 24
-              }시`}
+              {`${
+                isDelta && parseInt(timePeriod[activeIndex])
+                  ? ((timePeriod[activeIndex] - 1) % 24) + "시"
+                  : ""
+              } ${
+                parseInt(timePeriod[activeIndex]) ? `~ ${timePeriod[activeIndex] % 24}시` : "지금"
+              }`}
             </span>
             <div className="grey">
               어제 <strong> &nbsp;{yesterdayStats[activeIndex] || 0}명</strong>{" "}
@@ -243,7 +256,7 @@ const Graph: React.FC<Props> = ({ timeseries }) => {
                     autoSkipPadding: 14,
                     maxRotation: 0,
                     callback: (value, index) => {
-                      if (value !== 0) return `${value}${"시"}`;
+                      if (value !== 0) return `${value}${parseInt(value) ? "시" : ""}`;
                     },
                   },
                   gridLines: {
