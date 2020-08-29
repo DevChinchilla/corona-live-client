@@ -25,7 +25,7 @@ const announcement = { content: IMPORTANT_MESSAGE, date: 123213 };
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
-  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit2");
+  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,

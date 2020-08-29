@@ -56,11 +56,11 @@ const Popup = ({ show, onClose }) => {
         <h3>필독 부탁드립니다</h3>
         <Row minHeight="10px"></Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
+        <Row h="20px"></Row>
+        <Button big onClick={onClose}>
+          닫기
+        </Button>
       </Wrapper>
-      <Row h="20px"></Row>
-      <Button big onClick={onClose}>
-        닫기
-      </Button>
     </Modal>
   );
 };
