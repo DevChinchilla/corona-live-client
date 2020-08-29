@@ -9,7 +9,6 @@ const Wrapper = styled(Col)`
   justify-content: center;
   padding: 13px;
   border-radius: 8px;
-
   background: ${theme("greyBg")};
   margin-top: 20px;
   strong {

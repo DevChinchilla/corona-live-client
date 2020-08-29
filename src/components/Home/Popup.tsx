@@ -10,7 +10,18 @@ import { IMPORTANT_MESSAGE } from "@consts";
 const Wrapper = styled(Col)`
   overflow-y: auto;
   overflow-x: hidden;
+  /* text-align: center;
+  ol,
+  li {
+    text-align: left!;
+  } */
   p {
+    h3 {
+      font-weight: bold;
+    }
+    ol {
+      padding-left: 1.8em;
+    }
     margin-bottom: 10px;
     line-height: 24px;
     font-size: 12px;
@@ -42,7 +53,7 @@ const Popup = ({ show, onClose }) => {
         <Row bg="#1a1f2c" borderRadius="10px" flexShrink={0} minHeight="150px">
           <Icon height="150px" width="150px" name="LogoIcon" transform="translateY(-10px)"></Icon>
         </Row>
-        <h3>이용 전 필독 부탁드립니다</h3>
+        <h3>필독 부탁드립니다</h3>
         <Row minHeight="10px"></Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
       </Wrapper>

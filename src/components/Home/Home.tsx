@@ -25,7 +25,7 @@ const announcement = { content: IMPORTANT_MESSAGE, date: 123213 };
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
-  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit1");
+  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit2");
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
@@ -102,11 +102,11 @@ const Home = ({ theme, setTheme }) => {
           ></Graph>
         </Suspense>
       )}
-      {statsData?.timeseries && updatesData && (
+      {/* {statsData?.timeseries && updatesData && (
         <Suspense fallback={<div />}>
           <Message></Message>
         </Suspense>
-      )}
+      )} */}
 
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
