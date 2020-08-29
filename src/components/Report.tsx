@@ -105,12 +105,12 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
   return (
     <Modal show={show} title={"제보하기"} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper fadeInUp delay={1}>
-        <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input>
+        <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
         <input placeholder="이메일 (선택)" value={email} onChange={onChange} name="email"></input>
         <textarea
           autoFocus={!!referTo}
           ref={(el) => (textRef.current = el)}
-          placeholder="제보하시기전에 공지확인 부탁드리겠습니다. 확진자명수랑 지자체 사이트 링크/블로그 링크/재난문자를 꼭 첨부해주세요 (뉴스 x)"
+          placeholder="확진자수와 지자체 링크/재난문자 (뉴스 x)"
           value={message}
           onChange={onChange}
           name="message"
