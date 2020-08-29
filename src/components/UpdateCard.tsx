@@ -82,8 +82,8 @@ var URL = new RegExp(expression);
 
 const Content = ({ datetime, from, title, showDetails }) => {
   return (
-    <>
-      <Row flex="1">
+    <Row flex="1" flexWrap="wrap">
+      <Row flex="1" flexWrap="wrap">
         <UpdateTime date={datetime} flex="0 1 80px"></UpdateTime>
         <Message>
           <Box fontWeight={700} mr="4px">
@@ -93,7 +93,7 @@ const Content = ({ datetime, from, title, showDetails }) => {
         </Message>
       </Row>
       {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
-    </>
+    </Row>
   );
 };
 interface Props {

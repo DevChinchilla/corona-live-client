@@ -23,23 +23,27 @@ export const useData = () => {
 
   const isInitialised = stats.data != null && updates.data != null;
 
-  const onUpdatesSuccess = (data: UpdateType[]) => {
-    if (!updates.data) setUpdates({ data });
-    const isChanged = jsonCompare(data, updates.data) == false;
-    if (isChanged && isInitialised) {
-      const newUpdates = data.filter(
-        (newUpdate) => !updates.data?.find((update) => jsonCompare(newUpdate, update))
-      );
+  const onUpdatesSuccess = (newUpdates: UpdateType[]) => {
+    if (!updates.data) setUpdates({ data: newUpdates });
+    // const isChanged = jsonCompare(newUpdates, updates.data) == false;
+    const addedUpdates = newUpdates.filter(
+      (newUpdate) =>
+        !updates.data?.find((oldUpdate) => {
+          return newUpdate.src == oldUpdate.src;
+        })
+    );
+    if (addedUpdates.length > 0 && isInitialised) {
+      console.log(newUpdates, updates.data);
+
       let updatedTotal = 0;
-      const updatedCitiesCount = newUpdates.reduce((count, { city, cases }) => {
+      const updatedCitiesCount = addedUpdates.reduce((count, { city, cases }) => {
         if (!count[city]) count[city] = 0;
         count[city] += cases;
         updatedTotal += cases;
         return count;
       }, {});
-      console.log(`[UPDATES CHANGED]`, { old: updates.data, new: data });
       setNotification({ counts: updatedCitiesCount, total: updatedTotal });
-      setUpdates({ data });
+      setUpdates({ data: newUpdates });
     }
   };
 
@@ -53,11 +57,6 @@ export const useData = () => {
       data.announcements.length != stats.data?.announcements.length;
 
     if (isChanged && isInitialised) {
-      // console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
-      // setNotification({
-      //   current: cases - prevCases,
-      //   delta: delta - prevDelta,
-      // });
       setStats({ data });
     }
   };
@@ -105,7 +104,6 @@ export const useData = () => {
   const isLoading = updates.loading;
 
   useEffect(() => {
-    console.log({ isInitialised, isLoading });
     if (!isInitialised && !isLoading) mutateData();
   }, [isInitialised]);
 

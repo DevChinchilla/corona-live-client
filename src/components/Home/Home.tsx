@@ -36,20 +36,6 @@ const Home = ({ theme, setTheme }) => {
     removeNotification,
   } = useData();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setrenderIt(true);
-  //   }, 2000);
-  // }, []);
-  // console.log({ updatesData, statsData });
-  // const announcements = [
-  //   {
-  //     content: `SNS로도 보실수 있게 계정을 만들었습니다. 한시간 간격으로 현황 업로드가 될겄이니 편한곳에서 보시기 바랍니다<br></br><a href="https://twitter.com/kCm2v4r1PvpSE7A">트위터 계정</a> | <a href="https://www.instagram.com/corona.live.kr/">인스타 계정</a>`,
-  //     date: 1598518334473,
-  //   },
-  //   { content: "안녀하세요<br></br>감사합니다", date: 1598518334233 },
-  // ];
-  // console.log(statsData?.announcements);
   return (
     <Page>
       {!isLoading && !!notification && (
@@ -72,7 +58,7 @@ const Home = ({ theme, setTheme }) => {
         <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
-      {statsData?.announcements && !isFirstVisit ? (
+      {statsData?.announcements ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Announcements announcements={statsData?.announcements}></Announcements>
         </Suspense>
