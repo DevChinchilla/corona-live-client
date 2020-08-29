@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 
-import { Page, Row } from "@components/Layout";
+import { Page, Row, Col } from "@components/Layout";
 
 import { sortByDate } from "@utils";
 import { CITY_TD_FLEX, IMPORTANT_MESSAGE } from "@consts";
@@ -9,6 +9,7 @@ import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 import { CurrentType, OverallType, TimerseriesType } from "@types";
 import Graph from "@components/Graph";
+import Modal from "@components/Modal";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -26,6 +27,7 @@ const announcement = { content: IMPORTANT_MESSAGE, date: 123213 };
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
+  const [showModal, setShowModal] = useState(true);
   const [renderIt, setrenderIt] = useState(false);
   const {
     updatesData,
@@ -38,6 +40,18 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
+      <Modal show={showModal} dynamic title="29일 집계 마감" onClose={() => setShowModal(false)}>
+        <Row center mb="16px" fontSize="14px">
+          집계 시간 09시-23시
+        </Row>
+        <Col ai="center" fontSize="13px" opacity="0.8">
+          *본사이트에서 제공하는 오늘 확진자수는 다음날 제공하는 질본 수치와 오차가 발생할수
+          있습니다<br></br>
+          <br></br>
+          *본사이트에서 제공하는 정보 사용/공유로 인해 발생된 문제의 책임은 전적으로 사용자에게
+          있습니다.
+        </Col>
+      </Modal>
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} onClose={removeNotification}></Notification>

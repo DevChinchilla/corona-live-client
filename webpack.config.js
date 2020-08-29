@@ -42,12 +42,6 @@ module.exports = {
         { from: "public/assets", to: "." },
       ],
     }),
-    // new BrotliPlugin({
-    //   asset: "[path].br[query]",
-    //   test: /\.(js|css|html|svg)$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8,
-    // }),
     new CompressionPlugin(),
   ],
   devServer: {

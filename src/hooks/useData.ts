@@ -65,7 +65,7 @@ export const useData = () => {
     `${API_ROOT}/updates.json`,
     fetcher,
     {
-      refreshInterval: 30000,
+      refreshInterval: 90000,
       revalidateOnReconnect: true,
       revalidateOnMount: false,
       onSuccess: onUpdatesSuccess,
@@ -76,7 +76,7 @@ export const useData = () => {
     `${API_ROOT}/stats.json`,
     fetcher,
     {
-      refreshInterval: 30000,
+      refreshInterval: 90000,
       revalidateOnReconnect: true,
       revalidateOnMount: false,
       onSuccess: onStatsSuccess,
