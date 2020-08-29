@@ -24,7 +24,7 @@ interface Props {
   delay?: number;
   info: string;
 }
-const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
+const Stat: FC<Props> = ({ title, data, isToday, info, noDelta, ...props }) => {
   const [total, delta] = data;
   const theme = useTheme();
 
@@ -47,7 +47,7 @@ const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
           <Box fontSize="24px" fontWeight={300} color={_color}>
             명
           </Box>
-          <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
+          {!noDelta && <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>}
         </Row>
         {delta != 0 && (
           <Info>
@@ -78,6 +78,7 @@ const Board = ({ data }) => {
         title={"실시간 (비공식) 09시~23시"}
         fadeInUp
         delay={3}
+        noDelta
         info="어제 동시간 대비 증가수"
       ></Stat>
     </Row>
