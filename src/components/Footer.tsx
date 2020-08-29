@@ -144,7 +144,7 @@ const Footer = (props) => {
         </IconBox>
       </Row>
       <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
-        서비비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
+        서버비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
         통해 공개)
       </Row>
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>

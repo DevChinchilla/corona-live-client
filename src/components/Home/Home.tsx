@@ -102,11 +102,11 @@ const Home = ({ theme, setTheme }) => {
           ></Graph>
         </Suspense>
       )}
-      {/* {statsData && updatesData && (
+      {statsData?.timeseries && updatesData && (
         <Suspense fallback={<div />}>
           <Message></Message>
         </Suspense>
-      )} */}
+      )}
 
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
