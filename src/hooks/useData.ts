@@ -47,7 +47,10 @@ export const useData = () => {
     if (!stats.data) setStats({ data });
     const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
     const [cases, delta] = data?.overview?.current || [0, 0];
-    const isChanged = prevCases != cases || prevDelta != delta;
+    const isChanged =
+      prevCases != cases ||
+      prevDelta != delta ||
+      data.announcements.length != stats.data?.announcements.length;
 
     if (isChanged && isInitialised) {
       // console.log(`[STATS CHANGED] before: ${prevCases}|${prevDelta}, after: ${cases}|${delta}`);
