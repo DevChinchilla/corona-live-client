@@ -72,7 +72,7 @@ const Home = ({ theme, setTheme }) => {
         <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
-      {statsData?.announcements ? (
+      {statsData?.announcements && !isFirstVisit ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Announcements announcements={statsData?.announcements}></Announcements>
         </Suspense>
