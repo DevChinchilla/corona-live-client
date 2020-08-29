@@ -57,9 +57,11 @@ interface Props {
 }
 
 const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
-  const [{ message, email, title }, setForm] = useObjectState({
+  const [{ message, email, title, src, totalCases }, setForm] = useObjectState({
     message: "",
     email: "",
+    totalCases: "",
+    src: "",
     title: referTo || "",
   });
   const onChange = (e) => {
@@ -81,6 +83,8 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
       setForm({
         message: "",
         email: "",
+        totalCases: "",
+        src: "",
         title: referTo || "",
       });
     }
@@ -105,16 +109,32 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
   return (
     <Modal show={show} title={"제보하기"} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper fadeInUp delay={1}>
+        <label>지역 (필수)</label>
         <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input>
+        <label>확진자수 (필수)</label>
+        <input
+          placeholder="오늘확진 판정 확진자만 카운트"
+          value={email}
+          onChange={onChange}
+          name="email"
+        ></input>
+        <label>출처</label>
+        <input
+          placeholder="재난문자/지자체 공식사이트, 뉴스 불가능"
+          value={email}
+          onChange={onChange}
+          name="email"
+        ></input>
+        <label>이메일 (선택)</label>
         <input placeholder="이메일 (선택)" value={email} onChange={onChange} name="email"></input>
-        <textarea
+        {/* <textarea
           autoFocus={!!referTo}
           ref={(el) => (textRef.current = el)}
           placeholder="제보하시기전에 공지확인 부탁드리겠습니다. 확진자명수랑 지자체 사이트 링크/블로그 링크/재난문자를 꼭 첨부해주세요 (뉴스 x)"
           value={message}
           onChange={onChange}
           name="message"
-        ></textarea>
+        ></textarea> */}
 
         <Button big onClick={onSumbit}>
           {isLoading ? (

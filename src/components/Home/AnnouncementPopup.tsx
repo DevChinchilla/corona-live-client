@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Modal from "@components/Modal";
@@ -71,11 +71,12 @@ const Header = styled(Row)`
 const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
   if (!announcement) return <></>;
   console.log(announcement);
+  const [showPop, setShow] = useState(true);
   const [lastAnnouncement, setLastAnnouncement] = useLocalStorage("lastAnnouncement");
-  const show = lastAnnouncement != announcement.date;
+  // const show = lastAnnouncement != announcement.date;
 
   return (
-    <Modal show={show} noHeader style={{ height: "initial" }}>
+    <Modal show={showPop} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
         <Header>공지</Header>
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
@@ -95,7 +96,8 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
       <Button
         big
         onClick={() => {
-          setLastAnnouncement(announcement.date);
+          // setLastAnnouncement(announcement.date);
+          setShow(false);
         }}
       >
         닫기
