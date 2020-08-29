@@ -105,6 +105,9 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
   return (
     <Modal show={show} title={"제보하기"} onClose={onClose} hideOverlay={hideOverlay}>
       <Wrapper fadeInUp delay={1}>
+        <Row textAlign="center" fontSize="12px" textAlign="center" jc="center">
+          공지사항 체크 먼저 해주시기 바랍니다
+        </Row>
         <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
         <input placeholder="이메일 (선택)" value={email} onChange={onChange} name="email"></input>
         <textarea

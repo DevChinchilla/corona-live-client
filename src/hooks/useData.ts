@@ -29,7 +29,7 @@ export const useData = () => {
     const addedUpdates = newUpdates.filter(
       (newUpdate) =>
         !updates.data?.find((oldUpdate) => {
-          return newUpdate.src == oldUpdate.src;
+          return newUpdate.datetime == oldUpdate.datetime;
         })
     );
     if (addedUpdates.length > 0 && isInitialised) {
