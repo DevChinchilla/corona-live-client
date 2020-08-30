@@ -133,7 +133,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
         hideOverlay={true}
         show={showReport}
         onClose={() => setShowReport(false)}
-        referTo={message}
+        errorReport={message}
       ></Report>
 
       <Card

@@ -1,20 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import Modal from "@components/Modal";
+import { IMPORTANT_MESSAGE } from "@consts";
+
 import { Col, Row } from "@components/Layout";
+import Modal from "@components/Modal";
 import Icon from "@components/Icon";
 import Button from "@components/Button";
-import { IMPORTANT_MESSAGE } from "@consts";
+import SocialMedia from "./SocialMedia";
 
 const Wrapper = styled(Col)`
   overflow-y: auto;
   overflow-x: hidden;
-  /* text-align: center;
-  ol,
-  li {
-    text-align: left!;
-  } */
   p {
     h3 {
       font-weight: bold;
@@ -27,10 +24,6 @@ const Wrapper = styled(Col)`
     font-size: 12px;
     font-weight: 300;
     word-break: keep-all;
-    /* text-align: center; */
-    li {
-    }
-
     strong {
       font-weight: 500;
     }
@@ -56,6 +49,7 @@ const Popup = ({ show, onClose }) => {
         <h3>필독 부탁드립니다</h3>
         <Row minHeight="10px"></Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
+        <SocialMedia></SocialMedia>
         <Row h="20px"></Row>
         <Button big onClick={onClose}>
           닫기

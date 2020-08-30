@@ -46,7 +46,6 @@ const Updates = ({ data, mutateData, isLoading }) => {
   return (
     <Wrapper fadeInUp>
       <UpdateModal {...{ onClose: () => setShowModal(false), showModal, data }}></UpdateModal>
-      {/* <Time>{getCurrentDateTime()}</Time> */}
       <Row>
         <Row flex={1}>
           <UpdateCard

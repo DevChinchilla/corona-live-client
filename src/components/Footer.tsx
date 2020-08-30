@@ -14,6 +14,7 @@ import {
   TWITTER_SNS_URL,
   INSTA_SNS_URL,
   KAKAOPAY_URL,
+  EMAIL,
 } from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
@@ -37,6 +38,10 @@ const Wrapper = styled(Col)`
     margin-top: 50px;
     text-align: center;
     opacity: 0.7;
+  }
+  a {
+    color: ${theme("darkGreyText")};
+    margin-left: 2px;
   }
 `;
 
@@ -124,6 +129,7 @@ const Footer = (props) => {
           </IconBox>
         )}
       </Row>
+
       <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
         SNS로 보기
       </Row>
@@ -135,21 +141,23 @@ const Footer = (props) => {
           <Icon name="Instagram" size={14}></Icon>
         </IconBox>
       </Row>
-      <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
+
+      <Row fontSize="12px" mb="10px" mt="30px" opacity={0.7}>
         후원하기
       </Row>
-      <Row jc="center" position="relative">
+      <Row fontSize="11px" jc="center" opacity="0.5" textAlign="center">
+        서버비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
+        통해 공개)
+      </Row>
+      <Row jc="center" position="relative" mt="12px">
         <IconBox type="kakao" href={KAKAOPAY_URL} kakaoPay>
           <Icon name="KakaoPay" height="12px" width="100px"></Icon>
         </IconBox>
       </Row>
-      <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
-        서버비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
-        통해 공개)
-      </Row>
+
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
       <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
-        corona.live.kr@gmail.com
+        <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
       </Row>
     </Wrapper>
   );

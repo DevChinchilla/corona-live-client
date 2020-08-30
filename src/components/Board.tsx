@@ -23,9 +23,9 @@ interface Props {
   isToday?: boolean;
   fadeInUp?: boolean;
   delay?: number;
-  info: string;
+  info?: string;
 }
-const Stat: FC<Props> = ({ title, data, isToday, info, noDelta, ...props }) => {
+const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
   const [total, delta] = data;
   const theme = useTheme();
 
@@ -63,16 +63,8 @@ const Stat: FC<Props> = ({ title, data, isToday, info, noDelta, ...props }) => {
 
 const Board = ({ data }) => {
   return (
-    // <Row >
     <Row jc="space-evenly">
-      <Stat
-        data={data.confirmed}
-        title={"총 확진자 (공식)"}
-        isToday
-        fadeInUp
-        delay={2}
-        info={null}
-      ></Stat>
+      <Stat data={data.confirmed} title={"총 확진자 (공식)"} isToday fadeInUp delay={2}></Stat>
       <Box w="40px"></Box>
       <Stat
         data={data.current}

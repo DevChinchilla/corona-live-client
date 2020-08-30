@@ -4,7 +4,7 @@ import { Row, Col } from "@components/Layout";
 import { theme } from "@styles/themes";
 import Modal from "@components/Modal";
 import { getDateDistance } from "@utils";
-import { IMPORTANT_MESSAGE, MUST_READ } from "@consts";
+import { IMPORTANT_MESSAGE } from "@consts";
 
 const Wrapper = styled(Row)``;
 
@@ -97,15 +97,13 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
             dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}
             style={{ minHeight: "130px", overflowY: "auto", marginBottom: "10px" }}
           ></p>
-          {/* <Button></Button> */}
-          {/* <p dangerouslySetInnerHTML={{ __html: MUST_READ }}></p> */}
 
           {announcements.length > 0 ? (
             announcements.map(({ date, content }) => {
               return (
                 <>
-                  <span>{getDateDistance(date)}</span>
-                  <p dangerouslySetInnerHTML={{ __html: content }}></p>
+                  <span key={date}>{getDateDistance(date)}</span>
+                  <p key={date} dangerouslySetInnerHTML={{ __html: content }}></p>
                 </>
               );
             })

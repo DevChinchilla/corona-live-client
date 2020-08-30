@@ -25,7 +25,6 @@ export const useData = () => {
 
   const onUpdatesSuccess = (newUpdates: UpdateType[]) => {
     if (!updates.data) setUpdates({ data: newUpdates });
-    // const isChanged = jsonCompare(newUpdates, updates.data) == false;
     const addedUpdates = newUpdates.filter(
       (newUpdate) =>
         !updates.data?.find((oldUpdate) => {
@@ -33,8 +32,6 @@ export const useData = () => {
         })
     );
     if (addedUpdates.length > 0 && isInitialised) {
-      console.log(newUpdates, updates.data);
-
       let updatedTotal = 0;
       const updatedCitiesCount = addedUpdates.reduce((count, { city, cases }) => {
         if (!count[city]) count[city] = 0;

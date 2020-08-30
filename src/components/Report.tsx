@@ -3,11 +3,10 @@ import styled from "styled-components";
 
 import Modal from "@components/Modal";
 import Button from "@components/Button";
-import { Col, Box, Row } from "@components/Layout";
+import { Col, Row } from "@components/Layout";
 
 import { theme } from "@styles/themes";
-import { EMAIL_API } from "@consts";
-import { sleep } from "@utils";
+import { EMAIL_API, EMAIL } from "@consts";
 import Spinner from "./Spinner";
 import { useObjectState } from "@hooks/useObjectState";
 
@@ -26,7 +25,7 @@ const Wrapper = styled(Col)`
   textarea {
     font-size: 14px;
     border: none;
-    padding: 10px;
+    padding: 10px 0px;
     background: transparent;
     border: none;
     flex: 1;
@@ -35,60 +34,65 @@ const Wrapper = styled(Col)`
     height: 40px;
     border: none;
     font-size: 14px;
-    padding: 0px 10px;
     border-bottom: 1px solid ${theme("darkGreyText")}20;
     background: transparent;
     box-shadow: none;
   }
+  a {
+    color: ${theme("darkGreyText")};
+    margin-left: 2px;
+  }
 `;
 
 const Label = styled(Row)`
-  margin-bottom: 10px;
-  margin-left: 10px;
-  font-size: 12px;
-  opacity: 0.8;
+  margin-top: 16px;
+  font-size: 11px;
 `;
 interface Props {
   show: boolean;
   onClose: any;
   hideOverlay?: boolean;
-  referTo?: any;
+  errorReport?: any;
 }
 
-const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
-  const [{ message, email, title }, setForm] = useObjectState({
-    message: "",
-    email: "",
-    title: referTo || "",
+const initialState = {
+  message: "",
+  email: "",
+  src: "",
+  cases: "",
+};
+
+const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
+  const [isLoading, setisLoading] = useState(false);
+  const textRef = useRef<HTMLTextAreaElement | null>();
+  const [{ src, email, title, cases }, setForm] = useObjectState({
+    ...initialState,
+    title: errorReport || "",
   });
+
   const onChange = (e) => {
     let { name, value } = e.target;
     console.log(name, value);
     setForm({ [name]: value });
   };
-  const [isLoading, setisLoading] = useState(false);
-  const textRef = useRef<HTMLTextAreaElement | null>();
-  useEffect(() => {
-    if (referTo && !message) {
-      setForm({ title: referTo });
-    }
-  }, [referTo]);
 
   useEffect(() => {
     if (show) {
       setisLoading(false);
       setForm({
-        message: "",
-        email: "",
-        title: referTo || "",
+        ...initialState,
+        cases: errorReport ? "오류 제보" : "",
+        title: errorReport || "",
       });
     }
   }, [show]);
 
   const onSumbit = async () => {
     if (isLoading) return;
-    if (title.trim().length == 0) return alert("제목을 적어주세요");
-    if (message.trim().length == 0) return alert("내용을 적어주세요");
+    if (title.trim().length == 0) return alert("지역을 적어주세요");
+    if (cases.trim().length == 0) return alert("확진자수를 적어주세요");
+    if (src.trim().length == 0) return alert("출처을 적어주세요");
+
     setisLoading(true);
     await fetch(EMAIL_API, {
       method: "POST",
@@ -96,7 +100,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, content: message, title }),
+      body: JSON.stringify({ email, content: `${cases} ${src}`, title }),
     });
     onClose();
   };
@@ -107,15 +111,31 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, referTo }) => {
         <Row textAlign="center" fontSize="12px" jc="center">
           공지사항 체크 먼저 해주시기 바랍니다
         </Row>
+        <Row textAlign="center" fontSize="12px" jc="center" mt="2px">
+          문의는 <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
+        </Row>
+
+        <Label>지역*</Label>
         <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
-        <input placeholder="이메일 (선택)" value={email} onChange={onChange} name="email"></input>
+
+        {!errorReport && (
+          <>
+            <Label>확진자수*</Label>
+            <input placeholder="확진자수" value={cases} onChange={onChange} name="cases"></input>
+          </>
+        )}
+
+        <Label>이메일 (선택)</Label>
+        <input placeholder="이메일" value={email} onChange={onChange} name="email"></input>
+
+        <Label>{errorReport ? "오류*" : "출처*"}</Label>
         <textarea
-          autoFocus={!!referTo}
+          autoFocus={!!errorReport}
           ref={(el) => (textRef.current = el)}
-          placeholder="확진자수와 지자체 링크/재난문자 (뉴스 x)"
-          value={message}
+          placeholder={errorReport ? "오류설명" : "지자체 링크/재난문자만 가능 (뉴스 x)"}
+          value={src}
           onChange={onChange}
-          name="message"
+          name="src"
         ></textarea>
 
         <Button big onClick={onSumbit}>
