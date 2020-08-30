@@ -160,7 +160,10 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
         <Details fadeInUp>
           <p
             dangerouslySetInnerHTML={{
-              __html: currentContent.src.replace(URL, (val) => `<a href="http://${val}">링크</a>`),
+              __html: currentContent.src.replace(
+                URL,
+                (url) => `<a href="http://${url}">${url}</a>`
+              ),
             }}
           ></p>
           <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>

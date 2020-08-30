@@ -270,9 +270,6 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
             시간대별
           </OptionButton>
         </Row>
-        <Row fontSize="12px" opacity="0.5" textAlign="center" jc="center" mt="12px" mb="12px">
-          전날 대비 그래프/수치는 내일부터 다시 공개됩니다
-        </Row>
       </Wrapper>
     </>
   );
