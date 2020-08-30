@@ -12,6 +12,7 @@ import { useObjectState } from "@hooks/useObjectState";
 
 const Wrapper = styled(Col)`
   height: 100%;
+  overflow-y: auto;
   input,
   textarea {
     color: ${theme("darkGreyText")};
@@ -37,6 +38,8 @@ const Wrapper = styled(Col)`
     border-bottom: 1px solid ${theme("darkGreyText")}20;
     background: transparent;
     box-shadow: none;
+    -webkit-border-radius: 0px;
+    -webkit-appearance: none;
   }
   a {
     color: ${theme("darkGreyText")};
@@ -115,24 +118,24 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
           문의는 <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
         </Row>
 
-        <Label>지역*</Label>
+        {/* <Label>지역*</Label> */}
         <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
 
         {!errorReport && (
           <>
-            <Label>확진자수*</Label>
+            {/* <Label>확진자수*</Label> */}
             <input placeholder="확진자수" value={cases} onChange={onChange} name="cases"></input>
           </>
         )}
 
-        <Label>이메일 (선택)</Label>
-        <input placeholder="이메일" value={email} onChange={onChange} name="email"></input>
+        {/* <Label>이메일 (선택)</Label>
+        <input placeholder="이메일" value={email} onChange={onChange} name="email"></input> */}
 
-        <Label>{errorReport ? "오류*" : "출처*"}</Label>
+        {/* <Label>{errorReport ? "오류*" : "출처*"}</Label> */}
         <textarea
           autoFocus={!!errorReport}
           ref={(el) => (textRef.current = el)}
-          placeholder={errorReport ? "오류설명" : "지자체 링크/재난문자만 가능 (뉴스 x)"}
+          placeholder={errorReport ? "오류설명" : "지자체 링크 또는 재난문자만 (뉴스 x)"}
           value={src}
           onChange={onChange}
           name="src"
