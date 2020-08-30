@@ -9,9 +9,10 @@ import styled from "styled-components";
 
 const Info = styled(Row)`
   font-size: 10px;
-  opacity: 0.6;
+  opacity: 0.5;
   margin-top: 4px;
   align-items: center;
+  justify-content: flex-end;
   span {
     margin-left: 2px;
   }
@@ -49,10 +50,10 @@ const Stat: FC<Props> = ({ title, data, isToday, info, noDelta, ...props }) => {
           </Box>
           <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
-        {delta != 0 && (
+        {delta != 0 && info && (
           <Info>
-            <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
             <span>{info}</span>
+            <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
           </Info>
         )}
       </Col>
@@ -70,12 +71,12 @@ const Board = ({ data }) => {
         isToday
         fadeInUp
         delay={2}
-        info="어제 증가수"
+        info={null}
       ></Stat>
       <Box w="40px"></Box>
       <Stat
         data={data.current}
-        title={"현재(비공식) 09시~23시"}
+        title={"현재 (비공식)"}
         fadeInUp
         delay={3}
         info="어제 동시간 대비 증가수"

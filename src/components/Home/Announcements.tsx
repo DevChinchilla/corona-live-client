@@ -93,12 +93,12 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
         title={"공지사항"}
       >
         <Announcement>
-          {/* <p
+          <p
             dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}
             style={{ minHeight: "130px", overflowY: "auto", marginBottom: "10px" }}
-          ></p> */}
+          ></p>
           {/* <Button></Button> */}
-          <p dangerouslySetInnerHTML={{ __html: MUST_READ }}></p>
+          {/* <p dangerouslySetInnerHTML={{ __html: MUST_READ }}></p> */}
 
           {announcements.length > 0 ? (
             announcements.map(({ date, content }) => {

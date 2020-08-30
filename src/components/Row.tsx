@@ -65,7 +65,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
   if (!name) return <></>;
 
   const onClick = () => {
-    if (cityId == null) {
+    if (cityId == null && name != "대구") {
       history.push(`./city/${cityId || id}`);
     } else {
       if (updateTime || updates.length != 0) setShowModal(true);
@@ -104,11 +104,19 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
           )}
         </Td>
         <Td flex={tdFlex[3]}>
-          <Cases>{numberWithCommas(current[0])}</Cases>
-          <Box fontSize="10px" opacity={0.6} ml="2px">
-            명
-          </Box>
-          <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
+          {name != "대구" ? (
+            <>
+              <Cases>{numberWithCommas(current[0])}</Cases>
+              <Box fontSize="10px" opacity={0.6} ml="2px">
+                명
+              </Box>
+              <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
+            </>
+          ) : (
+            <Row fontSize="11px" fontWeight="bold">
+              집계 불가능
+            </Row>
+          )}
         </Td>
         <Td end={true} flex={tdFlex[4]}>
           {(updateTime || updates.length != 0) && (
