@@ -47,9 +47,9 @@ const Stat: FC<Props> = ({ title, data, isToday, info, noDelta, ...props }) => {
           <Box fontSize="24px" fontWeight={300} color={_color}>
             명
           </Box>
-          {!noDelta && <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>}
+          <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
-        {delta != 0 && !noDelta && (
+        {delta != 0 && (
           <Info>
             <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
             <span>{info}</span>
@@ -78,7 +78,6 @@ const Board = ({ data }) => {
         title={"현재(비공식) 09시~23시"}
         fadeInUp
         delay={3}
-        noDelta
         info="어제 동시간 대비 증가수"
       ></Stat>
     </Row>

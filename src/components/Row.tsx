@@ -108,7 +108,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
           <Box fontSize="10px" opacity={0.6} ml="2px">
             명
           </Box>
-          {/* <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag> */}
+          <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
         </Td>
         <Td end={true} flex={tdFlex[4]}>
           {(updateTime || updates.length != 0) && (
