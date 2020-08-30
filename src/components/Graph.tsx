@@ -28,25 +28,24 @@ const DATA: ChartData<Chart.ChartData> = {
       lineTension: 0,
       borderWidth: 2,
     },
+    {
+      label: "어제",
+      fill: true,
+      pointRadius: 5,
+      pointBackgroundColor: `${SECONDARY_COLOR}`,
+      // pointBorderColor: `${SECONDARY_COLOR}60`,
+      pointBorderColor: Array(10).fill(`${PRIMARY_COLOR}60`),
+      hoverBackgroundColor: `${SECONDARY_COLOR}`,
+      pointBorderWidth: Array(24).fill(1),
+      backgroundColor: "transparent",
+      hoverRadius: 5,
+      borderColor: `${SECONDARY_COLOR}40`,
+      // pointBorderWidth: 6,
+      lineTension: 0,
+      borderWidth: 2,
+    },
   ],
 };
-
-// {
-//   label: "어제",
-//   fill: true,
-//   pointRadius: 5,
-//   pointBackgroundColor: `${SECONDARY_COLOR}`,
-//   // pointBorderColor: `${SECONDARY_COLOR}60`,
-//   pointBorderColor: Array(10).fill(`${PRIMARY_COLOR}60`),
-//   hoverBackgroundColor: `${SECONDARY_COLOR}`,
-//   pointBorderWidth: Array(24).fill(1),
-//   backgroundColor: "transparent",
-//   hoverRadius: 5,
-//   borderColor: `${SECONDARY_COLOR}40`,
-//   // pointBorderWidth: 6,
-//   lineTension: 0,
-//   borderWidth: 2,
-// },
 
 const Wrapper = styled(Col)`
   position: relative;
@@ -170,9 +169,9 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
                 parseInt(timePeriod[activeIndex]) ? `~ ${timePeriod[activeIndex] % 24}시` : "현재"
               }`}
             </span>
-            {/* <div className="grey">
+            <div className="grey">
               어제 <strong> &nbsp;{yesterdayStats[activeIndex] || 0}명</strong>{" "}
-            </div> */}
+            </div>
             {todayStats.length - 1 >= activeIndex && (
               <div className="blue">
                 오늘 <strong>&nbsp;{todayStats[activeIndex]}명</strong>{" "}
@@ -192,25 +191,16 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
 
               if (index != null) {
                 const chart: any = chartRef.current?.chartInstance;
-                // chart!.data!.datasets[0]!.pointBorderColor[index] = `${PRIMARY_COLOR}50`;
-                // chart!.data!.datasets[0]!.pointBorderColor[index] = "white";
-                // chart!.data.datasets[1].pointBorderColor[index] = "white";
+
                 chart!.data!.datasets[0]!.pointBorderWidth = Array(20).fill(1);
                 chart!.data!.datasets[0]!.pointBorderWidth[index] = 20;
-                // chart!.data!.datasets[1]!.pointBorderWidth[index] = 2;
-                // chart!.data!.datasets[1]!.pointBorderWidth = 10;
+
                 setShowTooltip((a) => !a);
                 setShowTooltip((a) => !a);
                 setActiveIndex((prevIndex) => index || prevIndex);
                 chart.update();
                 chart.draw();
               }
-              // let index = activeElements[0] && activeElements[0]._index;
-              // setActiveIndex((prevIndex) => index || prevIndex);
-              // if (index != null) {
-              //   setShowTooltip((a) => !a);
-              //   setShowTooltip((a) => !a);
-              // }
             },
             tooltips: {
               enabled: false,

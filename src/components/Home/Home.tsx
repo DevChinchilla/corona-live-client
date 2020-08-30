@@ -40,7 +40,7 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
-      <Modal show={showModal} dynamic title="29일 집계 마감" onClose={() => setShowModal(false)}>
+      {/* <Modal show={showModal} dynamic title="29일 집계 마감" onClose={() => setShowModal(false)}>
         <Row center mb="16px" fontSize="14px">
           집계 시간 09시-23시
         </Row>
@@ -51,7 +51,7 @@ const Home = ({ theme, setTheme }) => {
           *본사이트에서 제공하는 정보 사용/공유로 인해 발생된 문제의 책임은 전적으로 사용자에게
           있습니다.
         </Col>
-      </Modal>
+      </Modal> */}
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} onClose={removeNotification}></Notification>
