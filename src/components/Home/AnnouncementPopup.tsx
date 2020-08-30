@@ -70,7 +70,6 @@ const Header = styled(Row)`
 `;
 const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
   if (!announcement) return <></>;
-  console.log(announcement);
   const [lastAnnouncement, setLastAnnouncement] = useLocalStorage("lastAnnouncement");
   const show = lastAnnouncement != announcement.date;
 

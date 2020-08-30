@@ -1,3 +1,5 @@
+import { ChartData } from "react-chartjs-2";
+
 export const TODAY_API_ROOT = "https://api.coronamap.live/today.json";
 // export const API_ROOT = `https://apiv3.corona-live.com/`;
 export const API_ROOT = `https://api.corona-live.com/`;
@@ -35,3 +37,43 @@ export const MUST_READ = `
 혼란을 방지하기 위해 어제 비교 그래프와 어제 비교 수치는 내일부터 다시 제공됩니다<br></br>
 금일(29일) 13시부터 적용합니다
 `;
+
+const CHART_PRIMARY_COLOR = `#5673EB`;
+const CHART_SECONDARY_COLOR = `#999999`;
+export const LineChartConfig: ChartData<Chart.ChartData> = {
+  datasets: [
+    {
+      label: "오늘",
+      fill: true,
+      backgroundColor: `${CHART_PRIMARY_COLOR}`,
+      borderColor: `${CHART_PRIMARY_COLOR}90`,
+      pointRadius: 5,
+      pointBackgroundColor: `${CHART_PRIMARY_COLOR}`,
+      pointBorderColor: Array(24).fill(`${CHART_PRIMARY_COLOR}50`),
+      pointBorderWidth: Array(24).fill(1),
+      hoverBackgroundColor: `${CHART_PRIMARY_COLOR}`,
+      hoverBorderWidth: 20,
+      pointHoverBorderColor: `${CHART_PRIMARY_COLOR}50`,
+      hoverRadius: 5,
+      lineTension: 0,
+      borderWidth: 2,
+    },
+    {
+      label: "어제",
+      fill: true,
+      pointRadius: 5,
+      pointBackgroundColor: `${CHART_SECONDARY_COLOR}`,
+      pointBorderColor: Array(10).fill(`${CHART_PRIMARY_COLOR}60`),
+      hoverBackgroundColor: `${CHART_SECONDARY_COLOR}`,
+      pointBorderWidth: Array(24).fill(1),
+      backgroundColor: "transparent",
+      hoverRadius: 5,
+      borderColor: `${CHART_SECONDARY_COLOR}40`,
+      lineTension: 0,
+      borderWidth: 2,
+    },
+  ],
+};
+
+export const C_TOTAL = 0;
+export const C_DELTA = 1;

@@ -11,6 +11,7 @@ import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
 import { useTranslation } from "@hooks/useTranslation";
 import { URL_REGEX } from "@consts";
+import { addHyperLink } from "@utils";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
@@ -158,10 +159,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
         <Details fadeInUp>
           <p
             dangerouslySetInnerHTML={{
-              __html: currentContent.src.replace(
-                URL_REGEX,
-                (url) => `<a href="http://${url}">${url}</a>`
-              ),
+              __html: addHyperLink(currentContent.src),
             }}
           ></p>
           <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>

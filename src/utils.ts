@@ -1,3 +1,5 @@
+import { URL_REGEX } from "@consts";
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 const HOUR = MINUTE * 60;
@@ -78,41 +80,34 @@ export const sleep = (timeout) => {
   return new Promise((res) => setTimeout(res, timeout));
 };
 
-// function deepCompareArray(dataA, dataB) {
-//   if (dataA.length != dataB.length) return false;
-//   return (
-//     dataA.filter((objA) =>
-//       dataB.find((objB) =>
-//         Object.keys(objA).filter((key) => {
-//           return objA[key] == objB[key];
-//         })
-//       )
-//     ).length == 0
-//   );
-// }
+export const addHyperLink = (text) => {
+  return text.replace(
+    URL_REGEX,
+    (url) => `<a href="http://${url.replace(/https?:\/\//, "")}">${url}</a>`
+  );
+};
 
-// function deepCompareArray(dataA, dataB) {
-//   if (dataA.length != dataB.length) return false;
-//   return (
-//     dataA.filter((_, i) => {
-//       if (typeof dataA[i] == "object") {
-//         return deepCompareArray(Object.keys(dataA), Object.keys(dataB));
-//       } else {
-//         return dataA[i] != dataB[i];
-//       }
-//     }).length == 0
-//   );
-// }
+export const setGradient = (canvas, color) => {
+  const ctx = canvas.getContext("2d");
+  const gradient = ctx.createLinearGradient(0, 0, 0, 140);
+  gradient.addColorStop(0, `${color}70`);
+  gradient.addColorStop(1, `${color}00`);
+  return gradient;
+};
 
-// function deepCompareArray(dataA, dataB) {
-//   if (dataA.length != dataB.length) return false;
-//   return dataA.filter((index) => {
-//     console.log({ dataA, dataB, index });
+export const getStatistic = (data, realtimeValue, dataType: "today" | "yesterday", chartType) => {
+  let latestHour = Math.max(...Object.keys(data).map((a) => Number(a)));
+  let latestValue = data[latestHour][0];
+  let chartIndex = chartType == "total" ? 0 : 1;
 
-//     if (typeof index == "object") {
-//       return deepCompareArray(Object.keys(dataA), Object.keys(dataB));
-//     } else {
-//       return !dataB.find((comparingindex) => dataB[comparingindex] == dataA[index]);
-//     }
-//   });
-// }
+  let previousStats = Object.keys(data).map((time) => data[time][chartIndex]);
+  let currentStats;
+
+  if (dataType == "today") {
+    currentStats = chartType == "total" ? realtimeValue : realtimeValue - latestValue;
+  } else {
+    currentStats = chartType == "total" ? realtimeValue : realtimeValue - latestValue;
+  }
+
+  return [...previousStats, currentStats];
+};

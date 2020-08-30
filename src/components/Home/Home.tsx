@@ -8,27 +8,22 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 import { CurrentType, OverallType, TimerseriesType } from "@types";
-import Graph from "@components/Graph";
-import Modal from "@components/Modal";
+import Graph from "@components/Chart";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
 const AnnouncementPopup = lazy(() => import("@components/Home/AnnouncementPopup"));
 const Announcements = lazy(() => import("@components/Home/Announcements"));
-const Message = lazy(() => import("@components/Home/Message"));
 const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
 const Popup = lazy(() => import("@components/Home/Popup"));
 
-const announcement = { content: IMPORTANT_MESSAGE, date: 123213 };
-
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
-  const [showModal, setShowModal] = useState(true);
-  const [renderIt, setrenderIt] = useState(false);
+
   const {
     updatesData,
     statsData,
@@ -102,11 +97,6 @@ const Home = ({ theme, setTheme }) => {
           ></Graph>
         </Suspense>
       )}
-      {/* {statsData?.timeseries && updatesData && (
-        <Suspense fallback={<div />}>
-          <Message></Message>
-        </Suspense>
-      )} */}
 
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
