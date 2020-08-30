@@ -13,6 +13,7 @@ const Wrapper = styled(Col)`
   overflow-y: auto;
   overflow-x: hidden;
   p {
+    text-align: center;
     h3 {
       font-weight: bold;
     }
@@ -50,7 +51,7 @@ const Popup = ({ show, onClose }) => {
         <Row minHeight="10px"></Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
         <SocialMedia></SocialMedia>
-        <Row h="20px"></Row>
+        <Row minHeight="30px"></Row>
         <Button big onClick={onClose}>
           닫기
         </Button>
