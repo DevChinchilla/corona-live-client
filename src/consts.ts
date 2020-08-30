@@ -17,6 +17,8 @@ export const INSTA_SNS_URL = `https://www.instagram.com/corona.live.kr/`;
 
 export const EMAIL_API = `https://64t2pyuhje.execute-api.ap-northeast-2.amazonaws.com/corona-live-email`;
 
+export const URL_REGEX = /(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*).\w+/gi;
+
 export const IMPORTANT_MESSAGE = `
 코로나 라이브는 재난문자와 각 지자체및 질병관리본부에서 <strong>금일 제공하는 자료</strong>를
 기반으로 코로나 현황을 실시간으로 제공 하고있습니다 <br><br> 하지만 민간이 취합한 집계이므로 공식적인

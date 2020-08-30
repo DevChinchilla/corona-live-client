@@ -10,6 +10,7 @@ import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
 import { useTranslation } from "@hooks/useTranslation";
+import { URL_REGEX } from "@consts";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
@@ -76,9 +77,6 @@ const AnimationContainer = styled(Absolute)`
   padding: 0px 14px;
   box-sizing: border-box;
 `;
-
-var expression = /(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
-var URL = new RegExp(expression);
 
 const Content = ({ datetime, from, title, showDetails }) => {
   return (
@@ -161,7 +159,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
           <p
             dangerouslySetInnerHTML={{
               __html: currentContent.src.replace(
-                URL,
+                URL_REGEX,
                 (url) => `<a href="http://${url}">${url}</a>`
               ),
             }}
