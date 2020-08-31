@@ -15,7 +15,7 @@ i18n
     fallbackLng: "korean",
     load: "languageOnly",
     backend: {
-      loadPath: "https://api.corona-live.com/locale_{{lng}}.json",
+      loadPath: `${API_ROOT}locale_{{lng}}.json`,
       addPath: "http://localhost:9999/",
     },
     interpolation: {
