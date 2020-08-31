@@ -51,7 +51,7 @@ const Popup = ({ show, onClose }) => {
         <Row minHeight="10px"></Row>
         <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
         <SocialMedia></SocialMedia>
-        <Row minHeight="30px"></Row>
+
         <Button big onClick={onClose}>
           닫기
         </Button>

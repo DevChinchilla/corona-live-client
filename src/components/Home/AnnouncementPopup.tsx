@@ -81,7 +81,6 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
       </Wrapper>
       <SocialMedia></SocialMedia>
-      <Row h="40px"></Row>
       <Button
         big
         onClick={() => {

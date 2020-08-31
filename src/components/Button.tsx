@@ -11,23 +11,23 @@ interface ButtonProps {
   square?: boolean;
 }
 const Button = styled.button<ButtonProps>`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
   outline: none;
-  border:none;
-  border-radius:6px;
-  font-size:12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
   transition: all 0.3s ease-out;
   flex-shrink: 0;
 
   width: 72px;
-  height:32px;
+  min-height: 32px;
 
-  color:${theme("darkGreyText")};
+  color: ${theme("darkGreyText")};
   background: ${theme("greyBg")};
-  cursor:pointer;
+  cursor: pointer;
 
   ${ifProp(
     "light",
@@ -38,12 +38,12 @@ const Button = styled.button<ButtonProps>`
     `
   )}
 
-${ifProp(
-  "white",
-  css`
-    background: transparent;
-  `
-)}
+  ${ifProp(
+    "white",
+    css`
+      background: transparent;
+    `
+  )}
 
   ${ifProp(
     "big",

@@ -15,11 +15,6 @@ export const useKakaoButton = () => {
           androidExecParams: "test",
         },
       },
-      social: {
-        likeCount: 5394,
-        commentCount: 302,
-        sharedCount: 4690,
-      },
       buttons: [
         {
           title: "실시간 현황 보기",

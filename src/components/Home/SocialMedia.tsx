@@ -10,10 +10,19 @@ const SocialMedia: React.FC<Props> = (props) => {
   const {} = props;
   return (
     <>
-      <Row fontSize="10px" mb="16px" mt="12px" opacity={0.5} jc="center" width="100%">
+      <Row
+        fontSize="10px"
+        minHeight="30px"
+        opacity={0.5}
+        jc="center"
+        ai="center"
+        width="100%"
+        flexShrink={0}
+      >
         코로나 라이브 SNS로 보기
       </Row>
-      <Row jc="center" position="relative">
+
+      <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
         <IconBox type="twitter" href={TWITTER_SNS_URL}>
           <Icon name="Twitter" size={14}></Icon>
         </IconBox>
