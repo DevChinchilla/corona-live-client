@@ -7,6 +7,7 @@
         "bundle": "webpack",
         "build": "webpack -p --mode=production",
         "start": "webpack-dev-server --mode development --open --hot ",
+        "deploy": " npm run build && npm run export && aws s3 sync ./out s3://yehwadam-web",
         "check-types": "tsc"
     },
     "keywords": [],
