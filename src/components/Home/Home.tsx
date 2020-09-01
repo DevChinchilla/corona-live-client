@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 
 import { Page, Row, Col } from "@components/Layout";
 
@@ -8,6 +8,7 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 import { CurrentType, OverallType, TimerseriesType } from "@types";
+import Modal from "@components/Modal";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -24,6 +25,7 @@ const LineChart = lazy(() => import("@components/Chart/LineChart"));
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
+  const [showModal, setShowModal] = useState(true);
 
   const {
     updatesData,
@@ -36,9 +38,17 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
-      <Suspense fallback={<div />}>
+      <Modal show={showModal} dynamic title="당일 집계 마감" onClose={() => setShowModal(false)}>
+        <Row center mb="16px" fontSize="14px">
+          서버 오류
+        </Row>
+        <Col ai="center" fontSize="13px" opacity="0.8">
+          현재 서버 오류로 인해 서비스가 지연 되고 있습니다. 양해 부탁드립니다
+        </Col>
+      </Modal>
+      {/* <Suspense fallback={<div />}>
         <FinishedPopup></FinishedPopup>
-      </Suspense>
+      </Suspense> */}
 
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>

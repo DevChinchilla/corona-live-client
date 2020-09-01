@@ -9,7 +9,7 @@ const FinishedPopup: React.FC<Props> = () => {
   const [showModal, setShowModal] = useState(true);
   if (currentHours >= 23 || currentHours < 9)
     return (
-      <Modal show={showModal} dynamic title="집계 마감" onClose={() => setShowModal(false)}>
+      <Modal show={showModal} dynamic title="당일 집계 마감" onClose={() => setShowModal(false)}>
         <Row center mb="16px" fontSize="14px">
           집계 시간 09시-23시
         </Row>
