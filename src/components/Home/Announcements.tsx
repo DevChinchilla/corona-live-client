@@ -40,6 +40,7 @@ const Button = styled(Row)`
 `;
 
 const AnnouncementContaienr = styled(Col)`
+  flex-shrink: 0;
   & > div:first-child {
     cursor: pointer;
     font-size: 12px;
@@ -118,7 +119,7 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
         onClose={() => setShowAnnouncements(false)}
         title={"공지사항"}
       >
-        <Col>
+        <Col overflowY="auto" overflowX="hidden">
           <Announcement
             data={{ title: "코로나 라이브 이용 주의사항", content: IMPORTANT_MESSAGE }}
           ></Announcement>
