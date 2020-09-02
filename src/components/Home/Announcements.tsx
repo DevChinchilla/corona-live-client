@@ -90,7 +90,7 @@ const Announcement: React.FC<{ data: AnnouncementType }> = ({ data }) => {
       <Row jc="space-between" onClick={() => setShowContent((a) => !a)}>
         <Row>
           <Row opacity="0.8" width="70px">
-            {date ? getDateDistance(date) : "중요"}
+            {date ? getDateDistance(date) : "--"}
           </Row>
           <Row fontWeight={date ? 400 : 700}>{title}</Row>
         </Row>
@@ -109,7 +109,7 @@ type Props = {
   announcements: AnnouncementType[];
 };
 const Announcements: React.FC<Props> = ({ announcements }) => {
-  const [showAnnouncements, setShowAnnouncements] = useState(true);
+  const [showAnnouncements, setShowAnnouncements] = useState(false);
   return (
     <>
       <Modal

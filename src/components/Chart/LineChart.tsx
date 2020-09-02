@@ -15,7 +15,7 @@ import FixedTooltip from "@components/Chart/FixedTooltip";
 const Wrapper = styled(Col)`
   position: relative;
   color: white;
-  margin-top: 50px;
+  margin-top: 30px;
   svg {
     fill: white;
     text {
@@ -105,36 +105,34 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
   }`;
 
   return (
-    <>
-      <Wrapper fadeInUp delay={5}>
-        {showTooltip && (
-          <FixedTooltip
-            title={tooltipTitle}
-            today={statistic[0][activeIndex]}
-            yesterday={statistic[1][activeIndex]}
-          ></FixedTooltip>
-        )}
+    <Wrapper fadeInUp delay={5}>
+      {showTooltip && (
+        <FixedTooltip
+          title={tooltipTitle}
+          today={statistic[0][activeIndex]}
+          yesterday={statistic[1][activeIndex]}
+        ></FixedTooltip>
+      )}
 
-        <Line
-          data={getData as any}
-          ref={(el) => (chartRef.current = el)}
-          options={
-            {
-              onClick: onPointClick,
-              ...lineChartOptions(isDelta, _theme),
-            } as any
-          }
-        ></Line>
-        <Row jc="center" mt="10px" fadeInUp>
-          <ChartType active={chartType == "total"} onClick={() => setChartType("total")}>
-            누적
-          </ChartType>
-          <ChartType active={chartType == "delta"} onClick={() => setChartType("delta")}>
-            시간대별
-          </ChartType>
-        </Row>
-      </Wrapper>
-    </>
+      <Line
+        data={getData as any}
+        ref={(el) => (chartRef.current = el)}
+        options={
+          {
+            onClick: onPointClick,
+            ...lineChartOptions(isDelta, _theme),
+          } as any
+        }
+      ></Line>
+      <Row jc="center" mt="10px" fadeInUp>
+        <ChartType active={chartType == "total"} onClick={() => setChartType("total")}>
+          누적
+        </ChartType>
+        <ChartType active={chartType == "delta"} onClick={() => setChartType("delta")}>
+          시간대별
+        </ChartType>
+      </Row>
+    </Wrapper>
   );
 };
 
