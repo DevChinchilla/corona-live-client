@@ -38,17 +38,9 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
-      <Modal show={showModal} dynamic title="당일 집계 마감" onClose={() => setShowModal(false)}>
-        <Row center mb="16px" fontSize="14px">
-          서버 오류
-        </Row>
-        <Col ai="center" fontSize="13px" opacity="0.8">
-          현재 서버 오류로 인해 서비스가 지연 되고 있습니다. 양해 부탁드립니다
-        </Col>
-      </Modal>
-      {/* <Suspense fallback={<div />}>
+      <Suspense fallback={<div />}>
         <FinishedPopup></FinishedPopup>
-      </Suspense> */}
+      </Suspense>
 
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>

@@ -5,6 +5,7 @@ import { theme } from "@styles/themes";
 import Modal from "@components/Modal";
 import { getDateDistance } from "@utils";
 import { IMPORTANT_MESSAGE } from "@consts";
+import Icon from "@components/Icon";
 
 const Wrapper = styled(Row)``;
 
@@ -38,9 +39,14 @@ const Button = styled(Row)`
   }
 `;
 
-const Announcement = styled(Col)`
-  overflow: scroll;
-  margin-bottom: 16px;
+const AnnouncementContaienr = styled(Col)`
+  & > div:first-child {
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.8;
+    padding: 14px 0px;
+    border-top: 1px solid ${theme("lightGreyText")};
+  }
   span {
     font-size: 12px;
     opacity: 0.7;
@@ -56,18 +62,12 @@ const Announcement = styled(Col)`
     background: ${theme("greyBg")};
     padding: 14px;
     border-radius: 12px;
-    margin-top: 10px;
-    * {
-      color: ${theme("darkGreyText")} !important;
-    }
+    color: ${theme("darkGreyText")} !important;
 
     strong {
       font-weight: 500;
     }
-    span {
-      font-size: 10px;
-      opacity: 0.6;
-    }
+
     br {
       content: "";
       display: block;
@@ -75,15 +75,41 @@ const Announcement = styled(Col)`
     }
   }
 `;
+
 interface AnnouncementType {
-  date: number;
+  date?: number;
   content: string;
+  title: string;
 }
+
+const Announcement: React.FC<{ data: AnnouncementType }> = ({ data }) => {
+  const { date, content, title } = data;
+  const [showContent, setShowContent] = useState(false);
+  return (
+    <AnnouncementContaienr fadeInUp delay={1}>
+      <Row jc="space-between" onClick={() => setShowContent((a) => !a)}>
+        <Row>
+          <Row opacity="0.8" width="70px">
+            {date ? getDateDistance(date) : "중요"}
+          </Row>
+          <Row fontWeight={date ? 400 : 700}>{title}</Row>
+        </Row>
+        <Icon name="ChevronDown"></Icon>
+      </Row>
+      {showContent && (
+        <Row fadeInUp>
+          <p dangerouslySetInnerHTML={{ __html: content }}></p>
+        </Row>
+      )}
+    </AnnouncementContaienr>
+  );
+};
+
 type Props = {
   announcements: AnnouncementType[];
 };
 const Announcements: React.FC<Props> = ({ announcements }) => {
-  const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const [showAnnouncements, setShowAnnouncements] = useState(true);
   return (
     <>
       <Modal
@@ -92,25 +118,17 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
         onClose={() => setShowAnnouncements(false)}
         title={"공지사항"}
       >
-        <Announcement>
-          <p
-            dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}
-            style={{ minHeight: "130px", overflowY: "auto", marginBottom: "10px" }}
-          ></p>
+        <Col>
+          <Announcement
+            data={{ title: "코로나 라이브 이용 주의사항", content: IMPORTANT_MESSAGE }}
+          ></Announcement>
 
           {announcements.length > 0 ? (
-            announcements.map(({ date, content }) => {
-              return (
-                <>
-                  <span key={date}>{getDateDistance(date)}</span>
-                  <p key={date} dangerouslySetInnerHTML={{ __html: content }}></p>
-                </>
-              );
-            })
+            announcements.map((data) => <Announcement data={data}></Announcement>)
           ) : (
             <span>공지사항이 없습니다</span>
           )}
-        </Announcement>
+        </Col>
       </Modal>
       <Wrapper fadeInUp delay={2}>
         <Button onClick={() => setShowAnnouncements(true)}>

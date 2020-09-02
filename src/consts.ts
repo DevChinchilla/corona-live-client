@@ -1,6 +1,6 @@
 export const TODAY_API_ROOT = "https://api.coronamap.live/today.json";
-export const API_ROOT = `https://apiv3.corona-live.com/`;
-
+// export const API_ROOT = `https://apiv3.corona-live.com/`;
+export const API_ROOT = `https://apiv3.coronamap.live/`;
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];
 export const DISTRICT_TD_FLEX = ["0.7", "0.25", "1", "1", "0 1 80px"];
 export const CITY_IDS = [...Array(16).keys()];
@@ -118,7 +118,7 @@ export const lineChartOptions = (isDelta, theme) => ({
           autoSkipPadding: 14,
           maxRotation: 0,
           callback: (value) => {
-            if (value !== 0) return `${value}${typeof value == "number" ? "시" : ""}`;
+            if (value !== 0) return `${value}${parseInt(value) ? "시" : ""}`;
           },
         },
         gridLines: {

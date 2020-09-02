@@ -7,7 +7,7 @@
         "bundle": "webpack",
         "build": "webpack -p --mode=production",
         "start": "webpack-dev-server --mode development --open --hot ",
-        "deploy": " npm run build && aws s3 sync ./dist s3://m.corona-live.com",
+        "deploy": " npm run build && aws s3 sync ./dist s3://corona-live.com",
         "check-types": "tsc"
     },
     "keywords": [],

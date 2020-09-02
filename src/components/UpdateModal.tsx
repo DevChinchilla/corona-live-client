@@ -124,7 +124,7 @@ export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, is
   const onSearchKeyword = (newKeyword) => {
     setKeyword(newKeyword);
     const filtered = data.filter(({ gu, city }) => {
-      return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) == 0;
+      return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) > -1;
     });
     setData(filtered);
   };

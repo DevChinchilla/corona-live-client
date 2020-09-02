@@ -57,8 +57,8 @@ const Header = styled(Row)`
 `;
 
 const Title = styled(Row)`
-  background: ${theme("greyBg")};
-  padding: 0px 10px;
+  /* background: ${theme("greyBg")}; */
+  /* padding: 0px 10px; */
 `;
 
 interface Props {
