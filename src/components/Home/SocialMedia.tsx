@@ -4,23 +4,26 @@ import { Row } from "@components/Layout";
 import { IconBox } from "./IconBox";
 import Icon from "@components/Icon";
 
-type Props = {};
+type Props = {
+  hideTitle?: boolean;
+};
 
-const SocialMedia: React.FC<Props> = (props) => {
-  const {} = props;
+const SocialMedia: React.FC<Props> = ({ hideTitle }) => {
   return (
     <>
-      <Row
-        fontSize="10px"
-        minHeight="30px"
-        opacity={0.5}
-        jc="center"
-        ai="center"
-        width="100%"
-        flexShrink={0}
-      >
-        코로나 라이브 SNS로 보기
-      </Row>
+      {!hideTitle && (
+        <Row
+          fontSize="10px"
+          minHeight="30px"
+          opacity={0.5}
+          jc="center"
+          ai="center"
+          width="100%"
+          flexShrink={0}
+        >
+          코로나 라이브 SNS로 보기
+        </Row>
+      )}
 
       <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
         <IconBox type="twitter" href={TWITTER_SNS_URL}>

@@ -70,7 +70,8 @@ const Header = styled(Row)`
   margin-bottom: 18px;
 `;
 const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
-  if (!announcement) return <></>;
+  const currentHours = new Date().getHours();
+  if (!announcement || currentHours >= 23 || currentHours < 9) return <></>;
   const [lastAnnouncement, setLastAnnouncement] = useLocalStorage("lastAnnouncement");
   const show = lastAnnouncement != announcement.date;
 

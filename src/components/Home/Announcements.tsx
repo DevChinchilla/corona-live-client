@@ -54,6 +54,7 @@ const AnnouncementContaienr = styled(Col)`
     text-align: center;
   }
   p {
+    width: 100%;
     margin-bottom: 10px;
     line-height: 24px;
     font-size: 12px;
