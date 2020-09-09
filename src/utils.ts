@@ -1,9 +1,4 @@
-import { URL_REGEX } from "@consts";
-
-const SECOND = 1000;
-const MINUTE = SECOND * 60;
-const HOUR = MINUTE * 60;
-const DAY = HOUR * 24;
+import { URL_REGEX, MINUTE, HOUR, DAY, SECOND } from "@consts";
 
 export const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -90,8 +85,10 @@ export const addHyperLink = (text) => {
 export const setGradient = (canvas, color) => {
   const ctx = canvas.getContext("2d");
   const gradient = ctx.createLinearGradient(0, 0, 0, 140);
+
   gradient.addColorStop(0, `${color}70`);
   gradient.addColorStop(1, `${color}00`);
+
   return gradient;
 };
 

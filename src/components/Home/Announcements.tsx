@@ -126,7 +126,7 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
           ></Announcement>
 
           {announcements.length > 0 ? (
-            announcements.map((data) => <Announcement data={data}></Announcement>)
+            announcements.map((data, i) => <Announcement key={i} data={data}></Announcement>)
           ) : (
             <span>공지사항이 없습니다</span>
           )}

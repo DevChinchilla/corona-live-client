@@ -31,7 +31,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme("text")};
     border-color: ${theme("border")};
     font-family: 'Noto Sans KR', sans-serif;
- 
   }
 
   @keyframes fadeInUp {

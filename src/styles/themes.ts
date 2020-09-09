@@ -74,13 +74,15 @@ const darkTheme: ThemeProps = {
   red: "#EB5374",
 
   updateCard: "#272b38",
-  kakaoBg: "#EFDB4830",
+
   kakao: "#EFDB48",
+  kakaoBg: "#EFDB4830",
   facebook: "#3672E4",
   blog: "#57C04F",
   twitter: "#4A9AE5",
   link: "#ffffff",
   instagram: "#bf2e70",
+
   notification: "#000000d6",
 };
 

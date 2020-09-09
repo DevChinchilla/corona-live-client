@@ -1,10 +1,14 @@
-export const TODAY_API_ROOT = "https://api.coronamap.live/today.json";
-// export const API_ROOT = `https://apiv3.corona-live.com/`;
-// export const API_ROOT = `https://apiv3.coronamap.live/`;
 export const API_ROOT = `https://api.corona-live.com/`;
+
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];
 export const DISTRICT_TD_FLEX = ["0.7", "0.25", "1", "1", "0 1 80px"];
+
 export const CITY_IDS = [...Array(16).keys()];
+
+export const SECOND = 1000;
+export const MINUTE = SECOND * 60;
+export const HOUR = MINUTE * 60;
+export const DAY = HOUR * 24;
 
 export const WEBSITE_URL = `https://corona-live.com`;
 export const FACEBOOK_URL = `https://www.facebook.com/sharer/sharer.php?u=${WEBSITE_URL}%2F&amp;src=sdkpreparse`;
@@ -25,14 +29,6 @@ export const IMPORTANT_MESSAGE = `
 <br><br>  본사이트에서 제공하는 정보 사용/공유로 인해 발생된 문제의 책임은<strong>
 전적으로 사용자에게 있습니다.</strong>
 <br><br>정보 오류나 누락 발견시 제보하여주시기 바랍니다
-`;
-
-export const MUST_READ = `
-어제 공지로 말씀드렸다시피 새로운 집계 방식으로 재난 문자 알림이 오면 지자체 사이트 확인 후 당일 확진 판정된 환자만 포함해서 집계를 하고 있었습니다<br></br>
-예를 들어 재난 문자로는 8명이라고 쓰여 있어도, 그중 7명만 확진 일자가 오늘이라면, 나머지 1명은 미포함했습니다<br></br>
-하지만 공지드렸음에도 불구하고 그 이후로 많은 분들이 왜 재난 문자랑 숫자가 다르냐 하시며 문의를 지속적으로 보내셔서 운영의 어려움이 있습니다 그러므로 일단은 기존 방식인 재난 문자에서 제공되는 확진자 명수로 집계를 하겠습니다<br></br>
-혼란을 방지하기 위해 어제 비교 그래프와 어제 비교 수치는 내일부터 다시 제공됩니다<br></br>
-금일(29일) 13시부터 적용합니다
 `;
 
 const CHART_PRIMARY_COLOR = `#5673EB`;
@@ -130,5 +126,6 @@ export const lineChartOptions = (isDelta, theme) => ({
     ],
   },
 });
+
 export const C_TOTAL = 0;
 export const C_DELTA = 1;

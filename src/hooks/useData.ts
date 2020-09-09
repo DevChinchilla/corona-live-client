@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-import useSWR, { mutate } from "swr";
+import { useEffect } from "react";
+import useSWR from "swr";
 
 import { API_ROOT } from "@consts";
-import { fetcher, jsonCompare, sleep } from "@utils";
+import { fetcher } from "@utils";
 import { StatsType, UpdateType, NotificationType } from "@types";
-import { useTimeoutState } from "./useTimeoutState";
 import { useObjectState } from "./useObjectState";
 
 interface StatsState {
