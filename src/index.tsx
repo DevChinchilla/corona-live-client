@@ -1,4 +1,3 @@
-import "./i18n";
 import React, { Suspense, lazy } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";

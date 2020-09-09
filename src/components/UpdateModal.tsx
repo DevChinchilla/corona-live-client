@@ -7,11 +7,10 @@ import Modal from "@components/Modal";
 import Icon from "@components/Icon";
 
 import { useTheme } from "@hooks/useTheme";
-import { useTranslation } from "@hooks/useTranslation";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
-import { sortByDate, onEnter } from "@utils";
+import { sortByDate, onEnter, ct } from "@utils";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -54,14 +53,12 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   flex-shrink: 0;
   font-size: 12px;
   cursor: pointer;
-  /* border: 1px solid ${theme("greyBg")}; */
 
   ${ifProp(
     "active",
     css`
       background: ${theme("blue")}20;
       color: ${theme("blue")};
-      /* border: 1px solid ${theme("blue")}90; */
     `
   )};
 `;
@@ -111,7 +108,6 @@ interface Props {
 
 export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, isDistrict }) => {
   const _theme = useTheme();
-  const [ct] = useTranslation();
 
   const [keyword, setKeyword] = useState("");
   const [filteredData, setData] = useState(data);

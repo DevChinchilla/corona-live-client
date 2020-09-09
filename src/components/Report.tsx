@@ -47,10 +47,6 @@ const Wrapper = styled(Col)`
   }
 `;
 
-const Label = styled(Row)`
-  margin-top: 16px;
-  font-size: 11px;
-`;
 interface Props {
   show: boolean;
   onClose: any;
@@ -118,7 +114,6 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
           문의는 <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
         </Row>
 
-        {/* <Label>지역*</Label> */}
         <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
 
         {!errorReport && (
@@ -128,10 +123,6 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
           </>
         )}
 
-        {/* <Label>이메일 (선택)</Label>
-        <input placeholder="이메일" value={email} onChange={onChange} name="email"></input> */}
-
-        {/* <Label>{errorReport ? "오류*" : "출처*"}</Label> */}
         <textarea
           autoFocus={!!errorReport}
           ref={(el) => (textRef.current = el)}

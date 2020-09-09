@@ -5,9 +5,9 @@ import { mixins } from "@styles";
 import { theme } from "@styles/themes";
 import Overlay from "./Overlay";
 import Icon from "./Icon";
-import { useTranslation } from "@hooks/useTranslation";
 import { NotificationType } from "@types";
 import Button from "./Button";
+import { ct } from "@utils";
 
 const Wrapper = styled(Col)`
   ${mixins.AbsoluteCenter};
@@ -70,7 +70,6 @@ type Props = {
 };
 
 const Notification: React.FC<Props> = ({ notification, onClose }) => {
-  const [ct] = useTranslation();
   const { addedCases, casesCountByCity } = notification;
   return (
     <>

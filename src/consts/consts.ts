@@ -126,3 +126,5 @@ export const lineChartOptions = (isDelta, theme) => ({
     ],
   },
 });
+
+export { default as CITIES } from "./cities.json";

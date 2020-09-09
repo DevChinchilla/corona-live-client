@@ -8,21 +8,19 @@ import Report from "@components/Report";
 
 import { useTheme } from "@hooks/useTheme";
 import { useHistory } from "react-router-dom";
-import { useTranslation } from "@hooks/useTranslation";
+import { ct } from "@utils";
 
 type Props = {
   cityId: string;
-  mutateData: any;
 };
 
-const CityNavBar: React.FC<Props> = ({ cityId, mutateData }) => {
-  const [ct] = useTranslation();
+const CityNavBar: React.FC<Props> = ({ cityId }) => {
   const history = useHistory();
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
   return (
     <>
-      <Report show={showReport} onClose={() => setShowReport(false)} referTo={ct(cityId)}></Report>
+      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
         <Button icon onClick={() => history.push("/")}>
           <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>

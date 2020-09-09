@@ -1,4 +1,11 @@
-import { URL_REGEX, MINUTE, HOUR, DAY, SECOND } from "@consts";
+import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES } from "@consts";
+
+export const ct = (cityId, guId = null) => {
+  let cityName = CITIES[`c${cityId}`] || "";
+  let guName = CITIES[`c${cityId}/${guId}`] || "";
+  guName = guName == cityName || guId == "_" ? "전체" : guName;
+  return guId != null ? guName : cityName;
+};
 
 export const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

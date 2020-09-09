@@ -9,9 +9,7 @@ import Report from "@components/Report";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
-import { useTranslation } from "@hooks/useTranslation";
-import { URL_REGEX } from "@consts";
-import { addHyperLink } from "@utils";
+import { addHyperLink, ct } from "@utils";
 
 const Card = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
@@ -35,7 +33,6 @@ const Card = styled(Row)<{ shadow?: boolean }>`
       border-top: none;
       border-radius: 6px;
       background: ${theme("greyBg")};
-      /* box-shadow: 0 3px 10px ${theme("blackText")}15; */
     `
   )}
 `;
@@ -103,8 +100,6 @@ interface Props {
   delay?: number;
 }
 export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }) => {
-  const [ct] = useTranslation();
-
   const [showDetails, setShowDetails] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [currentContent, setCurrentContent] = useState(data);

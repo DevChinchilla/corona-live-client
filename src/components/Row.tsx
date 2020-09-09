@@ -8,10 +8,9 @@ import { Row, Box } from "@components/Layout";
 import DeltaTag from "@components/DeltaTag";
 import { UpdateModal } from "@components/UpdateModal";
 
-import { numberWithCommas } from "@utils";
+import { numberWithCommas, ct } from "@utils";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
-import { useTranslation } from "@hooks/useTranslation";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -52,7 +51,6 @@ const Td = styled(Row)<PTd>`
 
 const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props }) => {
   const history = useHistory();
-  const [ct] = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
   const { total, current } = data;
@@ -113,7 +111,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
               <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
             </>
           ) : (
-            <Row fontSize="11px" fontWeight="bold">
+            <Row fontSize="11px" fontWeight={700}>
               집계 불가능
             </Row>
           )}

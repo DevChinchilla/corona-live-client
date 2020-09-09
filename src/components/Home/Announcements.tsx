@@ -6,6 +6,7 @@ import Modal from "@components/Modal";
 import { getDateDistance } from "@utils";
 import { IMPORTANT_MESSAGE } from "@consts";
 import Icon from "@components/Icon";
+import { AnnouncementType } from "@types";
 
 const Wrapper = styled(Row)``;
 
@@ -77,12 +78,6 @@ const AnnouncementContaienr = styled(Col)`
     }
   }
 `;
-
-interface AnnouncementType {
-  date?: number;
-  content: string;
-  title: string;
-}
 
 const Announcement: React.FC<{ data: AnnouncementType }> = ({ data }) => {
   const { date, content, title } = data;

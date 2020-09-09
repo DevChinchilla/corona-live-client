@@ -28,7 +28,7 @@ const City = ({ match }) => {
 
   return (
     <Page>
-      <CityNavBar {...{ cityId, mutateData }}></CityNavBar>
+      <CityNavBar {...{ cityId }}></CityNavBar>
       {statsData && (
         <Board
           data={{
