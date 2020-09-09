@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import { API_ROOT } from "@consts";
+import { API_ROOT, SECOND } from "@consts";
 import { fetcher } from "@utils";
 import { StatsType, UpdateType, NotificationType } from "@types";
 import { useObjectState } from "./useObjectState";
@@ -20,74 +20,77 @@ export const useData = () => {
   const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
   const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
 
+  const removeNotification = () => setNotification(null, true);
+
   const isInitialised = stats.data != null && updates.data != null;
 
-  const onUpdatesSuccess = (newUpdates: UpdateType[]) => {
-    if (!updates.data) setUpdates({ data: newUpdates });
-    const addedUpdates = newUpdates.filter(
+  const onUpdatesFetched = (newUpdates: UpdateType[]) => {
+    if (updates.data == null) setUpdates({ data: newUpdates });
+
+    const newCases = newUpdates.filter(
       (newUpdate) =>
         !updates.data?.find((oldUpdate) => {
           return newUpdate.datetime == oldUpdate.datetime;
         })
     );
-    if (addedUpdates.length > 0 && isInitialised) {
-      let updatedTotal = 0;
-      const updatedCitiesCount = addedUpdates.reduce((count, { city, cases }) => {
-        if (!count[city]) count[city] = 0;
-        count[city] += cases;
-        updatedTotal += cases;
-        return count;
+
+    if (newCases.length > 0 && isInitialised) {
+      let addedCases = 0;
+
+      const casesCountByCity = newCases.reduce((obj, { city, cases }) => {
+        obj[city] = obj[city] ? obj[city] + cases : cases;
+        addedCases += cases;
+        return obj;
       }, {});
-      setNotification({ counts: updatedCitiesCount, total: updatedTotal });
+
+      if (addedCases > 0) setNotification({ casesCountByCity, addedCases });
       setUpdates({ data: newUpdates });
     }
   };
 
-  const onStatsSuccess = (data: StatsType) => {
-    if (!stats.data) setStats({ data });
+  const onStatsFetched = (newStats: StatsType) => {
+    if (stats.data == null) setStats({ data: newStats });
+
     const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
-    const [cases, delta] = data?.overview?.current || [0, 0];
+    const [newCases, newDelta] = newStats?.overview?.current || [0, 0];
+
     const isChanged =
-      prevCases != cases ||
-      prevDelta != delta ||
-      data.announcements.length != stats.data?.announcements.length;
+      prevCases != newCases ||
+      prevDelta != newDelta ||
+      newStats.announcements.length != stats.data?.announcements.length;
 
     if (isChanged && isInitialised) {
-      setStats({ data });
+      setStats({ data: newStats });
     }
   };
 
-  const { mutate: mutateUpdates, isValidating: updatesValidating } = useSWR(
+  const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(
     `${API_ROOT}/updates.json`,
     fetcher,
     {
-      refreshInterval: 90000,
+      refreshInterval: SECOND * 30,
       revalidateOnReconnect: true,
       revalidateOnMount: false,
-      onSuccess: onUpdatesSuccess,
+      onSuccess: onUpdatesFetched,
     }
   );
 
-  const { mutate: mutateStats, isValidating: statsValidating } = useSWR(
-    `${API_ROOT}/stats.json`,
-    fetcher,
-    {
-      refreshInterval: 90000,
-      revalidateOnReconnect: true,
-      revalidateOnMount: false,
-      onSuccess: onStatsSuccess,
-    }
-  );
+  const { mutate: mutateStats } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
+    refreshInterval: SECOND * 30,
+    revalidateOnReconnect: true,
+    revalidateOnMount: false,
+    onSuccess: onStatsFetched,
+  });
 
   useEffect(() => {
-    if (updatesValidating == true) {
+    if (updatesLoading == true) {
       setUpdates({ loading: !!notification ? false : true });
     } else {
       setTimeout(() => {
-        setUpdates({ loading: updatesValidating });
+        setUpdates({ loading: updatesLoading });
       }, 2000);
     }
-  }, [updatesValidating, statsValidating]);
+  }, [updatesLoading]);
 
   const mutateData = async () => {
     setStats({ loading: true });
@@ -103,12 +106,9 @@ export const useData = () => {
     if (!isInitialised && !isLoading) mutateData();
   }, [isInitialised]);
 
-  const removeNotification = () => setNotification(null, true);
-
   return {
     updatesData: updates.data,
     statsData: stats.data,
-
     mutateData,
     isLoading,
     notification,

@@ -126,6 +126,3 @@ export const lineChartOptions = (isDelta, theme) => ({
     ],
   },
 });
-
-export const C_TOTAL = 0;
-export const C_DELTA = 1;

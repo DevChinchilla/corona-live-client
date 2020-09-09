@@ -71,7 +71,7 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ notification, onClose }) => {
   const [ct] = useTranslation();
-  if (notification.total < 1) return <></>;
+  const { addedCases, casesCountByCity } = notification;
   return (
     <>
       <Overlay fadeInUp zIndex={100000}></Overlay>
@@ -80,12 +80,12 @@ const Notification: React.FC<Props> = ({ notification, onClose }) => {
           <NotificationIcon fadeInUp>
             <Icon name="NotificationFilled" size={22}></Icon>
           </NotificationIcon>
-          <Message>확진자 {notification.total}명 추가</Message>
+          <Message>확진자 {addedCases}명 추가</Message>
           <Col py="14px">
-            {Object.keys(notification.counts || {}).map((cityId) => (
+            {Object.keys(casesCountByCity || {}).map((cityId) => (
               <Detail>
                 {ct(cityId)}
-                <Box w="6px"></Box>+{notification?.counts[cityId]}
+                <Box w="6px"></Box>+{casesCountByCity[cityId]}
               </Detail>
             ))}
           </Col>

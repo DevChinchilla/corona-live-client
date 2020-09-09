@@ -42,8 +42,6 @@ export interface UpdateType {
 }
 
 export interface NotificationType {
-  counts: { [cityId: string]: number };
-  total: number;
-  current: number;
-  delta: number;
+  casesCountByCity: { [cityId: string]: number };
+  addedCases: number;
 }

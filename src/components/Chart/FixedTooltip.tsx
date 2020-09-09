@@ -62,10 +62,10 @@ const FixedTooltip: React.FC<Props> = ({ title, today, yesterday }) => {
     <Wrapper fadeInUp>
       <span className="title">{title}</span>
       <div className="yesterday">
-        어제 <strong> &nbsp;{yesterday || 0}</strong>
+        어제 <strong> &nbsp;{yesterday || 0}명</strong>
       </div>
       <div className="today">
-        오늘 <strong> &nbsp;{today || 0}</strong>
+        오늘 <strong> &nbsp;{today || 0}명</strong>
       </div>
     </Wrapper>
   );

@@ -124,6 +124,7 @@ const Graph: React.FC<Props> = ({ timeseries, current }) => {
           } as any
         }
       ></Line>
+
       <Row jc="center" mt="10px" fadeInUp>
         <ChartType active={chartType == "total"} onClick={() => setChartType("total")}>
           누적

@@ -3,7 +3,6 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle, themes } from "@styles";
 import { Switch, Redirect, Route, useLocation } from "react-router-dom";
 import { useLocalStorage } from "@hooks/useLocalStorage";
-
 const Home = lazy(() => import("@components/Home"));
 const City = lazy(() => import("@components/City"));
 

@@ -1,5 +1,4 @@
 import { useTranslation as useTranslationHook } from "react-i18next";
-
 export const useTranslation = () => {
   const { t } = useTranslationHook();
   const ct = (cityId, guId = null) => {
