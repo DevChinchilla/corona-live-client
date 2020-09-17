@@ -16,6 +16,7 @@ const Wrapper = styled(Col)`
   position: relative;
   color: white;
   margin-top: 30px;
+  margin-bottom: 10px;
   svg {
     fill: white;
     text {

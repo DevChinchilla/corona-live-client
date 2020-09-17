@@ -42,8 +42,8 @@ const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
         <Icon
           transform="translateY(-4px)"
           name="Logo"
-          height="24px"
-          width="100px"
+          height="26px"
+          width="110px"
           fill={theme("blackText")}
         ></Icon>
 

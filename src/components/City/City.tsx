@@ -1,21 +1,26 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState } from "react";
 
-import { Page } from "@components/Layout";
+import { Page, Row } from "@components/Layout";
 
 const Table = lazy(() => import("@components/Table"));
 const Board = lazy(() => import("@components/Board"));
 const Footer = lazy(() => import("@components/Footer"));
 const CityNavBar = lazy(() => import("@components/City/CityNavBar"));
+const Notification = lazy(() => import("@components/Notification"));
+const UpdateModal = lazy(() => import("@components/UpdateModal"));
+const Updates = lazy(() => import("@components/Home/Updates"));
 
 import { DISTRICT_TD_FLEX } from "@consts";
 import { sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useData } from "@hooks/useData";
+import UpdateCard from "@components/UpdateCard";
 
 const City = ({ match }) => {
   useScrollTop();
 
   const cityId: string = match.params.cityId;
+  const [showUpdates, setShowUpdates] = useState(false);
 
   const {
     updatesData,
@@ -28,7 +33,52 @@ const City = ({ match }) => {
 
   return (
     <Page>
+      {updatesData && (
+        <Suspense fallback={<div />}>
+          <UpdateModal
+            isDistrict
+            {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData, cityId }}
+          ></UpdateModal>
+        </Suspense>
+      )}
+
+      {!isLoading && !!notification && (
+        <Suspense fallback={<div />}>
+          <Notification
+            notification={notification}
+            onClose={() => {
+              removeNotification();
+              setShowUpdates(true);
+            }}
+          ></Notification>
+        </Suspense>
+      )}
+
       <CityNavBar {...{ cityId }}></CityNavBar>
+
+      {/* {updatesData && (
+        <Suspense fallback={<div />}>
+          <Row mt="10px" fadeInUp delay={3}>
+            <UpdateCard
+              data={updatesData[0]}
+              onClick={() => setShowUpdates(true)}
+              animationData={updatesData.filter((a) => a.city == cityId).slice(0, 5)}
+            ></UpdateCard>
+          </Row>
+        </Suspense>
+      )} */}
+
+      {updatesData ? (
+        <Suspense fallback={<div style={{ height: "50px" }} />}>
+          <Updates
+            data={sortByDate(updatesData)}
+            {...{ mutateData, isLoading, showUpdates, setShowUpdates, cityId }}
+          ></Updates>
+        </Suspense>
+      ) : (
+        <Row h="30px"></Row>
+      )}
+
       {statsData && (
         <Board
           data={{
@@ -37,6 +87,7 @@ const City = ({ match }) => {
           }}
         ></Board>
       )}
+
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
           <Table

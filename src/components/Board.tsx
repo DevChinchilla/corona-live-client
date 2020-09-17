@@ -71,7 +71,7 @@ const Board = ({ data }) => {
         title={"현재 (비공식)"}
         fadeInUp
         delay={3}
-        info="어제 동시간 대비 증가수"
+        info="어제 동시간 대비"
       ></Stat>
     </Row>
   );

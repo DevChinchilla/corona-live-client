@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import Icon from "@components/Icon";
-import UpdateTime from "@components/UpdateTime";
 import { Row, Box } from "@components/Layout";
+import Icon from "@components/Icon";
 import DeltaTag from "@components/DeltaTag";
-import { UpdateModal } from "@components/UpdateModal";
+import UpdateTime from "@components/UpdateTime";
+import UpdateModal from "@components/UpdateModal";
 
 import { numberWithCommas, ct } from "@utils";
 import { ifProp } from "@styles/tools";
@@ -51,7 +51,7 @@ const Td = styled(Row)<PTd>`
 
 const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props }) => {
   const history = useHistory();
-  const [showModal, setShowModal] = useState(false);
+  const [showUpdates, setShowUpdates] = useState(false);
 
   const { total, current } = data;
 
@@ -66,7 +66,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
     if (cityId == null && name != "대구") {
       history.push(`./city/${cityId || id}`);
     } else {
-      if (updateTime || updates.length != 0) setShowModal(true);
+      if (updateTime || updates.length != 0) setShowUpdates(true);
     }
   };
 
@@ -74,7 +74,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
     <>
       <UpdateModal
         isDistrict={cityId != null}
-        {...{ onClose: () => setShowModal(false), showModal, data: updates }}
+        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updates }}
       ></UpdateModal>
 
       <Wrapper {...props} onClick={onClick}>

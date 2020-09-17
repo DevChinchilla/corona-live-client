@@ -21,7 +21,7 @@ const CityNavBar: React.FC<Props> = ({ cityId }) => {
   return (
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
-      <Row jc="space-between" ai="center" mb="20px" mt="0px" fadeInUp>
+      <Row jc="space-between" ai="center" mb="6px" mt="0px" fadeInUp>
         <Button icon onClick={() => history.push("/")}>
           <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
         </Button>

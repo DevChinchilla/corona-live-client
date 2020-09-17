@@ -1,10 +1,9 @@
-import React, { useEffect, FC } from "react";
+import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import * as ReactDOM from "react-dom";
 
-import Icon, { IconType } from "@components/Icon/Icon";
-import { Row, Box, Flex, Col } from "@components/Layout";
-import Underline from "@components/Underline";
+import Icon from "@components/Icon/Icon";
+import { Row, Col } from "@components/Layout";
 
 import { theme } from "@styles/themes";
 import { media } from "@styles";
@@ -36,7 +35,7 @@ const ModalContainer = styled(Col)<{ fixedHeight?: boolean }>`
       height: 80%;
     `
   )}
-  padding: 20px 20px;
+  padding: 16px 16px;
   background: ${theme("bg")};
   z-index: ${prop("zIndex")};
   border-radius: 10px;
@@ -54,11 +53,6 @@ const Header = styled(Row)`
   margin-bottom: 20px;
   align-items: center;
   justify-content: space-between;
-`;
-
-const Title = styled(Row)`
-  /* background: ${theme("greyBg")}; */
-  /* padding: 0px 10px; */
 `;
 
 interface Props {
@@ -92,16 +86,16 @@ const Modal: FC<Props> = ({
   const portal = document.getElementById("root-portal");
   const component = (
     <>
-      {!hideOverlay && <Overlay onClick={onClose}></Overlay>}
+      {!hideOverlay && <Overlay zIndex={zIndex ? zIndex - 1 : 999} onClick={onClose}></Overlay>}
       <ModalContainer {...props} fixedHeight={!dynamic} zIndex={zIndex || 1000}>
         {!noHeader && (
           <Header fadeInUp>
             <Button icon square onClick={onClose}>
               <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
             </Button>
-            <Title fontSize="14px" fontWeight={700}>
+            <Row fontSize="14px" fontWeight={700}>
               {title}
-            </Title>
+            </Row>
             {actionIcon ? (
               <Button icon square onClick={onActionClick}>
                 <Icon

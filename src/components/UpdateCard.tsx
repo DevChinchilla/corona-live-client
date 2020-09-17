@@ -80,7 +80,7 @@ const Content = ({ datetime, from, title, showDetails }) => {
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
-        <UpdateTime date={datetime} flex="0 1 80px"></UpdateTime>
+        <UpdateTime date={datetime} flex="0 1 75px"></UpdateTime>
         <Message>
           <Box fontWeight={700} mr="4px">
             {from}
@@ -105,15 +105,23 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
   const [currentContent, setCurrentContent] = useState(data);
   const contentIndex = useRef(0);
 
-  const { datetime, city, gu, cases } = currentContent;
+  const { datetime, city, gu, cases, total } = currentContent;
   const from = `${ct(city)} ${ct(city, gu)}`;
-  const title = `${cases}명 추가확진`;
+  const title = total == total - cases ? `${total}명 어제집계` : `${cases}명 추가확진`;
 
   const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
+
+  useEffect(() => {
+    if (animationData) {
+      setCurrentContent(animationData[contentIndex.current]);
+    }
+  }, [animationData]);
+
   useEffect(() => {
     let interval;
     if (animationData) {
       interval = setInterval(() => {
+        console.log(animationData[contentIndex.current]);
         setCurrentContent(animationData[contentIndex.current]);
         contentIndex.current++;
         if (contentIndex.current >= animationData.length) contentIndex.current = 0;
@@ -121,6 +129,14 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
     }
     return () => clearInterval(interval);
   }, []);
+
+  const getAdditionalMessage = () => {
+    if (total == total - cases) {
+      return `${total}명 ${total > 1 ? `모두 ` : ""}어제 집계에 이미 포함`;
+    } else {
+      return `${total}명중 ${total - cases}명은 어제 집계에 이미 포함`;
+    }
+  };
 
   return (
     <>
@@ -152,6 +168,11 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
 
       {showDetails && (
         <Details fadeInUp>
+          {total && (
+            <Row jc="center" mb="6px" fontSize="12px" fontWeight={700}>
+              {getAdditionalMessage()}
+            </Row>
+          )}
           <p
             dangerouslySetInnerHTML={{
               __html: addHyperLink(currentContent.src),

@@ -41,8 +41,9 @@ export const getDateDistance = (_past) => {
     return `${Math.floor(diffTime / MINUTE)}분 전`;
   } else if (diffTime < DAY) {
     return `${Math.floor(diffTime / HOUR)}시간 전`;
+  } else {
+    return `${Math.floor(diffTime / DAY)}일 전`;
   }
-  return null;
 };
 
 export const getCurrentDateTime = () => {

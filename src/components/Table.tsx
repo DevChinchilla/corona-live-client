@@ -15,7 +15,7 @@ const Th = styled(RowLayout)`
 
 const Header = ({ tdFlex }) => {
   return (
-    <RowLayout alignItems="center" mb="12px" mt="30px" px="12px" fadeInUp>
+    <RowLayout alignItems="center" mb="12px" mt="20px" px="12px" fadeInUp>
       <Th flex={tdFlex[0]}>지역</Th>
       <Th flex={tdFlex[1]}></Th>
       <Th flex={tdFlex[2]}>총 확진자</Th>
@@ -34,38 +34,61 @@ interface Props {
 }
 
 const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
-  const mainData = Object.keys(overall).length == 0 ? current : overall;
+  const getUpdateTime = (id) => {
+    let date = updates.find((update) => {
+      let { city, gu } = update;
+      if (cityId == null) return city == id;
+      if (city == cityId && gu == id) {
+        return true;
+      }
+    })?.datetime as string;
+    return new Date(date).getTime() || 0;
+  };
+
+  const sortByCurrent = (a, b) => {
+    if (cityId) return current[b][0] - current[a][0];
+    return current[b].cases[0] - current[a].cases[0];
+  };
+
+  console.log(getUpdateTime(0) - getUpdateTime(1));
+  const sortByUpdateTime = (a, b) => {
+    return (getUpdateTime(b) || 0) - (getUpdateTime(a) || 0);
+  };
+  // const mainData = Object.keys(overall).length == 0 ? current : overall;
   return (
     <>
       <Header tdFlex={tdFlex}></Header>
       <Col fadeInUp delay={6}>
-        {Object.keys(mainData).map((id, i) => {
-          const latestUpdate = updates.find((update) => {
-            let { city, gu } = update;
-            if (cityId == null) return city == id;
-            if (city == cityId && gu == id) {
-              return true;
-            }
-          });
+        {Object.keys(current)
+          .sort(sortByUpdateTime)
+          .sort(sortByCurrent)
+          .map((id, i) => {
+            const latestUpdate = updates.find((update) => {
+              let { city, gu } = update;
+              if (cityId == null) return city == id;
+              if (city == cityId && gu == id) {
+                return true;
+              }
+            });
 
-          return (
-            <Row
-              updates={updates.filter(({ city, gu }) => city == cityId && gu == id)}
-              tdFlex={tdFlex}
-              fadeInUp
-              delay={i * 1.5}
-              even={i % 2 == 0}
-              cityId={cityId}
-              id={id}
-              updateTime={latestUpdate?.datetime}
-              data={{
-                total: overall[id]?.cases || overall[id],
-                current: current[id]?.cases || current[id],
-              }}
-              key={`${cityId}/${id}`}
-            ></Row>
-          );
-        })}
+            return (
+              <Row
+                updates={updates.filter(({ city, gu }) => city == cityId && gu == id)}
+                tdFlex={tdFlex}
+                fadeInUp
+                delay={i * 1.5}
+                even={i % 2 == 0}
+                cityId={cityId}
+                id={id}
+                updateTime={latestUpdate?.datetime}
+                data={{
+                  total: overall[id]?.cases || overall[id],
+                  current: current[id]?.cases || current[id],
+                }}
+                key={`${cityId}/${id}`}
+              ></Row>
+            );
+          })}
       </Col>
     </>
   );

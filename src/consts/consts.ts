@@ -16,11 +16,11 @@ export const BLOG_URL = `http://blog.naver.com/openapi/share?url=${WEBSITE_URL}&
 export const TWITTER_URL = `http://twitter.com/share?url=${WEBSITE_URL}&text=코로나 현황 실시간으로 보기`;
 export const KAKAOPAY_URL = `https://qr.kakaopay.com/281006011172839271003566`;
 export const TWITTER_SNS_URL = `https://twitter.com/kCm2v4r1PvpSE7A`;
-export const INSTA_SNS_URL = `https://www.instagram.com/corona.live.kr/`;
+export const INSTA_SNS_URL = `https://www.instagram.com/corona_live_official/`;
 
 export const EMAIL_API = `https://64t2pyuhje.execute-api.ap-northeast-2.amazonaws.com/corona-live-email`;
 export const EMAIL = `corona.live.kr@gmail.com`;
-export const URL_REGEX = /(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*).\w+/gi;
+export const URL_REGEX = /(https?:\/\/(www\.)?)?[a-z][-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*).\w+/gi;
 
 export const IMPORTANT_MESSAGE = `
 코로나 라이브는 재난문자와 각 지자체및 질병관리본부에서 <strong>금일 제공하는 자료</strong>를

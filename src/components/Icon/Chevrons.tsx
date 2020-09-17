@@ -11,7 +11,7 @@ const ChevronLeft = () => {
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="2"
+      strokeWidth="1"
       className="feather feather-chevron-left"
       viewBox="0 0 24 24"
     >

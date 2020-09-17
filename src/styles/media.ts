@@ -5,8 +5,8 @@ const sizes = {
   tablet: 768,
   thone: 600,
   phablet: 480,
-  phone: 376,
-  tiny: 330,
+  phone: 360,
+  tiny: 320,
 };
 
 interface MeidaProp {

@@ -120,11 +120,8 @@ const Announcements: React.FC<Props> = ({ announcements }) => {
             data={{ title: "코로나 라이브 이용 주의사항", content: IMPORTANT_MESSAGE }}
           ></Announcement>
 
-          {announcements.length > 0 ? (
-            announcements.map((data, i) => <Announcement key={i} data={data}></Announcement>)
-          ) : (
-            <span>공지사항이 없습니다</span>
-          )}
+          {announcements.length > 0 &&
+            announcements.map((data, i) => <Announcement key={i} data={data}></Announcement>)}
         </Col>
       </Modal>
       <Wrapper fadeInUp delay={2}>

@@ -86,25 +86,25 @@ const BoxCss = css`
   ${ifProp(
     "fadeInUp",
     css`
-      animation-duration: 0.45s;
+      animation-duration: 0.4s;
       animation-fill-mode: both;
       animation-name: fadeInUp;
     `
   )}
-   ${ifProp(
-     "fadeInDown",
-     css`
-       animation-duration: 0.45s;
-       animation-fill-mode: both;
-       animation-name: fadeOutDown;
-     `
-   )}
+  ${ifProp(
+    "fadeInDown",
+    css`
+      animation-duration: 0.4s;
+      animation-fill-mode: both;
+      animation-name: fadeOutDown;
+    `
+  )}
     ${ifProp(
-      "delay",
-      css`
-        animation-delay: ${(props) => props["delay"] * 100}ms;
-      `
-    )}
+    "delay",
+    css`
+      animation-delay: ${(props) => props["delay"] * 100}ms;
+    `
+  )}
   ${Margin};
   ${Padding};
   ${Css};

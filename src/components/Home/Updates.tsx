@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { UpdateCard } from "@components/UpdateCard";
 import { Col, Row } from "@components/Layout";
-import { UpdateModal } from "@components/UpdateModal";
+import UpdateModal from "@components/UpdateModal";
 
 import { theme } from "@styles/themes";
 import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
+import { UpdateType } from "@types";
 
 const Wrapper = styled(Col)`
   width: 100%;
@@ -19,7 +20,8 @@ const Wrapper = styled(Col)`
 
 const Time = styled(Col)`
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  margin-top: 6px;
   font-size: 11px;
   font-weight: 500;
   color: ${theme("greyText")};
@@ -40,27 +42,58 @@ const RefreshButton = styled(Row)`
   }
 `;
 
-const Updates = ({ data, mutateData, isLoading }) => {
-  const [showModal, setShowModal] = useState(false);
+interface Props {
+  data: UpdateType[];
+  mutateData: any;
+  isLoading: boolean;
+  showUpdates: boolean;
+  setShowUpdates: any;
+  cityId?: string;
+}
+const Updates: FC<Props> = ({
+  data,
+  mutateData,
+  isLoading,
+  showUpdates,
+  setShowUpdates,
+  cityId,
+}) => {
   if (data.length == 0) return <div style={{ height: "30px" }}></div>;
+  const [updatesData, setUpdatesData] = useState<UpdateType[]>([]);
+  useEffect(() => {
+    if (cityId != null) {
+      setUpdatesData(data.filter((a) => a.city == cityId));
+    } else {
+      setUpdatesData(data);
+    }
+  }, [data]);
+  if (updatesData.length == 0) return <Row h="10px"></Row>;
   return (
     <Wrapper fadeInUp>
-      <UpdateModal {...{ onClose: () => setShowModal(false), showModal, data }}></UpdateModal>
+      <UpdateModal
+        isDistrict={cityId != null}
+        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData }}
+      ></UpdateModal>
+      <Time>{getCurrentDateTime()}</Time>
       <Row>
-        <Row flex={1}>
-          <UpdateCard
-            data={data[0]}
-            onClick={() => setShowModal(true)}
-            animationData={data.slice(0, 5)}
-          ></UpdateCard>
-        </Row>
-        <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
-          {isLoading ? (
-            <Spinner size={16} color={"darkGreyText"} bg={"greyBg"}></Spinner>
-          ) : (
-            <Icon name="Refresh" size={24} fadeInUp></Icon>
-          )}
-        </RefreshButton>
+        {updatesData.length > 0 && (
+          <Row flex={1}>
+            <UpdateCard
+              data={updatesData[0]}
+              onClick={() => setShowUpdates(true)}
+              animationData={updatesData.slice(0, 5)}
+            ></UpdateCard>
+          </Row>
+        )}
+        {cityId == null && (
+          <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
+            {isLoading ? (
+              <Spinner size={16} color={"darkGreyText"} bg={"greyBg"}></Spinner>
+            ) : (
+              <Icon name="Refresh" size={24} fadeInUp></Icon>
+            )}
+          </RefreshButton>
+        )}
       </Row>
     </Wrapper>
   );

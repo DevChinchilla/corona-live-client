@@ -43,9 +43,9 @@ const CategoryContainer = styled(Row)`
 `;
 
 const CategoryBox = styled(Row)<{ active: boolean }>`
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
-  margin-right: 8px;
+  margin-right: 6px;
   margin-bottom: 12px;
   transition: 0.3s;
   background: ${theme("greyBg")};
@@ -78,7 +78,6 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
       }, {}),
     []
   );
-
   return (
     <CategoryContainer fadeInUp delay={1}>
       <CategoryBox onClick={() => onSearchKeyword("")} active={keyword == ""}>
@@ -86,27 +85,34 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
         <CategoryCount>{data.length}건</CategoryCount>
       </CategoryBox>
 
-      {CITY_IDS.map((cityId) => {
-        let name = ct(cityId);
-        return (
-          <CategoryBox onClick={() => onSearchKeyword(name)} active={keyword == name}>
-            {name}
-            <CategoryCount>{categoryCounts[cityId] || 0}건</CategoryCount>
-          </CategoryBox>
-        );
-      })}
+      {CITY_IDS.sort((a, b) => (categoryCounts[b] || 0) - (categoryCounts[a] || 0)).map(
+        (cityId) => {
+          let name = ct(cityId) + " ";
+          return (
+            <CategoryBox
+              key={cityId}
+              onClick={() => onSearchKeyword(name)}
+              active={keyword == name}
+            >
+              {name}
+              <CategoryCount>{categoryCounts[cityId] || 0}건</CategoryCount>
+            </CategoryBox>
+          );
+        }
+      )}
     </CategoryContainer>
   );
 };
 
 interface Props {
-  showModal: boolean;
+  showUpdates: boolean;
   onClose: any;
   data?: any;
   isDistrict?: boolean;
+  cityId?: string;
 }
 
-export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, isDistrict }) => {
+const UpdateModal: FC<Props> = React.memo(({ onClose, showUpdates, data, isDistrict, cityId }) => {
   const _theme = useTheme();
 
   const [keyword, setKeyword] = useState("");
@@ -114,7 +120,11 @@ export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, is
   const [showCategories, setShowCategories] = useState(true);
 
   useEffect(() => {
-    onSearchKeyword(keyword);
+    if (cityId == null) {
+      onSearchKeyword(keyword);
+    } else {
+      setData(data.filter((a) => a.city == cityId));
+    }
   }, [data]);
 
   const onSearchKeyword = (newKeyword) => {
@@ -136,9 +146,9 @@ export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, is
   };
   return (
     <Modal
-      show={showModal}
+      show={showUpdates}
       onClose={onClose}
-      title={"오늘 추가 확진자 알림"}
+      title={"실시간 추가 확진자"}
       actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
       onActionClick={onToggle}
     >
@@ -178,3 +188,5 @@ export const UpdateModal: FC<Props> = React.memo(({ onClose, showModal, data, is
     </Modal>
   );
 });
+
+export default UpdateModal;

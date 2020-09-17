@@ -25,7 +25,7 @@ const LineChart = lazy(() => import("@components/Chart/LineChart"));
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
-  const [showModal, setShowModal] = useState(true);
+  const [showUpdates, setShowUpdates] = useState(false);
 
   const {
     updatesData,
@@ -44,7 +44,13 @@ const Home = ({ theme, setTheme }) => {
 
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
-          <Notification notification={notification} onClose={removeNotification}></Notification>
+          <Notification
+            notification={notification}
+            onClose={() => {
+              removeNotification();
+              setShowUpdates(true);
+            }}
+          ></Notification>
         </Suspense>
       )}
 
@@ -62,17 +68,20 @@ const Home = ({ theme, setTheme }) => {
         <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
       </Suspense>
 
-      {statsData?.announcements ? (
+      {/* {statsData?.announcements ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Announcements announcements={statsData?.announcements}></Announcements>
         </Suspense>
       ) : (
         <Row h="30px"></Row>
-      )}
+      )} */}
 
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
-          <Updates data={sortByDate(updatesData)} {...{ mutateData, isLoading }}></Updates>
+          <Updates
+            data={sortByDate(updatesData)}
+            {...{ mutateData, isLoading, showUpdates, setShowUpdates }}
+          ></Updates>
         </Suspense>
       ) : (
         <Row h="30px"></Row>

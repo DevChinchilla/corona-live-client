@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { API_ROOT, SECOND } from "@consts";
-import { fetcher } from "@utils";
+import { fetcher, jsonCompare } from "@utils";
 import { StatsType, UpdateType, NotificationType } from "@types";
-import { useObjectState } from "./useObjectState";
+import { useObjectState } from "@hooks/useObjectState";
 
 interface StatsState {
   data: StatsType | null;
@@ -25,7 +25,8 @@ export const useData = () => {
   const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesFetched = (newUpdates: UpdateType[]) => {
-    if (updates.data == null) setUpdates({ data: newUpdates });
+    // setNotification({ casesCountByCity: { 1: 1 }, addedCases: 1 });
+    if (!jsonCompare(updates.data, newUpdates)) setUpdates({ data: newUpdates });
 
     const newCases = newUpdates.filter(
       (newUpdate) =>
@@ -49,7 +50,7 @@ export const useData = () => {
   };
 
   const onStatsFetched = (newStats: StatsType) => {
-    if (stats.data == null) setStats({ data: newStats });
+    if (!jsonCompare(stats.data, newStats)) setStats({ data: newStats });
 
     const [prevCases, prevDelta] = stats.data?.overview?.current || [0, 0];
     const [newCases, newDelta] = newStats?.overview?.current || [0, 0];
@@ -68,7 +69,7 @@ export const useData = () => {
     `${API_ROOT}/updates.json`,
     fetcher,
     {
-      refreshInterval: SECOND * 30,
+      refreshInterval: SECOND * 20,
       revalidateOnReconnect: true,
       revalidateOnMount: false,
       onSuccess: onUpdatesFetched,
@@ -76,7 +77,7 @@ export const useData = () => {
   );
 
   const { mutate: mutateStats } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
-    refreshInterval: SECOND * 30,
+    refreshInterval: SECOND * 20,
     revalidateOnReconnect: true,
     revalidateOnMount: false,
     onSuccess: onStatsFetched,

@@ -59,19 +59,23 @@ const initialState = {
   email: "",
   src: "",
   cases: "",
+  website: "",
 };
+
+const ReportOptions = ["재난문자", "지자체 사이트"];
+const ErrorOptions = ["어제 이미 집계", "확진자수 오류"];
+const ErrorOptionsPlaceHolder = ["어제 집계된 확진자 번호 예) 1,2,3,...", "확진자수 (숫자만)"];
 
 const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   const [isLoading, setisLoading] = useState(false);
   const textRef = useRef<HTMLTextAreaElement | null>();
-  const [{ src, email, title, cases }, setForm] = useObjectState({
+  const [{ src, email, title, cases, website }, setForm] = useObjectState({
     ...initialState,
     title: errorReport || "",
   });
 
   const onChange = (e) => {
     let { name, value } = e.target;
-    console.log(name, value);
     setForm({ [name]: value });
   };
 
@@ -80,7 +84,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
       setisLoading(false);
       setForm({
         ...initialState,
-        cases: errorReport ? "오류 제보" : "",
+        cases: "",
         title: errorReport || "",
       });
     }
@@ -88,9 +92,20 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
 
   const onSumbit = async () => {
     if (isLoading) return;
-    if (title.trim().length == 0) return alert("지역을 적어주세요");
+    if (!errorReport) {
+      if (title.trim().length == 0) return alert("지역을 적어주세요");
+      if (title.trim().split(" ").length > 2) return alert("한지역만 적어주세요");
+      if (
+        title
+          .trim()
+          .split(" ")
+          .find((a) => a.length > 6)
+      )
+        alert("한지역만 적어주세요");
+    }
     if (cases.trim().length == 0) return alert("확진자수를 적어주세요");
-    if (src.trim().length == 0) return alert("출처을 적어주세요");
+    if (!parseInt(cases)) return alert("확진자수 숫자만 적어주세요");
+    // if (src.trim().length == 0) return alert("출처을 적어주세요");
 
     setisLoading(true);
     await fetch(EMAIL_API, {
@@ -105,32 +120,51 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   };
 
   return (
-    <Modal show={show} title={"제보하기"} onClose={onClose} hideOverlay={hideOverlay}>
+    <Modal
+      show={show}
+      title={"제보하기"}
+      onClose={onClose}
+      hideOverlay={hideOverlay}
+      dynamic
+      zIndex={10000}
+    >
       <Wrapper fadeInUp delay={1}>
-        <Row textAlign="center" fontSize="12px" jc="center">
-          공지사항 체크 먼저 해주시기 바랍니다
-        </Row>
+        {!errorReport && (
+          <Row textAlign="center" fontSize="12px" jc="center">
+            공지사항 체크 먼저 해주시기 바랍니다
+          </Row>
+        )}
+
         <Row textAlign="center" fontSize="12px" jc="center" mt="2px">
           문의는 <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
         </Row>
 
-        <input placeholder="지역" value={title} onChange={onChange} name="title"></input>
-
         {!errorReport && (
           <>
-            {/* <Label>확진자수*</Label> */}
-            <input placeholder="확진자수" value={cases} onChange={onChange} name="cases"></input>
+            <input placeholder="지역 " value={title} onChange={onChange} name="title"></input>
+            {/* <input
+              placeholder="링크 (선택)"
+              value={website}
+              onChange={onChange}
+              name="website"
+            ></input> */}
           </>
         )}
-
-        <textarea
+        <input
+          placeholder="확진자수 (숫자만)"
+          value={cases}
+          onChange={onChange}
+          name="cases"
+        ></input>
+        <Row h="10px"></Row>
+        {/* <textarea
           autoFocus={!!errorReport}
           ref={(el) => (textRef.current = el)}
           placeholder={errorReport ? "오류설명" : "지자체 링크 또는 재난문자만 (뉴스 x)"}
           value={src}
           onChange={onChange}
           name="src"
-        ></textarea>
+        ></textarea> */}
 
         <Button big onClick={onSumbit}>
           {isLoading ? (
