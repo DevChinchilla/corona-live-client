@@ -59,8 +59,8 @@ const Details = styled(Col)`
 `;
 
 const ReportButton = styled(Row)`
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 12px;
+  font-size: 10px;
 
   font-weight: 500;
   text-decoration: underline;
@@ -107,7 +107,12 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
 
   const { datetime, city, gu, cases, total } = currentContent;
   const from = `${ct(city)} ${ct(city, gu)}`;
-  const title = total == total - cases ? `${total}명 어제집계` : `${cases}명 추가확진`;
+  const title =
+    cases == null
+      ? "확인중"
+      : total == total - cases
+      ? `${total}명 어제 확진`
+      : `${cases}명 오늘 확진`;
 
   const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
 
@@ -132,9 +137,9 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
 
   const getAdditionalMessage = () => {
     if (total == total - cases) {
-      return `${total}명 ${total > 1 ? `모두 ` : ""}어제 집계에 이미 포함`;
+      return `${total}명 ${total > 1 ? `모두 ` : ""}어제 확진`;
     } else {
-      return `${total}명중 ${total - cases}명은 어제 집계에 이미 포함`;
+      return `${total}명중 ${total - cases}명은 어제 확진`;
     }
   };
 
@@ -169,7 +174,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
       {showDetails && (
         <Details fadeInUp>
           {total && (
-            <Row jc="center" mb="6px" fontSize="12px" fontWeight={700}>
+            <Row jc="center" mb="12px" mt="4px" fontSize="12px" fontWeight={700}>
               {getAdditionalMessage()}
             </Row>
           )}
@@ -178,7 +183,7 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
               __html: addHyperLink(currentContent.src),
             }}
           ></p>
-          <ReportButton onClick={() => setShowReport(true)}>오류제보하기</ReportButton>
+          <ReportButton onClick={() => setShowReport(true)}>오류제보</ReportButton>
         </Details>
       )}
     </>

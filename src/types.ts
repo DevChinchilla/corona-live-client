@@ -17,6 +17,13 @@ export interface AnnouncementType {
   content: string;
   title: string;
 }
+
+export interface CasesSummaryType {
+  checking: number;
+  totalCases: number;
+  yesterdayCases: number;
+  todayCases: number;
+}
 interface CityGuType {
   [cityId: string]: {
     cases: CasesType;
@@ -32,6 +39,7 @@ export interface StatsType {
   overall: OverallType;
   timeseries: TimerseriesType;
   announcements: AnnouncementType[];
+  casesSummary: CasesSummaryType;
 }
 export interface UpdateType {
   src: string;

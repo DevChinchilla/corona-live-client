@@ -9,7 +9,7 @@ import { theme } from "@styles/themes";
 import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
-import { UpdateType } from "@types";
+import { CasesSummaryType, UpdateType } from "@types";
 
 const Wrapper = styled(Col)`
   width: 100%;
@@ -49,6 +49,7 @@ interface Props {
   showUpdates: boolean;
   setShowUpdates: any;
   cityId?: string;
+  casesSummary?: CasesSummaryType;
 }
 const Updates: FC<Props> = ({
   data,
@@ -57,9 +58,11 @@ const Updates: FC<Props> = ({
   showUpdates,
   setShowUpdates,
   cityId,
+  casesSummary,
 }) => {
   if (data.length == 0) return <div style={{ height: "30px" }}></div>;
   const [updatesData, setUpdatesData] = useState<UpdateType[]>([]);
+
   useEffect(() => {
     if (cityId != null) {
       setUpdatesData(data.filter((a) => a.city == cityId));
@@ -67,12 +70,14 @@ const Updates: FC<Props> = ({
       setUpdatesData(data);
     }
   }, [data]);
+
   if (updatesData.length == 0) return <Row h="10px"></Row>;
+
   return (
     <Wrapper fadeInUp>
       <UpdateModal
         isDistrict={cityId != null}
-        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData }}
+        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData, casesSummary }}
       ></UpdateModal>
       <Time>{getCurrentDateTime()}</Time>
       <Row>

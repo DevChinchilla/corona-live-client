@@ -146,7 +146,7 @@ const ScrollBar = css`
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
   ::-webkit-scrollbar-track {
@@ -154,12 +154,12 @@ const ScrollBar = css`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${theme("lightGreyText")}C0;
+    background: ${theme("semigreyText")}C0;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${theme("lightGreyText")};
+    background: ${theme("semigreyText")};
   }
 `;
 const mixins = {

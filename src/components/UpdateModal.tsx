@@ -11,6 +11,8 @@ import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
 import { sortByDate, onEnter, ct } from "@utils";
+import CasesSummary from "./Home/CasesSummary";
+import { CasesSummaryType } from "@types";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -38,7 +40,7 @@ const SearchInput = styled(Row)`
 const CategoryContainer = styled(Row)`
   align-items: center;
   overflow-x: scroll;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   flex-shrink: 0;
 `;
 
@@ -46,7 +48,7 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   padding: 6px 10px;
   border-radius: 6px;
   margin-right: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   transition: 0.3s;
   background: ${theme("greyBg")};
   color: ${theme("greyText")};
@@ -110,83 +112,88 @@ interface Props {
   data?: any;
   isDistrict?: boolean;
   cityId?: string;
+  casesSummary?: CasesSummaryType;
 }
 
-const UpdateModal: FC<Props> = React.memo(({ onClose, showUpdates, data, isDistrict, cityId }) => {
-  const _theme = useTheme();
+const UpdateModal: FC<Props> = React.memo(
+  ({ onClose, showUpdates, data, isDistrict, cityId, casesSummary }) => {
+    const _theme = useTheme();
 
-  const [keyword, setKeyword] = useState("");
-  const [filteredData, setData] = useState(data);
-  const [showCategories, setShowCategories] = useState(true);
+    const [keyword, setKeyword] = useState("");
+    const [filteredData, setData] = useState(data);
+    const [showCategories, setShowCategories] = useState(true);
 
-  useEffect(() => {
-    if (cityId == null) {
-      onSearchKeyword(keyword);
-    } else {
-      setData(data.filter((a) => a.city == cityId));
-    }
-  }, [data]);
+    useEffect(() => {
+      if (cityId == null) {
+        onSearchKeyword(keyword);
+      } else {
+        setData(data.filter((a) => a.city == cityId));
+      }
+    }, [data]);
 
-  const onSearchKeyword = (newKeyword) => {
-    setKeyword(newKeyword);
-    const filtered = data.filter(({ gu, city }) => {
-      return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) > -1;
-    });
-    setData(filtered);
-  };
+    const onSearchKeyword = (newKeyword) => {
+      setKeyword(newKeyword);
+      const filtered = data.filter(({ gu, city }) => {
+        return `${ct(city)} ${ct(city, gu)}`.indexOf(newKeyword) > -1;
+      });
+      setData(filtered);
+    };
 
-  const onToggle = () => {
-    if (showCategories) {
-      setData(null);
-    } else {
-      setData(data);
-    }
-    setShowCategories((a) => !a);
-    setKeyword("");
-  };
-  return (
-    <Modal
-      show={showUpdates}
-      onClose={onClose}
-      title={"실시간 추가 확진자"}
-      actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
-      onActionClick={onToggle}
-    >
-      {!isDistrict && (
-        <>
-          {showCategories ? (
-            <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
-          ) : (
-            <>
-              <SearchInput fadeInUp delay={1}>
-                <Absolute right="18px" verticalCenter onClick={() => onSearchKeyword(keyword)}>
-                  <Icon name="Search" fill={_theme("darkGreyText")} size={14}></Icon>
-                </Absolute>
-                <input
-                  placeholder="지역 검색"
-                  onChange={(e) => setKeyword(e.target.value)}
-                  onKeyUp={onEnter((e) => onSearchKeyword(e.target.value))}
-                  value={keyword}
-                ></input>
-              </SearchInput>
-              {filteredData && (
-                <Row fontSize="10px" jc="center" mb="10px" fadeInUp>
-                  <Row opacity={0.8}>{"검색 결과"}</Row>
-                  <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
-                </Row>
-              )}
-            </>
-          )}
-        </>
-      )}
-      <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
-        {filteredData &&
-          sortByDate(filteredData, "datetime").map((update, i) => (
-            <UpdateCard key={`${update.datetime}/${i}`} data={update}></UpdateCard>
-          ))}
-      </Col>
-    </Modal>
-  );
-});
+    const onToggle = () => {
+      if (showCategories) {
+        setData(null);
+      } else {
+        setData(data);
+      }
+      setShowCategories((a) => !a);
+      setKeyword("");
+    };
+    return (
+      <Modal
+        show={showUpdates}
+        onClose={onClose}
+        title={"실시간 발생 확진자"}
+        actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
+        onActionClick={onToggle}
+        full
+      >
+        {casesSummary && <CasesSummary data={casesSummary}></CasesSummary>}
+        {!isDistrict && (
+          <>
+            {showCategories ? (
+              <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
+            ) : (
+              <>
+                <SearchInput fadeInUp delay={1}>
+                  <Absolute right="18px" verticalCenter onClick={() => onSearchKeyword(keyword)}>
+                    <Icon name="Search" fill={_theme("darkGreyText")} size={14}></Icon>
+                  </Absolute>
+                  <input
+                    placeholder="지역 검색"
+                    onChange={(e) => setKeyword(e.target.value)}
+                    onKeyUp={onEnter((e) => onSearchKeyword(e.target.value))}
+                    value={keyword}
+                  ></input>
+                </SearchInput>
+                {filteredData && (
+                  <Row fontSize="10px" jc="center" mb="10px" fadeInUp>
+                    <Row opacity={0.8}>{"검색 결과"}</Row>
+                    <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
+                  </Row>
+                )}
+              </>
+            )}
+          </>
+        )}
+        <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
+          {filteredData &&
+            sortByDate(filteredData, "datetime").map((update, i) => (
+              <UpdateCard key={`${update.datetime}/${i}`} data={update}></UpdateCard>
+            ))}
+        </Col>
+      </Modal>
+    );
+  }
+);
 
 export default UpdateModal;

@@ -21,7 +21,7 @@ const Children = styled.div`
   overflow-x: hidden;
 `;
 
-const ModalContainer = styled(Col)<{ fixedHeight?: boolean }>`
+const ModalContainer = styled(Col)<{ fixedHeight?: boolean; full?: boolean }>`
   position: fixed;
   left: 50%;
   box-sizing: border-box;
@@ -44,6 +44,14 @@ const ModalContainer = styled(Col)<{ fixedHeight?: boolean }>`
   width: 360px;
   ${media.phablet} {
     width: 85%;
+    ${ifProp(
+      "full",
+      css`
+        width: 100%;
+        min-height: 100%;
+        border-radius: 0px;
+      `
+    )}
   }
 `;
 
@@ -65,6 +73,7 @@ interface Props {
   style?: any;
   actionIcon?: any;
   dynamic?: boolean;
+  full?: boolean;
   zIndex?: number;
 }
 

@@ -6,6 +6,7 @@ import DeltaTag from "@components/DeltaTag";
 import { useTheme } from "@hooks/useTheme";
 import Icon from "./Icon";
 import styled from "styled-components";
+import { OverviewType } from "@types";
 
 const Info = styled(Row)`
   font-size: 10px;
@@ -17,7 +18,7 @@ const Info = styled(Row)`
     margin-left: 2px;
   }
 `;
-interface Props {
+interface StatsProps {
   title: string;
   data: any;
   isToday?: boolean;
@@ -25,7 +26,7 @@ interface Props {
   delay?: number;
   info?: string;
 }
-const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
+const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
   const [total, delta] = data;
   const theme = useTheme();
 
@@ -61,7 +62,11 @@ const Stat: FC<Props> = ({ title, data, isToday, info, ...props }) => {
   );
 };
 
-const Board = ({ data }) => {
+interface BoardProps {
+  data: OverviewType;
+}
+
+const Board: FC<BoardProps> = ({ data }) => {
   return (
     <Row jc="space-evenly">
       <Stat data={data.confirmed} title={"총 확진자 (공식)"} isToday fadeInUp delay={2}></Stat>
