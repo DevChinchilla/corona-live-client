@@ -51,12 +51,12 @@ const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
           </Box>
           <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
         </Row>
-        {delta != 0 && info && (
+        {/* {delta != 0 && info && (
           <Info>
             <span>{info}</span>
             <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
           </Info>
-        )}
+        )} */}
       </Col>
     </Col>
   );
@@ -69,11 +69,11 @@ interface BoardProps {
 const Board: FC<BoardProps> = ({ data }) => {
   return (
     <Row jc="space-evenly">
-      <Stat data={data.confirmed} title={"총 확진자 (공식)"} isToday fadeInUp delay={2}></Stat>
+      <Stat data={data.confirmed} title={"총 확진자 "} isToday fadeInUp delay={2}></Stat>
       <Box w="40px"></Box>
       <Stat
         data={data.current}
-        title={"현재 (비공식)"}
+        title={"오늘 확진자"}
         fadeInUp
         delay={3}
         info="어제 동시간 대비"

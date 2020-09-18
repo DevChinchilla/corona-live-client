@@ -15,17 +15,29 @@ interface UpdatesState {
   loading: boolean;
 }
 
+interface TimeseriesState {
+  data: any;
+  loading: boolean;
+}
+
 export const useData = () => {
   const [notification, setNotification] = useObjectState<NotificationType | null>(null);
   const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
   const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
+  const [timeseries, setTimeseries] = useObjectState<TimeseriesState>({
+    data: null,
+    loading: false,
+  });
 
   const removeNotification = () => setNotification(null, true);
 
   const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesFetched = (newUpdates: UpdateType[]) => {
-    // setNotification({ casesCountByCity: { 1: 1 }, addedCases: 1 });
+    // newUpdates[0].cases = null;
+    // newUpdates[0].total = 2;
+    // newUpdates[1].cases = null;
+    console.log(newUpdates);
     if (!jsonCompare(updates.data, newUpdates)) setUpdates({ data: newUpdates });
 
     const newCases = newUpdates.filter(
@@ -65,6 +77,10 @@ export const useData = () => {
     }
   };
 
+  const onTimeseriesFetched = (newTimeseries) => {
+    setTimeseries({ data: newTimeseries });
+  };
+
   const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(
     `${API_ROOT}/updates.json`,
     fetcher,
@@ -81,6 +97,12 @@ export const useData = () => {
     revalidateOnReconnect: true,
     revalidateOnMount: false,
     onSuccess: onStatsFetched,
+  });
+
+  useSWR(`${API_ROOT}/timeseries.json`, fetcher, {
+    revalidateOnReconnect: true,
+    revalidateOnMount: true,
+    onSuccess: onTimeseriesFetched,
   });
 
   useEffect(() => {
@@ -110,6 +132,7 @@ export const useData = () => {
   return {
     updatesData: updates.data,
     statsData: stats.data,
+    timeseriesData: timeseries.data,
     mutateData,
     isLoading,
     notification,

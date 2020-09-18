@@ -50,11 +50,10 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
     return current[b].cases[0] - current[a].cases[0];
   };
 
-  console.log(getUpdateTime(0) - getUpdateTime(1));
   const sortByUpdateTime = (a, b) => {
     return (getUpdateTime(b) || 0) - (getUpdateTime(a) || 0);
   };
-  // const mainData = Object.keys(overall).length == 0 ? current : overall;
+
   return (
     <>
       <Header tdFlex={tdFlex}></Header>

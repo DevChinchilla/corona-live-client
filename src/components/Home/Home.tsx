@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useState } from "react";
 
-import { Page, Row, Col } from "@components/Layout";
+import { Page, Row } from "@components/Layout";
 
 import { sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
@@ -8,9 +8,7 @@ import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 import { CurrentType, OverallType, TimerseriesType } from "@types";
-import Modal from "@components/Modal";
 
-const CasesSummary = lazy(() => import("@components/Home/CasesSummary"));
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
 const Notification = lazy(() => import("@components/Notification"));
@@ -20,16 +18,18 @@ const Board = lazy(() => import("@components/Board"));
 const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
 const Popup = lazy(() => import("@components/Home/Popup"));
-const LineChart = lazy(() => import("@components/Chart/LineChart"));
+const Chart = lazy(() => import("@components/Chart/Chart"));
+const BarChart = lazy(() => import("@components/Chart/BarChart"));
 
 const Home = ({ theme, setTheme }) => {
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
-  const [showUpdates, setShowUpdates] = useState(true);
+  const [showUpdates, setShowUpdates] = useState(false);
 
   const {
     updatesData,
     statsData,
+    timeseriesData,
     mutateData,
     isLoading,
     notification,
@@ -38,6 +38,7 @@ const Home = ({ theme, setTheme }) => {
 
   return (
     <Page>
+      {/* <BarChart timeseries={timeseriesData}></BarChart> */}
       <Suspense fallback={<div />}>
         <FinishedPopup></FinishedPopup>
       </Suspense>
@@ -72,19 +73,12 @@ const Home = ({ theme, setTheme }) => {
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Updates
             data={sortByDate(updatesData)}
-            casesSummary={statsData?.casesSummary}
             {...{ mutateData, isLoading, showUpdates, setShowUpdates }}
           ></Updates>
         </Suspense>
       ) : (
         <Row h="30px"></Row>
       )}
-
-      {/* {statsData && (
-        <Suspense fallback={<div style={{ height: "50px" }} />}>
-          <CasesSummary data={statsData.casesSummary}></CasesSummary>
-        </Suspense>
-      )} */}
 
       {statsData && (
         <Suspense fallback={<div style={{ height: "110px" }} />}>
@@ -94,10 +88,10 @@ const Home = ({ theme, setTheme }) => {
 
       {statsData && updatesData && (
         <Suspense fallback={<div />}>
-          <LineChart
+          <Chart
             timeseries={statsData?.timeseries as TimerseriesType}
             current={statsData.overview.current}
-          ></LineChart>
+          ></Chart>
         </Suspense>
       )}
 

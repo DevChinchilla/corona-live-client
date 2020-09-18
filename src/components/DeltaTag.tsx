@@ -44,9 +44,10 @@ interface Props {
 const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg }) => {
   const theme = useTheme();
   const _color = theme(color);
+  const _bg = theme((color + "Bg") as ThemeType);
   if (delta == 0) return <></>;
   return (
-    <Wrapper {...{ small, showBg }} color={_color} bg={!small || showBg ? _color + 15 : ""}>
+    <Wrapper {...{ small, showBg }} color={_color} bg={!small || showBg ? _bg : ""}>
       {delta > 0 ? (
         <Icon name="ArrowUp" stroke={_color}></Icon>
       ) : (

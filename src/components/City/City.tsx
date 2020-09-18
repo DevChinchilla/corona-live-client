@@ -14,7 +14,6 @@ import { DISTRICT_TD_FLEX } from "@consts";
 import { sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useData } from "@hooks/useData";
-import UpdateCard from "@components/UpdateCard";
 
 const City = ({ match }) => {
   useScrollTop();
@@ -55,18 +54,6 @@ const City = ({ match }) => {
       )}
 
       <CityNavBar {...{ cityId }}></CityNavBar>
-
-      {/* {updatesData && (
-        <Suspense fallback={<div />}>
-          <Row mt="10px" fadeInUp delay={3}>
-            <UpdateCard
-              data={updatesData[0]}
-              onClick={() => setShowUpdates(true)}
-              animationData={updatesData.filter((a) => a.city == cityId).slice(0, 5)}
-            ></UpdateCard>
-          </Row>
-        </Suspense>
-      )} */}
 
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>

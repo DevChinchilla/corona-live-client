@@ -1,17 +1,15 @@
 import { Row } from "@components/Layout";
 import { theme, ThemeType } from "@styles/themes";
 import { ifProp } from "@styles/tools";
-import { CasesSummaryType } from "@types";
+import { CasesSummaryType, UpdateType } from "@types";
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
 
 const Wrapper = styled(Row)`
   border-radius: 4px;
-  /* border: 1px solid ${theme("greyText")}; */
   padding: 0px 8px;
   padding-bottom: 10px;
-  margin-bottom: 12px;
-  /* justify-content: space-between; */
+  margin-bottom: 6px;
   align-items: center;
 `;
 
@@ -49,11 +47,26 @@ const Divider = styled(Row)`
 `;
 
 interface Props {
-  data: CasesSummaryType;
+  updates: UpdateType[];
 }
 
-const CasesSummary: FC<Props> = ({ data }) => {
-  const { checking, totalCases, yesterdayCases } = data;
+const getCasesSummary = (updates) => {
+  const totalCases = updates.reduce(
+    (t, { cases, total }) => (t += Number(total) || Number(cases)),
+    0
+  );
+  const todayCases = updates.reduce((t, { cases }) => (t += Number(cases)), 0);
+  const checking = updates.reduce(
+    (t, { cases, total }) => (t += cases == null ? Number(total) : 0),
+    0
+  );
+  const yesterdayCases = totalCases - todayCases - checking;
+  return { todayCases, totalCases, yesterdayCases, checking };
+};
+
+const CasesSummary: FC<Props> = ({ updates }) => {
+  // const { checking, totalCases, yesterdayCases } = data;
+  const { todayCases, totalCases, yesterdayCases, checking } = getCasesSummary(updates);
   return (
     <Wrapper fadeInUp>
       <Stat>
@@ -70,7 +83,7 @@ const CasesSummary: FC<Props> = ({ data }) => {
       </Stat>
       <Divider></Divider>
       <Stat color="red">
-        <span>오늘확진 </span> <span>{totalCases - yesterdayCases - checking}</span>
+        <span>오늘확진 </span> <span>{todayCases}</span>
       </Stat>
     </Wrapper>
   );

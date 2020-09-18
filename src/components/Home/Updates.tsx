@@ -10,6 +10,7 @@ import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
 import { CasesSummaryType, UpdateType } from "@types";
+import CasesSummary from "./CasesSummary";
 
 const Wrapper = styled(Col)`
   width: 100%;
@@ -24,7 +25,7 @@ const Time = styled(Col)`
   margin-top: 6px;
   font-size: 11px;
   font-weight: 500;
-  color: ${theme("greyText")};
+  color: ${theme("darkGreyText")};
   opacity: 0.8;
   text-align: center;
 `;
@@ -49,7 +50,6 @@ interface Props {
   showUpdates: boolean;
   setShowUpdates: any;
   cityId?: string;
-  casesSummary?: CasesSummaryType;
 }
 const Updates: FC<Props> = ({
   data,
@@ -58,7 +58,6 @@ const Updates: FC<Props> = ({
   showUpdates,
   setShowUpdates,
   cityId,
-  casesSummary,
 }) => {
   if (data.length == 0) return <div style={{ height: "30px" }}></div>;
   const [updatesData, setUpdatesData] = useState<UpdateType[]>([]);
@@ -77,9 +76,11 @@ const Updates: FC<Props> = ({
     <Wrapper fadeInUp>
       <UpdateModal
         isDistrict={cityId != null}
-        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData, casesSummary }}
+        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData }}
       ></UpdateModal>
       <Time>{getCurrentDateTime()}</Time>
+      <CasesSummary updates={updatesData}></CasesSummary>
+
       <Row>
         {updatesData.length > 0 && (
           <Row flex={1}>

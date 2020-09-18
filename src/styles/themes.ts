@@ -13,7 +13,8 @@ interface ThemeProps {
 
   blue: string;
   red: string;
-
+  blueBg: string;
+  redBg: string;
   updateCard: string;
 
   kakao: string;
@@ -42,13 +43,16 @@ const lightTheme: ThemeProps = {
   greyText: "#868686",
   semigreyText: "#d2d2d2",
   lightGreyText: "#eaeaea",
+
   blue: "#5673EB",
   red: "#EB5374",
+  blueBg: "#5673eb1a",
+  redBg: "#eb53741f",
 
   updateCard: "white",
 
   kakao: "#564a00",
-  kakaoBg: "#efdb4866",
+  kakaoBg: "#efdb487a",
   facebook: "#3672E4",
   blog: "#57C04F",
   twitter: "#4A9AE5",
@@ -70,9 +74,12 @@ const darkTheme: ThemeProps = {
   darkGreyText: "#E0E0E0",
   lightGreyText: "#3E3E3E",
   blackText: "#ffffff",
+
   blue: "#5673EB",
   red: "#EB5374",
 
+  blueBg: "#5673EB15",
+  redBg: "#EB537415",
   updateCard: "#272b38",
 
   kakao: "#EFDB48",

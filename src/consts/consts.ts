@@ -32,7 +32,7 @@ export const IMPORTANT_MESSAGE = `
 `;
 
 const CHART_PRIMARY_COLOR = `#5673EB`;
-const CHART_SECONDARY_COLOR = `#999999`;
+const CHART_SECONDARY_COLOR = `#99999990`;
 
 export const lineChartData: Chart.ChartData = {
   datasets: [
@@ -41,28 +41,28 @@ export const lineChartData: Chart.ChartData = {
       fill: true,
       backgroundColor: `${CHART_PRIMARY_COLOR}`,
       borderColor: `${CHART_PRIMARY_COLOR}90`,
-      pointRadius: 5,
+      pointRadius: 4,
       pointBackgroundColor: `${CHART_PRIMARY_COLOR}`,
       pointBorderColor: Array(24).fill(`${CHART_PRIMARY_COLOR}50`),
       pointBorderWidth: Array(24).fill(1),
       hoverBackgroundColor: `${CHART_PRIMARY_COLOR}`,
       hoverBorderWidth: 20,
       pointHoverBorderColor: `${CHART_PRIMARY_COLOR}50`,
-      hoverRadius: 5,
+      hoverRadius: 4,
       lineTension: 0,
       borderWidth: 2,
     },
     {
       label: "어제",
       fill: true,
-      pointRadius: 5,
+      pointRadius: 4,
       pointBackgroundColor: `${CHART_SECONDARY_COLOR}`,
       pointBorderColor: Array(10).fill(`${CHART_PRIMARY_COLOR}60`),
       hoverBackgroundColor: `${CHART_SECONDARY_COLOR}`,
       pointBorderWidth: Array(24).fill(1),
       backgroundColor: "transparent",
-      hoverRadius: 5,
-      borderColor: `${CHART_SECONDARY_COLOR}40`,
+      hoverRadius: 4,
+      borderColor: `${CHART_SECONDARY_COLOR.slice(-2)}40`,
       lineTension: 0,
       borderWidth: 2,
     },
@@ -93,7 +93,7 @@ export const lineChartOptions = (isDelta, theme) => ({
           beginAtZero: false,
           fontColor: `${theme("blackText")}B0`,
           fontSize: 11,
-          stepSize: isDelta ? 20 : 100,
+          stepSize: isDelta ? 20 : 30,
           autoSkip: true,
           callback: (value) => {
             if (value !== 0) return value;
@@ -116,6 +116,99 @@ export const lineChartOptions = (isDelta, theme) => ({
           maxRotation: 0,
           callback: (value) => {
             if (value !== 0) return `${value}${parseInt(value) ? "시" : ""}`;
+          },
+        },
+        gridLines: {
+          color: `${theme("blackText")}10`,
+          display: false,
+        },
+      },
+    ],
+  },
+});
+
+export const barChartData: Chart.ChartData = {
+  datasets: [
+    {
+      label: "오늘",
+      fill: true,
+      backgroundColor: `${CHART_PRIMARY_COLOR}`,
+      borderColor: `${CHART_PRIMARY_COLOR}90`,
+      pointRadius: 4,
+      pointBackgroundColor: `${CHART_PRIMARY_COLOR}`,
+      pointBorderColor: Array(24).fill(`${CHART_PRIMARY_COLOR}50`),
+      pointBorderWidth: Array(24).fill(1),
+      hoverBackgroundColor: `${CHART_PRIMARY_COLOR}`,
+      hoverBorderWidth: 20,
+      pointHoverBorderColor: `${CHART_PRIMARY_COLOR}50`,
+      hoverRadius: 4,
+      lineTension: 0,
+      borderWidth: 2,
+    },
+    {
+      label: "어제",
+      fill: true,
+      pointRadius: 4,
+      pointBackgroundColor: `${CHART_SECONDARY_COLOR}`,
+      pointBorderColor: Array(10).fill(`${CHART_PRIMARY_COLOR}60`),
+      hoverBackgroundColor: `${CHART_SECONDARY_COLOR}`,
+      pointBorderWidth: Array(24).fill(1),
+      backgroundColor: "transparent",
+      hoverRadius: 4,
+      borderColor: `${CHART_SECONDARY_COLOR.slice(-2)}40`,
+      lineTension: 0,
+      borderWidth: 2,
+    },
+  ],
+};
+
+export const barChartOptions = (theme) => ({
+  responsive: true,
+  tooltips: {
+    enabled: false,
+  },
+  legend: {
+    position: "top",
+    labels: {
+      fontColor: "white",
+      boxWidth: 20,
+    },
+    display: false,
+  },
+  scales: {
+    gridLines: {
+      drawBorder: false,
+      display: false,
+    },
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+          fontColor: `${theme("blackText")}B0`,
+          fontSize: 11,
+          stepSize: 30,
+          callback: (value) => {
+            if (value !== 0) return value;
+          },
+        },
+        position: "right",
+        gridLines: {
+          color: `${theme("blackText")}10`,
+        },
+      },
+    ],
+    xAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+          fontColor: `${theme("blackText")}B0`,
+          fontSize: 11,
+          autoSkip: true,
+          autoSkipPadding: 14,
+          maxRotation: 0,
+          callback: (value) => {
+            let [_, month, day] = value.split("-");
+            return `${Number(month)}.${Number(day)}`;
           },
         },
         gridLines: {

@@ -126,7 +126,6 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
     let interval;
     if (animationData) {
       interval = setInterval(() => {
-        console.log(animationData[contentIndex.current]);
         setCurrentContent(animationData[contentIndex.current]);
         contentIndex.current++;
         if (contentIndex.current >= animationData.length) contentIndex.current = 0;

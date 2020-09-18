@@ -157,9 +157,9 @@ const UpdateModal: FC<Props> = React.memo(
         onActionClick={onToggle}
         full
       >
-        {casesSummary && <CasesSummary data={casesSummary}></CasesSummary>}
         {!isDistrict && (
           <>
+            <CasesSummary updates={data}></CasesSummary>
             {showCategories ? (
               <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
             ) : (
