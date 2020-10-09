@@ -37,8 +37,14 @@ const Card = styled(Row)<{ shadow?: boolean }>`
   )}
 `;
 
-const Message = styled(Row)`
+const Message = styled(Row)<{ isInvalid?: boolean }>`
   font-size: 12px;
+  ${ifProp(
+    "isInvalid",
+    css`
+      opacity: 0.6;
+    `
+  )}
 `;
 
 const Details = styled(Col)`
@@ -76,12 +82,12 @@ const AnimationContainer = styled(Absolute)`
   box-sizing: border-box;
 `;
 
-const Content = ({ datetime, from, title, showDetails }) => {
+const Content = ({ datetime, from, title, showDetails, isInvalid, fullWidth }) => {
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
-        <UpdateTime date={datetime} flex="0 1 75px"></UpdateTime>
-        <Message>
+        <UpdateTime date={datetime} flex={`0 1 ${fullWidth ? 96 : 76}px`}></UpdateTime>
+        <Message isInvalid={isInvalid}>
           <Box fontWeight={700} mr="4px">
             {from}
           </Box>
@@ -98,21 +104,32 @@ interface Props {
   animationData?: any;
   fadeInUp?: boolean;
   delay?: number;
+  isDistrict?: boolean;
+  fullWidth?: boolean;
 }
-export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, delay }) => {
+export const UpdateCard: FC<Props> = ({
+  onClick,
+  data,
+  animationData,
+  fadeInUp,
+  delay,
+  fullWidth,
+  isDistrict,
+}) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [currentContent, setCurrentContent] = useState(data);
   const contentIndex = useRef(0);
 
   const { datetime, city, gu, cases, total } = currentContent;
+  const isInvalid = total == total - cases && !animationData;
   const from = `${ct(city)} ${ct(city, gu)}`;
   const title =
     cases == null
-      ? "확인중"
+      ? `${total}명 확인중`
       : total == total - cases
-      ? `${total}명 어제 확진`
-      : `${cases}명 오늘 확진`;
+      ? `${total}명 어제 집계`
+      : `${cases}명 추가 확진`;
 
   const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
 
@@ -134,12 +151,15 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
     return () => clearInterval(interval);
   }, []);
 
-  const getAdditionalMessage = () => {
-    if (total == total - cases) {
-      return `${total}명 ${total > 1 ? `모두 ` : ""}어제 확진`;
+  const getInvalidMessage = () => {
+    if (cases == null) {
+      return `${total}명 어제 집계 여부 확인중`;
+    } else if (total == total - cases) {
+      return `${total}명 ${total > 1 ? `모두 ` : ""}어제 집계`;
     } else {
-      return `${total}명중 ${total - cases}명은 어제 확진`;
+      return `${total}명중 ${total - cases}명은 어제 집계`;
     }
+    return ``;
   };
 
   return (
@@ -161,20 +181,20 @@ export const UpdateCard: FC<Props> = ({ onClick, data, animationData, fadeInUp, 
             ({ datetime, city }, i) =>
               contentIndex.current == i && (
                 <AnimationContainer fadeInUp key={`${datetime}/${city}/${i}`}>
-                  <Content {...{ datetime, from, title, showDetails }}></Content>
+                  <Content {...{ datetime, from, title, showDetails, isInvalid }}></Content>
                 </AnimationContainer>
               )
           )
         ) : (
-          <Content {...{ datetime, from, title, showDetails }}></Content>
+          <Content {...{ datetime, from, title, showDetails, isInvalid, fullWidth }}></Content>
         )}
       </Card>
 
       {showDetails && (
         <Details fadeInUp>
-          {total && (
+          {!!total && (
             <Row jc="center" mb="12px" mt="4px" fontSize="12px" fontWeight={700}>
-              {getAdditionalMessage()}
+              {getInvalidMessage()}
             </Row>
           )}
           <p

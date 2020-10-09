@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { Row, Box } from "@components/Layout";
 import Icon from "@components/Icon";
@@ -11,6 +11,7 @@ import UpdateModal from "@components/UpdateModal";
 import { numberWithCommas, ct } from "@utils";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
+import ALink from "./ALink";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -59,13 +60,13 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
   const currentColor = deltaPositive ? "red" : "blue";
 
   const name = cityId ? ct(cityId, id) : ct(id);
-
   if (!name) return <></>;
 
-  const onClick = () => {
-    if (cityId == null && name != "대구") {
-      history.push(`./city/${cityId || id}`);
+  const onClick = (e) => {
+    if (cityId == null && name != "대구" && name != "검역") {
+      // history.push(`./city/${cityId || id}`);
     } else {
+      e.preventDefault();
       if (updateTime || updates.length != 0) setShowUpdates(true);
     }
   };
@@ -74,57 +75,66 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
     <>
       <UpdateModal
         isDistrict={cityId != null}
+        cityId={cityId || id}
+        guId={cityId ? id : null}
         {...{ onClose: () => setShowUpdates(false), showUpdates, data: updates }}
       ></UpdateModal>
 
       <Wrapper {...props} onClick={onClick}>
-        <Td flex={tdFlex[0]}>
-          <Box fontSize="12px" fontWeight={500}>
-            {name}
-          </Box>
-        </Td>
-        <Td flex={tdFlex[1]}>
-          <Divider></Divider>
-        </Td>
-        <Td flex={tdFlex[2]}>
-          {total ? (
-            <>
-              <Cases>{numberWithCommas(total[0])}</Cases>
-              <Box fontSize="10px" opacity={0.6} ml="2px">
-                명
-              </Box>
-              {cityId == null && <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>}
-            </>
-          ) : (
-            <Box fontSize="12px" opacity={0.8} ml="2px">
-              NA
+        {/* <ALink to={{ pathname: cityId == null ? `/city/${id}` : null, state: "live" }}> */}
+        <ALink to={cityId == null ? `/city/${id}` : null}>
+          <Td flex={tdFlex[0]}>
+            <Box fontSize="12px" fontWeight={500}>
+              {name}
             </Box>
-          )}
-        </Td>
-        <Td flex={tdFlex[3]}>
-          {name != "대구" ? (
-            <>
-              <Cases>{numberWithCommas(current[0])}</Cases>
-              <Box fontSize="10px" opacity={0.6} ml="2px">
-                명
+          </Td>
+          <Td flex={tdFlex[1]}>
+            <Divider></Divider>
+          </Td>
+          <Td flex={tdFlex[2]}>
+            {total ? (
+              <>
+                <Cases>{numberWithCommas(total[0])}</Cases>
+                <Box fontSize="10px" opacity={0.6} ml="2px">
+                  명
+                </Box>
+                {cityId == null && (
+                  <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+                )}
+              </>
+            ) : (
+              <Box fontSize="12px" opacity={0.8} ml="2px">
+                NA
               </Box>
-              <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
-            </>
-          ) : (
-            <Row fontSize="11px" fontWeight={700}>
-              집계 불가능
-            </Row>
-          )}
-        </Td>
-        <Td end={true} flex={tdFlex[4]}>
-          {(updateTime || updates.length != 0) && (
-            <>
-              {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
-              <div style={{ width: "8px" }}></div>
-              <Icon name="ChevronRight" size={18}></Icon>
-            </>
-          )}
-        </Td>
+            )}
+          </Td>
+          <Td flex={tdFlex[3]}>
+            {name != "대구" && name != "검역" ? (
+              <>
+                <Cases>{numberWithCommas(current[0])}</Cases>
+                <Box fontSize="10px" opacity={0.6} ml="2px">
+                  명
+                </Box>
+                <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
+              </>
+            ) : (
+              <Row fontSize="11px" fontWeight={700}>
+                NA
+              </Row>
+            )}
+          </Td>
+          <Td end={true} flex={tdFlex[4]}>
+            {(updateTime ||
+              updates.length != 0 ||
+              (cityId === undefined && name != "대구" && name != "검역")) && (
+              <>
+                {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
+                <div style={{ width: "8px" }}></div>
+                <Icon name="ChevronRight" size={18}></Icon>
+              </>
+            )}
+          </Td>
+        </ALink>
       </Wrapper>
     </>
   );

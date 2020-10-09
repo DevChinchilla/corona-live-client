@@ -22,7 +22,7 @@ const CityNavBar: React.FC<Props> = ({ cityId }) => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Row jc="space-between" ai="center" mb="6px" mt="0px" fadeInUp>
-        <Button icon onClick={() => history.push("/")}>
+        <Button icon onClick={() => history.push({ pathname: "/", state: "live" })}>
           <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
         </Button>
         <Underline fontSize="18px " fontWeight={900}>

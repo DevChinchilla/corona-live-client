@@ -1,0 +1,217 @@
+{
+  "regions": {
+    "type": "GeometryCollection",
+    "geometries": [
+      {
+        "type": "Polygon",
+        "arcs": [[0, 1]],
+        "properties": { "name": "서울", "name_eng": "Seoul", "code": "0" }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [[[2, 3]], [[4, 5, 6], [7]]],
+        "properties": { "name": "부산", "name_eng": "Busan", "code": "1" }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[8, 9]],
+        "properties": { "name": "대구", "name_eng": "Daegu", "code": "3" }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [
+          [[10]],
+          [[11]],
+          [[12]],
+          [[13]],
+          [[-1, 14, 15, 16], [17]],
+          [[18]],
+          [[19]],
+          [[20]],
+          [[21]],
+          [[22]],
+          [[23]],
+          [[24]],
+          [[25]]
+        ],
+        "properties": { "name": "인천", "name_eng": "Incheon", "code": "2" }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[26]],
+        "properties": { "name": "광주", "name_eng": "Gwangju", "code": "4" }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[27, 28, 29]],
+        "properties": { "name": "대전", "name_eng": "Daejeon", "code": "5" }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[30, -6, 31, 32]],
+        "properties": { "name": "울산", "name_eng": "Ulsan", "code": "6" }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[33, -29, 34]],
+        "properties": { "name": "세종", "name_eng": "Sejongsi", "code": "7" }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [[[35, 36]], [[37, -15, -2, -17, 38, 39, 40, 41, 42], [43], [44]]],
+        "properties": {
+          "name": "경기",
+
+          "name_eng": "Gyeonggi-do",
+          "code": "8"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [[[45, 45, 45]], [[46]], [[47, 47, 47]], [[48, 49, 50, 51, -40, 52], [53]]],
+        "properties": {
+          "name": "강원",
+
+          "name_eng": "Gangwon-do",
+          "code": "9"
+        }
+      },
+      {
+        "type": "Polygon",
+        "arcs": [[-41, -52, 54, 55, 56, -30, -34, 57]],
+        "properties": {
+          "name": "충북",
+
+          "name_eng": "Chungcheongbuk-do",
+          "code": "10"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [
+          [[58, 59]],
+          [[60]],
+          [[61]],
+          [[62]],
+          [[63, 64]],
+          [[65]],
+          [[66, -42, -58, -35, -28, -57, 67, 68, 69], [70], [71], [72]]
+        ],
+        "properties": {
+          "name": "충남",
+
+          "name_eng": "Chungcheongnam-do",
+          "code": "11"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [[[73]], [[-56, 74, 75, 76, 77, -68]]],
+        "properties": {
+          "name": "전북",
+
+          "name_eng": "Jeollabuk-do",
+          "code": "14"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [
+          [[78]],
+          [[79]],
+          [[80]],
+          [[81]],
+          [[82, 83]],
+          [[84]],
+          [[85, 86]],
+          [[87]],
+          [[88]],
+          [[89]],
+          [[90]],
+          [[91]],
+          [[92]],
+          [[93]],
+          [[94]],
+          [[95]],
+          [[96]],
+          [[97, 97, 97]],
+          [[98]],
+          [[99]],
+          [[100]],
+          [[101]],
+          [[102]],
+          [[103]],
+          [[104]],
+          [[105]],
+          [[106]],
+          [[107]],
+          [[108]],
+          [[109]],
+          [[110]],
+          [[111]],
+          [[112]],
+          [[113]],
+          [[114]],
+          [[115]],
+          [[116]],
+          [[117]],
+          [[118], [119]],
+          [[120]],
+          [[121]],
+          [[122]],
+          [[123, 124, 125, -77, 126, 127], [128], [-27]]
+        ],
+        "properties": {
+          "name": "전남",
+
+          "name_eng": "Jeollanam-do",
+          "code": "15"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [
+          [[129, 130]],
+          [[131, 132]],
+          [[133]],
+          [[134]],
+          [[135, 136, 137, 138, -33, 139, -10, 140, -75, -55, -51, 141]],
+          [[142]],
+          [[143]],
+          [[144]]
+        ],
+        "properties": {
+          "name": "경북",
+
+          "name_eng": "Gyeongsangbuk-do",
+          "code": "12"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [
+          [[145]],
+          [[146]],
+          [[147]],
+          [[148]],
+          [[149]],
+          [[150]],
+          [[151]],
+          [[152, 153]],
+          [[154, 155, -127, -76, -141, -9, -140, -32, -5, 156, -4, 157]]
+        ],
+        "properties": {
+          "name": "경남",
+
+          "name_eng": "Gyeongsangnam-do",
+          "code": "13"
+        }
+      },
+      {
+        "type": "MultiPolygon",
+        "arcs": [[[158]], [[159]], [[160]], [[161]], [[162]], [[163, 164]]],
+        "properties": { "name": "제주", "name_eng": "Jeju-do", "code": "16" }
+      }
+    ]
+  }
+}

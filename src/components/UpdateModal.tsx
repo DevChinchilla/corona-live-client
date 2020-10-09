@@ -12,7 +12,6 @@ import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
 import { sortByDate, onEnter, ct } from "@utils";
 import CasesSummary from "./Home/CasesSummary";
-import { CasesSummaryType } from "@types";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -48,7 +47,7 @@ const CategoryBox = styled(Row)<{ active: boolean }>`
   padding: 6px 10px;
   border-radius: 6px;
   margin-right: 6px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   transition: 0.3s;
   background: ${theme("greyBg")};
   color: ${theme("greyText")};
@@ -112,11 +111,11 @@ interface Props {
   data?: any;
   isDistrict?: boolean;
   cityId?: string;
-  casesSummary?: CasesSummaryType;
+  guId?: string;
 }
 
 const UpdateModal: FC<Props> = React.memo(
-  ({ onClose, showUpdates, data, isDistrict, cityId, casesSummary }) => {
+  ({ onClose, showUpdates, data, isDistrict, cityId, guId }) => {
     const _theme = useTheme();
 
     const [keyword, setKeyword] = useState("");
@@ -148,18 +147,19 @@ const UpdateModal: FC<Props> = React.memo(
       setShowCategories((a) => !a);
       setKeyword("");
     };
+    const title = `${ct(cityId, guId)} 실시간 발생 확진자`;
     return (
       <Modal
         show={showUpdates}
         onClose={onClose}
-        title={"실시간 발생 확진자"}
+        title={title}
         actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
         onActionClick={onToggle}
         full
       >
+        <CasesSummary updates={data}></CasesSummary>
         {!isDistrict && (
           <>
-            <CasesSummary updates={data}></CasesSummary>
             {showCategories ? (
               <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
             ) : (
@@ -188,7 +188,12 @@ const UpdateModal: FC<Props> = React.memo(
         <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
           {filteredData &&
             sortByDate(filteredData, "datetime").map((update, i) => (
-              <UpdateCard key={`${update.datetime}/${i}`} data={update}></UpdateCard>
+              <UpdateCard
+                isDistrict={isDistrict}
+                fullWidth={true}
+                key={`${update.datetime}/${i}`}
+                data={update}
+              ></UpdateCard>
             ))}
         </Col>
       </Modal>

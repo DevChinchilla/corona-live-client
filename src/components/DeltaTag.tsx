@@ -39,9 +39,10 @@ interface Props {
   small?: boolean;
   countUp?: boolean;
   showBg?: boolean;
+  prevDelta?: number;
 }
 
-const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg }) => {
+const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg, prevDelta }) => {
   const theme = useTheme();
   const _color = theme(color);
   const _bg = theme((color + "Bg") as ThemeType);
@@ -55,7 +56,7 @@ const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg }) => {
       )}
       {!small && <Box w="2px"></Box>}
       {countUp ? (
-        <CountUp end={Math.abs(delta)} separator={","} duration={3}></CountUp>
+        <CountUp start={prevDelta} end={Math.abs(delta)} separator={","} duration={3}></CountUp>
       ) : (
         Math.abs(delta)
       )}

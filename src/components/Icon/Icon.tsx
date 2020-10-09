@@ -24,6 +24,8 @@ import NotificationFilled from "./NotificationFilled";
 import Info from "./Info";
 import Instagram from "./Instagram";
 import KakaoPay from "./KakaoPay";
+import Map from "./Map";
+import Table from "./Table";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -53,6 +55,8 @@ const icons = {
   Info,
   Instagram,
   KakaoPay,
+  Table,
+  Map,
 };
 
 export type IconType = keyof typeof icons;

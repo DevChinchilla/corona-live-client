@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import { API_ROOT, SECOND } from "@consts";
-import { fetcher, jsonCompare } from "@utils";
+import { fetcher, getCasesSummary, jsonCompare } from "@utils";
 import { StatsType, UpdateType, NotificationType } from "@types";
 import { useObjectState } from "@hooks/useObjectState";
 
@@ -24,6 +24,7 @@ export const useData = () => {
   const [notification, setNotification] = useObjectState<NotificationType | null>(null);
   const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
   const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
+  const [lastUpdated, setLastUpdated] = useState(0);
   const [timeseries, setTimeseries] = useObjectState<TimeseriesState>({
     data: null,
     loading: false,
@@ -34,10 +35,6 @@ export const useData = () => {
   const isInitialised = stats.data != null && updates.data != null;
 
   const onUpdatesFetched = (newUpdates: UpdateType[]) => {
-    // newUpdates[0].cases = null;
-    // newUpdates[0].total = 2;
-    // newUpdates[1].cases = null;
-    console.log(newUpdates);
     if (!jsonCompare(updates.data, newUpdates)) setUpdates({ data: newUpdates });
 
     const newCases = newUpdates.filter(
@@ -51,8 +48,8 @@ export const useData = () => {
       let addedCases = 0;
 
       const casesCountByCity = newCases.reduce((obj, { city, cases }) => {
-        obj[city] = obj[city] ? obj[city] + cases : cases;
-        addedCases += cases;
+        obj[city] = obj[city] ? obj[city] + Number(cases) : Number(cases);
+        addedCases += Number(cases);
         return obj;
       }, {});
 
@@ -82,27 +79,66 @@ export const useData = () => {
   };
 
   const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(
-    `${API_ROOT}/updates.json`,
+    `https://apiv2.corona-live.com/updates.json`,
     fetcher,
     {
-      refreshInterval: SECOND * 20,
-      revalidateOnReconnect: true,
+      refreshInterval: SECOND * 100,
+      revalidateOnReconnect: false,
+      revalidateOnFocus: false,
       revalidateOnMount: false,
       onSuccess: onUpdatesFetched,
     }
   );
 
-  const { mutate: mutateStats } = useSWR(`${API_ROOT}/stats.json`, fetcher, {
-    refreshInterval: SECOND * 20,
-    revalidateOnReconnect: true,
-    revalidateOnMount: false,
-    onSuccess: onStatsFetched,
-  });
+  const { mutate: mutateStats, isValidating: statsLoading } = useSWR(
+    `https://apiv2.corona-live.com/stats.json`,
+    fetcher,
+    {
+      refreshInterval: SECOND * 100,
+      revalidateOnReconnect: false,
+      revalidateOnFocus: false,
+      revalidateOnMount: false,
+      onSuccess: onStatsFetched,
+    }
+  );
 
-  useSWR(`${API_ROOT}/timeseries.json`, fetcher, {
+  // const { mutate: mutateTimeseries } = useSWR(`${API_ROOT}/timeseries.json`, fetcher, {
+  const { mutate: mutateTimeseries, isValidating: timeseriesLoading } = useSWR(
+    `https://apiv2.corona-live.com/timeseries.json`,
+    fetcher,
+    {
+      revalidateOnReconnect: false,
+      revalidateOnFocus: false,
+      revalidateOnMount: false,
+      onSuccess: onTimeseriesFetched,
+    }
+  );
+
+  const mutateData = async () => {
+    setStats({ loading: true });
+    setUpdates({ loading: true });
+
+    mutateUpdates();
+    mutateStats();
+
+    let currentHours = new Date().getHours();
+    let currentMinutes = new Date().getMinutes();
+    if (currentHours == 9 && currentMinutes > 30) {
+      mutateTimeseries();
+    }
+  };
+
+  useSWR(`https://apiv2.corona-live.com/notifier.json`, fetcher, {
     revalidateOnReconnect: true,
-    revalidateOnMount: true,
-    onSuccess: onTimeseriesFetched,
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    refreshInterval: SECOND * 6,
+    onSuccess: (newLastUpdated) => {
+      if (lastUpdated && lastUpdated != newLastUpdated) {
+        mutateData();
+      }
+      setLastUpdated(newLastUpdated);
+    },
   });
 
   useEffect(() => {
@@ -115,21 +151,17 @@ export const useData = () => {
     }
   }, [updatesLoading]);
 
-  const mutateData = async () => {
-    setStats({ loading: true });
-    setUpdates({ loading: true });
-
-    mutateUpdates();
-    mutateStats();
-  };
+  useEffect(() => {
+    if (!timeseries.data && !timeseriesLoading) mutateTimeseries();
+    if (!updates.data && !updatesLoading) mutateUpdates();
+    if (!stats.data && !statsLoading) mutateStats();
+  }, [timeseries, updates, stats]);
 
   const isLoading = updates.loading;
-
-  useEffect(() => {
-    if (!isInitialised && !isLoading) mutateData();
-  }, [isInitialised]);
+  const casesSummary = updates.data ? getCasesSummary(updates.data) : null;
 
   return {
+    casesSummary,
     updatesData: updates.data,
     statsData: stats.data,
     timeseriesData: timeseries.data,

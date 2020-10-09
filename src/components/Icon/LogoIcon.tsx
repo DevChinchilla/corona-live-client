@@ -2,7 +2,7 @@ import React from "react";
 
 function IconTemplate() {
   return (
-    <svg width="394" height="130" viewBox="0 0 394 378">
+    <svg width="394" height="378" viewBox="0 0 394 300">
       <defs>
         <filter id="Ellipse_4" x="147" y="140" width="34" height="35" filterUnits="userSpaceOnUse">
           <feOffset dy="3" />
@@ -135,7 +135,7 @@ function IconTemplate() {
                 </g>
               </g>
             </g>
-            <g id="Group_45" data-name="Group 45" transform="translate(698.549 370.653)">
+            {/* <g id="Group_45" data-name="Group 45" transform="translate(698.549 370.653)">
               <circle
                 id="Ellipse_5-4"
                 data-name="Ellipse 5"
@@ -155,10 +155,10 @@ function IconTemplate() {
                 transform="translate(6.451 6.347)"
                 fill="#da5e76"
               />
-            </g>
+            </g> */}
           </g>
         </g>
-        <g id="Group_49" data-name="Group 49" transform="translate(-565.09 -933.312)">
+        {/* <g id="Group_49" data-name="Group 49" transform="translate(-565.09 -933.312)">
           <path
             id="Path_9"
             data-name="Path 9"
@@ -173,7 +173,7 @@ function IconTemplate() {
             transform="translate(1186.972 1481.867)"
             fill="#606fe4"
           />
-        </g>
+        </g> */}
       </g>
     </svg>
   );

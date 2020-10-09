@@ -45,10 +45,7 @@ const SAbsolute = styled(Flex)`
   position: absolute;
   ${ifProp("center", mixins.AbsoluteCenter)}
   ${ifProp("full", mixins.AbsoluteFull)}
-  ${ifProp(
-    "verticalCenter",
-    mixins.AbsoluteVerticalCenter
-  )}
+  ${ifProp("verticalCenter", mixins.AbsoluteVerticalCenter)}
   ${ifProp("horizontalCenter", mixins.AbsoluteHorizontalCenter)}
 `;
 export const Absolute: FC<AbsoluteProps> = (props) => <SAbsolute {...props}></SAbsolute>;
@@ -58,6 +55,7 @@ const SPage = styled(Col)`
   padding: 20px;
   margin: auto;
   width: 400px;
+  overflow-x: hidden;
   ${media.phablet} {
     width: 100%;
   }

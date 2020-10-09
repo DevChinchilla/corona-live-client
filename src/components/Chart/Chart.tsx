@@ -1,74 +1,93 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import "chartjs-plugin-datalabels";
 import styled, { css } from "styled-components";
-import { theme } from "@styles/themes";
-
-import { ifProp } from "@styles/tools";
 
 import { Row, Col } from "@components/Layout";
-import LineChart from "./LineChart";
-
-const ChartType = styled(Row)<{ active: boolean }>`
-  font-size: 12px;
-  padding: 6px 14px;
-  background: ${theme("greyBg")};
-  margin-top: 12px;
-
-  color: ${theme("greyText")};
-  cursor: pointer;
-  &:first-child {
-    border-radius: 4px 0px 0px 4px;
-  }
-  &:last-child {
-    border-radius: 0px 4px 4px 0px;
-  }
-  &:not(:last-child) {
-    border-right: 1px solid ${theme("lightGreyText")};
-  }
-  ${ifProp(
-    "active",
-    css`
-      font-weight: bold;
-      background: ${theme("blue")}30;
-      color: ${theme("blue")};
-    `
-  )};
-`;
+import TodayChart from "./TodayChart";
+import DailyChart from "./DailyChart";
+import RatesChart from "./RatesChart";
+import { StatsType, TimerseriesType, UpdateType } from "@types";
+import { useRouteMatch } from "react-router-dom";
+import ToggleButtons from "@components/ToggleButtons";
 
 const Wrapper = styled(Col)`
   position: relative;
   color: white;
-  margin-top: 26px;
-  margin-bottom: 10px;
-  margin-top: 50px;
+  margin-bottom: 8px;
+  margin-top: 2px;
+  canvas {
+    height: 190px !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
 `;
 
-const Chart = ({ timeseries, current }) => {
-  const [chartType, setChartType]: [string, any] = useState("total");
+interface Props {
+  timeseries: TimerseriesType;
+  stats: StatsType;
+  cityId?: string;
+}
 
+const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
+  const routerMatch = useRouteMatch();
+
+  // const statInitialType =
+  // cityId != null && (stats.current[cityId]?.cases[0] || 0) < 5 ? "daily" : "today";
+  const statInitialType = cityId != null ? "daily" : "today";
+  const [statType, setStatType]: [string, any] = useState(statInitialType);
+  const [chartType, setChartType]: [string, any] = useState("total");
+  const [timeRange, setTimeRange]: [number, any] = useState(7);
+
+  useEffect(() => {
+    if (routerMatch.path == "/rates") setStatType("rates");
+    if (routerMatch.path == "/daily") setStatType("daily");
+  }, [routerMatch]);
+
+  const current = stats.overview.current;
   return (
     <Wrapper>
-      <LineChart {...{ timeseries, current, chartType }}></LineChart>
       <Row jc="space-between" mb="10px" fadeInUp>
+        <ToggleButtons
+          // noBg
+          options={[
+            { name: "오늘", value: "today", visible: true },
+            { name: "일별", value: "daily", visible: true },
+            { name: "확진율", value: "rates", visible: cityId == null },
+          ]}
+          activeOption={statType}
+          setOption={setStatType}
+        ></ToggleButtons>
         <Row>
-          <ChartType active={chartType == "total"} onClick={() => setChartType("total")}>
-            오늘
-          </ChartType>
-          <ChartType active={chartType == "delta"} onClick={() => setChartType("delta")}>
-            일별
-          </ChartType>
-          <ChartType active={chartType == "delta"} onClick={() => setChartType("delta")}>
-            확진률
-          </ChartType>
-        </Row>
-        <Row>
-          <ChartType active={chartType == "total"} onClick={() => setChartType("total")}>
-            누적
-          </ChartType>
-          <ChartType active={chartType == "delta"} onClick={() => setChartType("delta")}>
-            시간대별
-          </ChartType>
+          {statType == "today" ? (
+            <ToggleButtons
+              // noBg
+              options={[
+                { name: "누적", value: "total", visible: true },
+                { name: "시간대별", value: "delta", visible: cityId == null },
+              ]}
+              activeOption={chartType}
+              setOption={setChartType}
+            ></ToggleButtons>
+          ) : (
+            <ToggleButtons
+              // noBg
+              options={[
+                { name: "1주", value: 7, visible: true },
+                { name: "2주", value: 14, visible: true },
+                { name: "1달", value: 30, visible: true },
+              ]}
+              activeOption={timeRange}
+              setOption={setTimeRange}
+            ></ToggleButtons>
+          )}
         </Row>
       </Row>
+      {statType == "today" && <TodayChart {...{ stats, current, chartType, cityId }}></TodayChart>}
+      {statType == "daily" && <DailyChart {...{ timeseries, timeRange, cityId }}></DailyChart>}
+      {statType == "rates" && cityId == null && (
+        <RatesChart {...{ timeseries, timeRange, cityId }}></RatesChart>
+      )}
     </Wrapper>
   );
 };

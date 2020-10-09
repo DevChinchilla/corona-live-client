@@ -9,13 +9,13 @@ import { theme } from "@styles/themes";
 import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
-import { CasesSummaryType, UpdateType } from "@types";
-import CasesSummary from "./CasesSummary";
+import { UpdateType } from "@types";
+import { Link, useHistory } from "react-router-dom";
 
 const Wrapper = styled(Col)`
   width: 100%;
   justify-content: stretch;
-  padding-bottom: 20px;
+  /* padding-bottom: 8px; */
   padding-top: 10px;
 `;
 
@@ -26,7 +26,7 @@ const Time = styled(Col)`
   font-size: 11px;
   font-weight: 500;
   color: ${theme("darkGreyText")};
-  opacity: 0.8;
+  opacity: 0.5;
   text-align: center;
 `;
 
@@ -61,7 +61,7 @@ const Updates: FC<Props> = ({
 }) => {
   if (data.length == 0) return <div style={{ height: "30px" }}></div>;
   const [updatesData, setUpdatesData] = useState<UpdateType[]>([]);
-
+  const history = useHistory();
   useEffect(() => {
     if (cityId != null) {
       setUpdatesData(data.filter((a) => a.city == cityId));
@@ -76,20 +76,35 @@ const Updates: FC<Props> = ({
     <Wrapper fadeInUp>
       <UpdateModal
         isDistrict={cityId != null}
-        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData }}
+        {...{
+          onClose: () => {
+            if (cityId == null) {
+              history.push({ pathname: "/", state: "live" });
+            } else {
+              setShowUpdates(false);
+            }
+          },
+          showUpdates,
+          data: updatesData,
+          cityId,
+        }}
       ></UpdateModal>
       <Time>{getCurrentDateTime()}</Time>
-      <CasesSummary updates={updatesData}></CasesSummary>
 
-      <Row>
+      <Row mb="14px">
         {updatesData.length > 0 && (
-          <Row flex={1}>
-            <UpdateCard
-              data={updatesData[0]}
-              onClick={() => setShowUpdates(true)}
-              animationData={updatesData.slice(0, 5)}
-            ></UpdateCard>
-          </Row>
+          <Link
+            to={cityId == null ? "/live" : null}
+            style={{ display: "flex", flex: 1, color: "unset" }}
+          >
+            <Row flex={1}>
+              <UpdateCard
+                data={updatesData[0]}
+                onClick={() => cityId != null && setShowUpdates(true)}
+                animationData={updatesData.slice(0, 5)}
+              ></UpdateCard>
+            </Row>
+          </Link>
         )}
         {cityId == null && (
           <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
@@ -101,6 +116,7 @@ const Updates: FC<Props> = ({
           </RefreshButton>
         )}
       </Row>
+      {/* <CasesSummary updates={updatesData}></CasesSummary> */}
     </Wrapper>
   );
 };

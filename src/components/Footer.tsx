@@ -19,6 +19,7 @@ import {
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 import { ifProp, ifProps } from "@styles/tools";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -156,6 +157,15 @@ const Footer = (props) => {
       </Row>
 
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
+      <Gnb className="gnb">
+        <Link to="/live">실시간</Link>
+        <Link to="/report">제보</Link>
+        <Link to="/daily">일별</Link>
+        <Link to="/rates">확진율</Link>
+        <Link to="/city/0">서울</Link>
+        <Link to="/city/8">경기</Link>
+        <Link to="/city/1">부산</Link>
+      </Gnb>
       <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
         <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
       </Row>
@@ -169,3 +179,14 @@ export default Footer;
 //         사이트, 재난문자 및 국내외 언론 기사 등을 토대로 업데이트를 하고있습니다. 하지만 이는
 //         공식적인 수치가 아닌 개인이 취합한 정보이므로 수치의 정확성에 대해 책임질 수 없습니다. 본
 //         사이트에 나온 정보 사용에 대한 책임은 전적으로 사용자에게 있습니다.
+
+const Gnb = styled(Row)`
+  justify-content: center;
+  /* opacity: 0; */
+  margin-bottom: 10px;
+  a {
+    padding: 0px 6px;
+    font-size: 11px;
+    color: ${theme("semigreyText")};
+  }
+`;

@@ -6,7 +6,7 @@ import Button from "@components/Button";
 import { Col, Row } from "@components/Layout";
 
 import { theme } from "@styles/themes";
-import { EMAIL_API, EMAIL } from "@consts";
+import { EMAIL_API, EMAIL, URL_REGEX } from "@consts";
 import Spinner from "./Spinner";
 import { useObjectState } from "@hooks/useObjectState";
 
@@ -99,13 +99,14 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
         title
           .trim()
           .split(" ")
-          .find((a) => a.length > 6)
+          .find((a) => a.length > 5)
       )
-        alert("한지역만 적어주세요");
+        return alert("한지역만 적어주세요");
     }
+    if (website.trim().length > 0 && !website.match(URL_REGEX))
+      return alert("링크란에는 링크만 적어주세요 (선택)");
     if (cases.trim().length == 0) return alert("확진자수를 적어주세요");
-    if (!parseInt(cases)) return alert("확진자수 숫자만 적어주세요");
-    // if (src.trim().length == 0) return alert("출처을 적어주세요");
+    if (cases.match(/[^\d]/g)) return alert("확진자수 숫자만 적어주세요");
 
     setisLoading(true);
     await fetch(EMAIL_API, {
@@ -114,7 +115,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, content: `${cases} ${src}`, title }),
+      body: JSON.stringify({ email, content: `${cases}명 ${website}`, title }),
     });
     onClose();
   };
@@ -130,32 +131,17 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
     >
       <Wrapper fadeInUp delay={1}>
         {!errorReport && (
-          <Row textAlign="center" fontSize="12px" jc="center">
-            공지사항 체크 먼저 해주시기 바랍니다
-          </Row>
-        )}
-
-        <Row textAlign="center" fontSize="12px" jc="center" mt="2px">
-          문의는 <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
-        </Row>
-
-        {!errorReport && (
           <>
-            <input placeholder="지역 " value={title} onChange={onChange} name="title"></input>
-            {/* <input
+            <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input>
+            <input
               placeholder="링크 (선택)"
               value={website}
               onChange={onChange}
               name="website"
-            ></input> */}
+            ></input>
           </>
         )}
-        <input
-          placeholder="확진자수 (숫자만)"
-          value={cases}
-          onChange={onChange}
-          name="cases"
-        ></input>
+        <input placeholder="확진자수 (필수)" value={cases} onChange={onChange} name="cases"></input>
         <Row h="10px"></Row>
         {/* <textarea
           autoFocus={!!errorReport}
@@ -165,7 +151,22 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
           onChange={onChange}
           name="src"
         ></textarea> */}
+        <Col pt="10px" pb="20px">
+          {!errorReport && (
+            <>
+              <Row textAlign="center" fontSize="11px" jc="center" mb="6px">
+                오늘 발생하여도 어제 이미 집계로 확인된 확진자는 추가하지 않고 있습니다
+              </Row>
+            </>
+          )}
 
+          <Row textAlign="center" fontSize="11px" jc="center">
+            개선사항이나 문의는 이메일로 보내주시기 바랍니다
+          </Row>
+          <Row textAlign="center" fontSize="11px" jc="center">
+            <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
+          </Row>
+        </Col>
         <Button big onClick={onSumbit}>
           {isLoading ? (
             <Spinner size={20} color={"darkGreyText"} bg={"greyBg"}></Spinner>

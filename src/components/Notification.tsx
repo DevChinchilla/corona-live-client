@@ -16,7 +16,11 @@ const Wrapper = styled(Col)`
   width: fit-content;
 `;
 const Container = styled(Col)`
-  padding: 24px 70px;
+  width: 220px;
+  box-sizing: border-box;
+  justify-content: stretch;
+  display: flex;
+  padding: 24px 20px;
   border-radius: 10px;
   background: ${theme("bg")};
   align-items: center;
@@ -66,10 +70,11 @@ const NotificationIcon = styled(Row)`
 
 type Props = {
   notification: NotificationType;
-  onClose: () => void;
+  closeModal: () => void;
+  openUpdates?: () => void;
 };
 
-const Notification: React.FC<Props> = ({ notification, onClose }) => {
+const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }) => {
   const { addedCases, casesCountByCity } = notification;
   return (
     <>
@@ -80,18 +85,45 @@ const Notification: React.FC<Props> = ({ notification, onClose }) => {
             <Icon name="NotificationFilled" size={22}></Icon>
           </NotificationIcon>
           <Message>확진자 {addedCases}명 추가</Message>
-          <Col py="14px">
-            {Object.keys(casesCountByCity || {}).map((cityId) => (
-              <Detail>
-                {ct(cityId)}
-                <Box w="6px"></Box>+{casesCountByCity[cityId]}
-              </Detail>
-            ))}
+          <Col py="12px">
+            {Object.keys(casesCountByCity || {}).map((cityId) => {
+              if (casesCountByCity[cityId] < 1) return <></>;
+              return (
+                <Detail>
+                  {ct(cityId)}
+                  <Box w="6px"></Box>+{casesCountByCity[cityId]}
+                </Detail>
+              );
+            })}
           </Col>
-
-          <Button full onClick={onClose}>
+          {/* <Row p="0px 0px" fontSize="12px" fontWeight={700}>
             자세히 보기
-          </Button>
+          </Row> */}
+          {/* <Col w="100%" mt="10px"> */}
+          <Row w="100%" mt="10px">
+            <Row flex={1}>
+              <Button full onClick={closeModal}>
+                닫기
+              </Button>
+            </Row>
+            {/* <Row h="8px"></Row> */}
+            <Row w="8px"></Row>
+            {!!openUpdates && (
+              <Row flex={1}>
+                <Button
+                  full
+                  blue
+                  onClick={() => {
+                    closeModal();
+                    openUpdates();
+                  }}
+                >
+                  보기
+                </Button>
+              </Row>
+            )}
+          </Row>
+          {/* </Col> */}
         </Container>
       </Wrapper>
     </>

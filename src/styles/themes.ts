@@ -26,6 +26,9 @@ interface ThemeProps {
   instagram: string;
 
   notification: string;
+  shadow: string;
+  mapLabel: string;
+  mapBorder: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -41,7 +44,7 @@ const lightTheme: ThemeProps = {
   darkGreyText: "#4A4A4A",
   semiDarkGreyText: "#5a5a5a",
   greyText: "#868686",
-  semigreyText: "#d2d2d2",
+  semigreyText: "#c3c3c3",
   lightGreyText: "#eaeaea",
 
   blue: "#5673EB",
@@ -60,6 +63,9 @@ const lightTheme: ThemeProps = {
   instagram: "#bf2e70",
 
   notification: "#000000d6",
+  shadow: "#FFFFFF",
+  mapLabel: "#FFFFFF",
+  mapBorder: "#FFFFFF",
 };
 
 const darkTheme: ThemeProps = {
@@ -69,7 +75,7 @@ const darkTheme: ThemeProps = {
   greyBg: "#272b38",
 
   greyText: "#828284",
-  semigreyText: "#979AA0",
+  semigreyText: "#7e8186",
   semiDarkGreyText: "#C8C9CD",
   darkGreyText: "#E0E0E0",
   lightGreyText: "#3E3E3E",
@@ -91,6 +97,9 @@ const darkTheme: ThemeProps = {
   instagram: "#bf2e70",
 
   notification: "#000000d6",
+  shadow: "#272b38",
+  mapLabel: "#272b38ed",
+  mapBorder: "rgba(86, 115, 235,0.5)",
 };
 
 export default { light: lightTheme, dark: darkTheme };

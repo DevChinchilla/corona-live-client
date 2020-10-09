@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 
 import { Page, Row } from "@components/Layout";
 
@@ -9,14 +9,17 @@ const CityNavBar = lazy(() => import("@components/City/CityNavBar"));
 const Notification = lazy(() => import("@components/Notification"));
 const UpdateModal = lazy(() => import("@components/UpdateModal"));
 const Updates = lazy(() => import("@components/Home/Updates"));
+const Chart = lazy(() => import("@components/Chart/Chart"));
 
 import { DISTRICT_TD_FLEX } from "@consts";
-import { sortByDate } from "@utils";
+import { getCasesSummary, sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useData } from "@hooks/useData";
+import { useHistory } from "react-router-dom";
 
-const City = ({ match }) => {
+const City = ({ match, data }) => {
   useScrollTop();
+  const history = useHistory();
 
   const cityId: string = match.params.cityId;
   const [showUpdates, setShowUpdates] = useState(false);
@@ -24,11 +27,18 @@ const City = ({ match }) => {
   const {
     updatesData,
     statsData,
+    timeseriesData,
     mutateData,
     isLoading,
     notification,
     removeNotification,
-  } = useData();
+  } = data;
+
+  useEffect(() => {
+    if (Number(cityId) > 16) history.push({ pathname: "/", state: "live" });
+  }, [cityId]);
+
+  if (Number(cityId) > 16) return <></>;
 
   return (
     <Page>
@@ -43,13 +53,7 @@ const City = ({ match }) => {
 
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
-          <Notification
-            notification={notification}
-            onClose={() => {
-              removeNotification();
-              setShowUpdates(true);
-            }}
-          ></Notification>
+          <Notification notification={notification} closeModal={removeNotification}></Notification>
         </Suspense>
       )}
 
@@ -66,13 +70,20 @@ const City = ({ match }) => {
         <Row h="30px"></Row>
       )}
 
-      {statsData && (
+      {statsData && updatesData && (
         <Board
           data={{
             confirmed: statsData.overall[cityId].cases,
             current: statsData.current[cityId].cases,
           }}
+          casesSummary={getCasesSummary(updatesData.filter((a) => a.city == cityId))}
         ></Board>
+      )}
+
+      {statsData && timeseriesData && (
+        <Suspense fallback={<div />}>
+          <Chart stats={statsData} timeseries={timeseriesData} cityId={cityId}></Chart>
+        </Suspense>
       )}
 
       {statsData && updatesData && (

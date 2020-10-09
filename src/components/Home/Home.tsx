@@ -1,13 +1,16 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 
 import { Page, Row } from "@components/Layout";
 
-import { sortByDate } from "@utils";
+import { getCasesSummary, sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 import { CurrentType, OverallType, TimerseriesType } from "@types";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import MapExplorer from "./MapExplorer";
+import ToggleButtons from "@components/ToggleButtons";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -19,12 +22,13 @@ const Table = lazy(() => import("@components/Table"));
 const Footer = lazy(() => import("@components/Footer"));
 const Popup = lazy(() => import("@components/Home/Popup"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
-const BarChart = lazy(() => import("@components/Chart/BarChart"));
 
-const Home = ({ theme, setTheme }) => {
+const Home = ({ theme, setTheme, data }) => {
+  const routerMatch = useRouteMatch();
   useScrollTop();
   const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
-  const [showUpdates, setShowUpdates] = useState(false);
+  const [showUpdates, setShowUpdates] = useState(routerMatch.path == "/live");
+  const [showMap, setShowMap] = useState(false);
 
   const {
     updatesData,
@@ -34,23 +38,27 @@ const Home = ({ theme, setTheme }) => {
     isLoading,
     notification,
     removeNotification,
-  } = useData();
+    casesSummary,
+  } = data;
+
+  useEffect(() => {
+    if (routerMatch.path == "/live") setShowUpdates(true);
+  }, [routerMatch]);
 
   return (
     <Page>
-      {/* <BarChart timeseries={timeseriesData}></BarChart> */}
-      <Suspense fallback={<div />}>
-        <FinishedPopup></FinishedPopup>
-      </Suspense>
+      {statsData && casesSummary && routerMatch.path == "/" && (
+        <Suspense fallback={<div />}>
+          <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
+        </Suspense>
+      )}
 
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification
             notification={notification}
-            onClose={() => {
-              removeNotification();
-              setShowUpdates(true);
-            }}
+            closeModal={removeNotification}
+            openUpdates={() => setShowUpdates(true)}
           ></Notification>
         </Suspense>
       )}
@@ -61,12 +69,12 @@ const Home = ({ theme, setTheme }) => {
         </Suspense>
       )}
 
-      <Suspense fallback={<div />}>
+      {/* <Suspense fallback={<div />}>
         <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<div />}>
-        <NavBar {...{ theme, setTheme, mutateData }}></NavBar>
+        <NavBar {...{ theme, setTheme, mutateData, setShowUpdates }}></NavBar>
       </Suspense>
 
       {updatesData ? (
@@ -80,22 +88,39 @@ const Home = ({ theme, setTheme }) => {
         <Row h="30px"></Row>
       )}
 
-      {statsData && (
+      {statsData && casesSummary && (
         <Suspense fallback={<div style={{ height: "110px" }} />}>
-          <Board data={statsData.overview}></Board>
+          <Board data={statsData.overview} casesSummary={casesSummary}></Board>
         </Suspense>
       )}
 
-      {statsData && updatesData && (
+      {statsData && timeseriesData && (
         <Suspense fallback={<div />}>
-          <Chart
-            timeseries={statsData?.timeseries as TimerseriesType}
-            current={statsData.overview.current}
-          ></Chart>
+          <Chart stats={statsData} timeseries={timeseriesData}></Chart>
         </Suspense>
       )}
 
-      {statsData && updatesData && (
+      {statsData && (
+        <Row jc="center" mt="6px" fadeInUp delay={5}>
+          <ToggleButtons
+            noBg
+            options={[
+              { name: "지도", value: true, visible: true, icon: "Map" },
+              { name: "지역별 표", value: false, visible: true, icon: "Table" },
+            ]}
+            activeOption={showMap}
+            setOption={setShowMap}
+          ></ToggleButtons>
+        </Row>
+      )}
+
+      {statsData && showMap && (
+        <Suspense fallback={<div />}>
+          <MapExplorer stats={statsData}></MapExplorer>
+        </Suspense>
+      )}
+
+      {statsData && updatesData && !showMap && (
         <Suspense fallback={<div />}>
           <Table
             current={statsData.current as CurrentType}

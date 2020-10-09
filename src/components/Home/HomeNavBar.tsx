@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "@components/Icon";
 import { Row } from "@components/Layout";
 import Report from "@components/Report";
@@ -7,6 +7,7 @@ import Report from "@components/Report";
 import { useTheme } from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import Button from "@components/Button";
+import { useRouteMatch } from "react-router-dom";
 
 const Logo = styled(Row)`
   span {
@@ -29,8 +30,14 @@ const Wrapper = styled(Row)`
 `;
 
 const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
+  const routerMatch = useRouteMatch();
+
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
+
+  useEffect(() => {
+    if (routerMatch.path == "/report") setShowReport(true);
+  }, [routerMatch]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 
 import { Row, Col, Box } from "./Layout";
@@ -6,7 +6,9 @@ import DeltaTag from "@components/DeltaTag";
 import { useTheme } from "@hooks/useTheme";
 import Icon from "./Icon";
 import styled from "styled-components";
-import { OverviewType } from "@types";
+import { CasesSummaryType, OverviewType } from "@types";
+import { useHistory } from "react-router-dom";
+import { numberWithCommas } from "@utils";
 
 const Info = styled(Row)`
   font-size: 10px;
@@ -28,12 +30,24 @@ interface StatsProps {
 }
 const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
   const [total, delta] = data;
+  const prevTotal = useRef(0);
+  const prevDelta = useRef(0);
+
+  useEffect(() => {
+    prevTotal.current = total;
+    prevDelta.current = delta;
+  }, [total]);
+
   const theme = useTheme();
+
+  const history = useHistory();
 
   const deltaPositive = delta > 0;
   const color = "darkGreyText";
   const deltaColor = isToday ? "red" : deltaPositive ? "red" : "blue";
   const _color = theme(color);
+
+  console.log("state ", history.location.state);
 
   return (
     <Col {...props} mt="10px">
@@ -43,20 +57,35 @@ const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
         </Box>
         <Row ai="center">
           <Box fontSize="24px" fontWeight={700} color={_color}>
-            <CountUp end={total} separator={","} duration={3} />
+            {history.location.state == "live" ? (
+              numberWithCommas(total)
+            ) : (
+              <CountUp
+                start={prevTotal.current}
+                end={total}
+                // end={total}
+                separator={","}
+                duration={3}
+              />
+            )}
           </Box>
 
           <Box fontSize="24px" fontWeight={300} color={_color}>
             명
           </Box>
-          <DeltaTag color={deltaColor} delta={delta} countUp></DeltaTag>
+          <DeltaTag
+            color={deltaColor}
+            delta={delta}
+            countUp={history.location.state != "live"}
+            prevDelta={prevDelta.current}
+          ></DeltaTag>
         </Row>
-        {/* {delta != 0 && info && (
+        {info && (
           <Info>
             <span>{info}</span>
-            <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon>
+            {/* <Icon name="ArrowUp" stroke={theme("blackText")} size={12}></Icon> */}
           </Info>
-        )} */}
+        )}
       </Col>
     </Col>
   );
@@ -64,19 +93,21 @@ const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
 
 interface BoardProps {
   data: OverviewType;
+  casesSummary: CasesSummaryType;
 }
 
-const Board: FC<BoardProps> = ({ data }) => {
+const Board: FC<BoardProps> = ({ data, casesSummary }) => {
+  let { todayCases, yesterdayCases } = casesSummary;
   return (
-    <Row jc="space-evenly">
+    <Row jc="space-evenly" mb="10px">
       <Stat data={data.confirmed} title={"총 확진자 "} isToday fadeInUp delay={2}></Stat>
-      <Box w="40px"></Box>
+      <Box w="24px"></Box>
       <Stat
         data={data.current}
-        title={"오늘 확진자"}
+        title={"오늘 추가확진자"}
         fadeInUp
         delay={3}
-        info="어제 동시간 대비"
+        info={`오늘발생 ${yesterdayCases + todayCases}명중 ${yesterdayCases}명 어제집계`}
       ></Stat>
     </Row>
   );

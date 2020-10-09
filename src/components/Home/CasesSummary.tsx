@@ -2,6 +2,7 @@ import { Row } from "@components/Layout";
 import { theme, ThemeType } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CasesSummaryType, UpdateType } from "@types";
+import { getCasesSummary } from "@utils";
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
 
@@ -50,20 +51,6 @@ interface Props {
   updates: UpdateType[];
 }
 
-const getCasesSummary = (updates) => {
-  const totalCases = updates.reduce(
-    (t, { cases, total }) => (t += Number(total) || Number(cases)),
-    0
-  );
-  const todayCases = updates.reduce((t, { cases }) => (t += Number(cases)), 0);
-  const checking = updates.reduce(
-    (t, { cases, total }) => (t += cases == null ? Number(total) : 0),
-    0
-  );
-  const yesterdayCases = totalCases - todayCases - checking;
-  return { todayCases, totalCases, yesterdayCases, checking };
-};
-
 const CasesSummary: FC<Props> = ({ updates }) => {
   // const { checking, totalCases, yesterdayCases } = data;
   const { todayCases, totalCases, yesterdayCases, checking } = getCasesSummary(updates);
@@ -74,7 +61,7 @@ const CasesSummary: FC<Props> = ({ updates }) => {
       </Stat>
       <Divider></Divider>
       <Stat color="greyText">
-        <span>어제확진 </span> <span>{yesterdayCases}</span>
+        <span>어제집계 </span> <span>{yesterdayCases}</span>
       </Stat>
       <Divider></Divider>
 
@@ -83,7 +70,7 @@ const CasesSummary: FC<Props> = ({ updates }) => {
       </Stat>
       <Divider></Divider>
       <Stat color="red">
-        <span>오늘확진 </span> <span>{todayCases}</span>
+        <span>오늘 추가확진 </span> <span>{todayCases}</span>
       </Stat>
     </Wrapper>
   );

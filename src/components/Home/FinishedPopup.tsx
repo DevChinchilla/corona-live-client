@@ -2,27 +2,78 @@ import React, { useState } from "react";
 import Modal from "@components/Modal";
 import { Row, Col } from "@components/Layout";
 import SocialMedia from "./SocialMedia";
+import { HOUR } from "@consts";
+import { CasesSummaryType, StatsType } from "@types";
+import styled from "styled-components";
 
-type Props = {};
+const Information = styled.div`
+  font-size: 12px;
+  margin-top: 2px;
+  text-align: center;
+  /* display: flex;
+  justify-content: center; */
+  opacity: 0.7;
+  strong {
+    font-weight: bold;
+    margin: 0px 2px;
+  }
+`;
 
-const FinishedPopup: React.FC<Props> = () => {
-  const currentHours = new Date().getHours();
+type Props = {
+  casesSummary: CasesSummaryType;
+};
+
+const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
+  const date = new Date();
+  const currentHours = date.getHours();
+  const currentDate = new Date(date.getTime() - 10 * HOUR);
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
   const [showModal, setShowModal] = useState(true);
+  const { todayCases, yesterdayCases } = casesSummary;
+  console.log({ todayCases });
+  if (todayCases < 20) return <></>;
   if (currentHours >= 23 || currentHours < 9)
     return (
       <Modal
         show={showModal}
         dynamic
-        title="집계 시간: 09시~23시"
+        title={`${month}월 ${day}일 집계마감`}
         onClose={() => setShowModal(false)}
       >
-        <Row center mb="16px" fontSize="12px" opacity="0.6">
-          지난 집계는 모두 SNS를 통해 확인 하실 수 있습니다
-        </Row>
-        <SocialMedia hideTitle></SocialMedia>
-        <Col ai="center" fontSize="12px" opacity="0.5" textAlign="center">
-          코로나 라이브에서 제공하는 수치는 질본 수치와 오차가 발생할 수 있고, 본 사이트에서
-          제공하는 정보 사용/공유로 인해 발생한 문제의 책임은 전적으로 사용자에게 있습니다
+        <Col ai="center">
+          <Row fontSize="12px" opacity="0.7">
+            최소수치
+          </Row>
+          <Row fontSize="26px" fontWeight={700}>
+            {todayCases}명
+          </Row>
+          {/* <Row fontSize="12px" mt="20px" opacity="0.7">
+          9시부터 23시까지 업데이트
+        </Row> */}
+
+          <Row fontSize="12px" mt="20px" fontWeight={500}>
+            집계방식
+          </Row>
+          <Information>
+            재난 문자와 지자체 사이트에서 제공하는 당일 발생 확진자 중에서 당일 확진 판정받은 환자만
+            집계 (질병관리청 집계방식과 동일). 재난문자상으로는 오늘 발생했다 해도 전날 확진이면
+            미집계 (단 질병관리청 전날 집계에 포함이 안됬을경우에는 집계)
+          </Information>
+          <Row fontSize="12px" mt="20px" fontWeight={500}>
+            질병관리청 수치 보다 적게 나오는 이유
+          </Row>
+          <Information>
+            지자체에서 당일 확진자를 질병관리청에는 통보하지만 재난 문자는 다음날 보내는 경우 집계
+            불가. 대구와 검역은 당일 확진자 정보를 다음날 제공해서 집계불가 (지역사회 해외유입은
+            지자체에서 제공할경우 집계가능)
+          </Information>
+          <Row fontSize="12px" mt="20px" fontWeight={500}>
+            SNS로 보기
+          </Row>
+          <Col transform="translateY(12px)">
+            <SocialMedia hideTitle></SocialMedia>
+          </Col>
         </Col>
       </Modal>
     );

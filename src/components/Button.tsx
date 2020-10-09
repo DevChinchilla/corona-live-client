@@ -5,6 +5,8 @@ import { theme } from "@styles/themes";
 interface ButtonProps {
   light?: boolean;
   white?: boolean;
+  blue?: boolean;
+  primary?: boolean;
   big?: boolean;
   full?: boolean;
   icon?: boolean;
@@ -32,8 +34,7 @@ const Button = styled.button<ButtonProps>`
   ${ifProp(
     "light",
     css`
-      border: 1px solid ${theme("semigreyText")};
-      /* background: ${theme("bg")}; */
+      border: 1px solid ${theme("lightGreyText")};
       background: transparent;
     `
   )}
@@ -44,6 +45,15 @@ const Button = styled.button<ButtonProps>`
       background: transparent;
     `
   )}
+
+  ${ifProp(
+    "blue",
+    css`
+      background: ${theme("blueBg")};
+      color: ${theme("blue")};
+    `
+  )}
+
 
   ${ifProp(
     "big",

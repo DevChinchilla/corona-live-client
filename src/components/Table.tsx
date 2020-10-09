@@ -54,13 +54,16 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
     return (getUpdateTime(b) || 0) - (getUpdateTime(a) || 0);
   };
 
+  const data = cityId === undefined ? overall : current;
+
   return (
     <>
       <Header tdFlex={tdFlex}></Header>
       <Col fadeInUp delay={6}>
-        {Object.keys(current)
+        {Object.keys(data)
           .sort(sortByUpdateTime)
           .sort(sortByCurrent)
+
           .map((id, i) => {
             const latestUpdate = updates.find((update) => {
               let { city, gu } = update;

@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "none",
@@ -28,23 +30,29 @@ module.exports = {
     ],
   },
   output: {
-    filename: "[name].js",
+    filename: "[name].[hash].js",
     path: path.resolve(__dirname, "dist"),
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
+      hash: true,
+      collapseWhitespace: true,
+      removeComments: true,
     }),
+    new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         { from: "public/fonts", to: "fonts" },
+        { from: "public/maps", to: "maps" },
         { from: "public/assets", to: "." },
       ],
     }),
     new CompressionPlugin({
       filename: "[path].gz[query]",
       algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
+      test: /\.json$|\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
