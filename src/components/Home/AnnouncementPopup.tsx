@@ -16,7 +16,7 @@ import {
   INSTA_SNS_URL,
 } from "@consts";
 import Icon from "@components/Icon";
-import SocialMedia from "./SocialMedia";
+import SocialMedia from "../SocialMedia";
 const IconBox = styled.a<{ type: string }>`
   background: ${(props) => theme(props.type as any)}30;
   width: 30px;
@@ -75,10 +75,10 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
   if (!announcement || currentHours >= 23 || currentHours < 9) return <></>;
   const [lastAnnouncement, setLastAnnouncement] = useLocalStorage("lastAnnouncement");
   const show = lastAnnouncement != announcement.date;
-  const [showModal, setShowModal] = useState(true);
+  // const [showModal, setShowModal] = useState(true);
 
   return (
-    <Modal show={showModal} noHeader style={{ height: "initial" }}>
+    <Modal show={show} noHeader style={{ height: "initial" }}>
       <Wrapper fadeInUp ai="center">
         <Header>공지</Header>
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
@@ -87,7 +87,7 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
       <Button
         big
         onClick={() => {
-          setShowModal(false);
+          // setShowModal(false);
           setLastAnnouncement(announcement.date);
         }}
       >

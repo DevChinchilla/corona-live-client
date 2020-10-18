@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import { API_ROOT, SECOND } from "@consts";
+import { API, API_ROOT, SECOND } from "@consts";
 import { fetcher, getCasesSummary, jsonCompare } from "@utils";
 import { StatsType, UpdateType, NotificationType } from "@types";
 import { useObjectState } from "@hooks/useObjectState";
@@ -83,34 +83,24 @@ export const useData = () => {
     setTimeseries({ data: newTimeseries });
   };
 
-  const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(
-    // `https://apiv2.corona-live.com/updates.json`,
-    `https://apiv2.corona-live.com/updates.test.json`,
-    fetcher,
-    {
-      refreshInterval: SECOND * 100,
-      revalidateOnReconnect: false,
-      revalidateOnFocus: false,
-      revalidateOnMount: false,
-      onSuccess: onUpdatesFetched,
-    }
-  );
+  const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(API.updates, fetcher, {
+    refreshInterval: SECOND * 100,
+    revalidateOnReconnect: false,
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    onSuccess: onUpdatesFetched,
+  });
 
-  const { mutate: mutateStats, isValidating: statsLoading } = useSWR(
-    // `https://apiv2.corona-live.com/stats.json`,
-    `https://apiv2.corona-live.com/stats.test.json`,
-    fetcher,
-    {
-      refreshInterval: SECOND * 100,
-      revalidateOnReconnect: false,
-      revalidateOnFocus: false,
-      revalidateOnMount: false,
-      onSuccess: onStatsFetched,
-    }
-  );
+  const { mutate: mutateStats, isValidating: statsLoading } = useSWR(API.stats, fetcher, {
+    refreshInterval: SECOND * 100,
+    revalidateOnReconnect: false,
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    onSuccess: onStatsFetched,
+  });
 
   const { mutate: mutateTimeseries, isValidating: timeseriesLoading } = useSWR(
-    `https://apiv2.corona-live.com/timeseries.json`,
+    API.timeseries,
     fetcher,
     {
       revalidateOnReconnect: false,
@@ -134,7 +124,7 @@ export const useData = () => {
     }
   };
 
-  useSWR(`https://apiv2.corona-live.com/lastUpdated.json`, fetcher, {
+  useSWR(API.lastUpdated, fetcher, {
     revalidateOnReconnect: true,
     revalidateOnFocus: true,
     revalidateOnMount: true,

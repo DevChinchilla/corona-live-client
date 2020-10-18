@@ -1,18 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled, { css } from "styled-components";
 
 import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
 
-import { theme, ThemeType } from "@styles/themes";
+import { theme } from "@styles/themes";
 import {
   FACEBOOK_URL,
   BLOG_URL,
   TWITTER_URL,
   WEBSITE_URL,
   IMPORTANT_MESSAGE,
-  TWITTER_SNS_URL,
-  INSTA_SNS_URL,
   KAKAOPAY_URL,
   EMAIL,
 } from "@consts";
@@ -20,6 +18,7 @@ import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 import { ifProp, ifProps } from "@styles/tools";
 import { Link } from "react-router-dom";
+import SocialMedia from "./SocialMedia";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -88,7 +87,17 @@ const LinkCopyMsg = styled(Row)`
   font-weight: bold;
 `;
 
-const Footer = (props) => {
+const Gnb = styled(Row)`
+  justify-content: center;
+  margin-bottom: 10px;
+  a {
+    padding: 0px 6px;
+    font-size: 11px;
+    color: ${theme("semigreyText")};
+  }
+`;
+
+const Footer = () => {
   useKakaoButton();
   const [copySuccess, setCopySuccess] = useTimeoutState(false, 2000);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -134,14 +143,7 @@ const Footer = (props) => {
       <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
         SNS로 보기
       </Row>
-      <Row jc="center" position="relative">
-        <IconBox type="twitter" href={TWITTER_SNS_URL}>
-          <Icon name="Twitter" size={14}></Icon>
-        </IconBox>
-        <IconBox type="instagram" href={INSTA_SNS_URL}>
-          <Icon name="Instagram" size={14}></Icon>
-        </IconBox>
-      </Row>
+      <SocialMedia hideTitle></SocialMedia>
 
       <Row fontSize="12px" mb="10px" mt="30px" opacity={0.7}>
         후원하기
@@ -174,19 +176,3 @@ const Footer = (props) => {
 };
 
 export default Footer;
-
-// 본 사이트에서 제공하는 정보는 대한민국 질병관리 본부, 각지자체 블로그
-//         사이트, 재난문자 및 국내외 언론 기사 등을 토대로 업데이트를 하고있습니다. 하지만 이는
-//         공식적인 수치가 아닌 개인이 취합한 정보이므로 수치의 정확성에 대해 책임질 수 없습니다. 본
-//         사이트에 나온 정보 사용에 대한 책임은 전적으로 사용자에게 있습니다.
-
-const Gnb = styled(Row)`
-  justify-content: center;
-  /* opacity: 0; */
-  margin-bottom: 10px;
-  a {
-    padding: 0px 6px;
-    font-size: 11px;
-    color: ${theme("semigreyText")};
-  }
-`;

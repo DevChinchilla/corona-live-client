@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "@components/Modal";
 import { Row, Col } from "@components/Layout";
-import SocialMedia from "./SocialMedia";
+import SocialMedia from "../SocialMedia";
 import { HOUR } from "@consts";
 import { CasesSummaryType, StatsType } from "@types";
 import styled from "styled-components";

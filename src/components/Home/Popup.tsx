@@ -7,7 +7,7 @@ import { Col, Row } from "@components/Layout";
 import Modal from "@components/Modal";
 import Icon from "@components/Icon";
 import Button from "@components/Button";
-import SocialMedia from "./SocialMedia";
+import SocialMedia from "../SocialMedia";
 
 const Wrapper = styled(Col)`
   overflow-y: auto;

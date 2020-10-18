@@ -1,6 +1,13 @@
 import CITIES from "./cities.json";
 
-export const API_ROOT = `https://api.corona-live.com/`;
+export const API_ROOT = `https://apiv2.corona-live.com/`;
+
+export const API = {
+  updates: `${API_ROOT}updates.json`,
+  stats: `${API_ROOT}stats.json`,
+  timeseries: `${API_ROOT}timeseries.json`,
+  lastUpdated: `${API_ROOT}lastUpdated.json`,
+};
 
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];
 export const DISTRICT_TD_FLEX = ["0.7", "0.25", "1", "1", "0 1 80px"];

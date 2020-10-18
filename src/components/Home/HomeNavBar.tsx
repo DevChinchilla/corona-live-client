@@ -5,31 +5,15 @@ import { Row } from "@components/Layout";
 import Report from "@components/Report";
 
 import { useTheme } from "@hooks/useTheme";
-import { theme } from "@styles/themes";
 import Button from "@components/Button";
 import { useRouteMatch } from "react-router-dom";
-
-const Logo = styled(Row)`
-  span {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 16px;
-    letter-spacing: 1px;
-    &:first-child {
-      color: black;
-    }
-    &:last-child {
-      color: ${theme("blue")};
-    }
-  }
-`;
 
 const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
 `;
 
-const NavBar = ({ theme: currentTheme, setTheme, mutateData }) => {
+const NavBar = ({ theme: currentTheme, setTheme }) => {
   const routerMatch = useRouteMatch();
 
   const [showReport, setShowReport] = useState(false);

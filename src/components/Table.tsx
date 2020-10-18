@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import Row from "@components/Row";
 import { Col, Row as RowLayout } from "@components/Layout";

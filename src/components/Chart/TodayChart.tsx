@@ -3,8 +3,8 @@ import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 
 import { useTheme } from "@hooks/useTheme";
-import { StatsType, TimerseriesType, UpdateType } from "@types";
-import { setGradient, getStatistic, getSuggestedMax } from "@utils";
+import { StatsType } from "@types";
+import { setGradient, getStatistic } from "@utils";
 import { CHART_PRIMARY_COLOR, CHART_SECONDARY_COLOR } from "@consts";
 
 import { Col } from "@components/Layout";
@@ -136,14 +136,11 @@ const LineChart: React.FC<Props> = ({ stats, current, chartType, cityId }) => {
 
   const isDelta = chartType == "delta";
 
-  const [currentTotal, currentDelta] = current;
-  const yesterdayTotal = currentTotal - currentDelta;
   const statistic = [
-    getStatistic(stats, currentTotal, "today", chartType, cityId),
-    getStatistic(stats, yesterdayTotal, "yesterday", chartType, cityId),
+    getStatistic(stats, "today", chartType, cityId),
+    getStatistic(stats, "yesterday", chartType, cityId),
   ];
 
-  // const timePeriod: string[] = [...Object.keys(todayData), "현재"].slice(0, statistic[0].length);
   const timePeriod: string[] = [...Object.keys(todayData)].slice(0, statistic[0].length);
   const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
 
@@ -155,6 +152,7 @@ const LineChart: React.FC<Props> = ({ stats, current, chartType, cityId }) => {
     });
     return { datasets, labels: timePeriod };
   };
+
   const onPointClick = (_, activeElements: any) => {
     let index = activeElements[0] && activeElements[0]._index;
 
@@ -174,12 +172,10 @@ const LineChart: React.FC<Props> = ({ stats, current, chartType, cityId }) => {
   const divider = max > 50 ? 1 : 2;
   let stepSize = cityId == null ? (isDelta ? 10 : Math.ceil(30 / divider)) : isDelta ? 5 : 15;
   if (max < 30) stepSize = 4;
-  const toolTipData = true
-    ? [
-        { color: "greyText", value: statistic[1][activeIndex], name: "어제" },
-        { color: "blue", value: statistic[0][activeIndex], name: "오늘" },
-      ]
-    : [{ color: "blue", value: statistic[0][activeIndex], name: "확진자" }];
+  const toolTipData = [
+    { color: "greyText", value: statistic[1][activeIndex], name: "어제" },
+    { color: "blue", value: statistic[0][activeIndex], name: "오늘" },
+  ];
 
   return (
     <>

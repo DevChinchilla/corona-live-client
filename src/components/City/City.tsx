@@ -14,7 +14,6 @@ const Chart = lazy(() => import("@components/Chart/Chart"));
 import { DISTRICT_TD_FLEX } from "@consts";
 import { getCasesSummary, sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
-import { useData } from "@hooks/useData";
 import { useHistory } from "react-router-dom";
 
 const City = ({ match, data }) => {

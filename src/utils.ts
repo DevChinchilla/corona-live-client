@@ -100,61 +100,7 @@ export const setGradient = (canvas, color) => {
   return gradient;
 };
 
-const getTime = (time) => {
-  let [hours, minutes, seconds] = time.toString().split(":");
-  let date = new Date();
-
-  date.setHours(hours);
-  date.setMinutes(minutes);
-  date.setSeconds(seconds || "00");
-
-  return date;
-};
-
-const EARLIEST = 6;
-const LATEST = 24;
-
-const setUpdatesTimeRange = (updates, to, from = "00:00:00") => {
-  return updates
-    .filter(({ datetime }) => {
-      if (!datetime) return false;
-      let [_, _time] = datetime.split(" ");
-      let time = getTime(_time);
-      return time > getTime(from) && time < getTime(to);
-    })
-    .sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
-};
-
-const getTimeSeries = (updates, cityId) => {
-  const currentHour = getCurrentTime().split(":")[0];
-  const maxHour = currentHour > EARLIEST ? currentHour : EARLIEST;
-
-  let timeseries = {};
-  [...Array(LATEST - EARLIEST).keys()].map((i) => {
-    let prev = i + EARLIEST;
-    let next = prev + 1;
-    if (next <= maxHour)
-      timeseries[prev + 1] = setUpdatesTimeRange(updates, `${next}:00:00`, `${prev}:00:00`)
-        .filter(({ city }) => city == cityId)
-        .reduce((total, { cases }) => (total += cases), 0);
-  });
-
-  let total = Object.keys(timeseries).reduce((total, timePeriod) => {
-    total += timeseries[timePeriod];
-    timeseries[timePeriod] = [Math.max(total, 0), Math.max(timeseries[timePeriod], 0)];
-    return total;
-  }, 0);
-
-  return [timeseries, total];
-};
-
-export const getStatistic = (
-  stats,
-  realtimeValue,
-  dataType: "today" | "yesterday",
-  chartType,
-  cityId
-) => {
+export const getStatistic = (stats, dataType: "today" | "yesterday", chartType, cityId) => {
   let { timeseries, regionsTimeseries } = stats;
   let chartIndex = chartType == "total" ? 0 : 1;
   let data = cityId != null ? regionsTimeseries[dataType][cityId] : timeseries[dataType];

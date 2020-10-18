@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TWITTER_SNS_URL, INSTA_SNS_URL } from "@consts";
 import { Row } from "@components/Layout";
-import { IconBox } from "./IconBox";
+import { IconBox } from "./Home/IconBox";
 import Icon from "@components/Icon";
 
 type Props = {

@@ -10,13 +10,12 @@ import { getCurrentDateTime } from "@utils";
 import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
 import { UpdateType } from "@types";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ALink from "@components/ALink";
 
 const Wrapper = styled(Col)`
   width: 100%;
   justify-content: stretch;
-  /* padding-bottom: 8px; */
   padding-top: 10px;
 `;
 

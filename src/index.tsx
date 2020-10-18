@@ -41,5 +41,3 @@ if (browserSupportsAllFeatures()) {
     main
   );
 }
-
-// main();

@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "chartjs-plugin-datalabels";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Row, Col } from "@components/Layout";
 import TodayChart from "./TodayChart";
 import DailyChart from "./DailyChart";
 import RatesChart from "./RatesChart";
-import { StatsType, TimerseriesType, UpdateType } from "@types";
+import { StatsType, TimerseriesType } from "@types";
 import { useRouteMatch } from "react-router-dom";
 import ToggleButtons from "@components/ToggleButtons";
 

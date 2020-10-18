@@ -1,14 +1,12 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-
 import { Page, Row } from "@components/Layout";
 
-import { getCasesSummary, sortByDate } from "@utils";
+import { sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { useLocalStorage } from "@hooks/useLocalStorage";
-import { useData } from "@hooks/useData";
-import { CurrentType, OverallType, TimerseriesType } from "@types";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { CurrentType, OverallType } from "@types";
+import { useRouteMatch } from "react-router-dom";
 import MapExplorer from "./MapExplorer";
 import ToggleButtons from "@components/ToggleButtons";
 
@@ -52,7 +50,6 @@ const Home = ({ theme, setTheme, data }) => {
           <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
         </Suspense>
       )}
-
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification
@@ -69,12 +66,8 @@ const Home = ({ theme, setTheme, data }) => {
         </Suspense>
       )}
 
-      {/* <Suspense fallback={<div />}>
-        <Popup show={isFirstVisit == undefined} onClose={() => setFirstVisit(true)}></Popup>
-      </Suspense> */}
-
       <Suspense fallback={<div />}>
-        <NavBar {...{ theme, setTheme, mutateData, setShowUpdates }}></NavBar>
+        <NavBar {...{ theme, setTheme, setShowUpdates }}></NavBar>
       </Suspense>
 
       {updatesData ? (

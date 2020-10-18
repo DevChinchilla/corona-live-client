@@ -149,7 +149,6 @@ const MapExplorer: React.FC<Props> = ({ stats }) => {
 
   useEffect(() => {
     if (!geoData) return;
-    console.log(geoData);
     const svg = select(svgRef.current);
     const T = transition().duration(D3_TRANSITION_DURATION);
 
@@ -187,16 +186,11 @@ const MapExplorer: React.FC<Props> = ({ stats }) => {
         console.log(d);
         return `<div >${d.properties.name}</div>`;
       });
-    console.log({ currentTheme });
   }, [geoData, features, path, currentTheme]);
 
   return (
     <>
-      <Wrapper
-        fadeInUp
-        onClick={(e) => console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY)}
-        className="container"
-      >
+      <Wrapper fadeInUp className="container">
         {features &&
           features.map((f, i) => {
             let { name, code } = f.properties;

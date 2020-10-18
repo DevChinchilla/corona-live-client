@@ -19,7 +19,6 @@ const ratesChartOptions = (theme, cases) => ({
       align: "end",
       offset: 0,
       color: (context) => {
-        console.log(context);
         return context.dataset.borderColor;
       },
       font: {
