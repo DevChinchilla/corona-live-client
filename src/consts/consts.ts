@@ -1,3 +1,5 @@
+import CITIES from "./cities.json";
+
 export const API_ROOT = `https://api.corona-live.com/`;
 
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];
@@ -39,6 +41,12 @@ export const CHART_PRIMARY_COLOR = `#5673EB`;
 export const CHART_SECONDARY_COLOR = `#999999`;
 
 export { default as CITIES } from "./cities.json";
+
+export const CITY_GU_NAMES = Object.keys(CITIES).map((id) => {
+  let [city, gu] = id.split("/");
+  if (!gu) return CITIES[city];
+  return `${CITIES[city]} ${CITIES[id]}`;
+});
 
 export const MAP_POINTS = {
   서울: [155, 160],

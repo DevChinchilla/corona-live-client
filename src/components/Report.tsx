@@ -6,13 +6,15 @@ import Button from "@components/Button";
 import { Col, Row } from "@components/Layout";
 
 import { theme } from "@styles/themes";
-import { EMAIL_API, EMAIL, URL_REGEX } from "@consts";
+import { EMAIL_API, EMAIL, URL_REGEX, CITY_GU_NAMES } from "@consts";
 import Spinner from "./Spinner";
 import { useObjectState } from "@hooks/useObjectState";
+import DropdownInput from "./DropdownInput";
 
 const Wrapper = styled(Col)`
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   input,
   textarea {
     color: ${theme("darkGreyText")};
@@ -91,17 +93,11 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   }, [show]);
 
   const onSumbit = async () => {
+    console.log(CITY_GU_NAMES.includes(title), title);
     if (isLoading) return;
     if (!errorReport) {
       if (title.trim().length == 0) return alert("지역을 적어주세요");
-      if (title.trim().split(" ").length > 2) return alert("한지역만 적어주세요");
-      if (
-        title
-          .trim()
-          .split(" ")
-          .find((a) => a.length > 5)
-      )
-        return alert("한지역만 적어주세요");
+      if (!CITY_GU_NAMES.includes(title.trim())) return alert("유효한 지역을 적어주세요");
     }
     if (website.trim().length > 0 && !website.match(URL_REGEX))
       return alert("링크란에는 링크만 적어주세요 (선택)");
@@ -132,7 +128,14 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
       <Wrapper fadeInUp delay={1}>
         {!errorReport && (
           <>
-            <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input>
+            <DropdownInput
+              name="title"
+              onChange={onChange}
+              value={title}
+              placeholder={"시도"}
+              setValue={(value) => setForm({ title: value })}
+            ></DropdownInput>
+            {/* <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input> */}
             <input
               placeholder="링크 (선택)"
               value={website}
@@ -143,14 +146,6 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
         )}
         <input placeholder="확진자수 (필수)" value={cases} onChange={onChange} name="cases"></input>
         <Row h="10px"></Row>
-        {/* <textarea
-          autoFocus={!!errorReport}
-          ref={(el) => (textRef.current = el)}
-          placeholder={errorReport ? "오류설명" : "지자체 링크 또는 재난문자만 (뉴스 x)"}
-          value={src}
-          onChange={onChange}
-          name="src"
-        ></textarea> */}
         <Col pt="10px" pb="20px">
           {!errorReport && (
             <>
