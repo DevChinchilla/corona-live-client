@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Props } from "react";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import styled, { css } from "styled-components";
@@ -57,14 +57,26 @@ const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
 
 const Wrapper = styled(Row)``;
 
-const ToggleButtons = ({ options, setOption, activeOption, noBg }) => {
+interface Props {
+  options: any;
+  setOption: any;
+  activeOption: any;
+  noBg?: boolean;
+}
+
+const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg }) => {
   return (
     <Wrapper>
-      {options.map((option) => {
+      {options.map((option, i) => {
         let { name, value, icon, visible } = option;
         if (!visible) return <></>;
         return (
-          <Button noBg={noBg} active={activeOption == value} onClick={() => setOption(value)}>
+          <Button
+            key={i}
+            noBg={noBg}
+            active={activeOption == value}
+            onClick={() => setOption(value)}
+          >
             {icon && (
               <>
                 <Icon name={icon} size={12}></Icon>

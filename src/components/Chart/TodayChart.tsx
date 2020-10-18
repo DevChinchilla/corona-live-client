@@ -143,9 +143,9 @@ const LineChart: React.FC<Props> = ({ stats, current, chartType, cityId }) => {
     getStatistic(stats, yesterdayTotal, "yesterday", chartType, cityId),
   ];
 
-  const [activeIndex, setActiveIndex] = useState(statistic[0].length - 1);
-
-  const timePeriod: string[] = [...Object.keys(todayData), "현재"].slice(0, statistic[0].length);
+  // const timePeriod: string[] = [...Object.keys(todayData), "현재"].slice(0, statistic[0].length);
+  const timePeriod: string[] = [...Object.keys(todayData)].slice(0, statistic[0].length);
+  const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
 
   const getData = (canvas) => {
     let datasets = todayChartData.datasets!.map((set, i) => {

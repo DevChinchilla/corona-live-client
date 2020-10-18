@@ -8,6 +8,7 @@ export const ct = (cityId, guId = undefined) => {
 };
 
 export const numberWithCommas = (number) => {
+  if (!number) return number;
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
@@ -156,52 +157,11 @@ export const getStatistic = (
 ) => {
   let { timeseries, regionsTimeseries } = stats;
   let chartIndex = chartType == "total" ? 0 : 1;
-  let data = timeseries[dataType];
-  if (cityId != null) {
-    data = regionsTimeseries[dataType][cityId];
-    let timeseries = Object.keys(data).map((time) => data[time][chartIndex]);
-    // let dataTypeId = dataType == "today" ? 0 : 1;
-    let current;
-    let todayCurrent = stats.current[cityId].cases[0];
-    let todayDelta = stats.current[cityId].cases[1];
-
-    // if (dataType == "today") {
-    // }
-    current = dataType == "today" ? todayCurrent : todayCurrent - todayDelta;
-    // if (dataType == "yesterday")
-    timeseries.pop();
-    // timeseries.pop();
-    // if (dataType == "today") {
-    //   current = todayCurrent;
-    // } else {
-    //   current = todayCurrent - todayDelta;
-    // }
-    timeseries.push(current);
-    return timeseries;
-  }
-  // if (updates) {
-  //   let [newUpdates, total] = getTimeSeries(updates, cityId);
-  //   data = newUpdates;
-  //   realtimeValue = total;
-  //   console.log({ updates });
-  // }
-  let latestHour = Math.max(...Object.keys(data).map((a) => Number(a)));
-  let latestValue = data[latestHour][0];
-
-  let previousStats = Object.keys(data).map((time) => data[time][chartIndex]);
-  let currentStats;
-
-  currentStats = chartType == "total" ? realtimeValue : realtimeValue - latestValue;
-  // if (dataType == "today") {
-  // } else {
-  //   currentStats = chartType == "total" ? realtimeValue : realtimeValue - latestValue;
-  // }
-
-  return [...previousStats, currentStats];
+  let data = cityId != null ? regionsTimeseries[dataType][cityId] : timeseries[dataType];
+  return Object.keys(data).map((time) => data[time][chartIndex]);
 };
 
 export const getSuggestedMax = (max, stepSize) => {
-  // let stepSize = isDelta ? 10 : 30;
   let levels = Math.ceil(max / stepSize);
   let leftover = stepSize - (max % stepSize || stepSize);
   let suggestedMax = leftover < stepSize * 0.2 ? (levels + 1) * stepSize : levels * stepSize;

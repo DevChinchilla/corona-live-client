@@ -14,4 +14,32 @@ const main = () =>
     rootElement
   );
 
-main();
+const browserSupportsAllFeatures = () => {
+  return window.requestIdleCallback && window.IntersectionObserver;
+};
+
+const loadScript = (src, done) => {
+  const js = document.createElement("script");
+  js.src = src;
+  js.onload = function () {
+    done();
+  };
+  js.onerror = function () {
+    done(new Error("Failed to load script " + src));
+  };
+  document.head.appendChild(js);
+};
+
+if (browserSupportsAllFeatures()) {
+  console.log("Support all features");
+  main();
+} else {
+  console.log("Does not support all features");
+
+  loadScript(
+    "https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=requestIdleCallback%2CIntersectionObserver",
+    main
+  );
+}
+
+// main();

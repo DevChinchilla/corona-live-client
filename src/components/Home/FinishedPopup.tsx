@@ -30,8 +30,7 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
   const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
   const [showModal, setShowModal] = useState(true);
-  const { todayCases, yesterdayCases } = casesSummary;
-  console.log({ todayCases });
+  const { todayCases } = casesSummary;
   if (todayCases < 20) return <></>;
   if (currentHours >= 23 || currentHours < 9)
     return (
@@ -48,9 +47,6 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
           <Row fontSize="26px" fontWeight={700}>
             {todayCases}명
           </Row>
-          {/* <Row fontSize="12px" mt="20px" opacity="0.7">
-          9시부터 23시까지 업데이트
-        </Row> */}
 
           <Row fontSize="12px" mt="20px" fontWeight={500}>
             집계방식

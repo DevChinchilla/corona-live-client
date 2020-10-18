@@ -1,9 +1,16 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
   "plugins": [
+    // [
+    //   "@babel/plugin-transform-runtime",
+    //   {
+    //     "regenerator": true
+    //   }
+    // ],
     [
       "@babel/plugin-transform-runtime",
       {
+        "corejs": 3,
         "regenerator": true
       }
     ],

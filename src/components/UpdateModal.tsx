@@ -17,7 +17,8 @@ const SearchInput = styled(Row)`
   position: relative;
   width: 100%;
   height: 30px;
-  margin-bottom: 10px;
+
+    margin-bottom: 10px;
 
   input {
     width: 100%;
@@ -130,6 +131,10 @@ const UpdateModal: FC<Props> = React.memo(
       }
     }, [data]);
 
+    // useEffect(() => {
+    //   console.log("new data");
+    // }, [filteredData]);
+
     const onSearchKeyword = (newKeyword) => {
       setKeyword(newKeyword);
       const filtered = data.filter(({ gu, city }) => {
@@ -187,7 +192,7 @@ const UpdateModal: FC<Props> = React.memo(
         )}
         <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
           {filteredData &&
-            sortByDate(filteredData, "datetime").map((update, i) => (
+            filteredData.map((update, i) => (
               <UpdateCard
                 isDistrict={isDistrict}
                 fullWidth={true}

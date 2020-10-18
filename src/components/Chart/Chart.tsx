@@ -32,8 +32,6 @@ interface Props {
 const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
   const routerMatch = useRouteMatch();
 
-  // const statInitialType =
-  // cityId != null && (stats.current[cityId]?.cases[0] || 0) < 5 ? "daily" : "today";
   const statInitialType = cityId != null ? "daily" : "today";
   const [statType, setStatType]: [string, any] = useState(statInitialType);
   const [chartType, setChartType]: [string, any] = useState("total");
@@ -45,11 +43,13 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
   }, [routerMatch]);
 
   const current = stats.overview.current;
+
+  if (!timeseries && statType != "today") return <></>;
+
   return (
     <Wrapper>
       <Row jc="space-between" mb="10px" fadeInUp>
         <ToggleButtons
-          // noBg
           options={[
             { name: "오늘", value: "today", visible: true },
             { name: "일별", value: "daily", visible: true },
@@ -61,17 +61,15 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
         <Row>
           {statType == "today" ? (
             <ToggleButtons
-              // noBg
               options={[
                 { name: "누적", value: "total", visible: true },
-                { name: "시간대별", value: "delta", visible: cityId == null },
+                { name: "시간대별", value: "delta", visible: true },
               ]}
               activeOption={chartType}
               setOption={setChartType}
             ></ToggleButtons>
           ) : (
             <ToggleButtons
-              // noBg
               options={[
                 { name: "1주", value: 7, visible: true },
                 { name: "2주", value: 14, visible: true },

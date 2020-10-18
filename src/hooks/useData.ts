@@ -44,7 +44,15 @@ export const useData = () => {
         })
     );
 
-    if (newCases.length > 0 && isInitialised) {
+console.log({updates})
+
+    const prevCasesCount = updates.data ? updates.data.reduce((count,{cases})=>count+=Number(cases),0) :0
+    const newCasesCount = newUpdates.reduce((count,{cases})=>count+=Number(cases),0)
+
+    // console.log({prevCasesCount,newCasesCount})
+    console.log({prevCasesCount})
+
+    if ( newCasesCount>prevCasesCount && isInitialised) {
       let addedCases = 0;
 
       const casesCountByCity = newCases.reduce((obj, { city, cases }) => {
@@ -79,7 +87,8 @@ export const useData = () => {
   };
 
   const { mutate: mutateUpdates, isValidating: updatesLoading } = useSWR(
-    `https://apiv2.corona-live.com/updates.json`,
+    // `https://apiv2.corona-live.com/updates.json`,
+    `https://apiv2.corona-live.com/updates.test.json`,
     fetcher,
     {
       refreshInterval: SECOND * 100,
@@ -91,7 +100,8 @@ export const useData = () => {
   );
 
   const { mutate: mutateStats, isValidating: statsLoading } = useSWR(
-    `https://apiv2.corona-live.com/stats.json`,
+    // `https://apiv2.corona-live.com/stats.json`,
+    `https://apiv2.corona-live.com/stats.test.json`,
     fetcher,
     {
       refreshInterval: SECOND * 100,
@@ -102,7 +112,6 @@ export const useData = () => {
     }
   );
 
-  // const { mutate: mutateTimeseries } = useSWR(`${API_ROOT}/timeseries.json`, fetcher, {
   const { mutate: mutateTimeseries, isValidating: timeseriesLoading } = useSWR(
     `https://apiv2.corona-live.com/timeseries.json`,
     fetcher,
@@ -128,10 +137,10 @@ export const useData = () => {
     }
   };
 
-  useSWR(`https://apiv2.corona-live.com/notifier.json`, fetcher, {
+  useSWR(`https://apiv2.corona-live.com/lastUpdated.json`, fetcher, {
     revalidateOnReconnect: true,
-    revalidateOnFocus: false,
-    revalidateOnMount: false,
+    revalidateOnFocus: true,
+    revalidateOnMount: true,
     refreshInterval: SECOND * 6,
     onSuccess: (newLastUpdated) => {
       if (lastUpdated && lastUpdated != newLastUpdated) {

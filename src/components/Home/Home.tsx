@@ -94,7 +94,7 @@ const Home = ({ theme, setTheme, data }) => {
         </Suspense>
       )}
 
-      {statsData && timeseriesData && (
+      {statsData && (
         <Suspense fallback={<div />}>
           <Chart stats={statsData} timeseries={timeseriesData}></Chart>
         </Suspense>

@@ -20,6 +20,7 @@ const Wrapper = styled(Row)`
   height: 48px;
   padding: 0px 12px;
   margin-bottom: 2px;
+  position: relative;
   cursor: pointer;
   ${ifProp(
     "even",
@@ -82,59 +83,57 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
 
       <Wrapper {...props} onClick={onClick}>
         {/* <ALink to={{ pathname: cityId == null ? `/city/${id}` : null, state: "live" }}> */}
-        <ALink to={cityId == null ? `/city/${id}` : null}>
-          <Td flex={tdFlex[0]}>
-            <Box fontSize="12px" fontWeight={500}>
-              {name}
-            </Box>
-          </Td>
-          <Td flex={tdFlex[1]}>
-            <Divider></Divider>
-          </Td>
-          <Td flex={tdFlex[2]}>
-            {total ? (
-              <>
-                <Cases>{numberWithCommas(total[0])}</Cases>
-                <Box fontSize="10px" opacity={0.6} ml="2px">
-                  명
-                </Box>
-                {cityId == null && (
-                  <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
-                )}
-              </>
-            ) : (
-              <Box fontSize="12px" opacity={0.8} ml="2px">
-                NA
+        <ALink to={cityId == null ? `/city/${id}` : null}>{name}</ALink>
+
+        <Td flex={tdFlex[0]}>
+          <Box fontSize="12px" fontWeight={500}>
+            {name}
+          </Box>
+        </Td>
+        <Td flex={tdFlex[1]}>
+          <Divider></Divider>
+        </Td>
+        <Td flex={tdFlex[2]}>
+          {total ? (
+            <>
+              <Cases>{numberWithCommas(total[0])}</Cases>
+              <Box fontSize="10px" opacity={0.6} ml="2px">
+                명
               </Box>
-            )}
-          </Td>
-          <Td flex={tdFlex[3]}>
-            {name != "대구" && name != "검역" ? (
-              <>
-                <Cases>{numberWithCommas(current[0])}</Cases>
-                <Box fontSize="10px" opacity={0.6} ml="2px">
-                  명
-                </Box>
-                <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
-              </>
-            ) : (
-              <Row fontSize="11px" fontWeight={700}>
-                NA
-              </Row>
-            )}
-          </Td>
-          <Td end={true} flex={tdFlex[4]}>
-            {(updateTime ||
-              updates.length != 0 ||
-              (cityId === undefined && name != "대구" && name != "검역")) && (
-              <>
-                {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
-                <div style={{ width: "8px" }}></div>
-                <Icon name="ChevronRight" size={18}></Icon>
-              </>
-            )}
-          </Td>
-        </ALink>
+              {cityId == null && <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>}
+            </>
+          ) : (
+            <Box fontSize="12px" opacity={0.8} ml="2px">
+              NA
+            </Box>
+          )}
+        </Td>
+        <Td flex={tdFlex[3]}>
+          {name != "대구" && name != "검역" ? (
+            <>
+              <Cases>{numberWithCommas(current[0])}</Cases>
+              <Box fontSize="10px" opacity={0.6} ml="2px">
+                명
+              </Box>
+              <DeltaTag color={currentColor} delta={current[1]} small showBg></DeltaTag>
+            </>
+          ) : (
+            <Row fontSize="11px" fontWeight={700}>
+              NA
+            </Row>
+          )}
+        </Td>
+        <Td end={true} flex={tdFlex[4]}>
+          {(updateTime ||
+            updates.length != 0 ||
+            (cityId === undefined && name != "대구" && name != "검역")) && (
+            <>
+              {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
+              <div style={{ width: "8px" }}></div>
+              <Icon name="ChevronRight" size={18}></Icon>
+            </>
+          )}
+        </Td>
       </Wrapper>
     </>
   );

@@ -47,8 +47,6 @@ const Stat: FC<StatsProps> = ({ title, data, isToday, info, ...props }) => {
   const deltaColor = isToday ? "red" : deltaPositive ? "red" : "blue";
   const _color = theme(color);
 
-  console.log("state ", history.location.state);
-
   return (
     <Col {...props} mt="10px">
       <Col>

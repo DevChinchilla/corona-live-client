@@ -39,6 +39,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
 
 const Message = styled(Row)<{ isInvalid?: boolean }>`
   font-size: 12px;
+  text-align: center;
   ${ifProp(
     "isInvalid",
     css`
@@ -94,7 +95,7 @@ const Content = ({ datetime, from, title, showDetails, isInvalid, fullWidth }) =
           {title}
         </Message>
       </Row>
-      {!showDetails ? <Icon name="ChevronDown"></Icon> : <Icon name="ChevronUp"></Icon>}
+      {!showDetails ? <Icon name="ChevronDown" size={20}></Icon> : <Icon name="ChevronUp" size={20}></Icon>}
     </Row>
   );
 };
@@ -114,7 +115,6 @@ export const UpdateCard: FC<Props> = ({
   fadeInUp,
   delay,
   fullWidth,
-  isDistrict,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showReport, setShowReport] = useState(false);
@@ -132,6 +132,10 @@ export const UpdateCard: FC<Props> = ({
       : `${cases}명 추가 확진`;
 
   const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
+
+  useEffect(() => {
+    setCurrentContent(data);
+  }, [data]);
 
   useEffect(() => {
     if (animationData) {
@@ -159,7 +163,6 @@ export const UpdateCard: FC<Props> = ({
     } else {
       return `${total}명중 ${total - cases}명은 어제 집계`;
     }
-    return ``;
   };
 
   return (

@@ -11,6 +11,7 @@ import Icon from "@components/Icon";
 import Spinner from "@components/Spinner";
 import { UpdateType } from "@types";
 import { Link, useHistory } from "react-router-dom";
+import ALink from "@components/ALink";
 
 const Wrapper = styled(Col)`
   width: 100%;
@@ -81,8 +82,8 @@ const Updates: FC<Props> = ({
             if (cityId == null) {
               history.push({ pathname: "/", state: "live" });
             } else {
-              setShowUpdates(false);
             }
+            setShowUpdates(false);
           },
           showUpdates,
           data: updatesData,
@@ -93,18 +94,14 @@ const Updates: FC<Props> = ({
 
       <Row mb="14px">
         {updatesData.length > 0 && (
-          <Link
-            to={cityId == null ? "/live" : null}
-            style={{ display: "flex", flex: 1, color: "unset" }}
-          >
-            <Row flex={1}>
-              <UpdateCard
-                data={updatesData[0]}
-                onClick={() => cityId != null && setShowUpdates(true)}
-                animationData={updatesData.slice(0, 5)}
-              ></UpdateCard>
-            </Row>
-          </Link>
+          <Row flex={1} position="relative">
+            {cityId == null && <ALink to={"/live"}>실시간</ALink>}
+            <UpdateCard
+              data={updatesData[0]}
+              onClick={() => cityId != null && setShowUpdates(true)}
+              animationData={updatesData.slice(0, 5)}
+            ></UpdateCard>
+          </Row>
         )}
         {cityId == null && (
           <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
@@ -116,7 +113,6 @@ const Updates: FC<Props> = ({
           </RefreshButton>
         )}
       </Row>
-      {/* <CasesSummary updates={updatesData}></CasesSummary> */}
     </Wrapper>
   );
 };

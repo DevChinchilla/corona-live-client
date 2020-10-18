@@ -7,8 +7,11 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "none",
+  // entry: {
+  //   app: path.join(__dirname, "src", "index.tsx"),
+  // },
   entry: {
-    app: path.join(__dirname, "src", "index.tsx"),
+    app: ["core-js/stable", path.join(__dirname, "src", "index.tsx")],
   },
   target: "web",
   resolve: {
