@@ -44,15 +44,12 @@ export const useData = () => {
         })
     );
 
-console.log({updates})
+    const prevCasesCount = updates.data
+      ? updates.data.reduce((count, { cases }) => (count += Number(cases)), 0)
+      : 0;
+    const newCasesCount = newUpdates.reduce((count, { cases }) => (count += Number(cases)), 0);
 
-    const prevCasesCount = updates.data ? updates.data.reduce((count,{cases})=>count+=Number(cases),0) :0
-    const newCasesCount = newUpdates.reduce((count,{cases})=>count+=Number(cases),0)
-
-    // console.log({prevCasesCount,newCasesCount})
-    console.log({prevCasesCount})
-
-    if ( newCasesCount>prevCasesCount && isInitialised) {
+    if (newCasesCount > prevCasesCount && isInitialised) {
       let addedCases = 0;
 
       const casesCountByCity = newCases.reduce((obj, { city, cases }) => {

@@ -83,7 +83,23 @@ const AnimationContainer = styled(Absolute)`
   box-sizing: border-box;
 `;
 
-const Content = ({ datetime, from, title, showDetails, isInvalid, fullWidth }) => {
+interface ContentProps {
+  datetime: string;
+  from: string;
+  title: string;
+  showDetails: boolean;
+  isInvalid: boolean;
+  fullWidth?: boolean;
+}
+
+const Content: FC<ContentProps> = ({
+  datetime,
+  from,
+  title,
+  showDetails,
+  isInvalid,
+  fullWidth,
+}) => {
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
@@ -95,7 +111,11 @@ const Content = ({ datetime, from, title, showDetails, isInvalid, fullWidth }) =
           {title}
         </Message>
       </Row>
-      {!showDetails ? <Icon name="ChevronDown" size={20}></Icon> : <Icon name="ChevronUp" size={20}></Icon>}
+      {!showDetails ? (
+        <Icon name="ChevronDown" size={20}></Icon>
+      ) : (
+        <Icon name="ChevronUp" size={20}></Icon>
+      )}
     </Row>
   );
 };

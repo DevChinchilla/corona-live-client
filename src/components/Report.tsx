@@ -6,10 +6,11 @@ import Button from "@components/Button";
 import { Col, Row } from "@components/Layout";
 
 import { theme } from "@styles/themes";
-import { EMAIL_API, EMAIL, URL_REGEX, CITY_GU_NAMES } from "@consts";
+import { EMAIL_API, EMAIL, URL_REGEX, CITY_GU_NAMES, MINUTE } from "@consts";
 import Spinner from "./Spinner";
 import { useObjectState } from "@hooks/useObjectState";
 import DropdownInput from "./DropdownInput";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 
 const Wrapper = styled(Col)`
   height: 100%;
@@ -64,13 +65,10 @@ const initialState = {
   website: "",
 };
 
-const ReportOptions = ["재난문자", "지자체 사이트"];
-const ErrorOptions = ["어제 이미 집계", "확진자수 오류"];
-const ErrorOptionsPlaceHolder = ["어제 집계된 확진자 번호 예) 1,2,3,...", "확진자수 (숫자만)"];
-
 const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   const [isLoading, setisLoading] = useState(false);
-  const textRef = useRef<HTMLTextAreaElement | null>();
+  const [lastReport, setLastReport] = useLocalStorage("lastReportSubmit");
+
   const [{ src, email, title, cases, website }, setForm] = useObjectState({
     ...initialState,
     title: errorReport || "",
@@ -93,18 +91,23 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   }, [show]);
 
   const onSumbit = async () => {
-    console.log(CITY_GU_NAMES.includes(title), title);
     if (isLoading) return;
+
+    // if (new Date().getTime() - lastReport < MINUTE * 5)
+    //   return alert("제보는 5분 내에 한 번만 하실 수 있습니다");
+
     if (!errorReport) {
       if (title.trim().length == 0) return alert("지역을 적어주세요");
       if (!CITY_GU_NAMES.includes(title.trim())) return alert("유효한 지역을 적어주세요");
+      if (website.trim().length > 0 && !website.match(URL_REGEX))
+        return alert("링크란에는 링크만 적어주세요 (선택)");
     }
-    if (website.trim().length > 0 && !website.match(URL_REGEX))
-      return alert("링크란에는 링크만 적어주세요 (선택)");
+
     if (cases.trim().length == 0) return alert("확진자수를 적어주세요");
     if (cases.match(/[^\d]/g)) return alert("확진자수 숫자만 적어주세요");
 
     setisLoading(true);
+
     await fetch(EMAIL_API, {
       method: "POST",
       mode: "no-cors",
@@ -113,18 +116,13 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
       },
       body: JSON.stringify({ email, content: `${cases}명 ${website}`, title }),
     });
+
+    setLastReport(new Date().getTime());
     onClose();
   };
 
   return (
-    <Modal
-      show={show}
-      title={"제보하기"}
-      onClose={onClose}
-      hideOverlay={hideOverlay}
-      dynamic
-      zIndex={10000}
-    >
+    <Modal show={show} title={"제보하기"} onClose={onClose} dynamic zIndex={10000}>
       <Wrapper fadeInUp delay={1}>
         {!errorReport && (
           <>
@@ -132,10 +130,9 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
               name="title"
               onChange={onChange}
               value={title}
-              placeholder={"시도"}
+              placeholder={"지역"}
               setValue={(value) => setForm({ title: value })}
             ></DropdownInput>
-            {/* <input placeholder="지역 (필수)" value={title} onChange={onChange} name="title"></input> */}
             <input
               placeholder="링크 (선택)"
               value={website}

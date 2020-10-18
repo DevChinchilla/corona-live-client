@@ -21,7 +21,6 @@ const Dropdown = styled(Col)`
   top: 100%;
   width: 100%;
   background: ${theme("greyBg")};
-  /* box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1); */
   max-height: 180px;
   overflow-y: scroll;
 `;
@@ -47,7 +46,7 @@ const DropdownInput: React.FC<Props> = ({ setValue, ...inputProps }) => {
   const onKeyUp = (e) => {
     const { value } = e.target;
     if (!!value && value.length > 0) {
-      setDropdownItems(CITY_GU_NAMES.filter((cityName) => cityName.indexOf(value) > -1));
+      setDropdownItems(CITY_GU_NAMES.filter((cityName) => cityName.indexOf(value) > -1) as any);
     } else {
       setDropdownItems([]);
     }
