@@ -9,6 +9,7 @@ import { CurrentType, OverallType } from "@types";
 import { useRouteMatch } from "react-router-dom";
 import MapExplorer from "./MapExplorer";
 import ToggleButtons from "@components/ToggleButtons";
+import ThemePopup from "@components/ThemePopup";
 
 const NavBar = lazy(() => import("@components/Home/HomeNavBar"));
 const Updates = lazy(() => import("@components/Home/Updates"));
@@ -24,7 +25,7 @@ const Chart = lazy(() => import("@components/Chart/Chart"));
 const Home = ({ theme, setTheme, data }) => {
   const routerMatch = useRouteMatch();
   useScrollTop();
-  const [isFirstVisit, setFirstVisit] = useLocalStorage("firstVisit4");
+  const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
   const [showUpdates, setShowUpdates] = useState(routerMatch.path == "/live");
   const [showMap, setShowMap] = useState(false);
 
@@ -48,8 +49,12 @@ const Home = ({ theme, setTheme, data }) => {
       {statsData && casesSummary && routerMatch.path == "/" && (
         <Suspense fallback={<div />}>
           <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
+          {isFirstVisitor == 1 && (
+            <ThemePopup {...{ theme, setTheme }} onClose={() => setIsFirstVisitor(0)}></ThemePopup>
+          )}
         </Suspense>
       )}
+
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification

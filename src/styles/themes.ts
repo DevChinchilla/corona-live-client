@@ -29,6 +29,11 @@ interface ThemeProps {
   shadow: string;
   mapLabel: string;
   mapBorder: string;
+
+  themeShadow: string;
+
+  dark: string;
+  light: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -66,10 +71,16 @@ const lightTheme: ThemeProps = {
   shadow: "#FFFFFF",
   mapLabel: "#FFFFFF",
   mapBorder: "#FFFFFF",
+
+  themeShadow: "#cccccc",
+
+  light: "white",
+  dark: "#191F2C",
 };
 
 const darkTheme: ThemeProps = {
   bg: "#191F2C",
+  // bg: "#171725",
   text: "#C8C9CD",
   border: "#C8C9CD",
   greyBg: "#272b38",
@@ -77,7 +88,7 @@ const darkTheme: ThemeProps = {
   greyText: "#828284",
   semigreyText: "#7e8186",
   semiDarkGreyText: "#C8C9CD",
-  darkGreyText: "#E0E0E0",
+  darkGreyText: "#cfcfcf",
   lightGreyText: "#3E3E3E",
   blackText: "#ffffff",
 
@@ -100,6 +111,10 @@ const darkTheme: ThemeProps = {
   shadow: "#272b38",
   mapLabel: "#272b38ed",
   mapBorder: "rgba(86, 115, 235,0.5)",
+
+  themeShadow: "#000000a3",
+  light: "white",
+  dark: "#191F2C",
 };
 
 export default { light: lightTheme, dark: darkTheme };

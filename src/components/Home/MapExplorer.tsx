@@ -93,7 +93,7 @@ const Label = ({ pos, name, stats, cityId }) => {
   const cases = numberWithCommas(stats[cityId].cases[0]);
   const delta = stats[cityId].cases[1] || 0;
   const deltaColor = delta == 0 ? "greyText" : delta > 0 ? "red" : "blue";
-
+  // if (!cases) return <></>;
   const onClick = () => {
     if (name != "대구" && name != "검역") {
       history.push(`./city/${cityId}`);
@@ -102,10 +102,10 @@ const Label = ({ pos, name, stats, cityId }) => {
 
   return (
     <SLabel style={{ left, top }} color={deltaColor as ThemeType} onClick={onClick}>
-      <div className="name" style={{ opacity: cases == 0 ? 0.5 : 1 }}>
+      <div className="name" style={{ opacity: cases == 0 ? 0.3 : 1 }}>
         {name}
       </div>
-      <div className="cases" style={{ opacity: cases == 0 ? 0.5 : 1 }}>
+      <div className="cases" style={{ opacity: cases == 0 ? 0.3 : 1 }}>
         {cases}
       </div>
       {!!delta && (

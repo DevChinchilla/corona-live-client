@@ -64,9 +64,10 @@ const Header = styled(Row)`
 `;
 
 interface Props {
+  onClose: any;
   show: boolean;
+
   noHeader?: boolean;
-  onClose?: any;
   title?: string;
   hideOverlay?: boolean;
   onActionClick?: any;
@@ -75,6 +76,7 @@ interface Props {
   dynamic?: boolean;
   full?: boolean;
   zIndex?: number;
+  closeButtonPos?: "top" | "bottom";
 }
 
 const Modal: FC<Props> = ({
@@ -88,6 +90,7 @@ const Modal: FC<Props> = ({
   noHeader,
   dynamic,
   zIndex,
+  closeButtonPos,
   ...props
 }) => {
   const _theme = useTheme();
@@ -97,29 +100,34 @@ const Modal: FC<Props> = ({
     <>
       {!hideOverlay && <Overlay zIndex={zIndex ? zIndex - 1 : 999} onClick={onClose}></Overlay>}
       <ModalContainer {...props} fixedHeight={!dynamic} zIndex={zIndex || 1000}>
-        {!noHeader && (
-          <Header fadeInUp>
-            <Button icon square onClick={onClose}>
-              <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
-            </Button>
-            <Row fontSize="14px" fontWeight={700}>
-              {title}
-            </Row>
-            {actionIcon ? (
-              <Button icon square onClick={onActionClick}>
-                <Icon
-                  name={actionIcon[0]}
-                  size={actionIcon[1]}
-                  fill={_theme("darkGreyText")}
-                ></Icon>
+        {!noHeader ||
+          (closeButtonPos == "bottom" && (
+            <Header fadeInUp>
+              <Button icon square onClick={onClose}>
+                <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
               </Button>
-            ) : (
-              <Row width="24px"></Row>
-            )}
-          </Header>
-        )}
+
+              <Row fontSize="14px" fontWeight={700}>
+                {title}
+              </Row>
+              {actionIcon ? (
+                <Button icon square onClick={onActionClick}>
+                  <Icon
+                    name={actionIcon[0]}
+                    size={actionIcon[1]}
+                    fill={_theme("darkGreyText")}
+                  ></Icon>
+                </Button>
+              ) : (
+                <Row width="24px"></Row>
+              )}
+            </Header>
+          ))}
 
         <Children>{children}</Children>
+        <Button full onClick={onClose} l>
+          닫기
+        </Button>
       </ModalContainer>
     </>
   );
