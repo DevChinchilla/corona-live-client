@@ -50,6 +50,7 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
     <Wrapper>
       <Row jc="space-between" mb="10px" fadeInUp>
         <ToggleButtons
+          noBg
           options={[
             { name: "오늘", value: "today", visible: true },
             { name: "일별", value: "daily", visible: true },
@@ -61,6 +62,7 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
         <Row>
           {statType == "today" ? (
             <ToggleButtons
+              noBg
               options={[
                 { name: "누적", value: "total", visible: true },
                 { name: "시간대별", value: "delta", visible: true },
@@ -70,6 +72,7 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
             ></ToggleButtons>
           ) : (
             <ToggleButtons
+              noBg
               options={[
                 { name: "1주", value: 7, visible: true },
                 { name: "2주", value: 14, visible: true },
