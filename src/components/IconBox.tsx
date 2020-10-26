@@ -4,8 +4,8 @@ import styled, { css } from "styled-components";
 
 export const IconBox = styled.a<{ type: string; kakaoPay?: boolean }>`
   background: ${(props) => theme(props.type as any)}30;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   margin: 0px 10px;
   display: flex;
@@ -26,7 +26,9 @@ export const IconBox = styled.a<{ type: string; kakaoPay?: boolean }>`
     css`
       width: auto !important;
       background: transparent;
-      border: 1px solid ${theme("darkGreyText")}80;
+      background: ${theme("shadow")};
+      box-shadow: -1px 1px 20px #0000001e;
+      /* border: 1px solid ${theme("darkGreyText")}80; */
       svg {
         fill: ${theme("darkGreyText")};
       }

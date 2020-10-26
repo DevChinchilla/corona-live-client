@@ -5,7 +5,9 @@ import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-d
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 
-const World = lazy(() => import("@components/World"));
+const DomesticLive = lazy(() => import("@components/LiveUpdates/DomesticLiveUpdates"));
+const WorldLive = lazy(() => import("@components/LiveUpdates/WorldLiveUpdates"));
+const Country = lazy(() => import("@components/World/Country"));
 const Home = lazy(() => import("@components/Home"));
 const City = lazy(() => import("@components/Domestic/City"));
 
@@ -15,13 +17,29 @@ const pages = [
     view: Home,
   },
   {
+    pageLink: "/live",
+    view: DomesticLive,
+  },
+  {
+    pageLink: "/city/:cityId",
+    view: City,
+  },
+
+  {
     pageLink: "/world",
     view: Home,
   },
+
   {
-    pageLink: "/live",
-    view: Home,
+    pageLink: "/world/live",
+    view: WorldLive,
   },
+
+  {
+    pageLink: "/country/:countryId",
+    view: Country,
+  },
+
   {
     pageLink: "/daily",
     view: Home,
@@ -29,10 +47,6 @@ const pages = [
   {
     pageLink: "/rates",
     view: Home,
-  },
-  {
-    pageLink: "/city/:cityId",
-    view: City,
   },
 ];
 

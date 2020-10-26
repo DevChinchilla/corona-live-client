@@ -11,6 +11,7 @@ interface ButtonProps {
   full?: boolean;
   icon?: boolean;
   square?: boolean;
+  transparent?: boolean;
 }
 const Button = styled.button<ButtonProps>`
   display: flex;
@@ -87,9 +88,16 @@ const Button = styled.button<ButtonProps>`
   ${ifProp(
     "square",
     css`
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       padding: 0px;
+    `
+  )}
+
+${ifProp(
+    "transparent",
+    css`
+      background: transparent;
     `
   )}
 `;

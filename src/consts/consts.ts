@@ -1,4 +1,8 @@
 import CITIES from "./cities.json";
+import COUNTRIES from "./countries.json";
+
+export const COUNTRY_NAMES = COUNTRIES;
+export const COUNTRY_CODES = Object.keys(COUNTRIES);
 
 export const API_ROOT = `https://apiv2.corona-live.com/`;
 
@@ -7,6 +11,8 @@ export const API = {
   stats: `${API_ROOT}stats.json`,
   timeseries: `${API_ROOT}timeseries.json`,
   lastUpdated: `${API_ROOT}lastUpdated.json`,
+  worldStats: `${API_ROOT}world-stats.json`,
+  worldUpdates: `${API_ROOT}world-updates.json`,
 };
 
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];

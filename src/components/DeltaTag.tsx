@@ -8,6 +8,7 @@ import Icon from "@components/Icon";
 import { useTheme } from "@hooks/useTheme";
 import { prop, ifProp } from "@styles/tools";
 import { ThemeType } from "@styles/themes";
+import { numberWithCommas } from "@utils";
 
 const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean }>`
   color: ${prop("color")};
@@ -58,7 +59,7 @@ const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg, prevDelta }
       {countUp ? (
         <CountUp start={prevDelta} end={Math.abs(delta)} separator={","} duration={3}></CountUp>
       ) : (
-        Math.abs(delta)
+        numberWithCommas(Math.abs(delta))
       )}
     </Wrapper>
   );

@@ -21,7 +21,7 @@ const Wrapper = styled(Col)`
 
 const Time = styled(Col)`
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   margin-top: 6px;
   font-size: 11px;
   font-weight: 500;
@@ -91,7 +91,8 @@ const Updates: FC<Props> = ({
       ></UpdateModal>
       <Time>{getCurrentDateTime()}</Time>
 
-      <Row mb="14px">
+      <Row mb="12px">
+        {/* <Row mb="12px" mt="12px"> */}
         {updatesData.length > 0 && (
           <Row flex={1} position="relative">
             {cityId == null && <ALink to={"/live"}>실시간</ALink>}
@@ -101,15 +102,6 @@ const Updates: FC<Props> = ({
               animationData={updatesData.slice(0, 5)}
             ></UpdateCard>
           </Row>
-        )}
-        {cityId == null && (
-          <RefreshButton onClick={() => (!isLoading ? mutateData() : null)}>
-            {isLoading ? (
-              <Spinner size={16} color={"darkGreyText"} bg={"greyBg"}></Spinner>
-            ) : (
-              <Icon name="Refresh" size={24} fadeInUp></Icon>
-            )}
-          </RefreshButton>
         )}
       </Row>
     </Wrapper>

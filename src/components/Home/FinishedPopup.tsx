@@ -21,6 +21,7 @@ const Information = styled.div`
 const ShowButton = styled(Row)`
   font-size: 10px;
   margin-bottom: 10px;
+  margin-top: 4px;
   opacity: 0.7;
   border-bottom: 1px solid;
   cursor: pointer;
@@ -38,6 +39,7 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
   const currentDate = new Date(date.getTime() - 10 * HOUR);
   const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
+
   const [showModal, setShowModal] = useState(true);
   const { todayCases } = casesSummary;
   if (todayCases < 20) return <></>;
@@ -79,7 +81,7 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
               <ShowButton onClick={() => setShowInfo((prev) => !prev)}>
                 집계방식 보기 &rarr;
               </ShowButton>
-              <Row fontSize="12px" mt="20px">
+              <Row fontSize="12px" mt="20px" mb="16px">
                 SNS로 보기
               </Row>
               <Row jc="center" position="relative" flexShrink={0} minHeight="60px">

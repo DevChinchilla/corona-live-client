@@ -6,11 +6,10 @@ import { Row } from "./Layout";
 import Icon from "./Icon";
 import { IconType } from "./Icon/Icon";
 
-const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
+const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>`
   font-size: 12px;
   padding: 6px 14px;
   background: ${theme("greyBg")};
-  margin-top: 10px;
   color: ${theme("greyText")};
   display: flex;
   align-items: center;
@@ -38,6 +37,18 @@ const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
     `
   )};
   ${ifProp(
+    "small",
+    css`
+      font-size: 12px;
+      padding: 2px 8px;
+
+      /* padding: 6px 14px;
+      justify-content: center;
+      flex: 1; */
+    `
+  )};
+
+  ${ifProp(
     "active",
     css`
       font-weight: bold;
@@ -56,7 +67,14 @@ const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
   )};
 `;
 
-const Wrapper = styled(Row)``;
+const Wrapper = styled(Row)`
+  ${ifProp(
+    "small",
+    css`
+      /* width: 100%; */
+    `
+  )};
+`;
 
 interface OptionType {
   name: string;
@@ -69,11 +87,12 @@ interface Props {
   setOption: any;
   activeOption: any;
   noBg?: boolean;
+  small?: boolean;
 }
 
-const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg }) => {
+const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg, small }) => {
   return (
-    <Wrapper>
+    <Wrapper small={small}>
       {options.map((option, i) => {
         let { name, value, icon, visible = true } = option;
         if (!visible) return <></>;
@@ -83,6 +102,7 @@ const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg
             noBg={noBg}
             active={activeOption == value}
             onClick={() => setOption(value)}
+            small={small}
           >
             {icon && (
               <>

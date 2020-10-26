@@ -1,6 +1,6 @@
 import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES } from "@consts";
 
-export const ct = (cityId, guId = undefined) => {
+export const ct = (cityId, guId: any = undefined) => {
   let cityName = CITIES[`c${cityId}`] || "";
   let guName = CITIES[`c${cityId}/${guId}`] || "";
   guName = guName == cityName || guId == "_" ? "전체" : guName;

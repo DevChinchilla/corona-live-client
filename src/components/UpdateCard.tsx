@@ -32,7 +32,8 @@ const Card = styled(Row)<{ shadow?: boolean }>`
       padding: 0px 20px;
       border-top: none;
       border-radius: 6px;
-      background: ${theme("greyBg")};
+      background: ${theme("shadow")};
+      box-shadow: -1px 1px 20px #0000001e;
     `
   )}
 `;
@@ -40,6 +41,7 @@ const Card = styled(Row)<{ shadow?: boolean }>`
 const Message = styled(Row)<{ isInvalid?: boolean }>`
   font-size: 12px;
   text-align: center;
+  align-items: center;
   ${ifProp(
     "isInvalid",
     css`
@@ -103,18 +105,29 @@ const Content: FC<ContentProps> = ({
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
-        <UpdateTime date={datetime} flex={`0 1 ${fullWidth ? 96 : 76}px`}></UpdateTime>
+        <UpdateTime date={datetime} flex={`0 1 96px`}></UpdateTime>
         <Message isInvalid={isInvalid}>
-          <Box fontWeight={700} mr="4px">
-            {from}
-          </Box>
-          {title}
+          {!fullWidth ? (
+            <Absolute center>
+              <Row fontWeight={700} mr="4px">
+                {from}
+              </Row>
+              <Row>{title}</Row>
+            </Absolute>
+          ) : (
+            <>
+              <Row fontWeight={700} mr="4px">
+                {from}
+              </Row>
+              <Row>{title}</Row>
+            </>
+          )}
         </Message>
       </Row>
       {!showDetails ? (
-        <Icon name="ChevronDown" size={20}></Icon>
+        <Icon name="ChevronDown" size={24}></Icon>
       ) : (
-        <Icon name="ChevronUp" size={20}></Icon>
+        <Icon name="ChevronUp" size={24}></Icon>
       )}
     </Row>
   );

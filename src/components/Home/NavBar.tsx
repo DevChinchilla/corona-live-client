@@ -37,11 +37,15 @@ const NavBar: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
         {!!title ? (
-          <Button icon onClick={() => history.push({ pathname: "/", state: "live" })}>
+          <Button transparent icon onClick={() => history.push({ pathname: "/", state: "live" })}>
             <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
           </Button>
         ) : (
-          <Button icon onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
+          <Button
+            transparent
+            icon
+            onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}
+          >
             <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
           </Button>
         )}
@@ -60,7 +64,7 @@ const NavBar: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
           ></Icon>
         )}
 
-        <Button icon onClick={() => setShowReport(true)}>
+        <Button transparent icon onClick={() => setShowReport(true)}>
           <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>
         </Button>
       </Wrapper>

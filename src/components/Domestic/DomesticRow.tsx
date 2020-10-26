@@ -13,8 +13,6 @@ import { theme } from "@styles/themes";
 import ALink from "../ALink";
 
 const Wrapper = styled(Row)`
-  display: flex;
-  flex-direction: row;
   border-radius: 6px;
   height: 48px;
   padding: 0px 12px;

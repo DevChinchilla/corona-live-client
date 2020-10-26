@@ -20,6 +20,7 @@ import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 import { ifProp, ifProps } from "@styles/tools";
 import { Link } from "react-router-dom";
+import { IconBox } from "./IconBox";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -44,38 +45,6 @@ const Wrapper = styled(Col)`
     color: ${theme("darkGreyText")};
     margin-left: 2px;
   }
-`;
-
-const IconBox = styled.a<{ type: string; kakaoPay?: boolean }>`
-  background: ${(props) => theme(props.type as any)}30;
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  margin: 0px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  svg {
-    fill: ${(props) => theme(props.type as any)};
-  }
-  ${ifProps(
-    { type: "kakao" },
-    css`
-      background: ${theme("kakaoBg")};
-    `
-  )}
-  ${ifProp(
-    "kakaoPay",
-    css`
-      width: auto !important;
-      background: transparent;
-      border: 1px solid ${theme("darkGreyText")}80;
-      svg {
-        fill: ${theme("darkGreyText")};
-      }
-    `
-  )}
 `;
 
 const LinkCopyMsg = styled(Row)`

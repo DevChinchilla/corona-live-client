@@ -9,13 +9,14 @@ import styled from "styled-components";
 import { CasesSummaryType, OverviewType } from "@types";
 import { useHistory } from "react-router-dom";
 import { numberWithCommas } from "@utils";
+import { HOUR } from "@consts";
 
 const Info = styled(Row)`
   font-size: 10px;
   opacity: 0.5;
   margin-top: 4px;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   span {
     margin-left: 2px;
   }
@@ -96,9 +97,22 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = ({ data, casesSummary }) => {
   let { todayCases, yesterdayCases } = casesSummary;
+
+  const date = new Date();
+  const currentDate = new Date(date.getTime() - 10 * HOUR);
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+
   return (
-    <Row jc="space-evenly" mb="10px">
-      <Stat data={data.confirmed} title={"총 확진자 "} isToday fadeInUp delay={2}></Stat>
+    <Row jc="space-evenly" mt="8px" mb="24px">
+      <Stat
+        data={data.confirmed}
+        title={"총 확진자 "}
+        isToday
+        fadeInUp
+        delay={2}
+        info={`${month}월 ${day}일 0시 기준`}
+      ></Stat>
       <Box w="24px"></Box>
       <Stat
         data={data.current}
