@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-import Row from "@components/Row";
+import Row from "@components/Domestic/DomesticRow";
 import { Col, Row as RowLayout } from "@components/Layout";
 
 import { theme } from "@styles/themes";

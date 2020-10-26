@@ -5,12 +5,17 @@ import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-d
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 
+const World = lazy(() => import("@components/World"));
 const Home = lazy(() => import("@components/Home"));
-const City = lazy(() => import("@components/City"));
+const City = lazy(() => import("@components/Domestic/City"));
 
 const pages = [
   {
     pageLink: "/",
+    view: Home,
+  },
+  {
+    pageLink: "/world",
     view: Home,
   },
   {

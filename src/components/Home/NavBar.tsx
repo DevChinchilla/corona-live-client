@@ -1,20 +1,29 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
+
 import Icon from "@components/Icon";
 import { Row } from "@components/Layout";
-import Report from "@components/Report";
+import Report from "@components/Home/ReportModal";
+import Underline from "@components/Underline";
+import Button from "@components/Button";
 
 import { useTheme } from "@hooks/useTheme";
-import Button from "@components/Button";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 
 const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
 `;
 
-const NavBar = ({ theme: currentTheme, setTheme }) => {
+interface Props {
+  theme: string;
+  setTheme: any;
+  title?: string;
+}
+
+const NavBar: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
   const routerMatch = useRouteMatch();
+  const history = useHistory();
 
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
@@ -27,16 +36,29 @@ const NavBar = ({ theme: currentTheme, setTheme }) => {
     <>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
-        <Button icon onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
-          <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
-        </Button>
-        <Icon
-          transform="translateY(-4px)"
-          name="Logo"
-          height="26px"
-          width="110px"
-          fill={theme("blackText")}
-        ></Icon>
+        {!!title ? (
+          <Button icon onClick={() => history.push({ pathname: "/", state: "live" })}>
+            <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
+          </Button>
+        ) : (
+          <Button icon onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}>
+            <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
+          </Button>
+        )}
+
+        {!!title ? (
+          <Underline fontSize="18px " fontWeight={900}>
+            {title}
+          </Underline>
+        ) : (
+          <Icon
+            transform="translateY(-4px)"
+            name="Logo"
+            height="26px"
+            width="110px"
+            fill={theme("blackText")}
+          ></Icon>
+        )}
 
         <Button icon onClick={() => setShowReport(true)}>
           <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>

@@ -13,12 +13,13 @@ import {
   IMPORTANT_MESSAGE,
   KAKAOPAY_URL,
   EMAIL,
+  TWITTER_SNS_URL,
+  INSTA_SNS_URL,
 } from "@consts";
 import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 import { ifProp, ifProps } from "@styles/tools";
 import { Link } from "react-router-dom";
-import SocialMedia from "./SocialMedia";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -90,6 +91,7 @@ const LinkCopyMsg = styled(Row)`
 const Gnb = styled(Row)`
   justify-content: center;
   margin-bottom: 10px;
+  visibility: hidden;
   a {
     padding: 0px 6px;
     font-size: 11px;
@@ -143,7 +145,14 @@ const Footer = () => {
       <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
         SNS로 보기
       </Row>
-      <SocialMedia hideTitle></SocialMedia>
+      <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
+        <IconBox type="twitter" href={TWITTER_SNS_URL}>
+          <Icon name="Twitter" size={14}></Icon>
+        </IconBox>
+        <IconBox type="instagram" href={INSTA_SNS_URL}>
+          <Icon name="Instagram" size={14}></Icon>
+        </IconBox>
+      </Row>
 
       <Row fontSize="12px" mb="10px" mt="10px" opacity={0.7}>
         후원하기
@@ -159,7 +168,7 @@ const Footer = () => {
       </Row>
 
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
-      <Gnb className="gnb" style={{ visibility: "hidden" }}>
+      <Gnb className="gnb">
         <Link to="/live">실시간</Link>
         <Link to="/daily">일별</Link>
         <Link to="/rates">확진율</Link>

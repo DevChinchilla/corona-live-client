@@ -2,23 +2,21 @@ import React, { Suspense, lazy, useState, useEffect } from "react";
 
 import { Page, Row } from "@components/Layout";
 
-const Table = lazy(() => import("@components/Table"));
+const Table = lazy(() => import("@components/Domestic/DomesticTable"));
 const Board = lazy(() => import("@components/Board"));
 const Footer = lazy(() => import("@components/Footer"));
-const CityNavBar = lazy(() => import("@components/City/CityNavBar"));
 const Notification = lazy(() => import("@components/Notification"));
 const UpdateModal = lazy(() => import("@components/UpdateModal"));
 const Updates = lazy(() => import("@components/Updates"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
 
 import { DISTRICT_TD_FLEX } from "@consts";
-import { getCasesSummary, sortByDate } from "@utils";
+import { ct, getCasesSummary, sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
-import { useHistory } from "react-router-dom";
+import NavBar from "@components/Home/NavBar";
 
-const City = ({ match, data }) => {
+const City = ({ theme, setTheme, match, data }) => {
   useScrollTop();
-  const history = useHistory();
 
   const cityId: string = match.params.cityId;
   const [showUpdates, setShowUpdates] = useState(false);
@@ -56,7 +54,7 @@ const City = ({ match, data }) => {
         </Suspense>
       )}
 
-      <CityNavBar {...{ cityId }}></CityNavBar>
+      <NavBar {...{ theme, setTheme }} title={ct(cityId)}></NavBar>
 
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>

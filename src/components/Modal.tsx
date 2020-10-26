@@ -64,9 +64,9 @@ const Header = styled(Row)`
 `;
 
 interface Props {
-  onClose: any;
   show: boolean;
 
+  onClose?: any;
   noHeader?: boolean;
   title?: string;
   hideOverlay?: boolean;

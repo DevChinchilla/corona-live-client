@@ -2,18 +2,13 @@ import { theme, ThemeType } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import React from "react";
 import styled, { css } from "styled-components";
-import Icon from "./Icon";
-import { Col, Row } from "./Layout";
-import Modal from "./Modal";
+import Icon from "../Icon";
+import { Col, Row } from "../Layout";
+import Modal from "../Modal";
 
 const Wrapper = styled(Col)`
   justify-content: center;
   flex: 1;
-`;
-const Title = styled(Row)`
-  text-align: center;
-  justify-content: center;
-  font-size: 14px;
 `;
 
 const ThemeContainer = styled(Col)<{ selected: boolean }>`
@@ -72,8 +67,6 @@ const CheckBox = styled(Row)<{ selected: boolean }>`
       }
     `
   )}
-  
-}
 `;
 
 type Props = {

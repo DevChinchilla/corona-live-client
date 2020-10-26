@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { Col, Row, Box, Absolute } from "@components/Layout";
 import Icon from "@components/Icon";
 import UpdateTime from "@components/UpdateTime";
-import Report from "@components/Report";
+import Report from "@components/Home/ReportModal";
 
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";

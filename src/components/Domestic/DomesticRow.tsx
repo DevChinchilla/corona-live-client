@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { Link, useHistory } from "react-router-dom";
 
 import { Row, Box } from "@components/Layout";
 import Icon from "@components/Icon";
@@ -11,7 +10,7 @@ import UpdateModal from "@components/UpdateModal";
 import { numberWithCommas, ct } from "@utils";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
-import ALink from "./ALink";
+import ALink from "../ALink";
 
 const Wrapper = styled(Row)`
   display: flex;
@@ -52,7 +51,6 @@ const Td = styled(Row)<PTd>`
 `;
 
 const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props }) => {
-  const history = useHistory();
   const [showUpdates, setShowUpdates] = useState(false);
 
   const { total, current } = data;
@@ -65,7 +63,6 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
 
   const onClick = (e) => {
     if (cityId == null && name != "대구" && name != "검역") {
-      // history.push(`./city/${cityId || id}`);
     } else {
       e.preventDefault();
       if (updateTime || updates.length != 0) setShowUpdates(true);
@@ -82,8 +79,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
       ></UpdateModal>
 
       <Wrapper {...props} onClick={onClick}>
-        {/* <ALink to={{ pathname: cityId == null ? `/city/${id}` : null, state: "live" }}> */}
-        <ALink to={cityId == null ? `/city/${id}` : null}>{name}</ALink>
+        <ALink to={cityId == null ? `/city/${id}` : (null as any)}>{name}</ALink>
 
         <Td flex={tdFlex[0]}>
           <Box fontSize="12px" fontWeight={500}>

@@ -1,7 +1,7 @@
 import { Row } from "@components/Layout";
 import { theme, ThemeType } from "@styles/themes";
 import { ifProp } from "@styles/tools";
-import { CasesSummaryType, UpdateType } from "@types";
+import { UpdateType } from "@types";
 import { getCasesSummary } from "@utils";
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
@@ -52,7 +52,6 @@ interface Props {
 }
 
 const CasesSummary: FC<Props> = ({ updates }) => {
-  // const { checking, totalCases, yesterdayCases } = data;
   const { todayCases, totalCases, yesterdayCases, checking } = getCasesSummary(updates);
   return (
     <Wrapper fadeInUp>

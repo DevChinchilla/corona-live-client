@@ -2,8 +2,6 @@ export type CasesType = [number, number];
 
 export interface OverviewType {
   current: CasesType;
-  recovered: CasesType;
-  deceased: CasesType;
   confirmed: CasesType;
 }
 

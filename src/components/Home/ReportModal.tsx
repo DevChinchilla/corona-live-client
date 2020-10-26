@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef, useEffect } from "react";
+import React, { useState, FC, useEffect } from "react";
 import styled from "styled-components";
 
 import Modal from "@components/Modal";
@@ -7,9 +7,9 @@ import { Col, Row } from "@components/Layout";
 
 import { theme } from "@styles/themes";
 import { EMAIL_API, EMAIL, URL_REGEX, CITY_GU_NAMES, MINUTE } from "@consts";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 import { useObjectState } from "@hooks/useObjectState";
-import DropdownInput from "./DropdownInput";
+import DropdownInput from "../DropdownInput";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 
 const Wrapper = styled(Col)`
@@ -69,7 +69,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   const [isLoading, setisLoading] = useState(false);
   const [lastReport, setLastReport] = useLocalStorage("lastReportSubmit");
 
-  const [{ src, email, title, cases, website }, setForm] = useObjectState({
+  const [{ email, title, cases, website }, setForm] = useObjectState({
     ...initialState,
     title: errorReport || "",
   });
@@ -93,8 +93,8 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   const onSumbit = async () => {
     if (isLoading) return;
 
-    // if (new Date().getTime() - lastReport < MINUTE * 5)
-    //   return alert("제보는 5분 내에 한 번만 하실 수 있습니다");
+    if (new Date().getTime() - lastReport < MINUTE * 5)
+      return alert("제보는 5분 내에 한 번만 하실 수 있습니다");
 
     if (!errorReport) {
       if (title.trim().length == 0) return alert("지역을 적어주세요");

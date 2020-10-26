@@ -1,78 +1,27 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
-import { Page, Row } from "@components/Layout";
+import React, { lazy, Suspense, useState } from "react";
+import { Row } from "@components/Layout";
 
 import { sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
-import { useLocalStorage } from "@hooks/useLocalStorage";
 import { CurrentType, OverallType } from "@types";
-import { useRouteMatch } from "react-router-dom";
+
 import MapExplorer from "./MapExplorer";
-
 import ToggleButtons from "@components/ToggleButtons";
-import ThemePopup from "@components/ThemePopup";
 
-const NavBar = lazy(() => import("../Home/NavBar"));
 const Updates = lazy(() => import("../Updates"));
-const FinishedPopup = lazy(() => import("./FinishedPopup"));
-const Popup = lazy(() => import("./Popup"));
-
-const Notification = lazy(() => import("@components/Notification"));
-const AnnouncementPopup = lazy(() => import("@components/Domestic/AnnouncementPopup"));
 const Board = lazy(() => import("@components/Board"));
-const Table = lazy(() => import("@components/Table"));
+const Table = lazy(() => import("@components/Domestic/DomesticTable"));
 const Footer = lazy(() => import("@components/Footer"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
 
-const Domestic = ({ theme, setTheme, data }) => {
-  const routerMatch = useRouteMatch();
+const Domestic = ({ showUpdates, setShowUpdates, data }) => {
   useScrollTop();
-  const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
-  const [showUpdates, setShowUpdates] = useState(routerMatch.path == "/live");
   const [showMap, setShowMap] = useState(false);
-
-  const {
-    updatesData,
-    statsData,
-    timeseriesData,
-    mutateData,
-    isLoading,
-    notification,
-    removeNotification,
-    casesSummary,
-  } = data;
-
-  useEffect(() => {
-    if (routerMatch.path == "/live") setShowUpdates(true);
-  }, [routerMatch]);
+  const { updatesData, statsData, timeseriesData, mutateData, isLoading, casesSummary } = data;
 
   return (
     <>
-      {statsData && casesSummary && routerMatch.path == "/" && (
-        <Suspense fallback={<div />}>
-          <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
-          {isFirstVisitor == 1 && (
-            <ThemePopup {...{ theme, setTheme }} onClose={() => setIsFirstVisitor(0)}></ThemePopup>
-          )}
-        </Suspense>
-      )}
-
-      {!isLoading && !!notification && (
-        <Suspense fallback={<div />}>
-          <Notification
-            notification={notification}
-            closeModal={removeNotification}
-            openUpdates={() => setShowUpdates(true)}
-          ></Notification>
-        </Suspense>
-      )}
-
-      {statsData?.announcements && (
-        <Suspense fallback={<div />}>
-          <AnnouncementPopup announcement={statsData?.announcements[0]}></AnnouncementPopup>
-        </Suspense>
-      )}
-
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Updates

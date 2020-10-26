@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import Modal from "@components/Modal";
 import { Row, Col } from "@components/Layout";
-import SocialMedia from "../SocialMedia";
-import { HOUR } from "@consts";
-import { CasesSummaryType, StatsType } from "@types";
+import { HOUR, INSTA_SNS_URL, TWITTER_SNS_URL } from "@consts";
+import { CasesSummaryType } from "@types";
 import styled from "styled-components";
-import Button from "@components/Button";
 import Icon from "@components/Icon";
-import { useTheme } from "@hooks/useTheme";
+import { IconBox } from "@components/IconBox";
 
 const Information = styled.div`
   font-size: 12px;
   margin-top: 2px;
   text-align: center;
-  /* display: flex;
-  justify-content: center; */
   opacity: 0.7;
   strong {
     font-weight: bold;
     margin: 0px 2px;
   }
+`;
+
+const ShowButton = styled(Row)`
+  font-size: 10px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+  border-bottom: 1px solid;
+  cursor: pointer;
 `;
 
 type Props = {
@@ -28,7 +32,6 @@ type Props = {
 
 const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
   const [showInfo, setShowInfo] = useState(false);
-  const theme = useTheme();
 
   const date = new Date();
   const currentHours = date.getHours();
@@ -73,25 +76,22 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
               <Row fontSize="26px" fontWeight={700}>
                 {todayCases}명
               </Row>
-              <Row
-                fontSize="10px"
-                mb="10px"
-                opacity="0.7"
-                onClick={() => setShowInfo((prev) => !prev)}
-                borderBottom={`1px solid `}
-                cursor="pointer"
-              >
+              <ShowButton onClick={() => setShowInfo((prev) => !prev)}>
                 집계방식 보기 &rarr;
-              </Row>
+              </ShowButton>
               <Row fontSize="12px" mt="20px">
                 SNS로 보기
               </Row>
-              <Col transform="translateY(12px)">
-                <SocialMedia hideTitle></SocialMedia>
-              </Col>
+              <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
+                <IconBox type="twitter" href={TWITTER_SNS_URL}>
+                  <Icon name="Twitter" size={14}></Icon>
+                </IconBox>
+                <IconBox type="instagram" href={INSTA_SNS_URL}>
+                  <Icon name="Instagram" size={14}></Icon>
+                </IconBox>
+              </Row>
             </>
           )}
-
           <Row h="10px"></Row>
         </Col>
       </Modal>

@@ -1,36 +1,82 @@
-import Domestic from "@components/Domestic";
+import React, { Suspense, useEffect, useState } from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
+
+import AnnouncementPopup from "@components/Home/AnnouncementPopup";
+import FinishedPopup from "@components/Home/FinishedPopup";
 import NavBar from "@components/Home/NavBar";
-import { Page, Row } from "@components/Layout";
+import Notification from "@components/Notification";
 import ToggleButtons from "@components/ToggleButtons";
-import World from "@components/World/World";
-import React, { Suspense, useState } from "react";
-import styled from "styled-components";
 
-const Wrapper = styled.div``;
+import Domestic from "@components/Domestic";
+import World from "@components/World";
 
-type CurrentTabType = "domestic" | "world";
+import { Page, Row } from "@components/Layout";
+
+import { useLocalStorage } from "@hooks/useLocalStorage";
+import ThemePopup from "./ThemePopup";
 
 const Home = ({ theme, setTheme, data }) => {
-  const [currentTab, setCurrentTab] = useState<CurrentTabType>("domestic");
+  const history = useHistory();
+  const routerMatch = useRouteMatch();
+  const { path } = routerMatch;
+
+  const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
+  const [showUpdates, setShowUpdates] = useState(path == "/live");
+
+  const { statsData, isLoading, notification, removeNotification, casesSummary } = data;
+
+  useEffect(() => {
+    if (path == "/live") setShowUpdates(true);
+  }, [routerMatch]);
+
   return (
-    <Page>
-      <Suspense fallback={<div />}>
-        <NavBar {...{ theme, setTheme }}></NavBar>
-      </Suspense>
-      <Row jc="center" mt="6px" fadeInUp delay={5}>
-        <ToggleButtons
-          noBg
-          options={[
-            { name: "한국 현황", value: "domestic", icon: "Domestic" },
-            { name: "세계 현황", value: "world", icon: "World" },
-          ]}
-          activeOption={currentTab}
-          setOption={setCurrentTab}
-        ></ToggleButtons>
-      </Row>
-      {currentTab == "domestic" && <Domestic {...{ theme, setTheme, data }}></Domestic>}
-      {currentTab == "world" && <World></World>}
-    </Page>
+    <>
+      {statsData && casesSummary && path == "/" && (
+        <Suspense fallback={<div />}>
+          <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
+          {isFirstVisitor == 1 && (
+            <ThemePopup {...{ theme, setTheme }} onClose={() => setIsFirstVisitor(0)}></ThemePopup>
+          )}
+        </Suspense>
+      )}
+
+      {!isLoading && !!notification && (
+        <Suspense fallback={<div />}>
+          <Notification
+            notification={notification}
+            closeModal={removeNotification}
+            openUpdates={() => setShowUpdates(true)}
+          ></Notification>
+        </Suspense>
+      )}
+
+      {statsData?.announcements && (
+        <Suspense fallback={<div />}>
+          <AnnouncementPopup announcement={statsData?.announcements[0]}></AnnouncementPopup>
+        </Suspense>
+      )}
+
+      <Page>
+        <Suspense fallback={<div />}>
+          <NavBar {...{ theme, setTheme }}></NavBar>
+        </Suspense>
+        <Row jc="center" mt="6px" fadeInUp delay={5}>
+          <ToggleButtons
+            noBg
+            options={[
+              { name: "한국 현황", value: "/", icon: "Domestic" },
+              { name: "세계 현황", value: "/world", icon: "World" },
+            ]}
+            activeOption={path}
+            setOption={(option) => history.push(option)}
+          ></ToggleButtons>
+        </Row>
+        {path == "world" && <World></World>}
+        {path == "/" && (
+          <Domestic {...{ showUpdates, setShowUpdates, theme, setTheme, data }}></Domestic>
+        )}
+      </Page>
+    </>
   );
 };
 
