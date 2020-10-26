@@ -145,7 +145,7 @@ const Footer = () => {
       </Row>
       <SocialMedia hideTitle></SocialMedia>
 
-      <Row fontSize="12px" mb="10px" mt="30px" opacity={0.7}>
+      <Row fontSize="12px" mb="10px" mt="10px" opacity={0.7}>
         후원하기
       </Row>
       <Row fontSize="11px" jc="center" opacity="0.5" textAlign="center">
@@ -159,9 +159,8 @@ const Footer = () => {
       </Row>
 
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
-      <Gnb className="gnb">
+      <Gnb className="gnb" style={{ visibility: "hidden" }}>
         <Link to="/live">실시간</Link>
-        <Link to="/report">제보</Link>
         <Link to="/daily">일별</Link>
         <Link to="/rates">확진율</Link>
         <Link to="/city/0">서울</Link>

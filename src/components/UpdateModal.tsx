@@ -5,20 +5,20 @@ import UpdateCard from "@components/UpdateCard";
 import { Col, Row, Absolute } from "@components/Layout";
 import Modal from "@components/Modal";
 import Icon from "@components/Icon";
+import CasesSummary from "@components/CasesSummary";
 
 import { useTheme } from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
 import { sortByDate, onEnter, ct } from "@utils";
-import CasesSummary from "./Home/CasesSummary";
 
 const SearchInput = styled(Row)`
   position: relative;
   width: 100%;
   height: 30px;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
   input {
     width: 100%;

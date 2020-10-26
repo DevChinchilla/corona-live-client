@@ -26,6 +26,8 @@ import Instagram from "./Instagram";
 import KakaoPay from "./KakaoPay";
 import Map from "./Map";
 import Table from "./Table";
+import Domestic from "./Domestic";
+import World from "./World";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -57,6 +59,8 @@ const icons = {
   KakaoPay,
   Table,
   Map,
+  Domestic,
+  World,
 };
 
 export type IconType = keyof typeof icons;

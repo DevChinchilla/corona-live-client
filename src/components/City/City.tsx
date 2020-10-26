@@ -8,7 +8,7 @@ const Footer = lazy(() => import("@components/Footer"));
 const CityNavBar = lazy(() => import("@components/City/CityNavBar"));
 const Notification = lazy(() => import("@components/Notification"));
 const UpdateModal = lazy(() => import("@components/UpdateModal"));
-const Updates = lazy(() => import("@components/Home/Updates"));
+const Updates = lazy(() => import("@components/Updates"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
 
 import { DISTRICT_TD_FLEX } from "@consts";

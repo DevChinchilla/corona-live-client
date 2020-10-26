@@ -4,6 +4,7 @@ import { ifProp } from "@styles/tools";
 import styled, { css } from "styled-components";
 import { Row } from "./Layout";
 import Icon from "./Icon";
+import { IconType } from "./Icon/Icon";
 
 const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
   font-size: 12px;
@@ -57,8 +58,14 @@ const Button = styled(Row)<{ active: boolean; noBg: boolean }>`
 
 const Wrapper = styled(Row)``;
 
+interface OptionType {
+  name: string;
+  value: any;
+  icon?: IconType;
+  visible?: boolean;
+}
 interface Props {
-  options: any;
+  options: OptionType[];
   setOption: any;
   activeOption: any;
   noBg?: boolean;
@@ -68,7 +75,7 @@ const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg
   return (
     <Wrapper>
       {options.map((option, i) => {
-        let { name, value, icon, visible } = option;
+        let { name, value, icon, visible = true } = option;
         if (!visible) return <></>;
         return (
           <Button

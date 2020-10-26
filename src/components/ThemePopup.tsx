@@ -19,8 +19,7 @@ const Title = styled(Row)`
 const ThemeContainer = styled(Col)<{ selected: boolean }>`
   justify-content: center;
   align-items: center;
-  & > div {
-  }
+  cursor: pointer;
   & > span {
     font-size: 12px;
     margin-top: 10px;
@@ -85,9 +84,15 @@ type Props = {
 
 const ThemePopup: React.FC<Props> = ({ onClose, theme, setTheme }) => {
   return (
-    <Modal closeButtonPos="bottom" show={true} title="다크 모드 설정" dynamic onClose={onClose}>
+    <Modal
+      zIndex={10000}
+      closeButtonPos="bottom"
+      show={true}
+      title="배경 설정"
+      dynamic
+      onClose={onClose}
+    >
       <Wrapper>
-        <Title>다크 모드 설정</Title>
         <Row jc="center" py="30px">
           <ThemeContainer selected={theme == "light"} onClick={() => setTheme("light")}>
             <ThemeLogo themeName={"light"}>

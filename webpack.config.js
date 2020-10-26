@@ -47,9 +47,10 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
+        { from: "public/assets", to: "." },
         { from: "public/fonts", to: "fonts" },
         { from: "public/maps", to: "maps" },
-        { from: "public/assets", to: "." },
+        { from: "public/flags", to: "flags" },
       ],
     }),
     new CompressionPlugin({

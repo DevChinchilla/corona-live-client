@@ -4,6 +4,7 @@ import { GlobalStyle, themes } from "@styles";
 import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-dom";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
+
 const Home = lazy(() => import("@components/Home"));
 const City = lazy(() => import("@components/City"));
 
@@ -14,10 +15,6 @@ const pages = [
   },
   {
     pageLink: "/live",
-    view: Home,
-  },
-  {
-    pageLink: "/report",
     view: Home,
   },
   {

@@ -100,34 +100,39 @@ const Modal: FC<Props> = ({
     <>
       {!hideOverlay && <Overlay zIndex={zIndex ? zIndex - 1 : 999} onClick={onClose}></Overlay>}
       <ModalContainer {...props} fixedHeight={!dynamic} zIndex={zIndex || 1000}>
-        {!noHeader ||
-          (closeButtonPos == "bottom" && (
-            <Header fadeInUp>
+        {!noHeader && (
+          <Header fadeInUp>
+            {closeButtonPos != "bottom" ? (
               <Button icon square onClick={onClose}>
                 <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
               </Button>
+            ) : (
+              <Row width="24px"></Row>
+            )}
 
-              <Row fontSize="14px" fontWeight={700}>
-                {title}
-              </Row>
-              {actionIcon ? (
-                <Button icon square onClick={onActionClick}>
-                  <Icon
-                    name={actionIcon[0]}
-                    size={actionIcon[1]}
-                    fill={_theme("darkGreyText")}
-                  ></Icon>
-                </Button>
-              ) : (
-                <Row width="24px"></Row>
-              )}
-            </Header>
-          ))}
+            <Row fontSize="14px" fontWeight={700}>
+              {title}
+            </Row>
+            {actionIcon ? (
+              <Button icon square onClick={onActionClick}>
+                <Icon
+                  name={actionIcon[0]}
+                  size={actionIcon[1]}
+                  fill={_theme("darkGreyText")}
+                ></Icon>
+              </Button>
+            ) : (
+              <Row width="24px"></Row>
+            )}
+          </Header>
+        )}
 
         <Children>{children}</Children>
-        <Button full onClick={onClose} l>
-          닫기
-        </Button>
+        {closeButtonPos == "bottom" && (
+          <Button full onClick={onClose}>
+            닫기
+          </Button>
+        )}
       </ModalContainer>
     </>
   );
