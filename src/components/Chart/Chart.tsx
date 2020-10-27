@@ -76,7 +76,7 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId }) => {
               options={[
                 { name: "1주", value: 7, visible: true },
                 { name: "2주", value: 14, visible: true },
-                { name: "1달", value: 30, visible: true },
+                { name: "3달", value: 90, visible: true },
               ]}
               activeOption={timeRange}
               setOption={setTimeRange}

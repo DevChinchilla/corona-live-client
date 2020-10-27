@@ -165,7 +165,7 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
           data: imported,
           type: "bar",
           yAxisID: "A",
-          barThickness: 6,
+          barThickness: timeRange > 30 ? 2 : 6,
           backgroundColor: `${CHART_SECONDARY_COLOR}70`,
         },
       ],

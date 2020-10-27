@@ -37,13 +37,7 @@ interface Props {
   setShowUpdates: any;
   cityId?: string;
 }
-const Updates: FC<Props> = ({
-  data,
-
-  showUpdates,
-  setShowUpdates,
-  cityId,
-}) => {
+const Updates: FC<Props> = ({ data, showUpdates, setShowUpdates, cityId }) => {
   if (data.length == 0) return <div style={{ height: "30px" }}></div>;
   const [updatesData, setUpdatesData] = useState<UpdateType[]>([]);
   const history = useHistory();
