@@ -3,7 +3,7 @@ import React, { Suspense, lazy, useState, useEffect } from "react";
 import { Page, Row } from "@components/Layout";
 
 const Table = lazy(() => import("@components/Domestic/DomesticTable"));
-const Board = lazy(() => import("@components/Board"));
+const Board = lazy(() => import("@components/Domestic/DomesticBoard"));
 const Footer = lazy(() => import("@components/Footer"));
 const Notification = lazy(() => import("@components/Notification"));
 const UpdateModal = lazy(() => import("@components/UpdateModal"));

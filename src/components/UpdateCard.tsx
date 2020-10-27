@@ -32,6 +32,8 @@ const Card = styled(Row)<{ shadow?: boolean }>`
       padding: 0px 20px;
       border-top: none;
       border-radius: 6px;
+      background: ${theme("greyBg")};
+
       background: ${theme("shadow")};
       box-shadow: -1px 1px 20px #0000001e;
     `

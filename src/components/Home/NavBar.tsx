@@ -9,10 +9,15 @@ import Button from "@components/Button";
 
 import { useTheme } from "@hooks/useTheme";
 import { useRouteMatch, useHistory } from "react-router-dom";
+import { theme } from "@styles/themes";
 
 const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
+  padding: 16px 12px;
+  padding-bottom: 12px;
+  /* padding-top: 20px; */
+  /* box-shadow: -1px 1px 20px ${theme("navBarShadow")}; */
 `;
 
 interface Props {
@@ -56,7 +61,7 @@ const NavBar: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
           </Underline>
         ) : (
           <Icon
-            transform="translateY(-4px)"
+            transform="translate(2px,-4px)"
             name="Logo"
             height="26px"
             width="110px"

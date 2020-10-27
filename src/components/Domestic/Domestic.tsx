@@ -10,7 +10,7 @@ import MapExplorer from "./MapExplorer";
 import ToggleButtons from "@components/ToggleButtons";
 
 const Updates = lazy(() => import("../Updates"));
-const Board = lazy(() => import("@components/Board"));
+const Board = lazy(() => import("@components/Domestic/DomesticBoard"));
 const Table = lazy(() => import("@components/Domestic/DomesticTable"));
 const Footer = lazy(() => import("@components/Footer"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
@@ -48,6 +48,7 @@ const Domestic = ({ showUpdates, setShowUpdates, data }) => {
       {statsData && (
         <Row jc="center" mt="6px" fadeInUp delay={5}>
           <ToggleButtons
+            divider
             noBg
             options={[
               { name: "지도", value: true, visible: true, icon: "Map" },

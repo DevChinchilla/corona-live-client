@@ -35,7 +35,7 @@ const Cases = styled(Box)`
 const Divider = styled(Box)`
   width: 1px;
   height: 10px;
-  background: ${theme("greyText")};
+  background: ${theme("lightGreyText")};
 `;
 
 interface PTd {

@@ -34,6 +34,8 @@ interface ThemeProps {
 
   dark: string;
   light: string;
+
+  navBarShadow: string;
 }
 export type ThemeType = keyof ThemeProps;
 
@@ -54,7 +56,7 @@ const lightTheme: ThemeProps = {
 
   blue: "#5673EB",
   red: "#EB5374",
-  blueBg: "#5673eb1a",
+  blueBg: "#e0e6fb",
   redBg: "#eb53741f",
 
   updateCard: "white",
@@ -76,6 +78,8 @@ const lightTheme: ThemeProps = {
 
   light: "white",
   dark: "#191F2C",
+
+  navBarShadow: "#0000001e",
 };
 
 const darkTheme: ThemeProps = {
@@ -95,7 +99,7 @@ const darkTheme: ThemeProps = {
   blue: "#5673EB",
   red: "#EB5374",
 
-  blueBg: "#5673EB15",
+  blueBg: "#263051",
   redBg: "#EB537415",
   updateCard: "#272b38",
 
@@ -115,6 +119,8 @@ const darkTheme: ThemeProps = {
   themeShadow: "#000000a3",
   light: "white",
   dark: "#191F2C",
+
+  navBarShadow: "#8282821e",
 };
 
 export default { light: lightTheme, dark: darkTheme };

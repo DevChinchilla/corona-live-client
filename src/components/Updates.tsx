@@ -7,8 +7,7 @@ import UpdateModal from "@components/UpdateModal";
 
 import { theme } from "@styles/themes";
 import { getCurrentDateTime } from "@utils";
-import Icon from "@components/Icon";
-import Spinner from "@components/Spinner";
+
 import { UpdateType } from "@types";
 import { useHistory } from "react-router-dom";
 import ALink from "@components/ALink";
@@ -30,19 +29,6 @@ const Time = styled(Col)`
   text-align: center;
 `;
 
-const RefreshButton = styled(Row)`
-  width: 50px;
-  background: ${theme("greyBg")};
-  margin-left: 10px;
-  border-radius: 6px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  svg {
-    fill: ${theme("darkGreyText")};
-  }
-`;
-
 interface Props {
   data: UpdateType[];
   mutateData: any;
@@ -53,8 +39,7 @@ interface Props {
 }
 const Updates: FC<Props> = ({
   data,
-  mutateData,
-  isLoading,
+
   showUpdates,
   setShowUpdates,
   cityId,
@@ -92,7 +77,6 @@ const Updates: FC<Props> = ({
       <Time>{getCurrentDateTime()}</Time>
 
       <Row mb="12px">
-        {/* <Row mb="12px" mt="12px"> */}
         {updatesData.length > 0 && (
           <Row flex={1} position="relative">
             {cityId == null && <ALink to={"/live"}>실시간</ALink>}

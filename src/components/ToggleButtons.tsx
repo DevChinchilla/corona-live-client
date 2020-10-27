@@ -2,7 +2,7 @@ import React, { Props } from "react";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import styled, { css } from "styled-components";
-import { Row } from "./Layout";
+import { Absolute, Row } from "./Layout";
 import Icon from "./Icon";
 import { IconType } from "./Icon/Icon";
 
@@ -34,6 +34,7 @@ const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>
     css`
       border: 1px solid ${theme("greyText")}30;
       background: transparent;
+      background: ${theme("bg")};
     `
   )};
   ${ifProp(
@@ -52,7 +53,7 @@ const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>
     "active",
     css`
       font-weight: bold;
-      background: ${theme("blue")}30;
+      background: ${theme("blueBg")};
       color: ${theme("blue")};
       svg {
         fill: ${theme("blue")};
@@ -67,11 +68,24 @@ const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>
   )};
 `;
 
-const Wrapper = styled(Row)`
+const Wrapper = styled(Row)<{ divider?: boolean }>`
   ${ifProp(
-    "small",
+    "divider",
     css`
-      /* width: 100%; */
+      position: relative;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      &:before,
+      &:after {
+        content: "";
+        display: flex;
+        flex: 1;
+        height: 1px;
+        background: ${theme("greyText")}30;
+        z-index: -100;
+      }
     `
   )};
 `;
@@ -88,11 +102,19 @@ interface Props {
   activeOption: any;
   noBg?: boolean;
   small?: boolean;
+  divider?: boolean;
 }
 
-const ToggleButtons: React.FC<Props> = ({ options, setOption, activeOption, noBg, small }) => {
+const ToggleButtons: React.FC<Props> = ({
+  options,
+  setOption,
+  activeOption,
+  noBg,
+  small,
+  divider,
+}) => {
   return (
-    <Wrapper small={small}>
+    <Wrapper divider={divider}>
       {options.map((option, i) => {
         let { name, value, icon, visible = true } = option;
         if (!visible) return <></>;

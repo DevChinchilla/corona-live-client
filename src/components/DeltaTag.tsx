@@ -14,14 +14,14 @@ const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean 
   color: ${prop("color")};
   border-radius: 6px;
   padding: 4px 8px;
-  margin-left: 8px;
+  /* margin-left: 8px; */
   align-items: center;
   ${ifProp(
     "small",
     css`
-      font-size: 12px;
+      font-size: 11px;
       padding: 0px;
-      margin-left: 4px;
+      /* margin-left: 4px; */
     `
   )};
   ${ifProp(
