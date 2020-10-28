@@ -67,13 +67,13 @@ const Stat: FC<StatsProps> = ({ title, data, info, vertical, numbersOnly, ...pro
             </Box>
           )}
         </Row>
-        <Box w="8px"></Box>
+        {!vertical && <Box w="6px"></Box>}
         <DeltaTag
           color={deltaColor}
           delta={delta}
           countUp={history.location.state != "live"}
           prevDelta={prevDelta.current}
-          showBg={!vertical}
+          showBg={true}
         ></DeltaTag>
       </Row>
       {info && (

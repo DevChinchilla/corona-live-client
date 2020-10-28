@@ -147,7 +147,7 @@ export const UpdatesModal: FC<Props> = React.memo(
       setKeyword("");
     };
 
-    const title = `${areaName || ""} 실시간 발생 확진 현황`;
+    const title = `${areaName || ""} 실시간 확진 현황`;
 
     if (!filteredData) return <></>;
 

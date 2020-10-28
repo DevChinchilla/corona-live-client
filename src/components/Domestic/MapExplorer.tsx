@@ -103,7 +103,7 @@ const Label = ({ pos, name, stats, cityId }) => {
     <SLabel
       color={deltaColor as ThemeType}
       onClick={onClick}
-      style={{ left, top, opacity: cases == 0 ? 0.5 : 1 }}
+      style={{ left, top, opacity: cases == 0 ? 0.4 : 1 }}
     >
       <div className="name">{name}</div>
       <div className="cases">{cases}</div>

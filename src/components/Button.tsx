@@ -26,7 +26,7 @@ const Button = styled.button<ButtonProps>`
   flex-shrink: 0;
 
   width: 72px;
-  min-height: 32px;
+  min-height: 40px;
 
   color: ${theme("darkGreyText")};
   background: ${theme("greyBg")};
@@ -76,6 +76,7 @@ const Button = styled.button<ButtonProps>`
     "icon",
     css`
       width: 60px;
+      height: 32px;
       svg {
         transition: 0.3s;
         :hover {
@@ -88,8 +89,8 @@ const Button = styled.button<ButtonProps>`
   ${ifProp(
     "square",
     css`
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       padding: 0px;
     `
   )}

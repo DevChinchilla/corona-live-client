@@ -28,6 +28,7 @@ const City = ({ theme, setTheme, match, data }) => {
     isLoading,
     notification,
     removeNotification,
+    lastUpdatedDate,
   } = data;
 
   useEffect(() => {
@@ -80,6 +81,7 @@ const City = ({ theme, setTheme, match, data }) => {
             current: statsData.current[cityId].cases,
           }}
           casesSummary={getCasesSummary(updatesData.filter((a) => a.city == cityId))}
+          lastUpdated={lastUpdatedDate}
         ></Board>
       )}
 

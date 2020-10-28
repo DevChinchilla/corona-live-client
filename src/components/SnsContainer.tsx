@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useRef } from "react";
+import styled, { css } from "styled-components";
 
-import { Row } from "@components/Layout";
+import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
 
 import { useKakaoButton } from "@hooks/useKakaoButton";
@@ -16,21 +16,54 @@ import {
 } from "@consts";
 
 import { IconBox } from "./IconBox";
-const Wrapper = styled.div``;
+import { useTimeoutState } from "@hooks/useTimeoutState";
+import { ifProp } from "@styles/tools";
+const Wrapper = styled(Col)<{ reverse?: boolean; small?: boolean }>`
+  align-items: center;
+
+  & > div {
+    align-items: center;
+  }
+
+  textarea {
+    opacity: 0;
+    position: absolute;
+    left: -999px;
+    top: -999px;
+  }
+
+  ${ifProp(
+    "reverse",
+    css`
+      flex-direction: column-reverse;
+    `
+  )}
+
+  ${ifProp(
+    "small",
+    css`
+      transform: scale(0.9);
+    `
+  )}
+`;
 
 const LinkCopyMsg = styled(Row)`
   position: absolute;
   padding: 0px 10px;
-  bottom: -30px;
+  bottom: 64px;
   font-size: 11px;
   background: ${theme("greyText")}30;
   flex-shrink: 0;
   font-weight: bold;
 `;
 
-type Props = {};
+type Props = {
+  reverse?: boolean;
+  small?: boolean;
+  finishedPopup?: boolean;
+};
 
-const SnsContainer: React.FC<Props> = ({}) => {
+const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup }) => {
   useKakaoButton();
 
   const [copySuccess, setCopySuccess] = useTimeoutState(false, 2000);
@@ -45,45 +78,53 @@ const SnsContainer: React.FC<Props> = ({}) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper small={small} reverse={reverse}>
       <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
-      <Row fontSize="12px" mb="14px" opacity={0.7}>
-        공유하기
-      </Row>
-      <Row jc="center" position="relative">
-        <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
-          링크가 복사 되었습니다
-        </LinkCopyMsg>
-        <IconBox type="blog" href={BLOG_URL}>
-          <Icon name="Blog" size={14}></Icon>
-        </IconBox>
-        <IconBox type="facebook" href={FACEBOOK_URL}>
-          <Icon name="Facebook" size={14}></Icon>
-        </IconBox>
-        <IconBox type="twitter" href={TWITTER_URL}>
-          <Icon name="Twitter" size={14}></Icon>
-        </IconBox>
-        <IconBox type="kakao" id="kakaoShare">
-          <Icon name="KakaoTalk" size={14}></Icon>
-        </IconBox>
-        {document.queryCommandSupported("copy") && (
-          <IconBox type="link" onClick={copyToClipboard}>
-            <Icon name="Link" size={14}></Icon>
-          </IconBox>
-        )}
-      </Row>
 
-      <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
-        SNS로 보기
-      </Row>
-      <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
-        <IconBox type="twitter" href={TWITTER_SNS_URL}>
-          <Icon name="Twitter" size={14}></Icon>
-        </IconBox>
-        <IconBox type="instagram" href={INSTA_SNS_URL}>
-          <Icon name="Instagram" size={14}></Icon>
-        </IconBox>
-      </Row>
+      <Col my="9px">
+        <Row fontSize="12px" mb="10px" opacity={0.7}>
+          공유하기
+        </Row>
+        <Row jc="center" position="relative">
+          <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
+            링크가 복사 되었습니다
+          </LinkCopyMsg>
+          <IconBox type="facebook" href={FACEBOOK_URL}>
+            <Icon name="Facebook" size={14}></Icon>
+          </IconBox>
+          <IconBox type="twitter" href={TWITTER_URL}>
+            <Icon name="Twitter" size={14}></Icon>
+          </IconBox>
+          <IconBox type="blog" href={BLOG_URL}>
+            <Icon name="Blog" size={14}></Icon>
+          </IconBox>
+          <IconBox type="kakao" id="kakaoShare">
+            <Icon name="KakaoTalk" size={14}></Icon>
+          </IconBox>
+
+          {document.queryCommandSupported("copy") && (
+            <IconBox type="link" onClick={copyToClipboard}>
+              <Icon name="Link" size={14}></Icon>
+            </IconBox>
+          )}
+        </Row>
+      </Col>
+
+      {!finishedPopup && (
+        <Col my="9px">
+          <Row fontSize="12px" mb="10px" opacity={0.7}>
+            SNS로 보기
+          </Row>
+          <Row jc="center" position="relative" flexShrink={0}>
+            <IconBox type="twitter" href={TWITTER_SNS_URL}>
+              <Icon name="Twitter" size={14}></Icon>
+            </IconBox>
+            <IconBox type="instagram" href={INSTA_SNS_URL}>
+              <Icon name="Instagram" size={14}></Icon>
+            </IconBox>
+          </Row>
+        </Col>
+      )}
     </Wrapper>
   );
 };

@@ -6,6 +6,8 @@ import { CasesSummaryType } from "@types";
 import styled from "styled-components";
 import Icon from "@components/Icon";
 import { IconBox } from "@components/IconBox";
+import SnsContainer from "@components/SnsContainer";
+import { theme } from "@styles/themes";
 
 const Information = styled.div`
   font-size: 12px;
@@ -19,11 +21,13 @@ const Information = styled.div`
 `;
 
 const ShowButton = styled(Row)`
-  font-size: 10px;
-  margin-bottom: 10px;
+  font-size: 11px;
   margin-top: 4px;
-  opacity: 0.7;
-  border-bottom: 1px solid;
+  /* opacity: 0.6; */
+  background: ${theme("greyBg")};
+  color: ${theme("greyText")};
+  font-weight: bold;
+  padding: 1px 10px;
   cursor: pointer;
 `;
 
@@ -74,13 +78,20 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
             </Col>
           ) : (
             <>
-              <Row fontSize="12px">최소수치</Row>
-              <Row fontSize="26px" fontWeight={700}>
-                {todayCases}명
+              <Row fontSize="12px" opacity="0.7">
+                최소수치
+              </Row>
+              <Row fontSize="26px" jc="center">
+                <Row fontWeight={700}>{todayCases}</Row>
+
+                <Row fontWeight={300}>명</Row>
               </Row>
               <ShowButton onClick={() => setShowInfo((prev) => !prev)}>
                 집계방식 보기 &rarr;
               </ShowButton>
+              <Col my="10px">
+                <SnsContainer finishedPopup reverse small></SnsContainer>
+              </Col>
             </>
           )}
           <Row h="10px"></Row>

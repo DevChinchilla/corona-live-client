@@ -18,7 +18,7 @@ const Chart = lazy(() => import("@components/Chart/Chart"));
 const Domestic = ({ data }) => {
   useScrollTop();
   const [showMap, setShowMap] = useState(false);
-  const { updatesData, statsData, timeseriesData, casesSummary } = data;
+  const { updatesData, statsData, timeseriesData, casesSummary, lastUpdatedDate } = data;
 
   return (
     <>
@@ -35,7 +35,11 @@ const Domestic = ({ data }) => {
 
       {statsData && casesSummary && (
         <Suspense fallback={<div style={{ height: "110px" }} />}>
-          <Board data={statsData.overview} casesSummary={casesSummary}></Board>
+          <Board
+            data={statsData.overview}
+            casesSummary={casesSummary}
+            lastUpdated={lastUpdatedDate}
+          ></Board>
         </Suspense>
       )}
 
@@ -46,7 +50,7 @@ const Domestic = ({ data }) => {
       )}
 
       {statsData && (
-        <Row jc="center" mt="6px" fadeInUp delay={5}>
+        <Row jc="center" mt="12px" mb="4px" fadeInUp delay={5}>
           <ToggleButtons
             divider
             noBg

@@ -5,19 +5,8 @@ import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
 
 import { theme } from "@styles/themes";
-import {
-  FACEBOOK_URL,
-  BLOG_URL,
-  TWITTER_URL,
-  WEBSITE_URL,
-  IMPORTANT_MESSAGE,
-  KAKAOPAY_URL,
-  EMAIL,
-  TWITTER_SNS_URL,
-  INSTA_SNS_URL,
-} from "@consts";
-import { useTimeoutState } from "@hooks/useTimeoutState";
-import { ifProp, ifProps } from "@styles/tools";
+import { IMPORTANT_MESSAGE, KAKAOPAY_URL, EMAIL } from "@consts";
+
 import { Link } from "react-router-dom";
 import { IconBox } from "./IconBox";
 import SnsContainer from "./SnsContainer";
@@ -28,12 +17,6 @@ const Wrapper = styled(Col)`
 
   margin-top: 50px;
 
-  textarea {
-    opacity: 0;
-    position: absolute;
-    left: -999px;
-    top: -999px;
-  }
   p {
     font-size: 11px;
 
@@ -43,7 +26,7 @@ const Wrapper = styled(Col)`
   }
   a {
     color: ${theme("darkGreyText")};
-    margin-left: 2px;
+    /* margin-left: 2px; */
   }
 `;
 
@@ -62,14 +45,14 @@ const Footer = () => {
   return (
     <Wrapper fadeInUp delay={6}>
       <SnsContainer></SnsContainer>
-      <Row fontSize="12px" mb="10px" mt="10px" opacity={0.7}>
+      <Row fontSize="12px" mb="10px" mt="42px" opacity={0.7}>
         후원하기
       </Row>
       <Row fontSize="11px" jc="center" opacity="0.5" textAlign="center">
-        서버비용 충당후 남은 후원금은 투명하게 공개하여 코로나19 관련 단체에 기부하겠습니다 (SNS
-        통해 공개)
+        서버비용 충당후 남은 후원금은 코로나19 관련 단체에 기부하겠습니다 <br></br>(SNS 통해 공개)
       </Row>
-      <Row jc="center" position="relative" mt="12px">
+      <Row h="18px"></Row>
+      <Row jc="center" position="relative">
         <IconBox type="kakao" href={KAKAOPAY_URL} kakaoPay>
           <Icon name="KakaoPay" height="12px" width="100px"></Icon>
         </IconBox>

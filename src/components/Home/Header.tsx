@@ -14,6 +14,7 @@ import { theme } from "@styles/themes";
 const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
+  padding-top: 6px;
 `;
 
 interface Props {
@@ -39,7 +40,7 @@ const Header: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
       <Wrapper fadeInUp>
         {!!title ? (
           <Button transparent icon onClick={() => history.push({ pathname: "/", state: "live" })}>
-            <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
+            <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={28}></Icon>
           </Button>
         ) : (
           <Button

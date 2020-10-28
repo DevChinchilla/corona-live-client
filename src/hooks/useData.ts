@@ -156,6 +156,12 @@ export const useData = () => {
   const isLoading = updates.loading;
   const casesSummary = updates.data ? getCasesSummary(updates.data) : null;
 
+  const lastUpdatedDate = timeseries.data
+    ? Object.keys(timeseries.data).slice(-1)[0].slice(5)
+    : null;
+
+  console.log({ lastUpdatedDate });
+
   return {
     casesSummary,
     updatesData: updates.data,
@@ -165,5 +171,6 @@ export const useData = () => {
     isLoading,
     notification,
     removeNotification,
+    lastUpdatedDate,
   };
 };

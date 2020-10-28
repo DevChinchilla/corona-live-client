@@ -7,21 +7,19 @@ import Board from "@components/Board";
 interface Props {
   data: OverviewType;
   casesSummary: CasesSummaryType;
+  lastUpdated?: string;
 }
 
-const DomesticBoard: FC<Props> = ({ data, casesSummary }) => {
+const DomesticBoard: FC<Props> = ({ data, casesSummary, lastUpdated }) => {
   let { todayCases, yesterdayCases } = casesSummary;
 
-  const date = new Date();
-  const currentDate = new Date(date.getTime() - 10 * HOUR);
-  const month = currentDate.getMonth() + 1;
-  const day = currentDate.getDate();
+  const [month, day] = (lastUpdated || " ").split("-");
 
   const statsData = [
     {
       data: data.confirmed,
       title: "총 확진자",
-      info: `${month}월 ${day}일 0시 기준`,
+      info: `${month}월 ${day}일 00시 기준`,
     },
     {
       data: data.current,

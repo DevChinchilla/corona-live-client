@@ -7,7 +7,7 @@ export const IconBox = styled.a<{ type: string; kakaoPay?: boolean }>`
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  margin: 0px 10px;
+  margin: 0px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
