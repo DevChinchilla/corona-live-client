@@ -43,16 +43,19 @@ export const theme = (attr: ThemeType) => ({ theme }) => theme[attr];
 
 const lightTheme: ThemeProps = {
   bg: "white",
-  text: "#4A4A4A",
+  // text: "#4A4A4A",
+  text: "#555c62",
   border: "#F5F5F5",
   greyBg: "#F5F5F5",
 
   blackText: "#222222",
-  darkGreyText: "#4A4A4A",
+  // darkGreyText: "#4A4A4A",
+  darkGreyText: "#555c62",
+
   semiDarkGreyText: "#5a5a5a",
   greyText: "#868686",
   semigreyText: "#c3c3c3",
-  lightGreyText: "#eaeaea",
+  lightGreyText: "#c1c1c1",
 
   blue: "#5673EB",
   red: "#EB5374",
@@ -79,13 +82,15 @@ const lightTheme: ThemeProps = {
   light: "white",
   dark: "#191F2C",
 
-  navBarShadow: "#0000001e",
+  navBarShadow: "white",
 };
 
 const darkTheme: ThemeProps = {
-  bg: "#191F2C",
   // bg: "#171725",
-  text: "#C8C9CD",
+  // text: "#C8C9CD",
+  bg: "#191F2C",
+  // text: "#bfbfbf",
+  text: "#b7c1cc",
   border: "#C8C9CD",
   greyBg: "#272b38",
 
@@ -120,7 +125,7 @@ const darkTheme: ThemeProps = {
   light: "white",
   dark: "#191F2C",
 
-  navBarShadow: "#8282821e",
+  navBarShadow: "#ffffff08",
 };
 
 export default { light: lightTheme, dark: darkTheme };

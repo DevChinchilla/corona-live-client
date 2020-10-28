@@ -11,6 +11,7 @@ import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
 import ALink from "../ALink";
 import DomesticUpdatesModal from "./DomesticUpdatesModal";
+import { UNAVALIABLE_REGIONS } from "@consts";
 
 const Wrapper = styled(Row)`
   border-radius: 6px;
@@ -48,7 +49,7 @@ const Td = styled(Row)<PTd>`
   justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
 `;
 
-const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props }) => {
+const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...props }) => {
   const [showUpdates, setShowUpdates] = useState(false);
 
   const { total, current } = data;
@@ -56,15 +57,11 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
   const deltaPositive = current[1] > 0;
   const currentColor = deltaPositive ? "red" : "blue";
 
-  const name = cityId ? ct(cityId, id) : ct(id);
-  if (!name) return <></>;
+  const region = ct(cityId, guId);
+  if (!region) return <></>;
 
-  const onClick = (e) => {
-    if (cityId == null && name != "대구" && name != "검역") {
-    } else {
-      e.preventDefault();
-      if (updateTime || updates.length != 0) setShowUpdates(true);
-    }
+  const onClick = () => {
+    if (lastUpdated) setShowUpdates(true);
   };
 
   return (
@@ -75,21 +72,25 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
           onClose={() => setShowUpdates(false)}
           show={showUpdates}
           cityId={cityId}
-          guId={id}
+          guId={guId}
         ></DomesticUpdatesModal>
       )}
 
       <Wrapper {...props} onClick={onClick}>
-        <ALink to={cityId == null ? `/city/${id}` : (null as any)}>{name}</ALink>
+        {guId == undefined && !UNAVALIABLE_REGIONS[region] && (
+          <ALink to={`/city/${cityId}`}>{region}</ALink>
+        )}
 
         <Td flex={tdFlex[0]}>
           <Box fontSize="12px" fontWeight={500}>
-            {name}
+            {region}
           </Box>
         </Td>
+
         <Td flex={tdFlex[1]}>
           <Divider></Divider>
         </Td>
+
         <Td flex={tdFlex[2]}>
           {total ? (
             <>
@@ -97,7 +98,9 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
               <Box fontSize="10px" opacity={0.6} ml="2px">
                 명
               </Box>
-              {cityId == null && <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>}
+              {guId == undefined && (
+                <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+              )}
             </>
           ) : (
             <Box fontSize="12px" opacity={0.8} ml="2px">
@@ -105,8 +108,9 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
             </Box>
           )}
         </Td>
+
         <Td flex={tdFlex[3]}>
-          {name != "대구" && name != "검역" ? (
+          {!UNAVALIABLE_REGIONS[region] ? (
             <>
               <Cases>{numberWithCommas(current[0])}</Cases>
               <Box fontSize="10px" opacity={0.6} ml="2px">
@@ -120,12 +124,11 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
             </Row>
           )}
         </Td>
+
         <Td end={true} flex={tdFlex[4]}>
-          {(updateTime ||
-            updates.length != 0 ||
-            (cityId === undefined && name != "대구" && name != "검역")) && (
+          {!UNAVALIABLE_REGIONS[region] && (
             <>
-              {updateTime && <LastUpdatedTime isOld date={updateTime}></LastUpdatedTime>}
+              <LastUpdatedTime isOld date={lastUpdated}></LastUpdatedTime>
               <div style={{ width: "8px" }}></div>
               <Icon name="ChevronRight" size={18}></Icon>
             </>

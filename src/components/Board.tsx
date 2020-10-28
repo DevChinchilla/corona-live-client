@@ -47,7 +47,7 @@ const Stat: FC<StatsProps> = ({ title, data, info, vertical, ...props }) => {
   const _color = theme(color);
 
   return (
-    <Col {...props} mt="10px" ai={vertical ? "center" : "flex-start"}>
+    <Col {...props} ai={vertical ? "center" : "flex-start"}>
       <Box fontSize="11px" mb="2px" color={_color} opacity={0.7}>
         {title}
       </Box>
@@ -94,9 +94,9 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = ({ data }) => {
   return (
-    <Row jc="space-between" mt="8px" mb="24px">
+    <Row jc="space-between" my="22px">
       {data.map((stat) => {
-        return <Stat {...stat} fadeInUp delay={2}></Stat>;
+        return <Stat {...(stat as any)} fadeInUp delay={2}></Stat>;
       })}
     </Row>
   );

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import * as ReactDOM from "react-dom";
 
-import Icon from "@components/Icon/Icon";
+import Icon, { IconType } from "@components/Icon/Icon";
 import { Row, Col } from "@components/Layout";
 
 import { theme } from "@styles/themes";
@@ -116,11 +116,11 @@ const Modal: FC<Props> = ({
               {title}
             </Row>
 
-            {!hideActionIcon ? (
+            {actionIcon && !hideActionIcon ? (
               <Button icon square onClick={onActionClick}>
                 <Icon
-                  name={actionIcon.name}
-                  size={actionIcon.size}
+                  name={actionIcon?.name}
+                  size={actionIcon?.size}
                   fill={_theme("darkGreyText")}
                 ></Icon>
               </Button>

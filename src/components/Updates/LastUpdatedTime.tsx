@@ -45,6 +45,9 @@ interface Props {
 }
 const LastUpdatedTime: FC<Props> = ({ isOld, date, flex }) => {
   const _theme = useTheme();
+
+  if (!date) return <></>;
+
   return (
     <Wrapper isOld={isOld} flex={flex}>
       {!isOld && <Icon name="Notification" size={12} stroke={_theme("greyText")}></Icon>}

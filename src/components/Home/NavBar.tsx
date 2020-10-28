@@ -1,79 +1,74 @@
-import styled from "styled-components";
-import React, { useEffect, useState } from "react";
-
 import Icon from "@components/Icon";
 import { Row } from "@components/Layout";
-import Report from "@components/Home/ReportModal";
-import Underline from "@components/Underline";
-import Button from "@components/Button";
-
-import { useTheme } from "@hooks/useTheme";
-import { useRouteMatch, useHistory } from "react-router-dom";
 import { theme } from "@styles/themes";
+import { ifProp } from "@styles/tools";
+import React from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import styled, { css } from "styled-components";
 
 const Wrapper = styled(Row)`
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 12px;
-  padding-bottom: 12px;
-  /* padding-top: 20px; */
-  /* box-shadow: -1px 1px 20px ${theme("navBarShadow")}; */
+  justify-content: center;
+  width: fit-content;
+  margin: 8px auto;
+  box-shadow: -1px 1px 20px #0000001e;
+  background: ${theme("navBarShadow")};
+  border-radius: 50px;
+  overflow: hidden;
 `;
 
-interface Props {
-  theme: string;
-  setTheme: any;
-  title?: string;
-}
+const NavbarItem = styled(Row)<{ selected?: boolean }>`
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  border-radius: 6px;
+  border-radius: 50px;
+  color: ${theme("greyText")};
+  padding: 4px 12px;
 
-const NavBar: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
-  const routerMatch = useRouteMatch();
+  cursor: pointer;
+
+  span {
+    margin-left: 4px;
+  }
+  svg {
+    fill: ${theme("greyText")};
+  }
+
+  ${ifProp(
+    "selected",
+    css`
+      color: ${theme("blue")};
+      font-weight: bold;
+      background: ${theme("blueBg")};
+      svg {
+        fill: ${theme("blue")};
+      }
+    `
+  )}
+`;
+
+type Props = {};
+
+const NavBar: React.FC<Props> = ({}) => {
   const history = useHistory();
-
-  const [showReport, setShowReport] = useState(false);
-  const theme = useTheme();
-
-  useEffect(() => {
-    if (routerMatch.path == "/report") setShowReport(true);
-  }, [routerMatch]);
+  const routerMatch = useRouteMatch();
+  const { path } = routerMatch;
 
   return (
-    <>
-      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
-      <Wrapper fadeInUp>
-        {!!title ? (
-          <Button transparent icon onClick={() => history.push({ pathname: "/", state: "live" })}>
-            <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={24}></Icon>
-          </Button>
-        ) : (
-          <Button
-            transparent
-            icon
-            onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}
-          >
-            <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
-          </Button>
-        )}
-
-        {!!title ? (
-          <Underline fontSize="18px " fontWeight={900}>
-            {title}
-          </Underline>
-        ) : (
-          <Icon
-            transform="translate(2px,-4px)"
-            name="Logo"
-            height="26px"
-            width="110px"
-            fill={theme("blackText")}
-          ></Icon>
-        )}
-
-        <Button transparent icon onClick={() => setShowReport(true)}>
-          <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>
-        </Button>
-      </Wrapper>
-    </>
+    <Wrapper fadeInUp delay={2}>
+      <Row jc="center">
+        <NavbarItem onClick={() => history.push("/")} selected={path == "/"} mr="-2px">
+          <Icon name={"Domestic"} size={12}></Icon>
+          <span>국내 </span>
+        </NavbarItem>
+      </Row>
+      <Row jc="center">
+        <NavbarItem onClick={() => history.push("/world")} selected={path == "/world"}>
+          <Icon name={"World"} size={12}></Icon>
+          <span>세계 </span>
+        </NavbarItem>
+      </Row>
+    </Wrapper>
   );
 };
 

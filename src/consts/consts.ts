@@ -81,3 +81,5 @@ export const MAP_POINTS = {
   제주: [100, 540],
   검역: [284, 468],
 };
+
+export const UNAVALIABLE_REGIONS = { 대구: true, 검역: true };

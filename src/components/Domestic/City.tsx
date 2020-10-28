@@ -12,7 +12,7 @@ const Chart = lazy(() => import("@components/Chart/Chart"));
 import { DISTRICT_TD_FLEX } from "@consts";
 import { ct, getCasesSummary, getDomesticUpdates, sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
-import NavBar from "@components/Home/NavBar";
+import Header from "@components/Home/Header";
 import DomesticUpdatesModal from "./DomesticUpdatesModal";
 
 const City = ({ theme, setTheme, match, data }) => {
@@ -55,7 +55,7 @@ const City = ({ theme, setTheme, match, data }) => {
         </Suspense>
       )}
 
-      <NavBar {...{ theme, setTheme }} title={ct(cityId)}></NavBar>
+      <Header {...{ theme, setTheme }} title={ct(cityId)}></Header>
 
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>

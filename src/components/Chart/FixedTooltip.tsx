@@ -14,7 +14,7 @@ const Wrapper = styled(Row)`
   border-radius: 4px;
   margin: 10px 0px;
   left: 0px;
-  box-shadow: -1px 1px 10px #0000002e;
+  box-shadow: -1px 1px 16px -2px #0000001f;
   background: ${theme("shadow")};
   border: 0px;
 `;
