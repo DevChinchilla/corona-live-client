@@ -2,8 +2,6 @@ import Board from "@components/Board";
 import React from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div``;
-
 type Props = {
   worldData: { cases: number; casesDelta: number; deaths: number; deathsDelta: number };
 };
@@ -19,12 +17,12 @@ const WorldBoard: React.FC<Props> = ({ worldData }) => {
     },
     {
       data: [deaths, deathsDelta],
-      title: "총 사망자",
+      title: "오늘 추가확진자",
       vertical: true,
     },
   ];
 
-  return <Board data={statsData}></Board>;
+  return <Board data={statsData} numbersOnly></Board>;
 };
 
 export default WorldBoard;

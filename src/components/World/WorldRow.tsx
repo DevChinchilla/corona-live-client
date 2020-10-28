@@ -94,25 +94,19 @@ const WorldRow: React.FC<Props> = ({ data, code, index }) => {
       <CountryName fontSize={fontSize + "px"}>{countryName}</CountryName>
       <ConfirmedCases>
         <Col>
-          <CountryCases>
-            {numberWithCommas(cases)}
-            <span>명</span>
-          </CountryCases>
+          <CountryCases>{numberWithCommas(cases)}</CountryCases>
           <Row h="2px"></Row>
           <Row jc="flex-end">
-            <DeltaTag delta={casesDelta} color={"red"} small showBg={false}></DeltaTag>
+            <DeltaTag delta={casesDelta} color={"red"} small></DeltaTag>
           </Row>
         </Col>
       </ConfirmedCases>
       <ConfirmedCases>
         <Col>
-          <CountryCases>
-            {numberWithCommas(deaths)}
-            <span>명</span>
-          </CountryCases>
+          <CountryCases>{numberWithCommas(deaths)}</CountryCases>
           <Row h="2px"></Row>
           <Row jc="flex-end">
-            <DeltaTag delta={deathsDelta} color={"red"} small showBg={false}></DeltaTag>
+            <DeltaTag delta={deathsDelta} color={"red"} small></DeltaTag>
           </Row>
         </Col>
       </ConfirmedCases>

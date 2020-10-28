@@ -25,9 +25,10 @@ interface StatsProps {
   delay?: number;
   info?: string;
   vertical: boolean;
+  numbersOnly?: boolean;
 }
 
-const Stat: FC<StatsProps> = ({ title, data, info, vertical, ...props }) => {
+const Stat: FC<StatsProps> = ({ title, data, info, vertical, numbersOnly, ...props }) => {
   const [total, delta] = data;
   const prevTotal = useRef(0);
   const prevDelta = useRef(0);
@@ -60,9 +61,11 @@ const Stat: FC<StatsProps> = ({ title, data, info, vertical, ...props }) => {
               <CountUp start={prevTotal.current} end={total} separator={","} duration={3} />
             )}
           </Box>
-          <Box fontSize="24px" fontWeight={300} color={_color}>
-            명
-          </Box>
+          {!numbersOnly && (
+            <Box fontSize="24px" fontWeight={300} color={_color}>
+              명
+            </Box>
+          )}
         </Row>
         <Box w="8px"></Box>
         <DeltaTag
@@ -70,6 +73,7 @@ const Stat: FC<StatsProps> = ({ title, data, info, vertical, ...props }) => {
           delta={delta}
           countUp={history.location.state != "live"}
           prevDelta={prevDelta.current}
+          showBg={!vertical}
         ></DeltaTag>
       </Row>
       {info && (
@@ -90,13 +94,19 @@ interface BoardDataType {
 
 interface BoardProps {
   data: BoardDataType[];
+  numbersOnly?: boolean;
 }
 
-const Board: FC<BoardProps> = ({ data }) => {
+const Board: FC<BoardProps> = ({ data, numbersOnly }) => {
   return (
-    <Row jc="space-between" my="22px">
-      {data.map((stat) => {
-        return <Stat {...(stat as any)} fadeInUp delay={2}></Stat>;
+    <Row jc="space-evenly" my="22px">
+      {data.map((stat, i) => {
+        return (
+          <>
+            {i > 0 && <Row w="20px"></Row>}
+            <Stat {...(stat as any)} numbersOnly={numbersOnly} fadeInUp delay={2}></Stat>
+          </>
+        );
       })}
     </Row>
   );

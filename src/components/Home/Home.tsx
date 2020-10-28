@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import AnnouncementPopup from "@components/Home/AnnouncementPopup";
 import ThemePopup from "@components/Home/ThemePopup";
@@ -22,8 +23,39 @@ const Home = ({ theme, setTheme, data }) => {
   const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
   const { statsData, isLoading, notification, removeNotification, casesSummary } = data;
 
+  console.log(path);
+
+  const helmet = () => {
+    if (path == "/") {
+      return (
+        <Helmet>
+          <title>코로나 라이브 | 실시간</title>
+          <link rel="canonical" href="https://corona-live.com/live" />
+        </Helmet>
+      );
+    }
+
+    if (path == "/daily") {
+      return (
+        <Helmet>
+          <title>코로나 라이브 | 일별</title>
+          <link rel="canonical" href="https://corona-live.com/daily" />
+        </Helmet>
+      );
+    }
+
+    if (path == "/rates") {
+      return (
+        <Helmet>
+          <title>코로나 라이브 | 확진율</title>
+          <link rel="canonical" href="https://corona-live.com/rates" />
+        </Helmet>
+      );
+    }
+  };
   return (
     <>
+      {helmet()}
       {statsData && casesSummary && path == "/" && (
         <Suspense fallback={<div />}>
           <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
@@ -58,7 +90,7 @@ const Home = ({ theme, setTheme, data }) => {
         </Suspense>
 
         <Col>
-          {path == "/" && <Domestic data={data}></Domestic>}
+          {path != "/world" && <Domestic data={data}></Domestic>}
           {path == "/world" && <World></World>}
         </Col>
       </Page>

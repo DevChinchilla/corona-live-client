@@ -14,22 +14,20 @@ const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean 
   color: ${prop("color")};
   border-radius: 6px;
   padding: 4px 8px;
-  /* margin-left: 8px; */
   align-items: center;
   ${ifProp(
     "small",
     css`
       font-size: 11px;
-      padding: 0px;
-      /* margin-left: 4px; */
+      padding: 1px 6px 1px 4px;
     `
   )};
+
   ${ifProp(
     "showBg",
     css`
-      padding: 1px 4px;
-      padding-right: 6px;
-      margin-left: 6px;
+      padding-left: 4px;
+      margin-left: 4px;
     `
   )}
 `;
@@ -49,7 +47,7 @@ const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg, prevDelta }
   const _bg = theme((color + "Bg") as ThemeType);
   if (delta == 0) return <></>;
   return (
-    <Wrapper {...{ small, showBg }} color={_color} bg={!small || showBg ? _bg : ""}>
+    <Wrapper {...{ small, showBg }} color={_color} bg={showBg ? _bg : ""}>
       {delta > 0 ? (
         <Icon name="ArrowUp" stroke={_color}></Icon>
       ) : (

@@ -16,11 +16,11 @@ import {
   TWITTER_SNS_URL,
   INSTA_SNS_URL,
 } from "@consts";
-import { useKakaoButton } from "@hooks/useKakaoButton";
 import { useTimeoutState } from "@hooks/useTimeoutState";
 import { ifProp, ifProps } from "@styles/tools";
 import { Link } from "react-router-dom";
 import { IconBox } from "./IconBox";
+import SnsContainer from "./SnsContainer";
 
 const Wrapper = styled(Col)`
   align-items: center;
@@ -47,16 +47,6 @@ const Wrapper = styled(Col)`
   }
 `;
 
-const LinkCopyMsg = styled(Row)`
-  position: absolute;
-  padding: 0px 10px;
-  bottom: -30px;
-  font-size: 11px;
-  background: ${theme("greyText")}30;
-  flex-shrink: 0;
-  font-weight: bold;
-`;
-
 const Gnb = styled(Row)`
   justify-content: center;
   margin-bottom: 10px;
@@ -69,60 +59,9 @@ const Gnb = styled(Row)`
 `;
 
 const Footer = () => {
-  useKakaoButton();
-  const [copySuccess, setCopySuccess] = useTimeoutState(false, 2000);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  function copyToClipboard(e) {
-    textAreaRef.current!.select();
-    document.execCommand("copy");
-    textAreaRef.current!.blur();
-    e.target.blur();
-    setCopySuccess(true);
-  }
-
   return (
     <Wrapper fadeInUp delay={6}>
-      <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
-
-      <Row fontSize="12px" mb="14px" opacity={0.7}>
-        공유하기
-      </Row>
-      <Row jc="center" position="relative">
-        <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
-          링크가 복사 되었습니다
-        </LinkCopyMsg>
-        <IconBox type="blog" href={BLOG_URL}>
-          <Icon name="Blog" size={14}></Icon>
-        </IconBox>
-        <IconBox type="facebook" href={FACEBOOK_URL}>
-          <Icon name="Facebook" size={14}></Icon>
-        </IconBox>
-        <IconBox type="twitter" href={TWITTER_URL}>
-          <Icon name="Twitter" size={14}></Icon>
-        </IconBox>
-        <IconBox type="kakao" id="kakaoShare">
-          <Icon name="KakaoTalk" size={14}></Icon>
-        </IconBox>
-        {document.queryCommandSupported("copy") && (
-          <IconBox type="link" onClick={copyToClipboard}>
-            <Icon name="Link" size={14}></Icon>
-          </IconBox>
-        )}
-      </Row>
-
-      <Row fontSize="12px" mb="14px" mt="30px" opacity={0.7}>
-        SNS로 보기
-      </Row>
-      <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
-        <IconBox type="twitter" href={TWITTER_SNS_URL}>
-          <Icon name="Twitter" size={14}></Icon>
-        </IconBox>
-        <IconBox type="instagram" href={INSTA_SNS_URL}>
-          <Icon name="Instagram" size={14}></Icon>
-        </IconBox>
-      </Row>
-
+      <SnsContainer></SnsContainer>
       <Row fontSize="12px" mb="10px" mt="10px" opacity={0.7}>
         후원하기
       </Row>

@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
-
+import { Helmet } from "react-helmet";
 import { Page, Row } from "@components/Layout";
 
 const Table = lazy(() => import("@components/Domestic/DomesticTable"));
@@ -32,12 +32,17 @@ const City = ({ theme, setTheme, match, data }) => {
 
   useEffect(() => {
     if (Number(cityId) > 16) history.push({ pathname: "/", state: "live" });
+    document.title = `${ct(cityId)} | 코로나 라이브`;
   }, [cityId]);
 
   if (Number(cityId) > 16) return <></>;
 
   return (
     <Page>
+      <Helmet>
+        <title>{`코로나 라이브 | ${ct(cityId)}`}</title>
+        <link rel="canonical" href={`https://corona-live.com/city/${cityId}`} />
+      </Helmet>
       {updatesData && (
         <Suspense fallback={<div />}>
           <DomesticUpdatesModal

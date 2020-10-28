@@ -81,17 +81,6 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
               <ShowButton onClick={() => setShowInfo((prev) => !prev)}>
                 집계방식 보기 &rarr;
               </ShowButton>
-              <Row fontSize="12px" mt="20px" mb="16px">
-                SNS로 보기
-              </Row>
-              <Row jc="center" position="relative" flexShrink={0} minHeight="60px">
-                <IconBox type="twitter" href={TWITTER_SNS_URL}>
-                  <Icon name="Twitter" size={14}></Icon>
-                </IconBox>
-                <IconBox type="instagram" href={INSTA_SNS_URL}>
-                  <Icon name="Instagram" size={14}></Icon>
-                </IconBox>
-              </Row>
             </>
           )}
           <Row h="10px"></Row>
