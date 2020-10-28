@@ -5,8 +5,8 @@ import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-d
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
 
-const DomesticLive = lazy(() => import("@components/LiveUpdates/DomesticLiveUpdates"));
-const WorldLive = lazy(() => import("@components/LiveUpdates/WorldLiveUpdates"));
+const DomesticLive = lazy(() => import("@components/Domestic/DomesticLiveUpdates"));
+const WorldLive = lazy(() => import("@components/World/WorldLiveUpdates"));
 const Country = lazy(() => import("@components/World/Country"));
 const Home = lazy(() => import("@components/Home"));
 const City = lazy(() => import("@components/Domestic/City"));

@@ -81,7 +81,11 @@ const WorldRow: React.FC<Props> = ({ data, code, index }) => {
   if (imgName == "xo") imgName = "je";
   if (imgName.length > 2) imgName = "xx";
 
+  console.log(code);
   let countryName = COUNTRY_NAMES[code];
+
+  if (!countryName) return <></>;
+
   let fontSize = countryName.length > 5 ? 11 : 12;
   return (
     <Wrapper even={index % 2 == 0}>

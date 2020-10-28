@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import React, { useState, useEffect, useMemo, FC } from "react";
 
-import UpdateCard from "@components/UpdateCard";
+import UpdatesRow from "@components/Updates/UpdatesRow";
 import { Col, Row, Absolute } from "@components/Layout";
 import Modal from "@components/Modal";
 import Icon from "@components/Icon";
@@ -11,7 +11,7 @@ import { useTheme } from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
-import { sortByDate, onEnter, ct } from "@utils";
+import { onEnter, ct } from "@utils";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -107,33 +107,26 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
 };
 
 interface Props {
-  showUpdates: boolean;
-  onClose: any;
+  showModal: boolean;
+  showCasesSummary?: boolean;
+  showFilters?: boolean;
+
   data?: any;
-  isDistrict?: boolean;
-  cityId?: string;
-  guId?: string;
+  onClose: any;
+  areaName?: string;
 }
 
-const UpdateModal: FC<Props> = React.memo(
-  ({ onClose, showUpdates, data, isDistrict, cityId, guId }) => {
+export const UpdatesModal: FC<Props> = React.memo(
+  ({ data, areaName, showCasesSummary, showFilters, onClose, showModal }) => {
     const _theme = useTheme();
 
     const [keyword, setKeyword] = useState("");
     const [filteredData, setData] = useState(data);
-    const [showCategories, setShowCategories] = useState(true);
+    const [filterOption, setFilterOption] = useState<"category" | "search">("category");
 
     useEffect(() => {
-      if (cityId == null) {
-        onSearchKeyword(keyword);
-      } else {
-        setData(data.filter((a) => a.city == cityId));
-      }
+      onSearchKeyword(keyword);
     }, [data]);
-
-    // useEffect(() => {
-    //   console.log("new data");
-    // }, [filteredData]);
 
     const onSearchKeyword = (newKeyword) => {
       setKeyword(newKeyword);
@@ -144,30 +137,39 @@ const UpdateModal: FC<Props> = React.memo(
     };
 
     const onToggle = () => {
-      if (showCategories) {
-        setData(null);
+      if (filterOption == "category") {
+        setData([]);
+        setFilterOption("search");
       } else {
         setData(data);
+        setFilterOption("category");
       }
-      setShowCategories((a) => !a);
       setKeyword("");
     };
-    const title = `${ct(cityId, guId)} 실시간 발생 확진자`;
+
+    const title = `${areaName || ""} 실시간 발생 확진 현황`;
+
+    if (!filteredData) return <></>;
+
     return (
       <Modal
-        show={showUpdates}
+        show={showModal}
         onClose={onClose}
         title={title}
-        actionIcon={isDistrict ? null : !showCategories ? ["Category", 18] : ["Search", 14]}
+        actionIcon={
+          filterOption == "search" ? { name: "Category", size: 18 } : { name: "Search", size: 14 }
+        }
+        hideActionIcon={!showFilters}
         onActionClick={onToggle}
         full
       >
-        <CasesSummary updates={data}></CasesSummary>
-        {!isDistrict && (
+        {showCasesSummary && <CasesSummary updates={data}></CasesSummary>}
+        {showFilters && (
           <>
-            {showCategories ? (
+            {filterOption == "category" && (
               <Categories {...{ onSearchKeyword, keyword, ct, data }}></Categories>
-            ) : (
+            )}
+            {filterOption == "search" && (
               <>
                 <SearchInput fadeInUp delay={1}>
                   <Absolute right="18px" verticalCenter onClick={() => onSearchKeyword(keyword)}>
@@ -180,7 +182,7 @@ const UpdateModal: FC<Props> = React.memo(
                     value={keyword}
                   ></input>
                 </SearchInput>
-                {filteredData && (
+                {!!filteredData.length && (
                   <Row fontSize="10px" jc="center" mb="10px" fadeInUp>
                     <Row opacity={0.8}>{"검색 결과"}</Row>
                     <Row fontWeight={700} ml="2px">{`${filteredData.length}개`}</Row>
@@ -191,19 +193,13 @@ const UpdateModal: FC<Props> = React.memo(
           </>
         )}
         <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
-          {filteredData &&
-            filteredData.map((update, i) => (
-              <UpdateCard
-                isDistrict={isDistrict}
-                fullWidth={true}
-                key={`${update.datetime}/${i}`}
-                data={update}
-              ></UpdateCard>
-            ))}
+          {filteredData.map((update, i) => (
+            <UpdatesRow fullWidth key={`${update.datetime}${i}`} data={update}></UpdatesRow>
+          ))}
         </Col>
       </Modal>
     );
   }
 );
 
-export default UpdateModal;
+export default UpdatesModal;

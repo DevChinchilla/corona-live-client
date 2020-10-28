@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useState } from "react";
 import { Row } from "@components/Layout";
 
-import { sortByDate } from "@utils";
+import { getDomesticUpdates, sortByDate } from "@utils";
 import { CITY_TD_FLEX } from "@consts";
 import { useScrollTop } from "@hooks/useScrollTop";
 import { CurrentType, OverallType } from "@types";
@@ -9,24 +9,24 @@ import { CurrentType, OverallType } from "@types";
 import MapExplorer from "./MapExplorer";
 import ToggleButtons from "@components/ToggleButtons";
 
-const Updates = lazy(() => import("../Updates"));
+const Updates = lazy(() => import("@components/Updates/UpdatesLiveDisplay"));
 const Board = lazy(() => import("@components/Domestic/DomesticBoard"));
 const Table = lazy(() => import("@components/Domestic/DomesticTable"));
 const Footer = lazy(() => import("@components/Footer"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
 
-const Domestic = ({ showUpdates, setShowUpdates, data }) => {
+const Domestic = ({ data }) => {
   useScrollTop();
   const [showMap, setShowMap] = useState(false);
-  const { updatesData, statsData, timeseriesData, mutateData, isLoading, casesSummary } = data;
+  const { updatesData, statsData, timeseriesData, casesSummary } = data;
 
   return (
     <>
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Updates
-            data={sortByDate(updatesData)}
-            {...{ mutateData, isLoading, showUpdates, setShowUpdates }}
+            data={getDomesticUpdates(updatesData)}
+            link={{ href: "/live", name: "실시간" }}
           ></Updates>
         </Suspense>
       ) : (

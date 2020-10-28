@@ -4,13 +4,13 @@ import styled, { css } from "styled-components";
 import { Row, Box } from "@components/Layout";
 import Icon from "@components/Icon";
 import DeltaTag from "@components/DeltaTag";
-import UpdateTime from "@components/UpdateTime";
-import UpdateModal from "@components/UpdateModal";
+import LastUpdatedTime from "@components/Updates/LastUpdatedTime";
 
 import { numberWithCommas, ct } from "@utils";
 import { ifProp } from "@styles/tools";
 import { theme } from "@styles/themes";
 import ALink from "../ALink";
+import DomesticUpdatesModal from "./DomesticUpdatesModal";
 
 const Wrapper = styled(Row)`
   border-radius: 6px;
@@ -69,12 +69,15 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
 
   return (
     <>
-      <UpdateModal
-        isDistrict={cityId != null}
-        cityId={cityId || id}
-        guId={cityId ? id : null}
-        {...{ onClose: () => setShowUpdates(false), showUpdates, data: updates }}
-      ></UpdateModal>
+      {cityId && (
+        <DomesticUpdatesModal
+          data={updates}
+          onClose={() => setShowUpdates(false)}
+          show={showUpdates}
+          cityId={cityId}
+          guId={id}
+        ></DomesticUpdatesModal>
+      )}
 
       <Wrapper {...props} onClick={onClick}>
         <ALink to={cityId == null ? `/city/${id}` : (null as any)}>{name}</ALink>
@@ -122,7 +125,7 @@ const RowComponent = ({ updates, data, cityId, id, updateTime, tdFlex, ...props 
             updates.length != 0 ||
             (cityId === undefined && name != "대구" && name != "검역")) && (
             <>
-              {updateTime && <UpdateTime isOld date={updateTime}></UpdateTime>}
+              {updateTime && <LastUpdatedTime isOld date={updateTime}></LastUpdatedTime>}
               <div style={{ width: "8px" }}></div>
               <Icon name="ChevronRight" size={18}></Icon>
             </>

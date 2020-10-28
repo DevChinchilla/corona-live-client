@@ -72,7 +72,8 @@ interface Props {
   hideOverlay?: boolean;
   onActionClick?: any;
   style?: any;
-  actionIcon?: any;
+  actionIcon?: { name: IconType; size: number } | null;
+  hideActionIcon?: boolean;
   dynamic?: boolean;
   full?: boolean;
   zIndex?: number;
@@ -87,6 +88,7 @@ const Modal: FC<Props> = ({
   title,
   onActionClick,
   actionIcon,
+  hideActionIcon,
   noHeader,
   dynamic,
   zIndex,
@@ -113,11 +115,12 @@ const Modal: FC<Props> = ({
             <Row fontSize="14px" fontWeight={700}>
               {title}
             </Row>
-            {actionIcon ? (
+
+            {!hideActionIcon ? (
               <Button icon square onClick={onActionClick}>
                 <Icon
-                  name={actionIcon[0]}
-                  size={actionIcon[1]}
+                  name={actionIcon.name}
+                  size={actionIcon.size}
                   fill={_theme("darkGreyText")}
                 ></Icon>
               </Button>

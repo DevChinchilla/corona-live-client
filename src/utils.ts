@@ -1,6 +1,7 @@
 import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES } from "@consts";
 
 export const ct = (cityId, guId: any = undefined) => {
+  if (cityId == undefined) return "";
   let cityName = CITIES[`c${cityId}`] || "";
   let guName = CITIES[`c${cityId}/${guId}`] || "";
   guName = guName == cityName || guId == "_" ? "전체" : guName;
@@ -126,4 +127,30 @@ export const getCasesSummary = (updates) => {
   );
   const yesterdayCases = totalCases - todayCases - checking;
   return { todayCases, totalCases, yesterdayCases, checking };
+};
+
+export const getDomesticUpdates = (
+  updates,
+  cityId: string | undefined = undefined,
+  guId: string | undefined = undefined
+) => {
+  const transform = updates.map((update) => {
+    const { cases, total, city, gu } = update;
+    const area = `${ct(city)} ${ct(city, gu)}`;
+    const title =
+      cases == null
+        ? `${total}명 확인중`
+        : total == total - cases
+        ? `${total}명 어제 집계`
+        : `${cases}명 추가 확진`;
+    if (!!cityId && cityId != city) return;
+    if (!!guId && guId != gu) return;
+    return { ...update, area, title };
+  });
+
+  const filter = transform.filter((a) => !!a);
+
+  const sort = sortByDate(filter);
+
+  return sort;
 };

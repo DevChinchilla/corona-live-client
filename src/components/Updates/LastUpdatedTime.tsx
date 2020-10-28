@@ -43,7 +43,7 @@ interface Props {
   date?: string;
   flex?: string;
 }
-const UpdateTime: FC<Props> = ({ isOld, date, flex }) => {
+const LastUpdatedTime: FC<Props> = ({ isOld, date, flex }) => {
   const _theme = useTheme();
   return (
     <Wrapper isOld={isOld} flex={flex}>
@@ -53,4 +53,4 @@ const UpdateTime: FC<Props> = ({ isOld, date, flex }) => {
   );
 };
 
-export default UpdateTime;
+export default LastUpdatedTime;

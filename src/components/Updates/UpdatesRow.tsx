@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 
 import { Col, Row, Box, Absolute } from "@components/Layout";
 import Icon from "@components/Icon";
-import UpdateTime from "@components/UpdateTime";
+import LastUpdatedTime from "@components/Updates/LastUpdatedTime";
 import Report from "@components/Home/ReportModal";
 
 import { theme } from "@styles/themes";
@@ -11,7 +11,7 @@ import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
 import { addHyperLink, ct } from "@utils";
 
-const Card = styled(Row)<{ shadow?: boolean }>`
+const Container = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
   align-items: center;
   position: relative;
@@ -89,7 +89,7 @@ const AnimationContainer = styled(Absolute)`
 
 interface ContentProps {
   datetime: string;
-  from: string;
+  area: string;
   title: string;
   showDetails: boolean;
   isInvalid: boolean;
@@ -98,7 +98,7 @@ interface ContentProps {
 
 const Content: FC<ContentProps> = ({
   datetime,
-  from,
+  area,
   title,
   showDetails,
   isInvalid,
@@ -107,19 +107,19 @@ const Content: FC<ContentProps> = ({
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
-        <UpdateTime date={datetime} flex={`0 1 96px`}></UpdateTime>
+        <LastUpdatedTime date={datetime} flex={`0 1 96px`}></LastUpdatedTime>
         <Message isInvalid={isInvalid}>
           {!fullWidth ? (
             <Absolute center>
               <Row fontWeight={700} mr="4px">
-                {from}
+                {area}
               </Row>
               <Row>{title}</Row>
             </Absolute>
           ) : (
             <>
               <Row fontWeight={700} mr="4px">
-                {from}
+                {area}
               </Row>
               <Row>{title}</Row>
             </>
@@ -134,16 +134,23 @@ const Content: FC<ContentProps> = ({
     </Row>
   );
 };
+
+const AdditionalInfo = styled(Row)`
+  justify-content: center;
+  margin-bottom: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+`;
 interface Props {
   onClick?: any;
   data?: any;
   animationData?: any;
   fadeInUp?: boolean;
   delay?: number;
-  isDistrict?: boolean;
   fullWidth?: boolean;
 }
-export const UpdateCard: FC<Props> = ({
+export const UpdatesRow: FC<Props> = ({
   onClick,
   data,
   animationData,
@@ -156,26 +163,13 @@ export const UpdateCard: FC<Props> = ({
   const [currentContent, setCurrentContent] = useState(data);
   const contentIndex = useRef(0);
 
-  const { datetime, city, gu, cases, total } = currentContent;
+  const { datetime, area, title, cases, total } = currentContent;
   const isInvalid = total == total - cases && !animationData;
-  const from = `${ct(city)} ${ct(city, gu)}`;
-  const title =
-    cases == null
-      ? `${total}명 확인중`
-      : total == total - cases
-      ? `${total}명 어제 집계`
-      : `${cases}명 추가 확진`;
 
-  const message = `[${datetime.split(" ")[1]}] ${from} ${title} 관련`;
+  const message = `[${datetime.split(" ")[1]}] ${area} ${title} 관련`;
 
   useEffect(() => {
-    setCurrentContent(data);
-  }, [data]);
-
-  useEffect(() => {
-    if (animationData) {
-      setCurrentContent(animationData[contentIndex.current]);
-    }
+    if (animationData) setCurrentContent(animationData[contentIndex.current]);
   }, [animationData]);
 
   useEffect(() => {
@@ -185,12 +179,12 @@ export const UpdateCard: FC<Props> = ({
         setCurrentContent(animationData[contentIndex.current]);
         contentIndex.current++;
         if (contentIndex.current >= animationData.length) contentIndex.current = 0;
-      }, 5000);
+      }, 3000);
     }
     return () => clearInterval(interval);
   }, []);
 
-  const getInvalidMessage = () => {
+  const getAdditionalInfo = () => {
     if (cases == null) {
       return `${total}명 어제 집계 여부 확인중`;
     } else if (total == total - cases) {
@@ -209,32 +203,28 @@ export const UpdateCard: FC<Props> = ({
         errorReport={message}
       ></Report>
 
-      <Card
+      <Container
         shadow={!!animationData}
         onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}
         {...{ fadeInUp, delay }}
       >
         {animationData ? (
           animationData.map(
-            ({ datetime, city }, i) =>
+            ({ datetime, area, title }, i) =>
               contentIndex.current == i && (
-                <AnimationContainer fadeInUp key={`${datetime}/${city}/${i}`}>
-                  <Content {...{ datetime, from, title, showDetails, isInvalid }}></Content>
+                <AnimationContainer fadeInUp key={`${datetime}/${i}`}>
+                  <Content {...{ datetime, area, title, showDetails, isInvalid }}></Content>
                 </AnimationContainer>
               )
           )
         ) : (
-          <Content {...{ datetime, from, title, showDetails, isInvalid, fullWidth }}></Content>
+          <Content {...{ datetime, area, title, showDetails, isInvalid, fullWidth }}></Content>
         )}
-      </Card>
+      </Container>
 
       {showDetails && (
         <Details fadeInUp>
-          {!!total && (
-            <Row jc="center" mb="12px" mt="4px" fontSize="12px" fontWeight={700}>
-              {getInvalidMessage()}
-            </Row>
-          )}
+          {!!total && <AdditionalInfo>{getAdditionalInfo()}</AdditionalInfo>}
           <p
             dangerouslySetInnerHTML={{
               __html: addHyperLink(currentContent.src),
@@ -247,4 +237,4 @@ export const UpdateCard: FC<Props> = ({
   );
 };
 
-export default UpdateCard;
+export default UpdatesRow;

@@ -52,7 +52,7 @@ export const Absolute: FC<AbsoluteProps> = (props) => <SAbsolute {...props}></SA
 
 const SPage = styled(Col)`
   box-sizing: border-box;
-  /* padding: 20px; */
+  padding: 0px 20px;
   margin: auto;
   width: 400px;
   overflow-x: hidden;

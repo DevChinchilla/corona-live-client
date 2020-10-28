@@ -25,54 +25,36 @@ interface WorldStatsType {
   };
 }
 
+interface WorldUpdatesType {}
+
 const World: React.FC<Props> = ({}) => {
-  const { data: statsData }: { data: WorldStatsType } = useSWR(API.worldStats, fetcher, {
+  const { data: stats } = useSWR<WorldStatsType>(API.worldStats, fetcher, {
     revalidateOnReconnect: true,
     revalidateOnFocus: true,
     revalidateOnMount: true,
     refreshInterval: SECOND * 30,
-    onSuccess: (newLastUpdated) => {},
   });
 
-  const { data: updatesData } = useSWR(API.worldUpdates, fetcher, {
+  const { data: updates } = useSWR<WorldUpdatesType[]>(API.worldUpdates, fetcher, {
     revalidateOnReconnect: true,
     revalidateOnFocus: true,
     revalidateOnMount: true,
     refreshInterval: SECOND * 30,
-    onSuccess: (newLastUpdated) => {},
   });
 
-  if (!statsData) return <></>;
+  if (!stats) return <></>;
 
   return (
     <Wrapper>
-      <WorldBoard worldData={statsData["World"]}></WorldBoard>
-      {/* <Row>
-        <Col ai="center" jc="center" my="20px" flex={1}>
-          <Row fontSize="12px" opacity="0.7">
-            총 확진자
-          </Row>
-          <Row fontSize="24px" fontWeight={700}>
-            {numberWithCommas(cases)}
-          </Row>
-          <DeltaTag delta={casesDelta} showBg={false} color={"red"}></DeltaTag>
-        </Col>
-        <Col ai="center" jc="center" my="20px" flex={1}>
-          <Row fontSize="12px" opacity="0.7">
-            총 사망자
-          </Row>
-          <Row fontSize="24px" fontWeight={700}>
-            {numberWithCommas(deaths)}
-          </Row>
-          <DeltaTag delta={deathsDelta} showBg={false} color={"red"}></DeltaTag>
-        </Col>
-      </Row> */}
+      <WorldBoard worldData={stats["WORLD"]}></WorldBoard>
+
       <Col>
-        {Object.keys(statsData)
-          .sort((a, b) => statsData[b].total - statsData[a].total)
-          .slice(1, 5)
+        {Object.keys(stats)
+          .filter((countryCode) => countryCode.length < 3)
+          .sort((countryA, countryB) => stats[countryB].cases - stats[countryA].cases)
+          .slice(0, 10)
           .map((code, i) => (
-            <WorldRow key={i} data={statsData[code]} code={code} index={i}></WorldRow>
+            <WorldRow key={i} data={stats[code]} code={code} index={i}></WorldRow>
           ))}
       </Col>
     </Wrapper>

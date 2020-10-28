@@ -6,14 +6,14 @@ const Table = lazy(() => import("@components/Domestic/DomesticTable"));
 const Board = lazy(() => import("@components/Domestic/DomesticBoard"));
 const Footer = lazy(() => import("@components/Footer"));
 const Notification = lazy(() => import("@components/Notification"));
-const UpdateModal = lazy(() => import("@components/UpdateModal"));
-const Updates = lazy(() => import("@components/Updates"));
+const Updates = lazy(() => import("@components/Updates/UpdatesLiveDisplay"));
 const Chart = lazy(() => import("@components/Chart/Chart"));
 
 import { DISTRICT_TD_FLEX } from "@consts";
-import { ct, getCasesSummary, sortByDate } from "@utils";
+import { ct, getCasesSummary, getDomesticUpdates, sortByDate } from "@utils";
 import { useScrollTop } from "@hooks/useScrollTop";
 import NavBar from "@components/Home/NavBar";
+import DomesticUpdatesModal from "./DomesticUpdatesModal";
 
 const City = ({ theme, setTheme, match, data }) => {
   useScrollTop();
@@ -25,7 +25,6 @@ const City = ({ theme, setTheme, match, data }) => {
     updatesData,
     statsData,
     timeseriesData,
-    mutateData,
     isLoading,
     notification,
     removeNotification,
@@ -41,10 +40,12 @@ const City = ({ theme, setTheme, match, data }) => {
     <Page>
       {updatesData && (
         <Suspense fallback={<div />}>
-          <UpdateModal
-            isDistrict
-            {...{ onClose: () => setShowUpdates(false), showUpdates, data: updatesData, cityId }}
-          ></UpdateModal>
+          <DomesticUpdatesModal
+            data={updatesData}
+            onClose={() => setShowUpdates(false)}
+            show={showUpdates}
+            cityId={cityId}
+          ></DomesticUpdatesModal>
         </Suspense>
       )}
 
@@ -59,8 +60,8 @@ const City = ({ theme, setTheme, match, data }) => {
       {updatesData ? (
         <Suspense fallback={<div style={{ height: "50px" }} />}>
           <Updates
-            data={sortByDate(updatesData)}
-            {...{ mutateData, isLoading, showUpdates, setShowUpdates, cityId }}
+            data={getDomesticUpdates(updatesData, cityId)}
+            onClick={() => setShowUpdates(true)}
           ></Updates>
         </Suspense>
       ) : (

@@ -121,7 +121,7 @@ const Home = ({ theme, setTheme, data }) => {
           </WorldButtonContainer>
         </Absolute>
 
-        <Col p="20px">
+        <Col>
           {path == "/" && (
             <Domestic {...{ showUpdates, setShowUpdates, theme, setTheme, data }}></Domestic>
           )}
