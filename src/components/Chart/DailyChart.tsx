@@ -24,7 +24,7 @@ const dailyChartOptions = (theme, stepSize, cases) => ({
       },
       formatter: (_, context) => {
         if (cases.length > 14) return "";
-        if (context.dataset.label == "해외") return "";
+        if (context.dataset.label == "국내") return "";
         return cases[context.dataIndex];
       },
     },
@@ -142,12 +142,6 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
       return {
         datasets: [
           {
-            label: "해외",
-            data: imported,
-            barThickness: 6,
-            backgroundColor: CHART_SECONDARY_COLOR,
-          },
-          {
             label: "국내",
             data: domestic,
             backgroundColor: setGradient(canvas, CHART_PRIMARY_COLOR),
@@ -156,6 +150,12 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
             lineTension: 0,
             pointBorderWidth: 0,
             barThickness: 6,
+          },
+          {
+            label: "해외",
+            data: imported,
+            barThickness: 6,
+            backgroundColor: CHART_SECONDARY_COLOR,
           },
         ],
         labels: timePeriod.slice(timePeriod.length - timeRange),
