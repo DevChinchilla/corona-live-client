@@ -6,6 +6,7 @@
     "scripts": {
         "bundle": "webpack",
         "build": "webpack -p --mode=production",
+        "postbuild": "react-snap",
         "start": "webpack-dev-server --mode development --open --hot ",
         "check-types": "tsc"
     },
@@ -30,6 +31,7 @@
         "react-dom": "^16.13.1",
         "react-helmet": "^6.1.0",
         "react-router-dom": "^5.2.0",
+        "react-snap": "^1.23.0",
         "regenerator": "^0.14.7",
         "styled-components": "^5.1.1",
         "swr": "^0.3.1",
@@ -69,5 +71,9 @@
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0",
         "webpack-manifest-plugin": "^2.2.0"
-    }
+    },
+    "reactSnap" : {
+        "source" : "./dist"
+     
+     }
 }

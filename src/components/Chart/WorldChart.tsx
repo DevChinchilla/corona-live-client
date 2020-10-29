@@ -124,7 +124,6 @@ const WorldChart: React.FC<Props> = ({ timeseries }) => {
 
   const data = Object.keys(timeseries).map((time) => timeseries[time][0]);
   const timePeriod: string[] = Object.keys(timeseries);
-  console.log({ data, timePeriod });
   const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
 
   const getData = (canvas) => {

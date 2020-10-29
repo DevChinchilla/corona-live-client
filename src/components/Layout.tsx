@@ -57,6 +57,8 @@ const SPage = styled(Col)`
   margin: auto;
   width: 400px;
   overflow-x: hidden;
+  overflow-y: hidden;
+  min-height: 100vh;
   ${media.phablet} {
     width: 100%;
   }

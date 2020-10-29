@@ -100,7 +100,7 @@ const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...pro
         </Td>
 
         <Td flex={tdFlex[3]}>
-          {!UNAVALIABLE_REGIONS[region] ? (
+          {!UNAVALIABLE_REGIONS[region] || !!current[0] ? (
             <>
               <Cases>{numberWithCommas(current[0])}</Cases>
               <Box fontSize="10px" opacity={0.6} ml="2px">
@@ -116,7 +116,7 @@ const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...pro
         </Td>
 
         <Td end={true} flex={tdFlex[4]}>
-          {!UNAVALIABLE_REGIONS[region] && (
+          {(!UNAVALIABLE_REGIONS[region] || !!current[0]) && (
             <>
               <LastUpdatedTime isOld date={lastUpdated}></LastUpdatedTime>
               <div style={{ width: "8px" }}></div>

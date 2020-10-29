@@ -11,7 +11,12 @@
       <priority>0.85</priority>
    </url>
    <url>
-      <loc>https://corona-live.com/report</loc>
+      <loc>https://corona-live.com/world</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.85</priority>
+   </url>
+      <url>
+      <loc>https://corona-live.com/world/live</loc>
       <changefreq>daily</changefreq>
       <priority>0.85</priority>
    </url>

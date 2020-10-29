@@ -139,8 +139,8 @@ const Modal: FC<Props> = ({
       </ModalContainer>
     </>
   );
-
-  return ReactDOM.createPortal(component, portal as Element);
+  return component;
+  // return ReactDOM.createPortal(component, portal as Element);
 };
 
 export default Modal;

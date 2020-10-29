@@ -8,6 +8,7 @@ interface ButtonProps {
   blue?: boolean;
   primary?: boolean;
   big?: boolean;
+  small?: boolean;
   full?: boolean;
   icon?: boolean;
   square?: boolean;
@@ -62,6 +63,16 @@ const Button = styled.button<ButtonProps>`
       height: 40px;
       width: 100%;
       font-size: 14px;
+    `
+  )}
+
+
+${ifProp(
+    "small",
+    css`
+      height: 30px;
+      width: 100%;
+      font-size: 12px;
     `
   )}
 

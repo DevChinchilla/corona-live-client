@@ -26,14 +26,13 @@ const Wrapper = styled(Col)`
   }
   a {
     color: ${theme("darkGreyText")};
-    /* margin-left: 2px; */
   }
 `;
 
 const Gnb = styled(Row)`
   justify-content: center;
   margin-bottom: 10px;
-  visibility: hidden;
+  /* visibility: hidden; */
   a {
     padding: 0px 6px;
     font-size: 11px;
@@ -63,6 +62,7 @@ const Footer = () => {
         <Link to="/live">실시간</Link>
         <Link to="/daily">일별</Link>
         <Link to="/rates">확진율</Link>
+        <Link to="/world">세계</Link>
         <Link to="/city/0">서울</Link>
         <Link to="/city/8">경기</Link>
         <Link to="/city/1">부산</Link>

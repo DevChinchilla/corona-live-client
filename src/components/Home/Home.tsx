@@ -3,17 +3,20 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import AnnouncementPopup from "@components/Home/AnnouncementPopup";
-import ThemePopup from "@components/Home/ThemePopup";
-import FinishedPopup from "@components/Home/FinishedPopup";
-import Notification from "@components/Notification";
-import { Col, Page } from "@components/Layout";
+
+import { Page } from "@components/Layout";
 
 import { useLocalStorage } from "@hooks/useLocalStorage";
+import Meta from "@components/Meta";
+import Header from "./Header";
+import NavBar from "./Navbar";
+import Domestic from "@components/Domestic";
+import World from "@components/World";
 
-const Domestic = lazy(() => import("@components/Domestic"));
-const World = lazy(() => import("@components/World"));
-const NavBar = lazy(() => import("@components/Home/Navbar"));
-const Header = lazy(() => import("@components/Home/Header"));
+const FinishedPopup = lazy(() => import("@components/Home/FinishedPopup"));
+const ThemePopup = lazy(() => import("@components/Home/ThemePopup"));
+const Notification = lazy(() => import("@components/Notification"));
+
 const Home = ({ theme, setTheme, data }) => {
   const history = useHistory();
   const routerMatch = useRouteMatch();
@@ -25,49 +28,76 @@ const Home = ({ theme, setTheme, data }) => {
   const helmet = () => {
     if (path == "/") {
       return (
-        <Helmet>
-          <title>코로나 라이브 | 실시간</title>
-          <link rel="canonical" href="https://corona-live.com/live" />
-        </Helmet>
+        <Meta
+          data={{
+            title: `코로나 라이브 | 실시간 코로나 현황`,
+            canonical: ``,
+            description: `코로나 라이브 공식 사이트 | 코로나 확진자 현황을 실시간으로 제공합니다`,
+          }}
+        ></Meta>
+      );
+    }
+
+    if (path == "/world") {
+      return (
+        <Meta
+          data={{
+            title: `코로나 라이브 | 세계 코로나 현황`,
+            canonical: `world`,
+            description: `세계 코로나 확진자 현황을 실시간으로 제공합니다`,
+          }}
+        ></Meta>
       );
     }
 
     if (path == "/daily") {
       return (
-        <Helmet>
-          <title>코로나 라이브 | 일별</title>
-          <link rel="canonical" href="https://corona-live.com/daily" />
-        </Helmet>
+        <Meta
+          data={{
+            title: `코로나 라이브 | 일별 확진자`,
+            canonical: `daily`,
+            description: `코로나 확진자 추세를 일별로 제공합니다`,
+          }}
+        ></Meta>
       );
     }
 
     if (path == "/rates") {
       return (
-        <Helmet>
-          <title>코로나 라이브 | 확진율</title>
-          <link rel="canonical" href="https://corona-live.com/rates" />
-        </Helmet>
+        <Meta
+          data={{
+            title: `코로나 라이브 | 확진율`,
+            canonical: `rates`,
+            description: `국내 코로나 검사완료수 대비 확진율을 제공합니다 `,
+          }}
+        ></Meta>
       );
     }
   };
+
+  console.log(path);
   return (
     <>
       {helmet()}
-      {statsData && casesSummary && path == "/" && (
-        <Suspense fallback={<div />}>
-          <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
-          {isFirstVisitor == 1 && (
-            <ThemePopup {...{ theme, setTheme }} onClose={() => setIsFirstVisitor(0)}></ThemePopup>
-          )}
-        </Suspense>
-      )}
-
+      <Suspense fallback={<div />}>
+        {statsData && casesSummary && path == "/" && (
+          <Suspense fallback={<div />}>
+            <FinishedPopup casesSummary={casesSummary}></FinishedPopup>
+            {isFirstVisitor == 1 && (
+              <ThemePopup
+                {...{ theme, setTheme }}
+                onClose={() => setIsFirstVisitor(0)}
+              ></ThemePopup>
+            )}
+          </Suspense>
+        )}
+      </Suspense>
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification
             notification={notification}
             closeModal={removeNotification}
-            openUpdates={() => history.push("/live")}
+            openUpdates={() => history.push("/live/")}
           ></Notification>
         </Suspense>
       )}
@@ -79,25 +109,11 @@ const Home = ({ theme, setTheme, data }) => {
       )}
 
       <Page>
-        <Suspense fallback={<div />}>
-          <Header {...{ theme, setTheme }}></Header>
-        </Suspense>
-        <Suspense fallback={<div />}>
-          <NavBar></NavBar>
-        </Suspense>
+        <Header {...{ theme, setTheme }}></Header>
+        <NavBar></NavBar>
 
-        <Col>
-          {path != "/world" && (
-            <Suspense fallback={<div />}>
-              <Domestic data={data}></Domestic>
-            </Suspense>
-          )}
-          {path == "/world" && (
-            <Suspense fallback={<div />}>
-              <World data={data}></World>
-            </Suspense>
-          )}
-        </Col>
+        {path != "/world" && <Domestic data={data}></Domestic>}
+        {path == "/world" && <World data={data}></World>}
       </Page>
     </>
   );

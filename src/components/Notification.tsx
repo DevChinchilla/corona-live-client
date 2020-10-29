@@ -101,7 +101,7 @@ const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }
 
           <Row w="100%" mt="10px">
             <Row flex={1}>
-              <Button full onClick={closeModal}>
+              <Button full small onClick={closeModal}>
                 닫기
               </Button>
             </Row>
@@ -111,6 +111,7 @@ const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }
                 <Button
                   full
                   blue
+                  small
                   onClick={() => {
                     closeModal();
                     openUpdates();

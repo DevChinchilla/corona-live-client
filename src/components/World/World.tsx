@@ -7,6 +7,9 @@ import styled, { css } from "styled-components";
 import WorldBoard from "./WorldBoard";
 import WorldTable from "./WorldTable";
 import WorldChart from "@components/Chart/WorldChart";
+import { Row } from "@components/Layout";
+import Spinner from "@components/Spinner";
+import { theme } from "@styles/themes";
 
 const Wrapper = styled.div``;
 
@@ -17,8 +20,12 @@ type Props = {
 const World: React.FC<Props> = ({ data }) => {
   const { worldOverview } = data;
 
-  if (!worldOverview) return <></>;
-  console.log({ worldOverview });
+  if (!worldOverview)
+    return (
+      <Row ai="center" jc="center" flex={1}>
+        <Spinner size={30} color={"semiDarkGreyText"}></Spinner>
+      </Row>
+    );
 
   return (
     <Wrapper>

@@ -8,6 +8,7 @@ import { CurrentType, OverallType } from "@types";
 
 import MapExplorer from "./MapExplorer";
 import ToggleButtons from "@components/ToggleButtons";
+import Spinner from "@components/Spinner";
 
 const Updates = lazy(() => import("@components/Updates/UpdatesLiveDisplay"));
 const Board = lazy(() => import("@components/Domestic/DomesticBoard"));
@@ -19,6 +20,12 @@ const Domestic = ({ data }) => {
   useScrollTop();
   const [showMap, setShowMap] = useState(false);
   const { updatesData, statsData, timeseriesData, casesSummary, lastUpdatedDate } = data;
+  if (!data)
+    return (
+      <Row ai="center" jc="center" flex={1}>
+        <Spinner size={30} color={"semiDarkGreyText"}></Spinner>
+      </Row>
+    );
 
   return (
     <>
