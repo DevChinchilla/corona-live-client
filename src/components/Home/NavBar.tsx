@@ -57,13 +57,20 @@ const NavBar: React.FC<Props> = ({}) => {
   return (
     <Wrapper fadeInUp delay={2}>
       <Row jc="center">
-        <NavbarItem onClick={() => history.push("/")} selected={path == "/"} mr="-2px">
+        <NavbarItem
+          onClick={() => history.push({ pathname: "/", state: "live" })}
+          selected={path == "/"}
+          mr="-2px"
+        >
           <Icon name={"Domestic"} size={12}></Icon>
           <span>국내 </span>
         </NavbarItem>
       </Row>
       <Row jc="center">
-        <NavbarItem onClick={() => history.push("/world")} selected={path == "/world"}>
+        <NavbarItem
+          onClick={() => history.push({ pathname: "/world", state: "live" })}
+          selected={path == "/world"}
+        >
           <Icon name={"World"} size={12}></Icon>
           <span>세계 </span>
         </NavbarItem>

@@ -6,15 +6,14 @@ import AnnouncementPopup from "@components/Home/AnnouncementPopup";
 import ThemePopup from "@components/Home/ThemePopup";
 import FinishedPopup from "@components/Home/FinishedPopup";
 import Notification from "@components/Notification";
-import Domestic from "@components/Domestic";
-import World from "@components/World";
 import { Col, Page } from "@components/Layout";
 
 import { useLocalStorage } from "@hooks/useLocalStorage";
 
+const Domestic = lazy(() => import("@components/Domestic"));
+const World = lazy(() => import("@components/World"));
 const NavBar = lazy(() => import("@components/Home/Navbar"));
 const Header = lazy(() => import("@components/Home/Header"));
-
 const Home = ({ theme, setTheme, data }) => {
   const history = useHistory();
   const routerMatch = useRouteMatch();
@@ -22,8 +21,6 @@ const Home = ({ theme, setTheme, data }) => {
 
   const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
   const { statsData, isLoading, notification, removeNotification, casesSummary } = data;
-
-  console.log(path);
 
   const helmet = () => {
     if (path == "/") {
@@ -90,8 +87,16 @@ const Home = ({ theme, setTheme, data }) => {
         </Suspense>
 
         <Col>
-          {path != "/world" && <Domestic data={data}></Domestic>}
-          {path == "/world" && <World></World>}
+          {path != "/world" && (
+            <Suspense fallback={<div />}>
+              <Domestic data={data}></Domestic>
+            </Suspense>
+          )}
+          {path == "/world" && (
+            <Suspense fallback={<div />}>
+              <World data={data}></World>
+            </Suspense>
+          )}
         </Col>
       </Page>
     </>

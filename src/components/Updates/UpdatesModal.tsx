@@ -114,10 +114,11 @@ interface Props {
   data?: any;
   onClose: any;
   areaName?: string;
+  hideSrc?: boolean;
 }
 
 export const UpdatesModal: FC<Props> = React.memo(
-  ({ data, areaName, showCasesSummary, showFilters, onClose, showModal }) => {
+  ({ data, areaName, showCasesSummary, showFilters, onClose, showModal, hideSrc }) => {
     const _theme = useTheme();
 
     const [keyword, setKeyword] = useState("");
@@ -194,7 +195,12 @@ export const UpdatesModal: FC<Props> = React.memo(
         )}
         <Col flex={1} overflowY="auto" overflowX="hidden" fadeInUp delay={3}>
           {filteredData.map((update, i) => (
-            <UpdatesRow fullWidth key={`${update.datetime}${i}`} data={update}></UpdatesRow>
+            <UpdatesRow
+              fullWidth
+              key={`${update.datetime}${i}`}
+              data={update}
+              hideSrc={hideSrc}
+            ></UpdatesRow>
           ))}
         </Col>
       </Modal>

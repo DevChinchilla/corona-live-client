@@ -3,7 +3,7 @@ import useSWR from "swr";
 
 import { API, API_ROOT, SECOND } from "@consts";
 import { fetcher, getCasesSummary, jsonCompare } from "@utils";
-import { StatsType, UpdateType, NotificationType } from "@types";
+import { StatsType, UpdateType, NotificationType, WorldUpdatesType, WorldStatsType } from "@types";
 import { useObjectState } from "@hooks/useObjectState";
 
 interface StatsState {
@@ -160,7 +160,13 @@ export const useData = () => {
     ? Object.keys(timeseries.data).slice(-1)[0].slice(5)
     : null;
 
-  console.log({ lastUpdatedDate });
+  const { data: worldOverview } = useSWR<WorldStatsType>(API.worldOverview, fetcher, {
+    refreshInterval: SECOND * 30,
+  });
+
+  // const { data: worldUpdates } = useSWR<WorldUpdatesType[]>(API.worldUpdates, fetcher, {
+  //   refreshInterval: SECOND * 30,
+  // });
 
   return {
     casesSummary,
@@ -172,5 +178,6 @@ export const useData = () => {
     notification,
     removeNotification,
     lastUpdatedDate,
+    worldOverview,
   };
 };

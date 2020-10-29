@@ -40,7 +40,7 @@ const Container = styled(Row)<{ shadow?: boolean }>`
   )}
 `;
 
-const Message = styled(Row)<{ isInvalid?: boolean }>`
+const Message = styled(Row)<{ isInvalid?: boolean; longString?: boolean }>`
   font-size: 12px;
   text-align: center;
   align-items: center;
@@ -48,6 +48,14 @@ const Message = styled(Row)<{ isInvalid?: boolean }>`
     "isInvalid",
     css`
       opacity: 0.6;
+    `
+  )}
+  ${ifProp(
+    "longString",
+    css`
+      * {
+        font-size: 11px;
+      }
     `
   )}
 `;
@@ -94,6 +102,7 @@ interface ContentProps {
   showDetails: boolean;
   isInvalid: boolean;
   fullWidth?: boolean;
+  hideSrc?: boolean;
 }
 
 const Content: FC<ContentProps> = ({
@@ -103,12 +112,13 @@ const Content: FC<ContentProps> = ({
   showDetails,
   isInvalid,
   fullWidth,
+  hideSrc,
 }) => {
   return (
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
-        <LastUpdatedTime date={datetime} flex={`0 1 96px`}></LastUpdatedTime>
-        <Message isInvalid={isInvalid}>
+        <LastUpdatedTime date={datetime} flex={`0 1 90px`}></LastUpdatedTime>
+        <Message isInvalid={isInvalid} longString={area.length > 5}>
           {!fullWidth ? (
             <Absolute center>
               <Row fontWeight={700} mr="4px">
@@ -117,19 +127,23 @@ const Content: FC<ContentProps> = ({
               <Row>{title}</Row>
             </Absolute>
           ) : (
-            <>
+            <Row>
               <Row fontWeight={700} mr="4px">
                 {area}
               </Row>
               <Row>{title}</Row>
-            </>
+            </Row>
           )}
         </Message>
       </Row>
-      {!showDetails ? (
-        <Icon name="ChevronDown" size={24}></Icon>
-      ) : (
-        <Icon name="ChevronUp" size={24}></Icon>
+      {!hideSrc && (
+        <>
+          {!showDetails ? (
+            <Icon name="ChevronDown" size={24}></Icon>
+          ) : (
+            <Icon name="ChevronUp" size={24}></Icon>
+          )}
+        </>
       )}
     </Row>
   );
@@ -149,6 +163,7 @@ interface Props {
   fadeInUp?: boolean;
   delay?: number;
   fullWidth?: boolean;
+  hideSrc?: boolean;
 }
 export const UpdatesRow: FC<Props> = ({
   onClick,
@@ -157,6 +172,7 @@ export const UpdatesRow: FC<Props> = ({
   fadeInUp,
   delay,
   fullWidth,
+  hideSrc,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showReport, setShowReport] = useState(false);
@@ -213,16 +229,20 @@ export const UpdatesRow: FC<Props> = ({
             ({ datetime, area, title }, i) =>
               contentIndex.current == i && (
                 <AnimationContainer fadeInUp key={`${datetime}/${i}`}>
-                  <Content {...{ datetime, area, title, showDetails, isInvalid }}></Content>
+                  <Content
+                    {...{ datetime, area, title, showDetails, isInvalid, hideSrc }}
+                  ></Content>
                 </AnimationContainer>
               )
           )
         ) : (
-          <Content {...{ datetime, area, title, showDetails, isInvalid, fullWidth }}></Content>
+          <Content
+            {...{ datetime, area, title, showDetails, isInvalid, fullWidth, hideSrc }}
+          ></Content>
         )}
       </Container>
 
-      {showDetails && (
+      {showDetails && !hideSrc && (
         <Details fadeInUp>
           {!!total && <AdditionalInfo>{getAdditionalInfo()}</AdditionalInfo>}
           <p

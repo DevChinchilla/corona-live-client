@@ -1,21 +1,13 @@
 import React, { FC } from "react";
-import styled from "styled-components";
 
-import Row from "@components/Domestic/DomesticRow";
-import { Col, Row as RowLayout } from "@components/Layout";
+import DomesticRow from "@components/Domestic/DomesticRow";
+import { Col, Row, Th } from "@components/Layout";
 
-import { theme } from "@styles/themes";
 import { CurrentType, OverallType, UpdateType, CasesType } from "@types";
-
-const Th = styled(RowLayout)`
-  font-size: 10px;
-  transform: translateX(4px);
-  color: ${theme("greyText")};
-`;
 
 const Header = ({ tdFlex }) => {
   return (
-    <RowLayout alignItems="center" mb="12px" mt="20px" px="8px" fadeInUp>
+    <Row alignItems="center" mb="12px" mt="20px" px="8px" fadeInUp>
       <Th flex={tdFlex[0]}>지역</Th>
       <Th flex={tdFlex[1]}></Th>
       <Th flex={tdFlex[2]}>총 확진자</Th>
@@ -23,7 +15,7 @@ const Header = ({ tdFlex }) => {
       <Th flex={tdFlex[4]} flexBasis="50px" justifyContent="flex-end" pr="30px">
         업데이트
       </Th>
-    </RowLayout>
+    </Row>
   );
 };
 
@@ -74,7 +66,7 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
             let lastUpdated = getLastUpdatedTime(id).dateISO;
 
             return (
-              <Row
+              <DomesticRow
                 {...{ updates, tdFlex, data, lastUpdated }}
                 fadeInUp
                 delay={i * 1.5}
@@ -82,7 +74,7 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
                 cityId={_cityId}
                 guId={_guId}
                 key={`${cityId}/${id}`}
-              ></Row>
+              ></DomesticRow>
             );
           })}
       </Col>

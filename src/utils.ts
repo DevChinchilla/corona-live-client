@@ -1,4 +1,4 @@
-import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES } from "@consts";
+import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES, COUNTRY_NAMES } from "@consts";
 
 export const ct = (cityId, guId: any = undefined) => {
   if (cityId == undefined) return "";
@@ -153,4 +153,21 @@ export const getDomesticUpdates = (
   const sort = sortByDate(filter);
 
   return sort;
+};
+
+export const getWorldUpdates = (updates, countryCode) => {
+  const transform = updates.map((update) => {
+    const { cases, country } = update;
+    const title = `${numberWithCommas(cases)}명 추가 확진`;
+    if (!!countryCode && countryCode != country) return;
+    if (cases == 17633) return;
+
+    return { ...update, area: COUNTRY_NAMES[country], title };
+  });
+
+  const filter = transform.filter((a) => !!a);
+
+  const sort = sortByDate(filter);
+
+  return sort.slice(0, 200);
 };

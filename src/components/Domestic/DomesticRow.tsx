@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-import { Row, Box } from "@components/Layout";
+import { Row, Box, Td } from "@components/Layout";
 import Icon from "@components/Icon";
 import DeltaTag from "@components/DeltaTag";
 import LastUpdatedTime from "@components/Updates/LastUpdatedTime";
@@ -37,16 +37,6 @@ const Divider = styled(Box)`
   width: 1px;
   height: 10px;
   background: ${theme("lightGreyText")};
-`;
-
-interface PTd {
-  end?: boolean;
-  flex?: string;
-}
-const Td = styled(Row)<PTd>`
-  align-items: center;
-  flex: ${(props) => (props.flex ? props.flex : 1)};
-  justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
 `;
 
 const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...props }) => {

@@ -4,6 +4,7 @@ import styled, { css, ThemedStyledFunction, keyframes } from "styled-components"
 import mixins, { BoxProps } from "@styles/mixins";
 import { addIfProp, ifProp } from "@styles/tools";
 import { media } from "@styles";
+import { theme } from "@styles/themes";
 
 const SBox = styled.div`
   ${mixins.BoxCss};
@@ -64,3 +65,19 @@ const SPage = styled(Col)`
   }
 `;
 export const Page: FC<AbsoluteProps> = (props) => <SPage {...props}></SPage>;
+
+interface PTd {
+  end?: boolean;
+  flex?: string;
+}
+export const Td = styled(Row)<PTd>`
+  align-items: center;
+  flex: ${(props) => (props.flex ? props.flex : 1)};
+  justify-content: ${(props) => (props["end"] ? "flex-end" : "flex-start")};
+`;
+
+export const Th = styled(Row)`
+  font-size: 10px;
+  transform: translateX(4px);
+  color: ${theme("greyText")};
+`;

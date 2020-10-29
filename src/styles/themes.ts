@@ -44,13 +44,14 @@ export const theme = (attr: ThemeType) => ({ theme }) => theme[attr];
 const lightTheme: ThemeProps = {
   bg: "white",
   // text: "#4A4A4A",
-  text: "#555c62",
+  text: "#464d52",
   border: "#F5F5F5",
   greyBg: "#F5F5F5",
 
   blackText: "#222222",
   // darkGreyText: "#4A4A4A",
-  darkGreyText: "#555c62",
+  // darkGreyText: "#555c62",
+  darkGreyText: "#464d52",
 
   semiDarkGreyText: "#5a5a5a",
   greyText: "#868686",

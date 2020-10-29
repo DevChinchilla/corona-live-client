@@ -19,7 +19,7 @@ const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean 
     "small",
     css`
       font-size: 11px;
-      padding: 1px 6px 1px 4px;
+      padding: 0px;
     `
   )};
 
@@ -28,6 +28,12 @@ const Wrapper = styled(Row)<{ color?: string; small?: boolean; showBg?: boolean 
     css`
       padding-left: 4px;
       margin-left: 4px;
+      ${ifProp(
+        "small",
+        css`
+          padding: 1px 6px 1px 4px;
+        `
+      )};
     `
   )}
 `;
@@ -49,9 +55,9 @@ const DeltaTag: FC<Props> = ({ color, delta, small, countUp, showBg, prevDelta }
   return (
     <Wrapper {...{ small, showBg }} color={_color} bg={showBg ? _bg : ""}>
       {delta > 0 ? (
-        <Icon name="ArrowUp" stroke={_color}></Icon>
+        <Icon name="ArrowUp" stroke={_color} size={small ? 12 : 16}></Icon>
       ) : (
-        <Icon name="ArrowDown" stroke={_color}></Icon>
+        <Icon name="ArrowDown" stroke={_color} size={small ? 12 : 16}></Icon>
       )}
       {!small && <Box w="2px"></Box>}
       {countUp ? (

@@ -17,13 +17,13 @@ const WorldBoard: React.FC<Props> = ({ worldData }) => {
     },
     {
       data: [deaths, deathsDelta],
-      title: "오늘 추가확진자",
+      title: "총 사망자",
       vertical: true,
       showBg: true,
     },
   ];
 
-  return <Board data={statsData} numbersOnly></Board>;
+  return <Board data={statsData}></Board>;
 };
 
 export default WorldBoard;

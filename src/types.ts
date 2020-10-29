@@ -57,3 +57,23 @@ export interface NotificationType {
   casesCountByCity: { [cityId: string]: number };
   addedCases: number;
 }
+
+export interface WorldStatsType {
+  [id: string]: {
+    deaths: number;
+    cases: number;
+    casesDelta: number;
+    deathsDelta: number;
+    gmtCasesDelta: number;
+    gmtDeathsDelta: number;
+    rates: number;
+    tests: number;
+  };
+}
+
+export interface WorldUpdatesType {}
+export interface WorldOverviewType {
+  stats: WorldStatsType;
+  updates: WorldUpdatesType;
+  timeseries: TimerseriesType;
+}
