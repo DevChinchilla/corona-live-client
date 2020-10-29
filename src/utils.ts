@@ -155,7 +155,7 @@ export const getDomesticUpdates = (
   return sort;
 };
 
-export const getWorldUpdates = (updates, countryCode) => {
+export const getWorldUpdates = (updates, countryCode: string | undefined = undefined) => {
   const transform = updates.map((update) => {
     const { cases, country } = update;
     const title = `${numberWithCommas(cases)}명 추가 확진`;

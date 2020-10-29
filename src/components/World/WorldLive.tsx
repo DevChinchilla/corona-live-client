@@ -1,6 +1,5 @@
 import React from "react";
 import { Page } from "@components/Layout";
-import { Helmet } from "react-helmet";
 
 import WorldUpdatesModal from "@components/World/WorldUpdatesModal";
 import { WorldOverviewType } from "@types";

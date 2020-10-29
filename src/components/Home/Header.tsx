@@ -9,7 +9,6 @@ import Button from "@components/Button";
 
 import { useTheme } from "@hooks/useTheme";
 import { useRouteMatch, useHistory } from "react-router-dom";
-import { theme } from "@styles/themes";
 
 const Wrapper = styled(Row)`
   align-items: center;

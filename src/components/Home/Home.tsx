@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Helmet } from "react-helmet";
 
 import AnnouncementPopup from "@components/Home/AnnouncementPopup";
 

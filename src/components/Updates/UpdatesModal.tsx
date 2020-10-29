@@ -115,10 +115,11 @@ interface Props {
   onClose: any;
   areaName?: string;
   hideSrc?: boolean;
+  portal?: boolean;
 }
 
 export const UpdatesModal: FC<Props> = React.memo(
-  ({ data, areaName, showCasesSummary, showFilters, onClose, showModal, hideSrc }) => {
+  ({ data, areaName, showCasesSummary, showFilters, onClose, showModal, hideSrc, portal }) => {
     const _theme = useTheme();
 
     const [keyword, setKeyword] = useState("");
@@ -163,6 +164,7 @@ export const UpdatesModal: FC<Props> = React.memo(
         hideActionIcon={!showFilters}
         onActionClick={onToggle}
         full
+        portal={portal}
       >
         {showCasesSummary && <CasesSummary updates={data}></CasesSummary>}
         {showFilters && (

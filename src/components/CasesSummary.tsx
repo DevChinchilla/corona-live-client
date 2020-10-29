@@ -68,7 +68,7 @@ const CasesSummary: FC<Props> = ({ updates }) => {
         <span>확인중 </span> <span>{checking}</span>
       </Stat>
       <Divider></Divider>
-      <Stat color="red">
+      <Stat color="blue">
         <span>오늘 추가확진 </span> <span>{todayCases}</span>
       </Stat>
     </Wrapper>

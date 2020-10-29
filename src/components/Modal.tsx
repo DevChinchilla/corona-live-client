@@ -76,6 +76,7 @@ interface Props {
   hideActionIcon?: boolean;
   dynamic?: boolean;
   full?: boolean;
+  portal?: boolean;
   zIndex?: number;
   closeButtonPos?: "top" | "bottom";
 }
@@ -93,11 +94,12 @@ const Modal: FC<Props> = ({
   dynamic,
   zIndex,
   closeButtonPos,
+  portal,
   ...props
 }) => {
   const _theme = useTheme();
   if (!show) return <></>;
-  const portal = document.getElementById("root-portal");
+  const portalEl = document.getElementById("root-portal");
   const component = (
     <>
       {!hideOverlay && <Overlay zIndex={zIndex ? zIndex - 1 : 999} onClick={onClose}></Overlay>}
@@ -139,8 +141,11 @@ const Modal: FC<Props> = ({
       </ModalContainer>
     </>
   );
-  return component;
-  // return ReactDOM.createPortal(component, portal as Element);
+  if (portal) {
+    return ReactDOM.createPortal(component, portalEl as Element);
+  } else {
+    return component;
+  }
 };
 
 export default Modal;

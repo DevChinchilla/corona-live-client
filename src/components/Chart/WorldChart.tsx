@@ -3,9 +3,9 @@ import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 
 import { useTheme } from "@hooks/useTheme";
-import { StatsType, TimerseriesType } from "@types";
-import { setGradient, getStatistic } from "@utils";
-import { CHART_PRIMARY_COLOR, CHART_SECONDARY_COLOR } from "@consts";
+import { TimerseriesType } from "@types";
+import { setGradient } from "@utils";
+import { CHART_PRIMARY_COLOR } from "@consts";
 
 import { Col } from "@components/Layout";
 import FixedTooltip from "@components/Chart/FixedTooltip";

@@ -1,6 +1,6 @@
 import React from "react";
 import UpdateModal from "@components/Updates/UpdatesModal";
-import { ct, getDomesticUpdates, getWorldUpdates } from "@utils";
+import { getWorldUpdates } from "@utils";
 import { useHistory } from "react-router-dom";
 import { COUNTRY_NAMES } from "@consts";
 

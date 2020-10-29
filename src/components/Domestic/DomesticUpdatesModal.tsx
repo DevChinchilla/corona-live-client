@@ -2,6 +2,7 @@ import React from "react";
 import UpdateModal from "@components/Updates/UpdatesModal";
 import { ct, getDomesticUpdates } from "@utils";
 import { useHistory } from "react-router-dom";
+import { UNAVALIABLE_REGIONS } from "@consts";
 
 type Props = {
   data: any;
@@ -23,6 +24,7 @@ const DomesticUpdatesModal: React.FC<Props> = ({ data, show, onClose, cityId, gu
       showCasesSummary
       showFilters={cityId == undefined && guId == undefined}
       areaName={ct(cityId, guId)}
+      portal={guId != undefined || UNAVALIABLE_REGIONS[ct(cityId)]}
     ></UpdateModal>
   );
 };
