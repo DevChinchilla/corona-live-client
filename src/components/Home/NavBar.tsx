@@ -9,7 +9,9 @@ import styled, { css } from "styled-components";
 const Wrapper = styled(Row)`
   justify-content: center;
   width: fit-content;
-  margin: 8px auto;
+  margin: 6px auto;
+  margin-bottom: 14px;
+
   box-shadow: -1px 1px 20px #0000001e;
   background: ${theme("navBarShadow")};
   border-radius: 50px;

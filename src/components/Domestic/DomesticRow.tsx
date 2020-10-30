@@ -88,9 +88,9 @@ const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...pro
               <Box fontSize="10px" opacity={0.6} ml="2px">
                 명
               </Box>
-              {guId == undefined && (
-                <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
-              )}
+              {/* {guId == undefined && ( */}
+              <DeltaTag color={"red"} delta={total[1]} small showBg></DeltaTag>
+              {/* )} */}
             </>
           ) : (
             <Box fontSize="12px" opacity={0.8} ml="2px">

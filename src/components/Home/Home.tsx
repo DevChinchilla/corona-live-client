@@ -74,7 +74,6 @@ const Home = ({ theme, setTheme, data }) => {
     }
   };
 
-  console.log(path);
   return (
     <>
       {helmet()}

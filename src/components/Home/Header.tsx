@@ -2,18 +2,23 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 
 import Icon from "@components/Icon";
-import { Row } from "@components/Layout";
+import { Absolute, Row } from "@components/Layout";
 import Report from "@components/Home/ReportModal";
 import Underline from "@components/Underline";
 import Button from "@components/Button";
 
 import { useTheme } from "@hooks/useTheme";
-import { useRouteMatch, useHistory } from "react-router-dom";
+import { useRouteMatch, useHistory, Link } from "react-router-dom";
 
 const Wrapper = styled(Row)`
   align-items: center;
   justify-content: space-between;
   padding-top: 6px;
+`;
+
+const Gnb = styled(Absolute)`
+  top: -999px;
+  visibility: hidden;
 `;
 
 interface Props {
@@ -35,6 +40,15 @@ const Header: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
 
   return (
     <>
+      <Gnb className="gnb">
+        <Link to="/live">실시간</Link>
+        <Link to="/daily">일별</Link>
+        <Link to="/rates">확진율</Link>
+        <Link to="/world">세계</Link>
+        <Link to="/city/0">서울</Link>
+        <Link to="/city/8">경기</Link>
+        <Link to="/city/1">부산</Link>
+      </Gnb>
       <Report show={showReport} onClose={() => setShowReport(false)}></Report>
       <Wrapper fadeInUp>
         {!!title ? (

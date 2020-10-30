@@ -4,6 +4,7 @@ import { GlobalStyle, themes } from "@styles";
 import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-dom";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
+import { IE9ErrorBoundary } from "@components/ErrorBoundary";
 
 const DomesticLive = lazy(() => import("@components/Domestic/DomesticLive"));
 const WorldLive = lazy(() => import("@components/World/WorldLive"));
@@ -52,15 +53,11 @@ const pages = [
 const App = () => {
   const [theme, setTheme] = useLocalStorage("theme", "dark");
   const location = useLocation();
-  const history = useHistory();
 
   const data = useData();
 
-  useEffect(() => {
-    history.replace({ pathname: location.pathname, state: null });
-  }, []);
-
   return (
+    // <IE9ErrorBoundary>
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />
       <Suspense fallback={<div />}>
@@ -79,6 +76,7 @@ const App = () => {
         </Switch>
       </Suspense>
     </ThemeProvider>
+    // </IE9ErrorBoundary>
   );
 };
 

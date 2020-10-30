@@ -170,7 +170,7 @@ const LineChart: React.FC<Props> = ({ stats, chartType, cityId }) => {
   const max = Math.max(...statistic.reduce((acc, val) => acc.concat(val), []));
   const divider = max > 50 ? 1 : 2;
   let stepSize = cityId == null ? (isDelta ? 10 : Math.ceil(30 / divider)) : isDelta ? 5 : 15;
-  if (max < 30) stepSize = 4;
+  if (max < 15) stepSize = 4;
   const toolTipData = [
     { color: "greyText", value: statistic[1][activeIndex], name: "어제" },
     { color: "blue", value: statistic[0][activeIndex], name: "오늘" },

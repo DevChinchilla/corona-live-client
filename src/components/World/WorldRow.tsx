@@ -108,7 +108,7 @@ const WorldRow: React.FC<Props> = ({ data, code, index, lastUpdated, tdFlex, upd
           <CountryRank>{index + 1}</CountryRank>
         </Td>
         <Td flex={tdFlex[1]}>
-          <img src={`/flags/${imgName}.svg`}></img>
+          <img src={`/flags/${imgName}.svg`} alt={code}></img>
           <CountryName fontSize={fontSize + "px"}>{countryName}</CountryName>
         </Td>
         <Td flex={tdFlex[2]}>

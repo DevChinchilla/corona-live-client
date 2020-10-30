@@ -17,17 +17,19 @@ const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>
   svg {
     fill: ${theme("greyText")};
   }
-  &:first-child {
-    border-radius: 4px 0px 0px 4px;
-  }
-  &:last-child {
-    border-radius: 0px 4px 4px 0px;
+  &:not(:first-child) {
+    border-left: 0px;
   }
   &:not(:last-child) {
     border-right: 1px solid ${theme("lightGreyText")}90;
   }
-  &:not(:first-child) {
-    border-left: 0px;
+  &:last-child {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  &:first-child {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
   }
   ${ifProp(
     "noBg",

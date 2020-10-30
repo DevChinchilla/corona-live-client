@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { Fragment, useRef } from "react";
 import { theme, ThemeType } from "@styles/themes";
 import styled, { css } from "styled-components";
 import { Absolute, Row } from "@components/Layout";
@@ -121,12 +121,17 @@ const FixedTooltip: React.FC<Props> = ({
         </SelectContainer>
       </Row>
 
-      {data.map((info) => {
+      {data.map((info, i) => {
         const { color, name, value, unitName, hideIcon } = info;
         return (
-          <>
-            <Spacer></Spacer>
-            <Info color={color} flex={flex || 1} hideIcon={hideIcon}>
+          <Fragment key={i}>
+            {data[0].value.length < 4 && <Spacer></Spacer>}
+            <Info
+              color={color}
+              flex={flex || 1}
+              hideIcon={hideIcon}
+              style={{ fontSize: `${value}`.length > 4 ? "11px" : "12px" }}
+            >
               {name}{" "}
               <strong>
                 {" "}
@@ -134,7 +139,7 @@ const FixedTooltip: React.FC<Props> = ({
                 {unitName == null ? "명" : unitName}
               </strong>
             </Info>
-          </>
+          </Fragment>
         );
       })}
     </Wrapper>

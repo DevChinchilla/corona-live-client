@@ -76,4 +76,5 @@ export interface WorldOverviewType {
   stats: WorldStatsType;
   updates: WorldUpdatesType;
   timeseries: TimerseriesType;
+  yesterdayTimeseries: TimerseriesType;
 }

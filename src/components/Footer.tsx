@@ -58,15 +58,7 @@ const Footer = () => {
       </Row>
 
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
-      <Gnb className="gnb">
-        <Link to="/live">실시간</Link>
-        <Link to="/daily">일별</Link>
-        <Link to="/rates">확진율</Link>
-        <Link to="/world">세계</Link>
-        <Link to="/city/0">서울</Link>
-        <Link to="/city/8">경기</Link>
-        <Link to="/city/1">부산</Link>
-      </Gnb>
+
       <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
         <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
       </Row>

@@ -122,7 +122,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   };
 
   return (
-    <Modal show={show} title={"제보하기"} onClose={onClose} dynamic zIndex={10000}>
+    <Modal show={show} title={"제보하기"} onClose={onClose} dynamic zIndex={10000} portal>
       <Wrapper fadeInUp delay={1}>
         {!errorReport && (
           <>

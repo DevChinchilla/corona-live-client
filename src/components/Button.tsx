@@ -67,14 +67,6 @@ const Button = styled.button<ButtonProps>`
   )}
 
 
-${ifProp(
-    "small",
-    css`
-      height: 30px;
-      width: 100%;
-      font-size: 12px;
-    `
-  )}
 
   ${ifProp(
     "full",
@@ -110,6 +102,16 @@ ${ifProp(
     "transparent",
     css`
       background: transparent;
+    `
+  )}
+
+${ifProp(
+    "small",
+    css`
+      min-height: 30px;
+      height: 30px;
+      width: 100%;
+      font-size: 12px;
     `
   )}
 `;

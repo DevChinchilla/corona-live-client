@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, Fragment, useEffect, useRef } from "react";
 import CountUp from "react-countup";
 
 import { Row, Col, Box } from "@components/Layout";
@@ -102,10 +102,10 @@ const Board: FC<BoardProps> = ({ data, numbersOnly }) => {
     <Row jc="space-evenly" my="22px">
       {data.map((stat, i) => {
         return (
-          <>
+          <Fragment key={i}>
             {i > 0 && <Row w="20px"></Row>}
             <Stat {...(stat as any)} numbersOnly={numbersOnly} fadeInUp delay={2}></Stat>
-          </>
+          </Fragment>
         );
       })}
     </Row>

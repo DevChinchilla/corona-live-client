@@ -13,7 +13,7 @@ const Header = ({ tdFlex }) => {
       <Th flex={tdFlex[2]}>총 확진자</Th>
       <Th flex={tdFlex[3]}>오늘</Th>
       <Th flex={tdFlex[4]} flexBasis="50px" justifyContent="flex-end" pr="30px">
-        업데이트
+        &nbsp;
       </Th>
     </Row>
   );

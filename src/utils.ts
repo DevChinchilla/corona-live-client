@@ -5,6 +5,7 @@ export const ct = (cityId, guId: any = undefined) => {
   let cityName = CITIES[`c${cityId}`] || "";
   let guName = CITIES[`c${cityId}/${guId}`] || "";
   guName = guName == cityName || guId == "_" ? "전체" : guName;
+  if ((cityId == 0 || cityId == 8) && guName == "전체") guName = "기타";
   return guId != undefined ? guName : cityName;
 };
 

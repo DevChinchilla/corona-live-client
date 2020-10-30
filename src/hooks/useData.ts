@@ -124,7 +124,7 @@ export const useData = () => {
     }
   };
 
-  useSWR(API.lastUpdated, fetcher, {
+  const { mutate: mutateLastUpdated } = useSWR(API.lastUpdated, fetcher, {
     revalidateOnReconnect: true,
     revalidateOnFocus: true,
     revalidateOnMount: true,
@@ -160,9 +160,22 @@ export const useData = () => {
     ? Object.keys(timeseries.data).slice(-1)[0].slice(5)
     : null;
 
-  const { data: worldOverview } = useSWR<WorldStatsType>(API.worldOverview, fetcher, {
-    refreshInterval: SECOND * 30,
-  });
+  const { data: worldOverview, mutate: mutateWorldOverview } = useSWR<WorldStatsType>(
+    API.worldOverview,
+    fetcher,
+    {
+      refreshInterval: SECOND * 30,
+    }
+  );
+
+  useEffect(() => {
+    let lastUpdatedInerval = setInterval(mutateLastUpdated, 6000);
+    let worldOverviewInterval = setInterval(mutateWorldOverview, 30000);
+    return () => {
+      clearInterval(lastUpdatedInerval);
+      clearInterval(worldOverviewInterval);
+    };
+  }, []);
 
   // const { data: worldUpdates } = useSWR<WorldUpdatesType[]>(API.worldUpdates, fetcher, {
   //   refreshInterval: SECOND * 30,

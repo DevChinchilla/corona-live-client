@@ -105,7 +105,7 @@ const darkTheme: ThemeProps = {
   blue: "#5673EB",
   red: "#EB5374",
 
-  blueBg: "#263051",
+  blueBg: "#5673EB15",
   redBg: "#EB537415",
   updateCard: "#272b38",
 

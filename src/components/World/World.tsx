@@ -10,6 +10,7 @@ import WorldChart from "@components/Chart/WorldChart";
 import { Row } from "@components/Layout";
 import Spinner from "@components/Spinner";
 import { theme } from "@styles/themes";
+import Footer from "@components/Footer";
 
 const Wrapper = styled.div``;
 
@@ -27,15 +28,20 @@ const World: React.FC<Props> = ({ data }) => {
       </Row>
     );
 
+  const { updates, stats, timeseries, yesterdayTimeseries } = worldOverview;
+
   return (
     <Wrapper>
       <UpdatesLiveDisplay
-        data={getWorldUpdates(worldOverview.updates)}
+        data={getWorldUpdates(updates)}
         link={{ href: "/world/live", name: "세계 확진자 실시간" }}
       ></UpdatesLiveDisplay>
-      <WorldBoard worldData={worldOverview.stats["WORLD"]}></WorldBoard>
-      <WorldChart timeseries={worldOverview.timeseries}></WorldChart>
+      <WorldBoard worldData={stats["WORLD"]}></WorldBoard>
+      <Row h="12px"></Row>
+      <WorldChart timeseries={timeseries} yesterdayTimeseries={yesterdayTimeseries}></WorldChart>
+      <Row h="6px"></Row>
       <WorldTable data={worldOverview}></WorldTable>
+      <Footer></Footer>
     </Wrapper>
   );
 };

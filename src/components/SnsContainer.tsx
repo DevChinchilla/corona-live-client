@@ -81,50 +81,50 @@ const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup }) => {
     <Wrapper small={small} reverse={reverse}>
       <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
 
-      <Col my="9px">
-        <Row fontSize="12px" mb="10px" opacity={0.7}>
-          공유하기
-        </Row>
-        <Row jc="center" position="relative">
-          <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
-            링크가 복사 되었습니다
-          </LinkCopyMsg>
-          <IconBox type="facebook" href={FACEBOOK_URL}>
-            <Icon name="Facebook" size={14}></Icon>
-          </IconBox>
-          <IconBox type="twitter" href={TWITTER_URL}>
-            <Icon name="Twitter" size={14}></Icon>
-          </IconBox>
-          <IconBox type="blog" href={BLOG_URL}>
-            <Icon name="Blog" size={14}></Icon>
-          </IconBox>
-          <IconBox type="kakao" id="kakaoShare">
-            <Icon name="KakaoTalk" size={14}></Icon>
-          </IconBox>
-
-          {document.queryCommandSupported("copy") && (
-            <IconBox type="link" onClick={copyToClipboard}>
-              <Icon name="Link" size={14}></Icon>
-            </IconBox>
-          )}
-        </Row>
-      </Col>
-
       {!finishedPopup && (
         <Col my="9px">
           <Row fontSize="12px" mb="10px" opacity={0.7}>
-            SNS로 보기
+            공유하기
           </Row>
-          <Row jc="center" position="relative" flexShrink={0}>
-            <IconBox type="twitter" href={TWITTER_SNS_URL}>
+          <Row jc="center" position="relative">
+            <LinkCopyMsg fadeInUp={!!copySuccess} fadeInDown={!copySuccess}>
+              링크가 복사 되었습니다
+            </LinkCopyMsg>
+            <IconBox type="facebook" href={FACEBOOK_URL}>
+              <Icon name="Facebook" size={14}></Icon>
+            </IconBox>
+            <IconBox type="twitter" href={TWITTER_URL}>
               <Icon name="Twitter" size={14}></Icon>
             </IconBox>
-            <IconBox type="instagram" href={INSTA_SNS_URL}>
-              <Icon name="Instagram" size={14}></Icon>
+            <IconBox type="blog" href={BLOG_URL}>
+              <Icon name="Blog" size={14}></Icon>
             </IconBox>
+            <IconBox type="kakao" id="kakaoShare">
+              <Icon name="KakaoTalk" size={14}></Icon>
+            </IconBox>
+
+            {document.queryCommandSupported("copy") && (
+              <IconBox type="link" onClick={copyToClipboard}>
+                <Icon name="Link" size={14}></Icon>
+              </IconBox>
+            )}
           </Row>
         </Col>
       )}
+
+      <Col my="9px">
+        <Row fontSize="12px" mb="10px" opacity={0.7}>
+          SNS로 보기
+        </Row>
+        <Row jc="center" position="relative" flexShrink={0}>
+          <IconBox type="twitter" href={TWITTER_SNS_URL}>
+            <Icon name="Twitter" size={14}></Icon>
+          </IconBox>
+          <IconBox type="instagram" href={INSTA_SNS_URL}>
+            <Icon name="Instagram" size={14}></Icon>
+          </IconBox>
+        </Row>
+      </Col>
     </Wrapper>
   );
 };

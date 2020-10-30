@@ -22,7 +22,6 @@ const WorldUpdatesModal: React.FC<Props> = ({ data, show, onClose, countryCode }
       showModal={show}
       showFilters={false}
       areaName={countryCode == undefined ? "세계" : COUNTRY_NAMES[countryCode]}
-      hideSrc
     ></UpdateModal>
   );
 };
