@@ -6,7 +6,6 @@
     "scripts": {
         "bundle": "webpack",
         "build": "webpack -p --mode=production",
-        "postbuild": "react-snap",
         "start": "webpack-dev-server --mode development --open --hot ",
         "check-types": "tsc"
     },
@@ -74,6 +73,5 @@
     },
     "reactSnap" : {
         "source" : "./dist"
-     
      }
 }

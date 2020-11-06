@@ -5,6 +5,14 @@ const App = lazy(() => import("./App"));
 const rootElement = document.getElementById("root");
 
 const main = () => {
+  return render(
+    <Suspense fallback={<div />}>
+      <Router>
+        <App />
+      </Router>
+    </Suspense>,
+    rootElement
+  );
   if (rootElement.hasChildNodes()) {
     return hydrate(
       <Suspense fallback={<div />}>

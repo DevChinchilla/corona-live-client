@@ -5,7 +5,7 @@ export const ct = (cityId, guId: any = undefined) => {
   let cityName = CITIES[`c${cityId}`] || "";
   let guName = CITIES[`c${cityId}/${guId}`] || "";
   guName = guName == cityName || guId == "_" ? "전체" : guName;
-  if ((cityId == 0 || cityId == 8) && guName == "전체") guName = "기타";
+  // if ((cityId == 0 || cityId == 8) && guName == "전체") guName = "기타";
   return guId != undefined ? guName : cityName;
 };
 
@@ -127,7 +127,9 @@ export const getCasesSummary = (updates) => {
     0
   );
   const yesterdayCases = totalCases - todayCases - checking;
-  return { todayCases, totalCases, yesterdayCases, checking };
+  const imported = updates.reduce((t, { imported }) => (t += Number(imported) || 0), 0);
+  const domestic = updates.reduce((t, { domestic }) => (t += Number(domestic) || 0), 0);
+  return { todayCases, totalCases, yesterdayCases, checking, imported, domestic };
 };
 
 export const getDomesticUpdates = (

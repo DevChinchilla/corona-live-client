@@ -21,6 +21,8 @@ export interface CasesSummaryType {
   totalCases: number;
   yesterdayCases: number;
   todayCases: number;
+  imported: number;
+  domestic: number;
 }
 
 export interface RegionsTimeseriesType {

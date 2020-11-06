@@ -57,26 +57,26 @@ const App = () => {
   const data = useData();
 
   return (
-    // <IE9ErrorBoundary>
-    <ThemeProvider theme={themes[theme]}>
-      <GlobalStyle />
-      <Suspense fallback={<div />}>
-        <Switch location={location}>
-          {pages.map((page, index) => {
-            return (
-              <Route
-                exact
-                path={page.pageLink}
-                render={({ match }) => <page.view {...{ theme, setTheme, data }} match={match} />}
-                key={index}
-              />
-            );
-          })}
-          <Redirect to="/" />
-        </Switch>
-      </Suspense>
-    </ThemeProvider>
-    // </IE9ErrorBoundary>
+    <IE9ErrorBoundary>
+      <ThemeProvider theme={themes[theme]}>
+        <GlobalStyle />
+        <Suspense fallback={<div />}>
+          <Switch location={location}>
+            {pages.map((page, index) => {
+              return (
+                <Route
+                  exact
+                  path={page.pageLink}
+                  render={({ match }) => <page.view {...{ theme, setTheme, data }} match={match} />}
+                  key={index}
+                />
+              );
+            })}
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
+      </ThemeProvider>
+    </IE9ErrorBoundary>
   );
 };
 

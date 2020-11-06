@@ -45,7 +45,9 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
   const day = currentDate.getDate();
 
   const [showModal, setShowModal] = useState(true);
-  const { todayCases } = casesSummary;
+  const { todayCases, imported, domestic } = casesSummary;
+
+  const showDetails = imported + domestic == todayCases;
   if (todayCases < 20) return <></>;
   if (currentHours >= 23 || currentHours < 9)
     return (
@@ -83,9 +85,37 @@ const FinishedPopup: React.FC<Props> = ({ casesSummary }) => {
               </Row>
               <Row fontSize="26px" jc="center">
                 <Row fontWeight={700}>{todayCases}</Row>
-
                 <Row fontWeight={300}>명</Row>
               </Row>
+
+              {showDetails && (
+                <Row center mb="6px" mt="6px">
+                  <Row justifyContent="space-between" ai="center">
+                    <Row fontSize="13px" opacity="0.7" mr="4px">
+                      국내
+                    </Row>
+                    <Row>
+                      <Row fontSize="13px" fontWeight={700}>
+                        {domestic}
+                      </Row>
+                    </Row>
+                  </Row>
+                  <Row w="10px">
+                    <Row w="1px"></Row>
+                  </Row>
+                  <Row justifyContent="space-between" ai="center">
+                    <Row fontSize="13px" opacity="0.7" mr="4px">
+                      해외
+                    </Row>
+                    <Row>
+                      <Row fontSize="13px" fontWeight={700}>
+                        {imported}
+                      </Row>
+                    </Row>
+                  </Row>
+                </Row>
+              )}
+
               <ShowButton onClick={() => setShowInfo((prev) => !prev)}>
                 집계방식 보기 &rarr;
               </ShowButton>

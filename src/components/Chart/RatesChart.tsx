@@ -192,7 +192,7 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
     {
       color: "greyText",
       value: imported[activeIndex],
-      name: "검사완료",
+      name: "검사",
       unitName: "",
       hideIcon: true,
     },
@@ -219,14 +219,14 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
         options={timePeriod}
         optionName={(val) => val.slice(5)}
       ></FixedTooltip>
-      <Col color={_theme("text")}>
+      {/* <Col color={_theme("text")}>
         <Row fontSize="12px" opacity="0.4" textAlign="center" jc="center">
           *검사완료=(결과음성+확진) *확진율=확진/검사완료
         </Row>
         <Row fontSize="12px" opacity="0.4" textAlign="center" jc="center">
           공식적인 계산법이 아니기 때문에 참고용으로만 사용부탁드립니다
         </Row>
-      </Col>
+      </Col> */}
     </>
   );
 };

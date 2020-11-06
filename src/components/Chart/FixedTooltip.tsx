@@ -125,12 +125,12 @@ const FixedTooltip: React.FC<Props> = ({
         const { color, name, value, unitName, hideIcon } = info;
         return (
           <Fragment key={i}>
-            {data[0].value.length < 4 && <Spacer></Spacer>}
+            {`${value}`.length <= 5 && <Spacer></Spacer>}
             <Info
               color={color}
               flex={flex || 1}
               hideIcon={hideIcon}
-              style={{ fontSize: `${value}`.length > 4 ? "11px" : "12px" }}
+              style={{ fontSize: `${value}`.length > 5 ? "11px" : "12px" }}
             >
               {name}{" "}
               <strong>
