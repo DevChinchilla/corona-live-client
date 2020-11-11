@@ -90,7 +90,7 @@ const Home = ({ theme, setTheme, data }) => {
           </Suspense>
         )}
       </Suspense>
-      {!isLoading && !!notification && (
+      {!!notification && (
         <Suspense fallback={<div />}>
           <Notification
             notification={notification}

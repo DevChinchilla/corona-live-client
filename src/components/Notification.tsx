@@ -91,7 +91,7 @@ const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }
             {Object.keys(casesCountByCity || {}).map((cityId) => {
               if (casesCountByCity[cityId] < 1) return <></>;
               return (
-                <Detail>
+                <Detail key={cityId}>
                   {ct(cityId)}
                   <Box w="6px"></Box>+{casesCountByCity[cityId]}
                 </Detail>
