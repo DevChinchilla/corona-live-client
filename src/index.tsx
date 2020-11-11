@@ -13,25 +13,6 @@ const main = () => {
     </Suspense>,
     rootElement
   );
-  if (rootElement.hasChildNodes()) {
-    return hydrate(
-      <Suspense fallback={<div />}>
-        <Router>
-          <App />
-        </Router>
-      </Suspense>,
-      rootElement
-    );
-  } else {
-    return render(
-      <Suspense fallback={<div />}>
-        <Router>
-          <App />
-        </Router>
-      </Suspense>,
-      rootElement
-    );
-  }
 };
 
 const browserSupportsAllFeatures = () => {

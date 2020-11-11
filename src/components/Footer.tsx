@@ -57,6 +57,18 @@ const Footer = () => {
         </IconBox>
       </Row>
 
+      <Row fontSize="12px" mb="10px" mt="42px" opacity={0.7}>
+        집계 도움 주시는 분
+      </Row>
+      <Row ai="center">
+        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+          김재원
+        </Row>
+        <Row ml="2px" fontSize="12px" opacity={0.7}>
+          님
+        </Row>
+      </Row>
+
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
 
       <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
