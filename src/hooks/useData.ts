@@ -20,7 +20,7 @@ interface TimeseriesState {
   loading: boolean;
 }
 
-export const useData = () => {
+export const useData = (path) => {
   const [notification, setNotification] = useObjectState<NotificationType | null>(null);
   const [stats, setStats] = useObjectState<StatsState>({ data: null, loading: false });
   const [updates, setUpdates] = useObjectState<UpdatesState>({ data: null, loading: false });
@@ -119,16 +119,16 @@ export const useData = () => {
 
     let currentHours = new Date().getHours();
     let currentMinutes = new Date().getMinutes();
-    if (currentHours == 9 && currentMinutes > 30) {
+    if (currentHours == 9 && currentMinutes > 30 && currentMinutes < 40) {
       mutateTimeseries();
     }
   };
 
-  const { mutate: mutateLastUpdated } = useSWR(API.lastUpdated, fetcher, {
+  useSWR(API.lastUpdated, fetcher, {
     revalidateOnReconnect: true,
     revalidateOnFocus: true,
     revalidateOnMount: true,
-    refreshInterval: SECOND * 6,
+    refreshInterval: SECOND * 8,
     onSuccess: (newLastUpdated) => {
       if (lastUpdated && lastUpdated != newLastUpdated) {
         mutateData();
@@ -160,26 +160,13 @@ export const useData = () => {
     ? Object.keys(timeseries.data).slice(-1)[0].slice(5)
     : null;
 
-  const { data: worldOverview, mutate: mutateWorldOverview } = useSWR<WorldStatsType>(
-    API.worldOverview,
+  const { data: worldOverview } = useSWR<WorldStatsType>(
+    path.indexOf("world") > -1 ? API.worldOverview : null,
     fetcher,
     {
-      refreshInterval: SECOND * 30,
+      refreshInterval: SECOND * 90,
     }
   );
-
-  useEffect(() => {
-    let lastUpdatedInerval = setInterval(mutateLastUpdated, 6000);
-    let worldOverviewInterval = setInterval(mutateWorldOverview, 30000);
-    return () => {
-      clearInterval(lastUpdatedInerval);
-      clearInterval(worldOverviewInterval);
-    };
-  }, []);
-
-  // const { data: worldUpdates } = useSWR<WorldUpdatesType[]>(API.worldUpdates, fetcher, {
-  //   refreshInterval: SECOND * 30,
-  // });
 
   return {
     casesSummary,

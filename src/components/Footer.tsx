@@ -57,15 +57,25 @@ const Footer = () => {
         </IconBox>
       </Row>
 
-      <Row fontSize="12px" mb="10px" mt="42px" opacity={0.7}>
+      <Row fontSize="12px" mb="10px" mt="62px" opacity={0.7}>
         집계 도움 주시는 분
       </Row>
+
       <Row ai="center">
         <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
           김재원
         </Row>
         <Row ml="2px" fontSize="12px" opacity={0.7}>
           님
+        </Row>
+      </Row>
+
+      <Row fontSize="12px" mb="10px" mt="32px" opacity={0.7}>
+        개발자
+      </Row>
+      <Row ai="center">
+        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+          홍준서
         </Row>
       </Row>
 

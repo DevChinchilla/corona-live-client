@@ -54,7 +54,7 @@ const App = () => {
   const [theme, setTheme] = useLocalStorage("theme", "dark");
   const location = useLocation();
 
-  const data = useData();
+  const data = useData(location.pathname);
 
   return (
     <ThemeProvider theme={themes[theme]}>

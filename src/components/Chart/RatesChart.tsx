@@ -130,12 +130,9 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
   const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
   const cases = timePeriod.map((a) => timeseries[a][cityId || "confirmed"]);
 
-  const imported = timePeriod.map((a) => timeseries[a]["negative"] + timeseries[a]["confirmed"]);
-  const domestic = timePeriod.map((a) =>
-    (
-      (timeseries[a]["confirmed"] / (timeseries[a]["negative"] + timeseries[a]["confirmed"])) *
-      100
-    ).toFixed(2)
+  const tests = timePeriod.map((a) => timeseries[a]["negative"]);
+  const rates = timePeriod.map((a) =>
+    ((timeseries[a]["confirmed"] / timeseries[a]["negative"]) * 100).toFixed(2)
   );
 
   const chartRef = useRef<Line | null>();
@@ -150,7 +147,7 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
       datasets: [
         {
           label: "확진율",
-          data: domestic,
+          data: rates,
           type: "line",
           yAxisID: "B",
           backgroundColor: setGradient(canvas, _theme("blue")),
@@ -161,8 +158,8 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
           barThickness: 6,
         },
         {
-          label: "검사완료",
-          data: imported,
+          label: "검사",
+          data: tests,
           type: "bar",
           yAxisID: "A",
           barThickness: timeRange > 30 ? 2 : 6,
@@ -191,12 +188,12 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
   const toolTipData = [
     {
       color: "greyText",
-      value: imported[activeIndex],
+      value: tests[activeIndex],
       name: "검사",
       unitName: "",
       hideIcon: true,
     },
-    { color: "blue", value: domestic[activeIndex], name: "확진율", unitName: "%", hideIcon: true },
+    { color: "blue", value: rates[activeIndex], name: "확진율", unitName: "%", hideIcon: true },
   ];
 
   return (

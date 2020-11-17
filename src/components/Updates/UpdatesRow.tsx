@@ -118,7 +118,7 @@ const Content: FC<ContentProps> = ({
     <Row flex="1" flexWrap="wrap">
       <Row flex="1" flexWrap="wrap">
         <LastUpdatedTime date={datetime} flex={`0 1 90px`}></LastUpdatedTime>
-        <Message isInvalid={isInvalid} longString={area.length > 5}>
+        <Message isInvalid={isInvalid} longString={area?.length > 5}>
           {!fullWidth ? (
             <Absolute center>
               <Row fontWeight={700} mr="4px">
@@ -194,7 +194,7 @@ export const UpdatesRow: FC<Props> = ({
       interval = setInterval(() => {
         setCurrentContent(animationData[contentIndex.current]);
         contentIndex.current++;
-        if (contentIndex.current >= animationData.length) contentIndex.current = 0;
+        if (contentIndex.current >= animationData?.length) contentIndex.current = 0;
       }, 3000);
     }
     return () => clearInterval(interval);
