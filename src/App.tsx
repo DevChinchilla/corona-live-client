@@ -51,7 +51,7 @@ const pages = [
 ];
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorage("theme", "dark");
+  const [theme, setTheme] = useLocalStorage("theme", "light");
   const location = useLocation();
 
   const data = useData(location.pathname);

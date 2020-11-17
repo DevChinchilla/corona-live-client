@@ -116,7 +116,7 @@ const WorldRow: React.FC<Props> = ({ data, code, index, lastUpdated, tdFlex, upd
             <Col>
               <Row jc="flex-end" mt="-2px" ai="flex-start">
                 <CountryCases>{numberWithCommas(cases)}</CountryCases>
-                <span>명</span>
+                {/* <span>명</span> */}
               </Row>
               <DeltaTag delta={casesDelta} color={"red"} small></DeltaTag>
             </Col>
@@ -127,7 +127,7 @@ const WorldRow: React.FC<Props> = ({ data, code, index, lastUpdated, tdFlex, upd
             <Col>
               <Row jc="flex-end" mt="-2px" ai="flex-start">
                 <CountryCases>{numberWithCommas(deaths)}</CountryCases>
-                <span>명</span>
+                {/* <span>명</span> */}
               </Row>
               <DeltaTag delta={deathsDelta} color={"red"} small></DeltaTag>
             </Col>
