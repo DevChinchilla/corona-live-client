@@ -1,4 +1,4 @@
-import React, { useState, FC, useEffect } from "react";
+import React, { useState, FC, useEffect, useCallback } from "react";
 import styled from "styled-components";
 
 import Modal from "@components/Modal";
@@ -65,7 +65,7 @@ const initialState = {
   website: "",
 };
 
-const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
+const Report: FC<Props> = ({ show, onClose, errorReport }) => {
   const [isLoading, setisLoading] = useState(false);
   const [lastReport, setLastReport] = useLocalStorage("lastReportSubmit");
 
@@ -121,6 +121,10 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
     onClose();
   };
 
+  const setDropdownValue = useCallback((value) => {
+    setForm({ title: value });
+  }, []);
+
   return (
     <Modal show={show} title={"제보하기"} onClose={onClose} dynamic zIndex={10000} portal>
       <Wrapper fadeInUp delay={1}>
@@ -131,7 +135,7 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
               onChange={onChange}
               value={title}
               placeholder={"지역"}
-              setValue={(value) => setForm({ title: value })}
+              setValue={setDropdownValue}
             ></DropdownInput>
             <input
               placeholder="링크 (선택)"
@@ -171,4 +175,8 @@ const Report: FC<Props> = ({ show, onClose, hideOverlay, errorReport }) => {
   );
 };
 
-export default Report;
+const MemoReport = React.memo(Report, (prev, next) => {
+  return prev.errorReport === next.errorReport;
+});
+
+export default MemoReport;

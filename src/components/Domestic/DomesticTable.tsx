@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import DomesticRow from "@components/Domestic/DomesticRow";
 import { Col, Row, Th } from "@components/Layout";
 
-import { CurrentType, OverallType, UpdateType, CasesType } from "@types";
+import { CurrentType, OverallType, UpdateType, CasesType, OverviewType } from "@types";
 
 const Header = ({ tdFlex }) => {
   return (
@@ -23,11 +23,12 @@ interface Props {
   cityId?: string | number;
   current: CurrentType | { [guId: number]: CasesType };
   overall: OverallType | { [guId: number]: CasesType };
+  overview: OverviewType;
   updates: UpdateType[];
   tdFlex: string[];
 }
 
-const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
+const DomesticTable: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
   const getLastUpdatedTime = (id) => {
     let dateISO = updates.find((update) => {
       let { city, gu } = update;
@@ -82,4 +83,13 @@ const Table: FC<Props> = ({ cityId, current, overall, updates, tdFlex }) => {
   );
 };
 
-export default Table;
+const MemoDomesticTable = React.memo(DomesticTable, (prev, next) => {
+  return (
+    prev.overview?.confirmed[0] == next.overview?.confirmed[0] &&
+    prev.overview?.confirmed[1] == next.overview?.confirmed[1] &&
+    prev.overview?.current[0] == next.overview?.current[0] &&
+    prev.overview?.current[1] == next.overview?.current[1]
+  );
+});
+
+export default MemoDomesticTable;

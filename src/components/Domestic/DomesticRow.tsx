@@ -39,7 +39,7 @@ const Divider = styled(Box)`
   background: ${theme("lightGreyText")};
 `;
 
-const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...props }) => {
+const DomesticRow = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...props }) => {
   const [showUpdates, setShowUpdates] = useState(false);
 
   const { total, current } = data;
@@ -129,4 +129,13 @@ const RowComponent = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...pro
   );
 };
 
-export default RowComponent;
+const MemoDomesticRow = React.memo(DomesticRow, (prev, next) => {
+  return (
+    prev.data.total[0] == next.data.total[0] &&
+    prev.data.total[1] == next.data.total[1] &&
+    prev.data.current[0] == next.data.current[0] &&
+    prev.data.current[1] == next.data.current[1]
+  );
+});
+
+export default MemoDomesticRow;

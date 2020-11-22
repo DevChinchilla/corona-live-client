@@ -119,4 +119,13 @@ Icon.defaultProps = {
   justifyContent: "center",
 };
 
-export default Icon;
+const MemoIcon = React.memo(Icon, (prev, next) => {
+  return (
+    prev.name === next.name &&
+    prev.size === next.size &&
+    prev.fill === next.fill &&
+    prev.stroke === next.stroke
+  );
+});
+
+export default MemoIcon;

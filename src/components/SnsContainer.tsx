@@ -61,10 +61,11 @@ type Props = {
   reverse?: boolean;
   small?: boolean;
   finishedPopup?: boolean;
+  style?: any;
 };
 
-const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup }) => {
-  useKakaoButton();
+const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup, style }) => {
+  if (!finishedPopup) useKakaoButton();
 
   const [copySuccess, setCopySuccess] = useTimeoutState(false, 2000);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -78,11 +79,11 @@ const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup }) => {
   }
 
   return (
-    <Wrapper small={small} reverse={reverse}>
+    <Wrapper small={small} reverse={reverse} style={style}>
       <textarea ref={textAreaRef} value={WEBSITE_URL} readOnly />
 
       {!finishedPopup && (
-        <Col my="9px">
+        <Col my="8px">
           <Row fontSize="12px" mb="10px" opacity={0.7}>
             공유하기
           </Row>
@@ -99,15 +100,14 @@ const SnsContainer: React.FC<Props> = ({ reverse, small, finishedPopup }) => {
             <IconBox type="blog" href={BLOG_URL}>
               <Icon name="Blog" size={14}></Icon>
             </IconBox>
+
             <IconBox type="kakao" id="kakaoShare">
               <Icon name="KakaoTalk" size={14}></Icon>
             </IconBox>
 
-            {document.queryCommandSupported("copy") && (
-              <IconBox type="link" onClick={copyToClipboard}>
-                <Icon name="Link" size={14}></Icon>
-              </IconBox>
-            )}
+            <IconBox type="link" onClick={copyToClipboard}>
+              <Icon name="Link" size={14}></Icon>
+            </IconBox>
           </Row>
         </Col>
       )}

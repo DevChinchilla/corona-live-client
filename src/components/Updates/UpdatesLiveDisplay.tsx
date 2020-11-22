@@ -51,4 +51,9 @@ const UpdatesLiveDisplay: FC<Props> = ({ data, link, onClick }) => {
   );
 };
 
-export default UpdatesLiveDisplay;
+const MemoUpdatesLiveDisplay = React.memo(
+  UpdatesLiveDisplay,
+  (prev, next) => prev.data.length == next.data.length
+);
+
+export default MemoUpdatesLiveDisplay;

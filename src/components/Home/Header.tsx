@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import Icon from "@components/Icon";
 import { Absolute, Row } from "@components/Layout";
@@ -8,7 +8,7 @@ import Underline from "@components/Underline";
 import Button from "@components/Button";
 
 import { useTheme } from "@hooks/useTheme";
-import { useRouteMatch, useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Wrapper = styled(Row)`
   align-items: center;
@@ -28,15 +28,18 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
-  const routerMatch = useRouteMatch();
   const history = useHistory();
 
   const [showReport, setShowReport] = useState(false);
   const theme = useTheme();
 
-  useEffect(() => {
-    if (routerMatch.path == "/report") setShowReport(true);
-  }, [routerMatch]);
+  const closeReportModal = () => setShowReport(false);
+  const openReportModal = () => setShowReport(true);
+
+  const goBack = useCallback(() => history.push({ pathname: "/", state: "live" }), []);
+  const toggleTheme = useCallback(() => setTheme(currentTheme == "light" ? "dark" : "light"), [
+    currentTheme,
+  ]);
 
   return (
     <>
@@ -49,37 +52,35 @@ const Header: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
         <Link to="/city/8">경기</Link>
         <Link to="/city/1">부산</Link>
       </Gnb>
-      <Report show={showReport} onClose={() => setShowReport(false)}></Report>
+
+      {showReport && <Report show={showReport} onClose={closeReportModal}></Report>}
+
       <Wrapper fadeInUp>
-        {!!title ? (
-          <Button transparent icon onClick={() => history.push({ pathname: "/", state: "live" })}>
-            <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={28}></Icon>
-          </Button>
+        {title ? (
+          <>
+            <Button transparent icon onClick={goBack}>
+              <Icon name="ChevronLeft" stroke={theme("darkGreyText")} size={28}></Icon>
+            </Button>
+            <Underline fontSize="18px " fontWeight={900}>
+              {title}
+            </Underline>
+          </>
         ) : (
-          <Button
-            transparent
-            icon
-            onClick={() => setTheme(currentTheme == "light" ? "dark" : "light")}
-          >
-            <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
-          </Button>
+          <>
+            <Button transparent icon onClick={toggleTheme}>
+              <Icon name="Light" size={26} fill={theme("darkGreyText")}></Icon>
+            </Button>
+            <Icon
+              transform="translate(2px,-4px)"
+              name="Logo"
+              height="26px"
+              width="110px"
+              fill={theme("blackText")}
+            ></Icon>
+          </>
         )}
 
-        {!!title ? (
-          <Underline fontSize="18px " fontWeight={900}>
-            {title}
-          </Underline>
-        ) : (
-          <Icon
-            transform="translate(2px,-4px)"
-            name="Logo"
-            height="26px"
-            width="110px"
-            fill={theme("blackText")}
-          ></Icon>
-        )}
-
-        <Button transparent icon onClick={() => setShowReport(true)}>
+        <Button transparent icon onClick={openReportModal}>
           <Icon name="SendMessage" size={20} fill={theme("darkGreyText")}></Icon>
         </Button>
       </Wrapper>
@@ -87,4 +88,6 @@ const Header: React.FC<Props> = ({ theme: currentTheme, setTheme, title }) => {
   );
 };
 
-export default Header;
+const MemoHeader = React.memo(Header, (prev, next) => prev.theme === next.theme);
+
+export default MemoHeader;

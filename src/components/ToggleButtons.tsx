@@ -1,10 +1,10 @@
-import React, { Props } from "react";
+import React, { useCallback } from "react";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import styled, { css } from "styled-components";
-import { Absolute, Row } from "./Layout";
+import { Row } from "./Layout";
 import Icon from "./Icon";
-import { IconType } from "./Icon/Icon";
+import { ToggleOptionType } from "@types";
 
 const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>`
   font-size: 12px;
@@ -44,10 +44,6 @@ const Button = styled(Row)<{ active: boolean; noBg?: boolean; small?: boolean }>
     css`
       font-size: 12px;
       padding: 2px 8px;
-
-      /* padding: 6px 14px;
-      justify-content: center;
-      flex: 1; */
     `
   )};
 
@@ -92,20 +88,38 @@ const Wrapper = styled(Row)<{ divider?: boolean }>`
   )};
 `;
 
-interface OptionType {
-  name: string;
-  value: any;
-  icon?: IconType;
-  visible?: boolean;
-}
 interface Props {
-  options: OptionType[];
+  options: ToggleOptionType[];
   setOption: any;
   activeOption: any;
   noBg?: boolean;
   small?: boolean;
   divider?: boolean;
 }
+
+const ToggleButton = ({ noBg, activeOption, small, option, setOption }) => {
+  let { name, value, icon } = option;
+
+  const onClick = useCallback(() => {
+    setOption(value);
+  }, [value]);
+
+  return (
+    <Button noBg={noBg} active={activeOption == value} onClick={onClick} small={small}>
+      {icon && (
+        <>
+          <Icon name={icon} size={12}></Icon>
+          <Row w="4px"></Row>
+        </>
+      )}
+      <Row>{name}</Row>
+    </Button>
+  );
+};
+
+const MemoToggleButton = React.memo(ToggleButton, (prev, next) => {
+  return (prev.option.value === prev.activeOption) === (next.option.value === next.activeOption);
+});
 
 const ToggleButtons: React.FC<Props> = ({
   options,
@@ -117,29 +131,22 @@ const ToggleButtons: React.FC<Props> = ({
 }) => {
   return (
     <Wrapper divider={divider}>
-      {options.map((option, i) => {
-        let { name, value, icon, visible = true } = option;
+      {options.map((option) => {
+        let { visible = true } = option;
         if (!visible) return <></>;
         return (
-          <Button
-            key={i}
-            noBg={noBg}
-            active={activeOption == value}
-            onClick={() => setOption(value)}
-            small={small}
-          >
-            {icon && (
-              <>
-                <Icon name={icon} size={12}></Icon>
-                <Row w="4px"></Row>
-              </>
-            )}
-            <Row>{name}</Row>
-          </Button>
+          <MemoToggleButton
+            key={option.name}
+            {...{ noBg, activeOption, small, setOption, option }}
+          ></MemoToggleButton>
         );
       })}
     </Wrapper>
   );
 };
 
-export default ToggleButtons;
+const MemoToggleButtons = React.memo(ToggleButtons, (prev, next) => {
+  return prev.activeOption === next.activeOption;
+});
+
+export default MemoToggleButtons;

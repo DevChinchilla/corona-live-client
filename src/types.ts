@@ -1,3 +1,5 @@
+import { IconType } from "@components/Icon/Icon";
+
 export type CasesType = [number, number];
 
 export interface OverviewType {
@@ -79,4 +81,11 @@ export interface WorldOverviewType {
   updates: WorldUpdatesType;
   timeseries: TimerseriesType;
   yesterdayTimeseries: TimerseriesType;
+}
+
+export interface ToggleOptionType {
+  name: string;
+  value: any;
+  icon?: IconType;
+  visible?: boolean;
 }

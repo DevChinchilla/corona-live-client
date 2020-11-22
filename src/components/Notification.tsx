@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { Col, Row, Box } from "./Layout";
@@ -78,6 +78,12 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }) => {
   const { addedCases, casesCountByCity } = notification;
+
+  const showLiveUpdates = useCallback(() => {
+    closeModal();
+    if (openUpdates) openUpdates();
+  }, []);
+
   return (
     <>
       <Overlay fadeInUp zIndex={100000}></Overlay>
@@ -106,17 +112,9 @@ const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }
               </Button>
             </Row>
             <Row w="8px"></Row>
-            {!!openUpdates && (
+            {openUpdates && (
               <Row flex={1}>
-                <Button
-                  full
-                  blue
-                  small
-                  onClick={() => {
-                    closeModal();
-                    openUpdates();
-                  }}
-                >
+                <Button full blue small onClick={showLiveUpdates}>
                   보기
                 </Button>
               </Row>
@@ -128,4 +126,9 @@ const Notification: React.FC<Props> = ({ notification, closeModal, openUpdates }
   );
 };
 
-export default Notification;
+const MemoNotification = React.memo(
+  Notification,
+  (prev, next) => prev.notification.addedCases === next.notification.addedCases
+);
+
+export default MemoNotification;

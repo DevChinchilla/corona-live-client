@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import React, { useState, useEffect, useMemo, FC } from "react";
+import React, { useState, useEffect, useMemo, FC, useCallback } from "react";
 
 import UpdatesRow from "@components/Updates/UpdatesRow";
 import { Col, Row, Absolute } from "@components/Layout";
@@ -11,7 +11,8 @@ import { useTheme } from "@hooks/useTheme";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { CITY_IDS } from "@consts";
-import { onEnter, ct } from "@utils";
+import { onEnter, ct, getCasesSummary } from "@utils";
+import { CasesSummaryType } from "@types";
 
 const SearchInput = styled(Row)`
   position: relative;
@@ -70,6 +71,21 @@ const CategoryCount = styled(Row)`
   padding-left: 4px;
 `;
 
+const Category = ({ cityId, name, onSearchKeyword, count, active }) => {
+  const onClick = useCallback(() => onSearchKeyword(name), [name]);
+  return (
+    <CategoryBox key={cityId} onClick={onClick} active={active}>
+      {name}
+      <CategoryCount>{count || 0}건</CategoryCount>
+    </CategoryBox>
+  );
+};
+
+const MemoCategory = React.memo(
+  Category,
+  (prev, next) => prev.count === next.count && prev.active === next.active
+);
+
 const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
   const categoryCounts = useMemo(
     () =>
@@ -80,6 +96,12 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
       }, {}),
     []
   );
+
+  const sortedCityIds = useMemo(
+    () => CITY_IDS.sort((a, b) => (categoryCounts[b] || 0) - (categoryCounts[a] || 0)),
+    []
+  );
+
   return (
     <CategoryContainer fadeInUp delay={1}>
       <CategoryBox onClick={() => onSearchKeyword("")} active={keyword == ""}>
@@ -87,21 +109,20 @@ const Categories = ({ onSearchKeyword, keyword, ct, data }) => {
         <CategoryCount>{data.length}건</CategoryCount>
       </CategoryBox>
 
-      {CITY_IDS.sort((a, b) => (categoryCounts[b] || 0) - (categoryCounts[a] || 0)).map(
-        (cityId) => {
-          let name = ct(cityId) + " ";
-          return (
-            <CategoryBox
-              key={cityId}
-              onClick={() => onSearchKeyword(name)}
-              active={keyword == name}
-            >
-              {name}
-              <CategoryCount>{categoryCounts[cityId] || 0}건</CategoryCount>
-            </CategoryBox>
-          );
-        }
-      )}
+      {sortedCityIds.map((cityId) => {
+        let name = ct(cityId) + " ";
+        return (
+          <MemoCategory
+            {...{
+              cityId,
+              name,
+              onSearchKeyword,
+              count: categoryCounts[cityId],
+              active: keyword == name,
+            }}
+          ></MemoCategory>
+        );
+      })}
     </CategoryContainer>
   );
 };
@@ -126,6 +147,8 @@ export const UpdatesModal: FC<Props> = React.memo(
     const [filteredData, setData] = useState(data);
     const [filterOption, setFilterOption] = useState<"category" | "search">("category");
 
+    const casesSummary = useMemo<CasesSummaryType>(() => getCasesSummary(data), [data]);
+
     useEffect(() => {
       onSearchKeyword(keyword);
     }, [data]);
@@ -149,7 +172,12 @@ export const UpdatesModal: FC<Props> = React.memo(
       setKeyword("");
     };
 
-    const title = `${areaName || ""} 실시간 확진 현황`;
+    const title = useMemo(() => `${areaName || ""} 실시간 확진 현황`, [areaName]);
+    const actionIcon = useMemo(
+      () =>
+        filterOption == "search" ? { name: "Category", size: 18 } : { name: "Search", size: 14 },
+      [filterOption]
+    );
 
     if (!filteredData) return <></>;
 
@@ -158,15 +186,13 @@ export const UpdatesModal: FC<Props> = React.memo(
         show={showModal}
         onClose={onClose}
         title={title}
-        actionIcon={
-          filterOption == "search" ? { name: "Category", size: 18 } : { name: "Search", size: 14 }
-        }
+        actionIcon={actionIcon as any}
         hideActionIcon={!showFilters}
         onActionClick={onToggle}
-        full
         portal={portal}
+        full
       >
-        {showCasesSummary && <CasesSummary updates={data}></CasesSummary>}
+        {showCasesSummary && <CasesSummary data={casesSummary}></CasesSummary>}
         {showFilters && (
           <>
             {filterOption == "category" && (

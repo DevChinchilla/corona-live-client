@@ -194,7 +194,9 @@ const MapExplorer: React.FC<Props> = ({ stats }) => {
           features.map((f, i) => {
             let { name, code } = f.properties;
             let pos = MAP_POINTS[name].map((a) => a + "px");
-            return <Label pos={pos} name={name} cityId={code} stats={stats[statType]}></Label>;
+            return (
+              <Label key={code} pos={pos} name={name} cityId={code} stats={stats[statType]}></Label>
+            );
           })}
         {statType == "overall" && (
           <Label pos={MAP_POINTS["검역"]} name={"검역"} cityId={17} stats={stats[statType]}></Label>

@@ -21,6 +21,7 @@ export const fetcher = (url) => {
 };
 
 export const sortByDate = (arr, key = "datetime") => {
+  if (!arr) return [];
   const array = [...arr];
   array.sort((a, b) => {
     let dateA = key ? a[key] : a;
@@ -137,6 +138,7 @@ export const getDomesticUpdates = (
   cityId: string | undefined = undefined,
   guId: string | undefined = undefined
 ) => {
+  if (!updates) return [];
   const transform = updates.map((update) => {
     const { cases, total, city, gu } = update;
     const area = `${ct(city)} ${ct(city, gu)}`;

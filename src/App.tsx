@@ -56,6 +56,8 @@ const App = () => {
 
   const data = useData(location.pathname);
 
+  if (!data) return <></>;
+
   return (
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />

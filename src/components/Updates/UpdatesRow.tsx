@@ -1,7 +1,7 @@
-import React, { useState, FC, useRef, useEffect } from "react";
+import React, { useState, FC, useRef, useEffect, useMemo, useCallback } from "react";
 import styled, { css } from "styled-components";
 
-import { Col, Row, Box, Absolute } from "@components/Layout";
+import { Col, Row, Absolute } from "@components/Layout";
 import Icon from "@components/Icon";
 import LastUpdatedTime from "@components/Updates/LastUpdatedTime";
 import Report from "@components/Home/ReportModal";
@@ -9,7 +9,7 @@ import Report from "@components/Home/ReportModal";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { mixins } from "@styles";
-import { addHyperLink, ct } from "@utils";
+import { addHyperLink } from "@utils";
 
 const Container = styled(Row)<{ shadow?: boolean }>`
   justify-content: flex-end;
@@ -200,7 +200,7 @@ export const UpdatesRow: FC<Props> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const getAdditionalInfo = () => {
+  const additionalInfo = useMemo(() => {
     if (cases == null) {
       return `${total}명 어제 집계 여부 확인중`;
     } else if (total == total - cases) {
@@ -208,22 +208,37 @@ export const UpdatesRow: FC<Props> = ({
     } else {
       return `${total}명중 ${total - cases}명은 어제 집계`;
     }
-  };
+  }, [cases, total]);
+
+  const onContainerClick = useCallback(() => {
+    if (onClick) {
+      onClick();
+    } else {
+      setShowDetails((a) => !a);
+    }
+  }, [onClick]);
+
+  const closeReportModal = useCallback(() => setShowReport(false), [setShowReport]);
+  const openReportModal = useCallback(() => setShowReport(true), [setShowReport]);
+
+  const detailsHtml = useMemo(
+    () => ({
+      __html: addHyperLink(currentContent.src),
+    }),
+    [currentContent.src]
+  );
 
   return (
     <>
-      <Report
-        hideOverlay={true}
-        show={showReport}
-        onClose={() => setShowReport(false)}
-        errorReport={message}
-      ></Report>
-
-      <Container
-        shadow={!!animationData}
-        onClick={() => (onClick ? onClick() : setShowDetails((a) => !a))}
-        {...{ fadeInUp, delay }}
-      >
+      {showReport && (
+        <Report
+          hideOverlay={true}
+          show={showReport}
+          onClose={closeReportModal}
+          errorReport={message}
+        ></Report>
+      )}
+      <Container shadow={!!animationData} onClick={onContainerClick} {...{ fadeInUp, delay }}>
         {animationData ? (
           animationData.map(
             ({ datetime, area, title }, i) =>
@@ -244,17 +259,19 @@ export const UpdatesRow: FC<Props> = ({
 
       {showDetails && !hideSrc && (
         <Details fadeInUp>
-          {!!total && <AdditionalInfo>{getAdditionalInfo()}</AdditionalInfo>}
-          <p
-            dangerouslySetInnerHTML={{
-              __html: addHyperLink(currentContent.src),
-            }}
-          ></p>
-          <ReportButton onClick={() => setShowReport(true)}>오류제보</ReportButton>
+          {!!total && <AdditionalInfo>{additionalInfo}</AdditionalInfo>}
+          <p dangerouslySetInnerHTML={detailsHtml}></p>
+          <ReportButton onClick={openReportModal}>오류제보</ReportButton>
         </Details>
       )}
     </>
   );
 };
 
-export default UpdatesRow;
+const MemoUpdatesRow = React.memo(UpdatesRow, (prev, next) => {
+  let p = prev.data;
+  let n = next.data;
+  return p.datetime === n.datetime && p.cases === n.cases && p.total === n.total;
+});
+
+export default MemoUpdatesRow;

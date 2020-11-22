@@ -1,7 +1,7 @@
 import { Row } from "@components/Layout";
 import { theme, ThemeType } from "@styles/themes";
 import { ifProp } from "@styles/tools";
-import { UpdateType } from "@types";
+import { CasesSummaryType, UpdateType } from "@types";
 import { getCasesSummary } from "@utils";
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
@@ -48,11 +48,11 @@ const Divider = styled(Row)`
 `;
 
 interface Props {
-  updates: UpdateType[];
+  data: CasesSummaryType;
 }
 
-const CasesSummary: FC<Props> = ({ updates }) => {
-  const { todayCases, totalCases, yesterdayCases, checking } = getCasesSummary(updates);
+const CasesSummary: FC<Props> = ({ data }) => {
+  const { todayCases, totalCases, yesterdayCases, checking } = data;
   return (
     <Wrapper fadeInUp>
       <Stat>
@@ -75,4 +75,9 @@ const CasesSummary: FC<Props> = ({ updates }) => {
   );
 };
 
-export default CasesSummary;
+const MemoCasesSummary = React.memo(
+  CasesSummary,
+  (prev, next) => prev.todayCases === next.todayCases
+);
+
+export default MemoCasesSummary;

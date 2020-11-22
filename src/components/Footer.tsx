@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 
 import { Col, Row } from "@components/Layout";
 import Icon from "@components/Icon";
@@ -7,7 +7,6 @@ import Icon from "@components/Icon";
 import { theme } from "@styles/themes";
 import { IMPORTANT_MESSAGE, KAKAOPAY_URL, EMAIL } from "@consts";
 
-import { Link } from "react-router-dom";
 import { IconBox } from "./IconBox";
 import SnsContainer from "./SnsContainer";
 
@@ -26,17 +25,6 @@ const Wrapper = styled(Col)`
   }
   a {
     color: ${theme("darkGreyText")};
-  }
-`;
-
-const Gnb = styled(Row)`
-  justify-content: center;
-  margin-bottom: 10px;
-  /* visibility: hidden; */
-  a {
-    padding: 0px 6px;
-    font-size: 11px;
-    color: ${theme("semigreyText")};
   }
 `;
 
@@ -68,6 +56,13 @@ const Footer = () => {
         <Row ml="2px" fontSize="12px" opacity={0.7}>
           님
         </Row>
+        <Row w="8px"></Row>
+        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+          신정헌
+        </Row>
+        <Row ml="2px" fontSize="12px" opacity={0.7}>
+          님
+        </Row>
       </Row>
 
       <Row fontSize="12px" mb="10px" mt="32px" opacity={0.7}>
@@ -88,4 +83,6 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+const MemoFooter = React.memo(Footer);
+
+export default MemoFooter;

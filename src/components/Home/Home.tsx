@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useMemo, useCallback } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 import AnnouncementPopup from "@components/Home/AnnouncementPopup";
@@ -22,9 +22,9 @@ const Home = ({ theme, setTheme, data }) => {
   const { path } = routerMatch;
 
   const [isFirstVisitor, setIsFirstVisitor] = useLocalStorage("firstVisitor", 1);
-  const { statsData, isLoading, notification, removeNotification, casesSummary } = data;
+  const { statsData, notification, removeNotification, casesSummary } = data;
 
-  const helmet = () => {
+  const helmet = useCallback(() => {
     if (path == "/") {
       return (
         <Meta
@@ -72,11 +72,12 @@ const Home = ({ theme, setTheme, data }) => {
         ></Meta>
       );
     }
-  };
+  }, [path]);
 
   return (
     <>
       {helmet()}
+
       <Suspense fallback={<div />}>
         {statsData && casesSummary && path == "/" && (
           <Suspense fallback={<div />}>
@@ -108,9 +109,9 @@ const Home = ({ theme, setTheme, data }) => {
 
       <Page>
         <Header {...{ theme, setTheme }}></Header>
-        <NavBar></NavBar>
+        <NavBar path={path}></NavBar>
 
-        {path != "/world" && <Domestic data={data}></Domestic>}
+        {path != "/world" && <Domestic data={data} path={path}></Domestic>}
         {path == "/world" && <World data={data}></World>}
       </Page>
     </>

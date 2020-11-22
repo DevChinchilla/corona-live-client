@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import styled from "styled-components";
 
@@ -142,33 +142,36 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
     if (activeIndex != timePeriod.length - 1) setActiveIndex(timePeriod.length - 1);
   }, [timeRange]);
 
-  const getData = (canvas) => {
-    return {
-      datasets: [
-        {
-          label: "확진율",
-          data: rates,
-          type: "line",
-          yAxisID: "B",
-          backgroundColor: setGradient(canvas, _theme("blue")),
-          borderColor: `${CHART_PRIMARY_COLOR}`,
-          borderWidth: 3,
-          lineTension: 0,
-          pointBorderWidth: 0,
-          barThickness: 6,
-        },
-        {
-          label: "검사",
-          data: tests,
-          type: "bar",
-          yAxisID: "A",
-          barThickness: timeRange > 30 ? 2 : 6,
-          backgroundColor: `${CHART_SECONDARY_COLOR}70`,
-        },
-      ],
-      labels: timePeriod.slice(timePeriod.length - timeRange),
-    };
-  };
+  const getData = useCallback(
+    (canvas) => {
+      return {
+        datasets: [
+          {
+            label: "확진율",
+            data: rates,
+            type: "line",
+            yAxisID: "B",
+            backgroundColor: setGradient(canvas, _theme("blue")),
+            borderColor: `${CHART_PRIMARY_COLOR}`,
+            borderWidth: 3,
+            lineTension: 0,
+            pointBorderWidth: 0,
+            barThickness: 6,
+          },
+          {
+            label: "검사",
+            data: tests,
+            type: "bar",
+            yAxisID: "A",
+            barThickness: timeRange > 30 ? 2 : 6,
+            backgroundColor: `${CHART_SECONDARY_COLOR}70`,
+          },
+        ],
+        labels: timePeriod.slice(timePeriod.length - timeRange),
+      };
+    },
+    [timePeriod]
+  );
 
   const onPointClick = (_, activeElements: any) => {
     let index = activeElements[0] && activeElements[0]._index;
@@ -185,16 +188,19 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
     }
   };
 
-  const toolTipData = [
-    {
-      color: "greyText",
-      value: tests[activeIndex],
-      name: "검사",
-      unitName: "",
-      hideIcon: true,
-    },
-    { color: "blue", value: rates[activeIndex], name: "확진율", unitName: "%", hideIcon: true },
-  ];
+  const toolTipData = useMemo(
+    () => [
+      {
+        color: "greyText",
+        value: tests[activeIndex],
+        name: "검사",
+        unitName: "",
+        hideIcon: true,
+      },
+      { color: "blue", value: rates[activeIndex], name: "확진율", unitName: "%", hideIcon: true },
+    ],
+    [tests, rates, activeIndex]
+  );
 
   return (
     <>
@@ -216,14 +222,6 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
         options={timePeriod}
         optionName={(val) => val.slice(5)}
       ></FixedTooltip>
-      {/* <Col color={_theme("text")}>
-        <Row fontSize="12px" opacity="0.4" textAlign="center" jc="center">
-          *검사완료=(결과음성+확진) *확진율=확진/검사완료
-        </Row>
-        <Row fontSize="12px" opacity="0.4" textAlign="center" jc="center">
-          공식적인 계산법이 아니기 때문에 참고용으로만 사용부탁드립니다
-        </Row>
-      </Col> */}
     </>
   );
 };

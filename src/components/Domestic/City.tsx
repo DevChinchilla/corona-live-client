@@ -16,11 +16,31 @@ import Header from "@components/Home/Header";
 import DomesticUpdatesModal from "./DomesticUpdatesModal";
 import Meta from "@components/Meta";
 
+const UpdatesSection = ({ updatesData, cityId }) => {
+  const [showUpdates, setShowUpdates] = useState(false);
+
+  if (!updatesData) return <Row h="50px"></Row>;
+
+  return (
+    <>
+      <DomesticUpdatesModal
+        data={updatesData}
+        onClose={() => setShowUpdates(false)}
+        show={showUpdates}
+        cityId={cityId}
+      ></DomesticUpdatesModal>
+      <Updates
+        data={getDomesticUpdates(updatesData, cityId)}
+        onClick={() => setShowUpdates(true)}
+      ></Updates>
+    </>
+  );
+};
+
 const City = ({ theme, setTheme, match, data }) => {
   useScrollTop();
 
   const cityId: string = match.params.cityId;
-  const [showUpdates, setShowUpdates] = useState(false);
 
   const {
     updatesData,
@@ -48,17 +68,6 @@ const City = ({ theme, setTheme, match, data }) => {
         }}
       ></Meta>
 
-      {updatesData && (
-        <Suspense fallback={<div />}>
-          <DomesticUpdatesModal
-            data={updatesData}
-            onClose={() => setShowUpdates(false)}
-            show={showUpdates}
-            cityId={cityId}
-          ></DomesticUpdatesModal>
-        </Suspense>
-      )}
-
       {!isLoading && !!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} closeModal={removeNotification}></Notification>
@@ -67,16 +76,7 @@ const City = ({ theme, setTheme, match, data }) => {
 
       <Header {...{ theme, setTheme }} title={ct(cityId)}></Header>
 
-      {updatesData ? (
-        <Suspense fallback={<div style={{ height: "50px" }} />}>
-          <Updates
-            data={getDomesticUpdates(updatesData, cityId)}
-            onClick={() => setShowUpdates(true)}
-          ></Updates>
-        </Suspense>
-      ) : (
-        <Row h="30px"></Row>
-      )}
+      <UpdatesSection {...{ updatesData, cityId }}></UpdatesSection>
 
       {statsData && updatesData && (
         <Board

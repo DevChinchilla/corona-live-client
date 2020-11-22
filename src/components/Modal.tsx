@@ -55,13 +55,47 @@ const ModalContainer = styled(Col)<{ fixedHeight?: boolean; full?: boolean }>`
   }
 `;
 
-const Header = styled(Row)`
+const HeaderContainer = styled(Row)`
   display: flex;
   position: relative;
   margin-bottom: 20px;
   align-items: center;
   justify-content: space-between;
 `;
+
+const Header = ({ closeButtonPos, onClose, title, actionIcon, hideActionIcon, onActionClick }) => {
+  const _theme = useTheme();
+
+  return (
+    <HeaderContainer fadeInUp>
+      {closeButtonPos != "bottom" ? (
+        <Button icon square onClick={onClose}>
+          <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
+        </Button>
+      ) : (
+        <Row width="24px"></Row>
+      )}
+
+      <Row fontSize="14px" fontWeight={700}>
+        {title}
+      </Row>
+
+      {actionIcon && !hideActionIcon ? (
+        <Button icon square onClick={onActionClick}>
+          <Icon
+            name={actionIcon?.name}
+            size={actionIcon?.size}
+            fill={_theme("darkGreyText")}
+          ></Icon>
+        </Button>
+      ) : (
+        <Row width="24px"></Row>
+      )}
+    </HeaderContainer>
+  );
+};
+
+const MemoHeader = React.memo(Header, (prev, next) => prev.actionIcon == next.actionIcon);
 
 interface Props {
   show: boolean;
@@ -97,7 +131,6 @@ const Modal: FC<Props> = ({
   portal,
   ...props
 }) => {
-  const _theme = useTheme();
   if (!show) return <></>;
   const portalEl = document.getElementById("root-portal");
   const component = (
@@ -105,31 +138,9 @@ const Modal: FC<Props> = ({
       {!hideOverlay && <Overlay zIndex={zIndex ? zIndex - 1 : 999} onClick={onClose}></Overlay>}
       <ModalContainer {...props} fixedHeight={!dynamic} zIndex={zIndex || 1000}>
         {!noHeader && (
-          <Header fadeInUp>
-            {closeButtonPos != "bottom" ? (
-              <Button icon square onClick={onClose}>
-                <Icon name="ChevronLeft" size={24} stroke={_theme("darkGreyText")}></Icon>
-              </Button>
-            ) : (
-              <Row width="24px"></Row>
-            )}
-
-            <Row fontSize="14px" fontWeight={700}>
-              {title}
-            </Row>
-
-            {actionIcon && !hideActionIcon ? (
-              <Button icon square onClick={onActionClick}>
-                <Icon
-                  name={actionIcon?.name}
-                  size={actionIcon?.size}
-                  fill={_theme("darkGreyText")}
-                ></Icon>
-              </Button>
-            ) : (
-              <Row width="24px"></Row>
-            )}
-          </Header>
+          <MemoHeader
+            {...{ closeButtonPos, onClose, title, actionIcon, hideActionIcon, onActionClick }}
+          ></MemoHeader>
         )}
 
         <Children>{children}</Children>

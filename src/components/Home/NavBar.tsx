@@ -49,12 +49,12 @@ const NavbarItem = styled(Row)<{ selected?: boolean }>`
   )}
 `;
 
-type Props = {};
+type Props = {
+  path: string;
+};
 
-const NavBar: React.FC<Props> = ({}) => {
+const NavBar: React.FC<Props> = ({ path }) => {
   const history = useHistory();
-  const routerMatch = useRouteMatch();
-  const { path } = routerMatch;
 
   return (
     <Wrapper fadeInUp delay={2}>
@@ -81,4 +81,6 @@ const NavBar: React.FC<Props> = ({}) => {
   );
 };
 
-export default NavBar;
+const MemoNavbar = React.memo(NavBar);
+
+export default MemoNavbar;

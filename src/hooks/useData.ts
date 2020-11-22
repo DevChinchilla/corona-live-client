@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { API, API_ROOT, SECOND } from "@consts";
@@ -156,9 +156,10 @@ export const useData = (path) => {
   const isLoading = updates.loading;
   const casesSummary = updates.data ? getCasesSummary(updates.data) : null;
 
-  const lastUpdatedDate = timeseries.data
-    ? Object.keys(timeseries.data).slice(-1)[0].slice(5)
-    : null;
+  const lastUpdatedDate = useMemo(
+    () => (timeseries.data ? Object.keys(timeseries.data).slice(-1)[0].slice(5) : null),
+    [timeseries.data]
+  );
 
   const { data: worldOverview } = useSWR<WorldStatsType>(
     path.indexOf("world") > -1 ? API.worldOverview : null,
@@ -168,16 +169,47 @@ export const useData = (path) => {
     }
   );
 
-  return {
-    casesSummary,
-    updatesData: updates.data,
-    statsData: stats.data,
-    timeseriesData: timeseries.data,
-    mutateData,
-    isLoading,
-    notification,
-    removeNotification,
-    lastUpdatedDate,
-    worldOverview,
-  };
+  const retuningData = useMemo(
+    () => ({
+      casesSummary,
+      updatesData: updates.data,
+      statsData: stats.data,
+      timeseriesData: timeseries.data,
+      mutateData,
+      isLoading,
+      notification,
+      removeNotification,
+      lastUpdatedDate,
+      worldOverview,
+      lastUpdated,
+    }),
+    [
+      casesSummary,
+      updates.data,
+      stats.data,
+      timeseries.data,
+      mutateData,
+      isLoading,
+      notification,
+      removeNotification,
+      lastUpdatedDate,
+      worldOverview,
+      lastUpdated,
+    ]
+  );
+
+  return retuningData;
+  // return {
+  //   casesSummary,
+  //   updatesData: updates.data,
+  //   statsData: stats.data,
+  //   timeseriesData: timeseries.data,
+  //   mutateData,
+  //   isLoading,
+  //   notification,
+  //   removeNotification,
+  //   lastUpdatedDate,
+  //   worldOverview,
+  //   lastUpdated,
+  // };
 };
