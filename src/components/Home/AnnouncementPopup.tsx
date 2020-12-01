@@ -50,9 +50,10 @@ const AnnouncementPopup: React.FC<Props> = ({ announcement }) => {
       show={show}
       title="공지"
       style={{ height: "initial" }}
+      closeButtonPos="bottom"
       onClose={() => setLastAnnouncement(announcement.date)}
     >
-      <Wrapper fadeInUp ai="center">
+      <Wrapper fadeInUp ai="center" mb="12px">
         <p dangerouslySetInnerHTML={{ __html: announcement.content }}></p>
       </Wrapper>
     </Modal>
