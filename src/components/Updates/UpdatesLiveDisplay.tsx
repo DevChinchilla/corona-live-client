@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { FC } from "react";
+import React, { FC, useRef, useState } from "react";
 
 import UpdatesRow from "@components/Updates/UpdatesRow";
 import { Col, Row } from "@components/Layout";
@@ -26,6 +26,20 @@ const Time = styled(Col)`
   text-align: center;
 `;
 
+const LiveDisplay = ({ data, link, onClick }) => {
+  return (
+    <Row flex={1} position="relative">
+      {link && <ALink to={link.href}>{link.name}</ALink>}
+      <UpdatesRow data={data[0]} onClick={onClick} animationData={data.slice(0, 5)}></UpdatesRow>
+    </Row>
+  );
+};
+
+const MemoLiveDisplay = React.memo(
+  LiveDisplay,
+  (prev, next) => prev.data.length == next.data.length
+);
+
 interface Props {
   data: UpdateType[];
   link?: { href: string; name: string };
@@ -37,23 +51,9 @@ const UpdatesLiveDisplay: FC<Props> = ({ data, link, onClick }) => {
   return (
     <Wrapper fadeInUp>
       <Time>{getCurrentDateTime()}</Time>
-      {data.length > 0 && (
-        <Row flex={1} position="relative">
-          {link && <ALink to={link.href}>{link.name}</ALink>}
-          <UpdatesRow
-            data={data[0]}
-            onClick={onClick}
-            animationData={data.slice(0, 5)}
-          ></UpdatesRow>
-        </Row>
-      )}
+      {data.length > 0 && <MemoLiveDisplay {...{ data, link, onClick }}></MemoLiveDisplay>}
     </Wrapper>
   );
 };
 
-const MemoUpdatesLiveDisplay = React.memo(
-  UpdatesLiveDisplay,
-  (prev, next) => prev.data.length == next.data.length
-);
-
-export default MemoUpdatesLiveDisplay;
+export default UpdatesLiveDisplay;
