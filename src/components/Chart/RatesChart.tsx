@@ -126,14 +126,19 @@ type Props = {
 };
 
 const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
-  const timePeriod = Object.keys(timeseries).slice(-timeRange);
-  const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
-  const cases = timePeriod.map((a) => timeseries[a][cityId || "confirmed"]);
+  const [timePeriod, cases, tests, rates] = useMemo(() => {
+    let timePeriod = Object.keys(timeseries)
+      .filter((a) => timeseries[a].negative)
+      .slice(-timeRange);
+    let cases = timePeriod.map((a) => timeseries[a][cityId || "confirmed"]);
+    let tests = timePeriod.map((a) => timeseries[a]["negative"]);
+    let rates = timePeriod.map((a) =>
+      ((timeseries[a]["confirmed"] / timeseries[a]["negative"]) * 100).toFixed(2)
+    );
+    return [timePeriod, cases, tests, rates];
+  }, [timeseries, timeRange]);
 
-  const tests = timePeriod.map((a) => timeseries[a]["negative"]);
-  const rates = timePeriod.map((a) =>
-    ((timeseries[a]["confirmed"] / timeseries[a]["negative"]) * 100).toFixed(2)
-  );
+  const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
 
   const chartRef = useRef<Line | null>();
   const _theme = useTheme();

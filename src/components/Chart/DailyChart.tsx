@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import styled from "styled-components";
 
@@ -105,12 +105,18 @@ type Props = {
 };
 
 const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
-  const timePeriod = Object.keys(timeseries).slice(-timeRange);
-  const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
-  const cases = timePeriod.map((a) => timeseries[a][cityId || "confirmed"]);
+  const [timePeriod, cases, imported, domestic] = useMemo(() => {
+    const timePeriod = Object.keys(timeseries).slice(-timeRange);
 
-  const imported = timePeriod.map((a) => timeseries[a]["imported"]);
-  const domestic = timePeriod.map((a) => timeseries[a]["domestic"]);
+    const cases = timePeriod.map((a) => timeseries[a][cityId || "confirmed"]);
+
+    const imported = timePeriod.map((a) => timeseries[a]["imported"]);
+    const domestic = timePeriod.map((a) => timeseries[a]["domestic"]);
+
+    return [timePeriod, cases, imported, domestic];
+  }, [timeseries, timeRange]);
+
+  const [activeIndex, setActiveIndex] = useState(timePeriod.length - 1);
 
   const chartRef = useRef<Line | null>();
   const _theme = useTheme();
@@ -119,49 +125,52 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
     if (activeIndex != timePeriod.length - 1) setActiveIndex(timePeriod.length - 1);
   }, [timeRange]);
 
-  const getData = (canvas) => {
-    if (cityId != null || timeRange > 14) {
-      return {
-        datasets: [
-          {
-            label: "확진자",
-            data: cases,
-            type: timePeriod.length > 14 ? "line" : "bar",
-            backgroundColor: setGradient(canvas, CHART_PRIMARY_COLOR),
-            borderColor: `${CHART_PRIMARY_COLOR}`,
-            pointRadius: 0,
-            borderWidth: 3,
-            lineTension: 0,
-            pointBorderWidth: 0,
-            barThickness: 6,
-          },
-        ],
-        labels: timePeriod.slice(timePeriod.length - timeRange),
-      };
-    } else {
-      return {
-        datasets: [
-          {
-            label: "국내",
-            data: domestic,
-            backgroundColor: setGradient(canvas, CHART_PRIMARY_COLOR),
-            borderColor: `${CHART_PRIMARY_COLOR}`,
-            borderWidth: 3,
-            lineTension: 0,
-            pointBorderWidth: 0,
-            barThickness: 6,
-          },
-          {
-            label: "해외",
-            data: imported,
-            barThickness: 6,
-            backgroundColor: CHART_SECONDARY_COLOR,
-          },
-        ],
-        labels: timePeriod.slice(timePeriod.length - timeRange),
-      };
-    }
-  };
+  const getData = useCallback(
+    (canvas) => {
+      if (cityId != null || timeRange > 14) {
+        return {
+          datasets: [
+            {
+              label: "확진자",
+              data: cases,
+              type: timePeriod.length > 14 ? "line" : "bar",
+              backgroundColor: setGradient(canvas, CHART_PRIMARY_COLOR),
+              borderColor: `${CHART_PRIMARY_COLOR}`,
+              pointRadius: 0,
+              borderWidth: 3,
+              lineTension: 0,
+              pointBorderWidth: 0,
+              barThickness: 6,
+            },
+          ],
+          labels: timePeriod.slice(timePeriod.length - timeRange),
+        };
+      } else {
+        return {
+          datasets: [
+            {
+              label: "국내",
+              data: domestic,
+              backgroundColor: setGradient(canvas, CHART_PRIMARY_COLOR),
+              borderColor: `${CHART_PRIMARY_COLOR}`,
+              borderWidth: 3,
+              lineTension: 0,
+              pointBorderWidth: 0,
+              barThickness: 6,
+            },
+            {
+              label: "해외",
+              data: imported,
+              barThickness: 6,
+              backgroundColor: CHART_SECONDARY_COLOR,
+            },
+          ],
+          labels: timePeriod.slice(timePeriod.length - timeRange),
+        };
+      }
+    },
+    [timePeriod]
+  );
 
   const onPointClick = (_, activeElements: any) => {
     let index = activeElements[0] && activeElements[0]._index;
