@@ -50,7 +50,6 @@ module.exports = {
         { from: "public/assets", to: "." },
         { from: "public/fonts", to: "fonts" },
         { from: "public/maps", to: "maps" },
-        { from: "public/flags", to: "flags" },
       ],
     }),
     new CompressionPlugin({

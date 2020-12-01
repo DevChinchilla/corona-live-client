@@ -126,7 +126,9 @@ const Chart: React.FC<Props> = ({ timeseries, stats, cityId, path }) => {
 const MemoChart = React.memo(Chart, (prev, next) => {
   return (
     prev.stats.overview.current[0] === next.stats.overview.current[0] &&
-    prev.stats.overview.current[1] === next.stats.overview.current[1]
+    prev.stats.overview.current[1] === next.stats.overview.current[1] &&
+    Object.keys(prev.stats.timeseries.today).length ===
+      Object.keys(next.stats.timeseries.today).length
   );
 });
 

@@ -58,7 +58,7 @@ export const useData = (path) => {
         return obj;
       }, {});
 
-      if (addedCases > 0) setNotification({ casesCountByCity, addedCases });
+      if (addedCases > 0 && newCases.length < 3) setNotification({ casesCountByCity, addedCases });
       setUpdates({ data: newUpdates });
     }
   };

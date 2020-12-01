@@ -28,6 +28,7 @@ import Map from "./Map";
 import Table from "./Table";
 import Domestic from "./Domestic";
 import World from "./World";
+import CurveArrow from "./CurveArrow";
 
 import { Row } from "@components/Layout";
 import { ifProp, prop, addIfProp } from "@styles/tools";
@@ -61,6 +62,7 @@ const icons = {
   Map,
   Domestic,
   World,
+  CurveArrow,
 };
 
 export type IconType = keyof typeof icons;

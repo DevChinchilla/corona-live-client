@@ -32,11 +32,13 @@ const Footer = () => {
   return (
     <Wrapper fadeInUp delay={6}>
       <SnsContainer></SnsContainer>
-      <Row fontSize="12px" mb="10px" mt="42px" opacity={0.7}>
-        후원하기
+      <Row fontSize="12px" mb="10px" mt="42px" opacity={0.8}>
+        서버비용 후원하기
       </Row>
-      <Row fontSize="11px" jc="center" opacity="0.5" textAlign="center">
-        서버비용 충당후 남은 후원금은 코로나19 관련 단체에 기부하겠습니다 <br></br>(SNS 통해 공개)
+      <Row fontSize="11px" jc="center" opacity="0.6" textAlign="center">
+        이용하시는데 불편함이 없도록 광고 없이 운영을 하고 있습니다.<br></br>
+        서버비용 충당 후 후원금이 남을시 코로나19 관련 단체에 기부하겠습니다. <br></br> (SNS 통해
+        공개)
       </Row>
       <Row h="18px"></Row>
       <Row jc="center" position="relative">
@@ -50,14 +52,14 @@ const Footer = () => {
       </Row>
 
       <Row ai="center">
-        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+        <Row fontSize="12px" fontWeight={700}>
           김재원
         </Row>
         <Row ml="2px" fontSize="12px" opacity={0.7}>
           님
         </Row>
         <Row w="8px"></Row>
-        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+        <Row fontSize="12px" fontWeight={700}>
           신정헌
         </Row>
         <Row ml="2px" fontSize="12px" opacity={0.7}>
@@ -69,16 +71,22 @@ const Footer = () => {
         개발자
       </Row>
       <Row ai="center">
-        <Row fontSize="12px" jc="center" textAlign="center" fontWeight={700}>
+        <Row fontSize="12px" fontWeight={700}>
           홍준서
         </Row>
       </Row>
 
       <p dangerouslySetInnerHTML={{ __html: IMPORTANT_MESSAGE }}></p>
 
-      <Row fontSize="11px" mt="10px" jc="center" opacity="0.5" textAlign="center">
-        <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
-      </Row>
+      <Col mt="10px" jc="center" ai="center">
+        <Row fontSize="12px" opacity="0.8" mb="2px">
+          문의
+        </Row>
+
+        <Row fontSize="12px">
+          <a href={`mailto: ${EMAIL}`}>{EMAIL}</a>
+        </Row>
+      </Col>
     </Wrapper>
   );
 };

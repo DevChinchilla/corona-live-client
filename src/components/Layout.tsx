@@ -61,6 +61,7 @@ const SPage = styled(Col)`
   min-height: 100vh;
   ${media.phablet} {
     width: 100%;
+    padding: 16px;
   }
   ${media.phone} {
     padding: 16px 12px;

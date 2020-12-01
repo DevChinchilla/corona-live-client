@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import DomesticRow from "@components/Domestic/DomesticRow";
 import { Col, Row, Th } from "@components/Layout";
@@ -40,44 +40,44 @@ const DomesticTable: FC<Props> = ({ cityId, current, overall, updates, tdFlex })
     return { dateISO, dateTime };
   };
 
-  const sortByCurrentCases = (regionA, regionB) => {
-    if (cityId) return current[regionB][0] - current[regionA][0];
-    return current[regionB].cases[0] - current[regionA].cases[0];
-  };
+  const domesticRows = useMemo(() => {
+    const sortByCurrentCases = (regionA, regionB) => {
+      if (cityId) return current[regionB][0] - current[regionA][0];
+      return current[regionB].cases[0] - current[regionA].cases[0];
+    };
 
-  const sortByUpdatedTime = (regionA, regionB) => {
-    return getLastUpdatedTime(regionB).dateTime - getLastUpdatedTime(regionA).dateTime;
-  };
+    const sortByUpdatedTime = (regionA, regionB) => {
+      return getLastUpdatedTime(regionB).dateTime - getLastUpdatedTime(regionA).dateTime;
+    };
+    return Object.keys(current).sort(sortByUpdatedTime).sort(sortByCurrentCases);
+  }, [current]);
 
   return (
     <>
       <Header tdFlex={tdFlex}></Header>
       <Col fadeInUp delay={6}>
-        {Object.keys(current)
-          .sort(sortByUpdatedTime)
-          .sort(sortByCurrentCases)
-          .map((id, i) => {
-            let _cityId = cityId == undefined ? id : cityId;
-            let _guId = cityId == undefined ? null : id;
+        {domesticRows.map((id, i) => {
+          let _cityId = cityId == undefined ? id : cityId;
+          let _guId = cityId == undefined ? null : id;
 
-            let data = {
-              total: overall[id]?.cases || overall[id],
-              current: current[id]?.cases || current[id],
-            };
-            let lastUpdated = getLastUpdatedTime(id).dateISO;
+          let data = {
+            total: overall[id]?.cases || overall[id],
+            current: current[id]?.cases || current[id],
+          };
+          let lastUpdated = getLastUpdatedTime(id).dateISO;
 
-            return (
-              <DomesticRow
-                {...{ updates, tdFlex, data, lastUpdated }}
-                fadeInUp
-                delay={i * 1.5}
-                even={i % 2 == 0}
-                cityId={_cityId}
-                guId={_guId}
-                key={`${cityId}/${id}`}
-              ></DomesticRow>
-            );
-          })}
+          return (
+            <DomesticRow
+              {...{ updates, tdFlex, data, lastUpdated }}
+              fadeInUp
+              delay={i * 1.5}
+              even={i % 2 == 0}
+              cityId={_cityId}
+              guId={_guId}
+              key={`${cityId}/${id}`}
+            ></DomesticRow>
+          );
+        })}
       </Col>
     </>
   );

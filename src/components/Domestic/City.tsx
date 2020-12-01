@@ -50,6 +50,7 @@ const City = ({ theme, setTheme, match, data }) => {
     notification,
     removeNotification,
     lastUpdatedDate,
+    lastUpdated,
   } = data;
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const City = ({ theme, setTheme, match, data }) => {
         }}
       ></Meta>
 
-      {!isLoading && !!notification && (
+      {!!notification && (
         <Suspense fallback={<div />}>
           <Notification notification={notification} closeModal={removeNotification}></Notification>
         </Suspense>
@@ -85,7 +86,8 @@ const City = ({ theme, setTheme, match, data }) => {
             current: statsData.current[cityId].cases,
           }}
           casesSummary={getCasesSummary(updatesData.filter((a) => a.city == cityId))}
-          lastUpdated={lastUpdatedDate}
+          lastUpdatedDate={lastUpdatedDate}
+          lastUpdatedTime={lastUpdated}
         ></Board>
       )}
 

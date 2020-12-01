@@ -11,24 +11,20 @@ interface Props {
 }
 
 const DomesticBoard: FC<Props> = ({ data, casesSummary, lastUpdatedDate, lastUpdatedTime }) => {
-  let { todayCases, yesterdayCases } = casesSummary;
-
-  const [month, day] = (lastUpdatedDate || " ").split("-");
-
   const statsData = useMemo(
     () => [
       {
         data: data.confirmed,
-        title: "총 확진자",
-        info: `${month}월 ${day}일 00시 기준`,
+        title: "총 확진자수",
+        info: `0시 기준 신규 확진자수`,
       },
       {
         data: data.current,
-        title: "오늘 추가확진자",
-        info: `오늘발생 ${yesterdayCases + todayCases}명중 ${yesterdayCases}명 어제집계`,
+        title: "실시간 확진자수",
+        info: `어제 동시간 대비`,
       },
     ],
-    [lastUpdatedTime]
+    [lastUpdatedDate, lastUpdatedTime]
   );
 
   return <Board data={statsData}></Board>;

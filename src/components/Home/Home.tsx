@@ -29,9 +29,9 @@ const Home = ({ theme, setTheme, data }) => {
       return (
         <Meta
           data={{
-            title: `코로나 라이브 | 공식 사이트`,
+            title: `코로나 라이브 | 실시간 코로나 현황`,
             canonical: ``,
-            description: `코로나 라이브 공식 사이트 | 코로나 확진자 현황을 실시간으로 제공합니다`,
+            description: `코로나 라이브 | 코로나 확진자 현황을 실시간으로 제공합니다`,
           }}
         ></Meta>
       );

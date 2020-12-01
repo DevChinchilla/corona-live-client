@@ -4,16 +4,17 @@ import COUNTRIES from "./countries.json";
 export const COUNTRY_NAMES = COUNTRIES;
 export const COUNTRY_CODES = Object.keys(COUNTRIES);
 
-export const API_ROOT = `https://apiv2.corona-live.com/`;
+export const ASSETS_URL = `https://assets.corona-live.com/`;
+export const API_URL = `https://apiv2.corona-live.com/`;
 
 export const API = {
-  updates: `${API_ROOT}updates.json`,
-  stats: `${API_ROOT}stats.json`,
-  timeseries: `${API_ROOT}timeseries.json`,
-  lastUpdated: `${API_ROOT}lastUpdated.json`,
-  worldStats: `${API_ROOT}world-stats.json`,
-  worldUpdates: `${API_ROOT}world-updates.json`,
-  worldOverview: `${API_ROOT}world-overview.json`,
+  updates: `${API_URL}updates.json`,
+  stats: `${API_URL}stats.json`,
+  timeseries: `${API_URL}timeseries.json`,
+  lastUpdated: `${API_URL}lastUpdated.json`,
+  worldStats: `${API_URL}world-stats.json`,
+  worldUpdates: `${API_URL}world-updates.json`,
+  worldOverview: `${API_URL}world-overview.json`,
 };
 
 export const CITY_TD_FLEX = ["0.45", "0.2", "1.3", "1", "0 1 80px"];

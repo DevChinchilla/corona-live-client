@@ -3,9 +3,11 @@ import { URL_REGEX, MINUTE, HOUR, DAY, SECOND, CITIES, COUNTRY_NAMES } from "@co
 export const ct = (cityId, guId: any = undefined) => {
   if (cityId == undefined) return "";
   let cityName = CITIES[`c${cityId}`] || "";
+
   let guName = CITIES[`c${cityId}/${guId}`] || "";
-  guName = guName == cityName || guId == "_" ? "전체" : guName;
-  // if ((cityId == 0 || cityId == 8) && guName == "전체") guName = "기타";
+  guName = guName == cityName || guId == -1 ? "전체" : guName;
+  if (cityId == 0 && guName == "전체") guName = "기타";
+
   return guId != undefined ? guName : cityName;
 };
 
@@ -89,7 +91,11 @@ export const sleep = (timeout) => {
 export const addHyperLink = (text) => {
   return text.replace(
     URL_REGEX,
-    (url) => `<a href="http://${url.replace(/https?:\/\//, "")}">${url}</a>`
+    (url) =>
+      `<a href="http://${url.replace(
+        /https?:\/\//,
+        ""
+      )}" target="_blank" rel="noopener noreferrer">${url}</a>`
   );
 };
 

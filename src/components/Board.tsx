@@ -7,16 +7,15 @@ import { useTheme } from "@hooks/useTheme";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { numberWithCommas } from "@utils";
+import MemoIcon from "./Icon";
 
 const Info = styled(Row)`
   font-size: 10px;
   opacity: 0.5;
   margin-top: 4px;
   align-items: center;
-  justify-content: flex-start;
-  span {
-    margin-left: 2px;
-  }
+  justify-content: flex-end;
+  width: 100%;
 `;
 interface StatsProps {
   title: string;
@@ -76,9 +75,11 @@ const Stat: FC<StatsProps> = ({ title, data, info, vertical, numbersOnly, ...pro
           showBg={true}
         ></DeltaTag>
       </Row>
-      {info && (
+      {info && !!delta && (
         <Info>
           <span>{info}</span>
+          <Row w="4px"></Row>
+          <MemoIcon name="CurveArrow" size={10} fill={theme("darkGreyText")}></MemoIcon>
         </Info>
       )}
     </Col>

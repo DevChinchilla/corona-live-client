@@ -131,6 +131,8 @@ const DomesticRow = ({ updates, data, cityId, guId, lastUpdated, tdFlex, ...prop
 
 const MemoDomesticRow = React.memo(DomesticRow, (prev, next) => {
   return (
+    prev.even == next.even &&
+    prev.lastUpdated == next.lastUpdated &&
     prev.data.total[0] == next.data.total[0] &&
     prev.data.total[1] == next.data.total[1] &&
     prev.data.current[0] == next.data.current[0] &&

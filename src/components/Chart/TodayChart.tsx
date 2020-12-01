@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 
@@ -133,8 +133,6 @@ const LineChart: React.FC<Props> = ({ stats, chartType, cityId }) => {
 
   const todayData = cityId == null ? timeseries.today : regionsTimeseries.today[cityId];
 
-  const isDelta = chartType == "delta";
-
   const statistic = [
     getStatistic(stats, "today", chartType, cityId),
     getStatistic(stats, "yesterday", chartType, cityId),
@@ -167,14 +165,27 @@ const LineChart: React.FC<Props> = ({ stats, chartType, cityId }) => {
     }
   };
 
-  const max = Math.max(...statistic.reduce((acc, val) => acc.concat(val), []));
-  const divider = max > 50 ? 1 : 2;
-  let stepSize = cityId == null ? (isDelta ? 10 : Math.ceil(50 / divider)) : isDelta ? 5 : 15;
-  if (max < 15) stepSize = 4;
-  const toolTipData = [
-    { color: "greyText", value: statistic[1][activeIndex], name: "어제" },
-    { color: "blue", value: statistic[0][activeIndex], name: "오늘" },
-  ];
+  const stepSize = useMemo(() => {
+    const max = Math.max(...statistic.reduce((acc, val) => acc.concat(val), []));
+
+    let stepSize = cityId == null ? 10 : 20;
+    if (max >= 700) {
+      stepSize = 200;
+    } else if (max >= 250) {
+      stepSize = 100;
+    } else if (max >= 50) {
+      stepSize = 50;
+    }
+    return stepSize;
+  }, [statistic]);
+
+  const toolTipData = useMemo(
+    () => [
+      { color: "greyText", value: statistic[1][activeIndex], name: "어제" },
+      { color: "blue", value: statistic[0][activeIndex], name: "오늘" },
+    ],
+    [statistic]
+  );
 
   return (
     <>

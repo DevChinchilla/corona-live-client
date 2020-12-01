@@ -2,7 +2,7 @@ import DeltaTag from "@components/DeltaTag";
 import Icon from "@components/Icon";
 import { Col, Row, Td } from "@components/Layout";
 import LastUpdatedTime from "@components/Updates/LastUpdatedTime";
-import { API, COUNTRY_CODES, COUNTRY_NAMES, SECOND } from "@consts";
+import { API, ASSETS_URL, COUNTRY_CODES, COUNTRY_NAMES, SECOND } from "@consts";
 import { theme } from "@styles/themes";
 import { ifProp } from "@styles/tools";
 import { fetcher, numberWithCommas, sortByDate } from "@utils";
@@ -108,7 +108,7 @@ const WorldRow: React.FC<Props> = ({ data, code, index, lastUpdated, tdFlex, upd
           <CountryRank>{index + 1}</CountryRank>
         </Td>
         <Td flex={tdFlex[1]}>
-          <img src={`/flags/${imgName}.svg`} alt={code}></img>
+          <img src={`${ASSETS_URL}flags/${imgName}.svg`} alt={code}></img>
           <CountryName fontSize={fontSize + "px"}>{countryName}</CountryName>
         </Td>
         <Td flex={tdFlex[2]}>

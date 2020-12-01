@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import styled from "styled-components";
 
@@ -178,16 +178,29 @@ const BarChart: React.FC<Props> = ({ timeseries, timeRange, cityId }) => {
     }
   };
 
-  const toolTipData =
-    cityId == null
-      ? [
-          { color: "greyText", value: imported[activeIndex], name: "해외" },
-          { color: "blue", value: domestic[activeIndex], name: "국내" },
-        ]
-      : [{ color: "blue", value: cases[activeIndex], name: "확진자" }];
+  const toolTipData = useMemo(
+    () =>
+      cityId == null
+        ? [
+            { color: "greyText", value: imported[activeIndex], name: "해외" },
+            { color: "blue", value: domestic[activeIndex], name: "국내" },
+          ]
+        : [{ color: "blue", value: cases[activeIndex], name: "확진자" }],
+    [activeIndex]
+  );
 
-  const max = Math.max(...cases);
-  const stepSize = max > 300 ? 100 : 30;
+  const stepSize = useMemo(() => {
+    const max = Math.max(...cases);
+
+    let stepSize = 20;
+    if (max >= 250) {
+      stepSize = 100;
+    } else if (max >= 50) {
+      stepSize = 50;
+    }
+    return stepSize;
+  }, [cases]);
+
   return (
     <>
       <Wrapper>
