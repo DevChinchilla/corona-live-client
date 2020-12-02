@@ -1,10 +1,9 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, themes } from "@styles";
-import { Switch, Redirect, Route, useLocation, useHistory } from "react-router-dom";
+import { Switch, Redirect, Route, useLocation } from "react-router-dom";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { useData } from "@hooks/useData";
-import { IE9ErrorBoundary } from "@components/ErrorBoundary";
 
 const DomesticLive = lazy(() => import("@components/Domestic/DomesticLive"));
 const WorldLive = lazy(() => import("@components/World/WorldLive"));

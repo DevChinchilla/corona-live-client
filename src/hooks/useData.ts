@@ -169,47 +169,17 @@ export const useData = (path) => {
     }
   );
 
-  const retuningData = useMemo(
-    () => ({
-      casesSummary,
-      updatesData: updates.data,
-      statsData: stats.data,
-      timeseriesData: timeseries.data,
-      mutateData,
-      isLoading,
-      notification,
-      removeNotification,
-      lastUpdatedDate,
-      worldOverview,
-      lastUpdated,
-    }),
-    [
-      casesSummary,
-      updates.data,
-      stats.data,
-      timeseries.data,
-      mutateData,
-      isLoading,
-      notification,
-      removeNotification,
-      lastUpdatedDate,
-      worldOverview,
-      lastUpdated,
-    ]
-  );
-
-  return retuningData;
-  // return {
-  //   casesSummary,
-  //   updatesData: updates.data,
-  //   statsData: stats.data,
-  //   timeseriesData: timeseries.data,
-  //   mutateData,
-  //   isLoading,
-  //   notification,
-  //   removeNotification,
-  //   lastUpdatedDate,
-  //   worldOverview,
-  //   lastUpdated,
-  // };
+  return {
+    casesSummary,
+    updatesData: updates.data,
+    statsData: stats.data,
+    timeseriesData: timeseries.data,
+    mutateData,
+    isLoading,
+    notification,
+    removeNotification,
+    lastUpdatedDate,
+    worldOverview,
+    lastUpdated,
+  };
 };

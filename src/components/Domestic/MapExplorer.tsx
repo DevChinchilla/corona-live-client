@@ -3,8 +3,9 @@ import { ThemeContext } from "styled-components";
 import { geoPath, geoMercator } from "d3-geo";
 import { select } from "d3-selection";
 import { transition } from "d3-transition";
-import useSWR from "swr";
 import { json } from "d3-fetch";
+
+import useSWR from "swr";
 import * as topojson from "topojson";
 import styled from "styled-components";
 import { StatsType } from "@types";

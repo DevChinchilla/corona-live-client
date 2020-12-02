@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { FC, useRef, useState } from "react";
+import React, { FC } from "react";
 
 import UpdatesRow from "@components/Updates/UpdatesRow";
 import { Col, Row } from "@components/Layout";

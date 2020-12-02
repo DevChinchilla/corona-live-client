@@ -1,17 +1,16 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "none",
-  // entry: {
-  //   app: path.join(__dirname, "src", "index.tsx"),
-  // },
   entry: {
-    app: ["core-js/stable", path.join(__dirname, "src", "index.tsx")],
+    app: path.join(__dirname, "src", "index.tsx"),
   },
   target: "web",
   resolve: {
@@ -38,6 +37,9 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
       hash: true,
@@ -60,6 +62,13 @@ module.exports = {
       minRatio: 0.8,
     }),
   ],
+  optimization: {
+    usedExports: true,
+    minimize: true,
+  },
+  externals: {
+    moment: "moment",
+  },
   devServer: {
     contentBase: __dirname + "/dist/",
     inline: true,
